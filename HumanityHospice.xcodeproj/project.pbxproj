@@ -11,6 +11,7 @@
 		675AC0BCE46E3895811EB7D5 /* Pods_HumanityHospice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B7D5CA25AA5987CE2BB4CC /* Pods_HumanityHospice.framework */; };
 		809963FACA7973222ED35534 /* Pods_HumanityHospiceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E36CE8881F55E0DC4A9EE78 /* Pods_HumanityHospiceTests.framework */; };
 		A57636C02086F1130096C452 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A57636BF2086F1130096C452 /* GoogleService-Info.plist */; };
+		A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */; };
 		A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */; };
 		A5BBD4352086EC3700B80BD0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BBD4342086EC3700B80BD0 /* ViewController.swift */; };
 		A5BBD4382086EC3700B80BD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5BBD4362086EC3700B80BD0 /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		49B7D5CA25AA5987CE2BB4CC /* Pods_HumanityHospice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HumanityHospice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0742E56CFABA503B832FF38 /* Pods-HumanityHospice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospice.release.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospice/Pods-HumanityHospice.release.xcconfig"; sourceTree = "<group>"; };
 		A57636BF2086F1130096C452 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseHandler.swift; sourceTree = "<group>"; };
 		A5BBD42F2086EC3700B80BD0 /* HumanityHospice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HumanityHospice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5BBD4342086EC3700B80BD0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +106,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		A57CC3F120881C3000C9D776 /* Database Handler */ = {
+			isa = PBXGroup;
+			children = (
+				A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */,
+			);
+			path = "Database Handler";
+			sourceTree = "<group>";
+		};
 		A5BBD4262086EC3700B80BD0 = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +141,7 @@
 			children = (
 				A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */,
 				A5BBD4342086EC3700B80BD0 /* ViewController.swift */,
+				A57CC3F120881C3000C9D776 /* Database Handler */,
 				A5BBD4362086EC3700B80BD0 /* Main.storyboard */,
 				A5BBD4392086EC3700B80BD0 /* Assets.xcassets */,
 				A5BBD43B2086EC3700B80BD0 /* LaunchScreen.storyboard */,
@@ -450,6 +461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */,
 				A5BBD4352086EC3700B80BD0 /* ViewController.swift in Sources */,
 				A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */,
 			);
