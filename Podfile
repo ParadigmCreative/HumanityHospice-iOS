@@ -10,7 +10,6 @@ target 'HumanityHospice' do
 pod 'Firebase/Database'
 pod 'Firebase/Auth'
 pod 'Firebase/Storage'
-pod 'SnapKit'
 pod 'RealmSwift'
 
 

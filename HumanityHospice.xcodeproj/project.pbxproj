@@ -19,6 +19,11 @@
 		A5BBD43D2086EC3700B80BD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5BBD43B2086EC3700B80BD0 /* LaunchScreen.storyboard */; };
 		A5BBD4482086EC3700B80BD0 /* HumanityHospiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BBD4472086EC3700B80BD0 /* HumanityHospiceTests.swift */; };
 		A5BBD4532086EC3700B80BD0 /* HumanityHospiceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BBD4522086EC3700B80BD0 /* HumanityHospiceUITests.swift */; };
+		A5D00665208938C30079CD49 /* MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D00664208938C30079CD49 /* MenuHandler.swift */; };
+		A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C1220892CA00084BA9B /* MenuView.swift */; };
+		A5FC5C1520892FA60084BA9B /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5FC5C1420892FA60084BA9B /* Menu.xib */; };
+		A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */; };
+		A5FC5C1A2089367D0084BA9B /* JournalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C192089367D0084BA9B /* JournalTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +65,11 @@
 		A5BBD44E2086EC3700B80BD0 /* HumanityHospiceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HumanityHospiceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5BBD4522086EC3700B80BD0 /* HumanityHospiceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanityHospiceUITests.swift; sourceTree = "<group>"; };
 		A5BBD4542086EC3700B80BD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5D00664208938C30079CD49 /* MenuHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHandler.swift; sourceTree = "<group>"; };
+		A5FC5C1220892CA00084BA9B /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		A5FC5C1420892FA60084BA9B /* Menu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
+		A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		A5FC5C192089367D0084BA9B /* JournalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTableViewController.swift; sourceTree = "<group>"; };
 		CA40643634E3AC40619883B0 /* Pods-HumanityHospiceUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospiceUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospiceUITests/Pods-HumanityHospiceUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F02E7DD9041FFB21D883E459 /* Pods-HumanityHospice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospice.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospice/Pods-HumanityHospice.debug.xcconfig"; sourceTree = "<group>"; };
 		F664BA10DC443AE4590D0D3C /* Pods_HumanityHospiceUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HumanityHospiceUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,7 +151,9 @@
 			children = (
 				A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */,
 				A5BBD4342086EC3700B80BD0 /* ViewController.swift */,
+				A5FC5C1620892FAB0084BA9B /* Menu Handler */,
 				A57CC3F120881C3000C9D776 /* Database Handler */,
+				A5FC5C1B208936830084BA9B /* Pages */,
 				A5BBD4362086EC3700B80BD0 /* Main.storyboard */,
 				A5BBD4392086EC3700B80BD0 /* Assets.xcassets */,
 				A5BBD43B2086EC3700B80BD0 /* LaunchScreen.storyboard */,
@@ -167,6 +179,25 @@
 				A5BBD4542086EC3700B80BD0 /* Info.plist */,
 			);
 			path = HumanityHospiceUITests;
+			sourceTree = "<group>";
+		};
+		A5FC5C1620892FAB0084BA9B /* Menu Handler */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC5C1220892CA00084BA9B /* MenuView.swift */,
+				A5D00664208938C30079CD49 /* MenuHandler.swift */,
+				A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */,
+				A5FC5C1420892FA60084BA9B /* Menu.xib */,
+			);
+			path = "Menu Handler";
+			sourceTree = "<group>";
+		};
+		A5FC5C1B208936830084BA9B /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC5C192089367D0084BA9B /* JournalTableViewController.swift */,
+			);
+			path = Pages;
 			sourceTree = "<group>";
 		};
 		DA9E5015D0F0B6CF39A92F1B /* Frameworks */ = {
@@ -296,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5BBD43D2086EC3700B80BD0 /* LaunchScreen.storyboard in Resources */,
+				A5FC5C1520892FA60084BA9B /* Menu.xib in Resources */,
 				A57636C02086F1130096C452 /* GoogleService-Info.plist in Resources */,
 				A5BBD43A2086EC3700B80BD0 /* Assets.xcassets in Resources */,
 				A5BBD4382086EC3700B80BD0 /* Main.storyboard in Resources */,
@@ -461,9 +493,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5D00665208938C30079CD49 /* MenuHandler.swift in Sources */,
 				A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */,
 				A5BBD4352086EC3700B80BD0 /* ViewController.swift in Sources */,
 				A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */,
+				A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */,
+				A5FC5C1A2089367D0084BA9B /* JournalTableViewController.swift in Sources */,
+				A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
