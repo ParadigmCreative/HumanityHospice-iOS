@@ -10,14 +10,16 @@ import UIKit
 
 class JournalTableViewController: UITableViewController {
 
+    
+    var menuDelegate: MenuHandlerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        MenuHandler.initialize(vc: self)
+        menuDelegate = MenuHandler.staticMenu
+        menuDelegate?.setBaseView(view: self.view)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -84,13 +86,19 @@ class JournalTableViewController: UITableViewController {
 
   
     // MARK: - Navigation
-    
+    var menuIsShowing: Bool = false
     @IBAction func toggleMenu(_ sender: Any) {
         
-        
+        if menuIsShowing {
+            MenuHandler.closeMenu()
+            menuIsShowing = false
+        } else {
+            MenuHandler.openMenu(vc: self)
+            menuIsShowing = true
+        }
         
     }
-    
+
     
     
     

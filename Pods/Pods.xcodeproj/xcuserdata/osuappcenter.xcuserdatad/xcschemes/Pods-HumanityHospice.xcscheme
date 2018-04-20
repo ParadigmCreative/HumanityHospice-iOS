@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7E5ED9366DF7C239589F3F5E147207EA"
+               BlueprintIdentifier = "E54DE6C6D0CADE5A0A0481ECE8F4561E"
                BuildableName = "Pods_HumanityHospice.framework"
                BlueprintName = "Pods-HumanityHospice"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7E5ED9366DF7C239589F3F5E147207EA"
+            BlueprintIdentifier = "E54DE6C6D0CADE5A0A0481ECE8F4561E"
             BuildableName = "Pods_HumanityHospice.framework"
             BlueprintName = "Pods-HumanityHospice"
             ReferencedContainer = "container:Pods.xcodeproj">

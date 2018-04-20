@@ -10,12 +10,18 @@ import Foundation
 import UIKit
 
 protocol MenuHandlerDelegate {
-    func userDidPressMenuButton()
+    func setBaseView(view: UIView)
 }
 
 class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerDelegate {
     
     var isMenuShowing: Bool?
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var mainAreaView: UIView!
+    @IBOutlet weak var exitAreaView: UIView!
     
     // MARK: - TableView
     @IBOutlet weak var listingTableView: UITableView!
@@ -35,10 +41,18 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     }
     
     // MARK: - MenuHandler Delegate
-    func userDidPressMenuButton() {
-        
+    var baseView: UIView?
+    func setBaseView(view: UIView) {
+        baseView = view
     }
     
-    // Static Functions
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            if touch.view == exitAreaView {
+                MenuHandler.closeMenu()
+            }
+        }
+    }
+    
     
 }
