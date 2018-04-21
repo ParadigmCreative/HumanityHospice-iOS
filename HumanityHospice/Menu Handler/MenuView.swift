@@ -23,13 +23,14 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     @IBOutlet weak var mainAreaView: UIView!
     @IBOutlet weak var exitAreaView: UIView!
     
+    
     // MARK: - TableView
+    var items = ["My Journal", "Encouragement Board", "My Photo Album", "Create Family Account", "Invite People", "Sign Out", "About Humanity Hospice"]
     @IBOutlet weak var listingTableView: UITableView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
     
-    var items = ["My Journal", "Encouragement Board", "My Photo Album", "Create Family Account", "Invite People", "Sigh Out", "About Humanity Hospice"]
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = MenuTableViewCell(style: .default, reuseIdentifier: "cell")
         cell.textLabel?.text = items[indexPath.row]
@@ -38,6 +39,15 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+    }
+    
+    func setupTable() {
+        self.listingTableView.delegate = self
+        self.listingTableView.dataSource = self
+        
+        self.listingTableView.separatorStyle = .none
+        self.listingTableView.tableFooterView = UIView()
+        self.listingTableView.isScrollEnabled = false
     }
     
     // MARK: - MenuHandler Delegate

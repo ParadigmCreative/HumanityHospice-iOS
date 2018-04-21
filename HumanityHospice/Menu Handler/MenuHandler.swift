@@ -20,34 +20,57 @@ class MenuHandler {
     }
     
     static func openMenu(vc: UIViewController) {
+        staticMenu?.setupTable()
         UIApplication.shared.keyWindow?.addSubview(staticMenu!)
-        staticMenu?.snp.removeConstraints()
-        staticMenu!.snp.makeConstraints({ (make) in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-        })
+        staticMenu?.frame = CGRect(x: 0 - UIScreen.main.bounds.width,
+                                   y: 0,
+                                   width: UIScreen.main.bounds.width,
+                                   height: UIScreen.main.bounds.height)
+      
         
-        staticMenu?.mainAreaView.snp.removeConstraints()
-        staticMenu?.mainAreaView.snp.makeConstraints({ (make) in
-            make.top.equalToSuperview()
-            make.left.equalToSuperview()
-            make.bottom.equalToSuperview()
-            let width = UIScreen.main.bounds.width
-            make.width.equalTo(0.75 * width)
-        })
+        UIView.animate(withDuration: 0.2, animations: {
+            staticMenu?.frame = CGRect(x: 0,
+                                       y: 0,
+                                       width: UIScreen.main.bounds.width,
+                                       height: UIScreen.main.bounds.height)
+        }) { (done) in
+            staticMenu?.snp.removeConstraints()
+            staticMenu!.snp.makeConstraints({ (make) in
+                make.top.equalToSuperview()
+                make.bottom.equalToSuperview()
+                make.left.equalToSuperview()
+                make.right.equalToSuperview()
+
+                staticMenu?.mainAreaView.snp.removeConstraints()
+                staticMenu?.mainAreaView.snp.makeConstraints({ (make) in
+                    make.top.equalToSuperview()
+                    make.left.equalToSuperview()
+                    make.bottom.equalToSuperview()
+                    let width = UIScreen.main.bounds.width
+                    make.width.equalTo(0.75 * width)
+                })
+            })
+
+        }
         
         staticMenu?.mainAreaView.layer.shadowColor = UIColor.black.cgColor
         staticMenu?.mainAreaView.layer.shadowOffset = CGSize(width: 5, height: 2)
         staticMenu?.mainAreaView.layer.shadowOpacity = 0.5
         staticMenu?.mainAreaView.layer.shadowRadius = 5.0
         staticMenu?.mainAreaView.layer.masksToBounds = false
+        
     }
     
     static func closeMenu() {
-        staticMenu!.snp.removeConstraints()
-        staticMenu!.removeFromSuperview()
+        UIView.animate(withDuration: 0.2, animations: {
+            staticMenu?.frame = CGRect(x: 0 - UIScreen.main.bounds.width,
+                                       y: 0,
+                                       width: UIScreen.main.bounds.width,
+                                       height: UIScreen.main.bounds.height)
+        }) { (done) in
+            staticMenu?.snp.removeConstraints()
+            staticMenu?.removeFromSuperview()
+        }
     }
     
 }

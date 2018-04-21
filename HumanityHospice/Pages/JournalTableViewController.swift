@@ -89,13 +89,7 @@ class JournalTableViewController: UITableViewController {
     var menuIsShowing: Bool = false
     @IBAction func toggleMenu(_ sender: Any) {
         
-        if menuIsShowing {
-            MenuHandler.closeMenu()
-            menuIsShowing = false
-        } else {
-            MenuHandler.openMenu(vc: self)
-            menuIsShowing = true
-        }
+        MenuHandler.openMenu(vc: self)
         
     }
 
