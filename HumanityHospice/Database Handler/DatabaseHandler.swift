@@ -52,12 +52,11 @@ class DatabaseHandler {
         case .Patient:
             let patient = user as! Patient
             userRef = ref.child("Patients").child(patient.id)
-            
             let data: [String : Any] = ["MetaData": ["firstName": patient.firstName,
                                                        "lastName": patient.lastName,
                                                        "DOB": patient.DOB ?? 0.0],
                                        "Nurse": patient.nurse,
-                                       "InviteCode": patient.inviteCode ?? "",
+                                       "InviteCode": patient.inviteCode,
                                        "FamilyID": patient.familyID ?? ""]
             dataToSend = data
         case .Family:
@@ -127,9 +126,10 @@ class DatabaseHandler {
     static func createAppUser(user: User) -> AppUser? {
         switch AppSettings.userType! {
         case .Patient:
+            let code = self.generateUserInviteCode()
             let appuser = Patient(id: user.uid,
                                   firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last,
-                                  DOB: nil, nurse: nil, inviteCode: nil, familyID: nil)
+                                  DOB: nil, nurse: nil, inviteCode: code, familyID: nil)
             return appuser
         case .Reader:
             let appuser = Reader(id: user.uid,
@@ -141,6 +141,20 @@ class DatabaseHandler {
             return nil
         }
     }
+    
+    private static func generateUserInviteCode() -> String {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let array = Array(alphabet)
+        var code = ""
+        for _ in 0..<6 {
+            let random = arc4random_uniform(26)
+            let letter = array[Int(random)]
+            code.append(letter)
+        }
+        
+        return code
+    }
+    
     
     enum UserType {
         case Staff
@@ -219,6 +233,10 @@ protocol AppUser {
     var lastName: String { get set }
 }
 
+protocol DatabaseObject {
+    var id: String { get set }
+}
+
 extension AppUser {
     func changeName(changingFirst: Bool, newName: String, completion: @escaping (Error?)->()) {
         let request = Auth.auth().currentUser?.createProfileChangeRequest()
@@ -235,10 +253,6 @@ extension AppUser {
             }
         })
     }
-}
-
-protocol DatabaseObject {
-    var id: String { get set }
 }
 
 
