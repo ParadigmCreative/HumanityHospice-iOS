@@ -8,12 +8,13 @@
 
 import Foundation
 import UIKit
+import DZNEmptyDataSet
 
 protocol MenuHandlerDelegate {
     func setBaseView(view: UIView)
 }
 
-class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerDelegate {
+class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     var isMenuShowing: Bool?
     
@@ -48,6 +49,8 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         self.listingTableView.separatorStyle = .none
         self.listingTableView.tableFooterView = UIView()
         self.listingTableView.isScrollEnabled = false
+        self.listingTableView.emptyDataSetSource = self
+        self.listingTableView.emptyDataSetDelegate = self
     }
     
     // MARK: - MenuHandler Delegate

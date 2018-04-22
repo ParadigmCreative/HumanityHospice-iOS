@@ -53,12 +53,12 @@ class DatabaseHandler {
             let patient = user as! Patient
             userRef = ref.child("Patients").child(patient.id)
             
-            let data: [String: Any] = ["MetaData": ["firstName": patient.firstName,
-                                                    "lastName": patient.lastName,
-                                                    "DOB": patient.DOB],
+            let data: [String : Any] = ["MetaData": ["firstName": patient.firstName,
+                                                       "lastName": patient.lastName,
+                                                       "DOB": patient.DOB ?? 0.0],
                                        "Nurse": patient.nurse,
-                                       "InviteCode": patient.inviteCode,
-                                       "FamilyID": patient.familyID]
+                                       "InviteCode": patient.inviteCode ?? "",
+                                       "FamilyID": patient.familyID ?? ""]
             dataToSend = data
         case .Family:
             let familyMember = user as! Family
@@ -124,6 +124,24 @@ class DatabaseHandler {
         
     }
     
+    static func createAppUser(user: User) -> AppUser? {
+        switch AppSettings.userType! {
+        case .Patient:
+            let appuser = Patient(id: user.uid,
+                                  firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last,
+                                  DOB: nil, nurse: nil, inviteCode: nil, familyID: nil)
+            return appuser
+        case .Reader:
+            let appuser = Reader(id: user.uid,
+                                 firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last,
+                                 readingFrom: nil, patients: nil)
+            return appuser
+        default:
+            print("Error")
+            return nil
+        }
+    }
+    
     enum UserType {
         case Staff
         case Patient
@@ -142,10 +160,10 @@ class DatabaseHandler {
         var id: String
         var firstName: String
         var lastName: String
-        var DOB: TimeInterval
-        var nurse: Staff
-        let inviteCode: String
-        let familyID: String
+        var DOB: TimeInterval?
+        var nurse: Staff?
+        let inviteCode: String?
+        let familyID: String?
     }
     
     struct Family: AppUser {
@@ -159,8 +177,8 @@ class DatabaseHandler {
         var id: String
         var firstName: String
         var lastName: String
-        var readingFrom: Patient
-        var patients: [Patient]
+        var readingFrom: Patient?
+        var patients: [Patient]?
     }
     
     struct Journal: DatabaseObject {

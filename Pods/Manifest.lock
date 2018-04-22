@@ -1,4 +1,5 @@
 PODS:
+  - DZNEmptyDataSet (1.8.1)
   - Firebase/Auth (4.0.3):
     - Firebase/Core
     - FirebaseAuth (= 4.0.0)
@@ -48,6 +49,7 @@ PODS:
   - SnapKit (4.0.0)
 
 DEPENDENCIES:
+  - DZNEmptyDataSet
   - Firebase/Auth
   - Firebase/Database
   - Firebase/Storage
@@ -56,6 +58,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - DZNEmptyDataSet
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -70,6 +73,7 @@ SPEC REPOS:
     - SnapKit
 
 SPEC CHECKSUMS:
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Firebase: 9e33fdfbca37cab635c693883caa90a4475b842b
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
@@ -83,6 +87,6 @@ SPEC CHECKSUMS:
   RealmSwift: 8183818515471b01a99abdd2970f8e4fd52b6f4a
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: a68b85e87eb9f9c758424a5f82229f63e8112f6c
+PODFILE CHECKSUM: 0a0b10668b6bf335969d91a563112c8d9e291da0
 
 COCOAPODS: 1.5.0

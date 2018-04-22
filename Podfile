@@ -12,6 +12,7 @@ pod 'Firebase/Auth'
 pod 'Firebase/Storage'
 pod 'RealmSwift'
 pod 'SnapKit', '~> 4.0'
+pod 'DZNEmptyDataSet'
 
   target 'HumanityHospiceTests' do
     inherit! :search_paths

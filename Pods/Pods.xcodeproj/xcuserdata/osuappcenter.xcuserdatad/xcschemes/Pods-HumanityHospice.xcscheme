@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E54DE6C6D0CADE5A0A0481ECE8F4561E"
+               BlueprintIdentifier = "E6E7AE0C8A93DDD9112A028BC6765770"
                BuildableName = "Pods_HumanityHospice.framework"
                BlueprintName = "Pods-HumanityHospice"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E54DE6C6D0CADE5A0A0481ECE8F4561E"
+            BlueprintIdentifier = "E6E7AE0C8A93DDD9112A028BC6765770"
             BuildableName = "Pods_HumanityHospice.framework"
             BlueprintName = "Pods-HumanityHospice"
             ReferencedContainer = "container:Pods.xcodeproj">

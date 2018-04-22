@@ -20,6 +20,12 @@
 		A5BBD4482086EC3700B80BD0 /* HumanityHospiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BBD4472086EC3700B80BD0 /* HumanityHospiceTests.swift */; };
 		A5BBD4532086EC3700B80BD0 /* HumanityHospiceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BBD4522086EC3700B80BD0 /* HumanityHospiceUITests.swift */; };
 		A5D00665208938C30079CD49 /* MenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D00664208938C30079CD49 /* MenuHandler.swift */; };
+		A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D3F96C208D0D130079B713 /* LandingViewController.swift */; };
+		A5D3F970208D18540079B713 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D3F96F208D18540079B713 /* LoginViewController.swift */; };
+		A5D3F972208D23470079B713 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D3F971208D23470079B713 /* Utilities.swift */; };
+		A5D3F974208D26BA0079B713 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D3F973208D26BA0079B713 /* SignUpViewController.swift */; };
+		A5D3F976208D2E8C0079B713 /* CompleteSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D3F975208D2E8C0079B713 /* CompleteSignUpViewController.swift */; };
+		A5D3F978208D31870079B713 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D3F977208D31870079B713 /* AppSettings.swift */; };
 		A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C1220892CA00084BA9B /* MenuView.swift */; };
 		A5FC5C1520892FA60084BA9B /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5FC5C1420892FA60084BA9B /* Menu.xib */; };
 		A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */; };
@@ -66,6 +72,12 @@
 		A5BBD4522086EC3700B80BD0 /* HumanityHospiceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanityHospiceUITests.swift; sourceTree = "<group>"; };
 		A5BBD4542086EC3700B80BD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5D00664208938C30079CD49 /* MenuHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHandler.swift; sourceTree = "<group>"; };
+		A5D3F96C208D0D130079B713 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
+		A5D3F96F208D18540079B713 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A5D3F971208D23470079B713 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		A5D3F973208D26BA0079B713 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		A5D3F975208D2E8C0079B713 /* CompleteSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteSignUpViewController.swift; sourceTree = "<group>"; };
+		A5D3F977208D31870079B713 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		A5FC5C1220892CA00084BA9B /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		A5FC5C1420892FA60084BA9B /* Menu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
 		A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -120,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */,
+				A5D3F977208D31870079B713 /* AppSettings.swift */,
 			);
 			path = "Database Handler";
 			sourceTree = "<group>";
@@ -150,11 +163,13 @@
 			isa = PBXGroup;
 			children = (
 				A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */,
-				A5BBD4342086EC3700B80BD0 /* ViewController.swift */,
-				A5FC5C1620892FAB0084BA9B /* Menu Handler */,
-				A57CC3F120881C3000C9D776 /* Database Handler */,
-				A5FC5C1B208936830084BA9B /* Pages */,
 				A5BBD4362086EC3700B80BD0 /* Main.storyboard */,
+				A5BBD4342086EC3700B80BD0 /* ViewController.swift */,
+				A5D3F971208D23470079B713 /* Utilities.swift */,
+				A5D3F96E208D0D1C0079B713 /* Landing Process */,
+				A57CC3F120881C3000C9D776 /* Database Handler */,
+				A5FC5C1620892FAB0084BA9B /* Menu Handler */,
+				A5FC5C1B208936830084BA9B /* Pages */,
 				A5BBD4392086EC3700B80BD0 /* Assets.xcassets */,
 				A5BBD43B2086EC3700B80BD0 /* LaunchScreen.storyboard */,
 				A5BBD43E2086EC3700B80BD0 /* Info.plist */,
@@ -179,6 +194,17 @@
 				A5BBD4542086EC3700B80BD0 /* Info.plist */,
 			);
 			path = HumanityHospiceUITests;
+			sourceTree = "<group>";
+		};
+		A5D3F96E208D0D1C0079B713 /* Landing Process */ = {
+			isa = PBXGroup;
+			children = (
+				A5D3F96C208D0D130079B713 /* LandingViewController.swift */,
+				A5D3F96F208D18540079B713 /* LoginViewController.swift */,
+				A5D3F973208D26BA0079B713 /* SignUpViewController.swift */,
+				A5D3F975208D2E8C0079B713 /* CompleteSignUpViewController.swift */,
+			);
+			path = "Landing Process";
 			sourceTree = "<group>";
 		};
 		A5FC5C1620892FAB0084BA9B /* Menu Handler */ = {
@@ -407,6 +433,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HumanityHospice/Pods-HumanityHospice-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -415,6 +442,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -433,12 +461,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5D3F978208D31870079B713 /* AppSettings.swift in Sources */,
+				A5D3F974208D26BA0079B713 /* SignUpViewController.swift in Sources */,
+				A5D3F970208D18540079B713 /* LoginViewController.swift in Sources */,
 				A5D00665208938C30079CD49 /* MenuHandler.swift in Sources */,
 				A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */,
+				A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */,
 				A5BBD4352086EC3700B80BD0 /* ViewController.swift in Sources */,
 				A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */,
+				A5D3F976208D2E8C0079B713 /* CompleteSignUpViewController.swift in Sources */,
 				A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */,
 				A5FC5C1A2089367D0084BA9B /* JournalTableViewController.swift in Sources */,
+				A5D3F972208D23470079B713 /* Utilities.swift in Sources */,
 				A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -607,6 +641,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4VDXY7JL33;
 				INFOPLIST_FILE = HumanityHospice/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospice;
@@ -622,6 +657,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4VDXY7JL33;
 				INFOPLIST_FILE = HumanityHospice/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospice;
