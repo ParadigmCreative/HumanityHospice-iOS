@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LandingViewController: UIViewController {
     
@@ -15,6 +16,14 @@ class LandingViewController: UIViewController {
 
         masterSetup()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if Auth.auth().currentUser != nil {
+            if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
+                self.present(tabbar, animated: true, completion: nil)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -80,33 +80,54 @@ class CompleteSignUpViewController: UIViewController {
     }
     
     @IBAction func signUp(_ sender: Any) {
+        self.showIndicator()
         verifyTextFields { (email, pass) in
+            // Sign up user
             DatabaseHandler.signUp(email: email, password: pass, completion: { (user, error) in
                 if error != nil {
+                    // show alert if error isn't nil
                     self.showAlert(title: "Hmm...", message: error!.localizedDescription)
+                    self.closeIndicator()
                 } else {
                     if user != nil {
+                        // set current user to user handed back from call
                         AppSettings.currentFBUser = user
+                        
+                        // make profile changes to user
                         let changes = user?.createProfileChangeRequest()
                         changes?.displayName = "\(AppSettings.signUpName!.first) \(AppSettings.signUpName!.last)"
                         changes?.commitChanges(completion: { (error) in
                             if error != nil {
+                                
+                                // show alert if there was an error
                                 self.showAlert(title: "Hmm...", message: error!.localizedDescription)
+                                self.closeIndicator()
                             } else {
                                 print("New User:", user!.uid, user!.email, user!.displayName)
+                                
+                                // create app user instance
                                 let appuser = DatabaseHandler.createAppUser(user: user!)
-                                DatabaseHandler.createUserReference(type: AppSettings.userType!,
-                                                                    user: appuser!,
-                                                                    completion: { (error, done) in
-                                                                        if error != nil {
-                                                                            self.showAlert(title: "Hmm...", message: error!.localizedDescription)
-                                                                        } else {
-                                                                            print("Created new user:", appuser!.firstName)
-                                                                        }
+                                
+                                // create DB reference with user data
+                                DatabaseHandler.createUserReference(type: AppSettings.userType!, user: appuser!, completion: { (error, done) in
+                                    if error != nil {
+                                        self.showAlert(title: "Hmm...", message: error!.localizedDescription)
+                                        self.closeIndicator()
+                                    } else {
+                                        print("Created new user:", appuser!.firstName)
+                                        
+                                        // if creation is successful, set
+                                        AppSettings.currentAppUser = appuser
+                                        
+                                        // Present the Journal View
+                                        self.closeIndicator()
+                                        self.moveToJournal()
+                                    }
                                 })
                             }
                         })
                     } else {
+                        self.closeIndicator()
                         self.showAlert(title: "Hmm...", message: "Something happend. Please try again later")
                     }
                 }
@@ -115,11 +136,11 @@ class CompleteSignUpViewController: UIViewController {
     }
     
     
-    
-    
-    
-    
-    
+    func moveToJournal() {
+        if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
+           self.present(tabbar, animated: true, completion: nil)
+        }
+    }
     
 
     /*

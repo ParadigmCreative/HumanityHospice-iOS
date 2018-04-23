@@ -36,6 +36,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="My Journal" id="MZU-4Q-gOw">
                         <barButtonItem key="leftBarButtonItem" image="Menu" id="Rmt-4U-DhY">
+                            <color key="tintColor" red="0.46050292250000002" green="0.44724994899999998" blue="0.75665760039999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="toggleMenu:" destination="eSP-XQ-a0m" id="2DN-GD-elM"/>
                             </connections>
@@ -312,7 +313,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ztc-5z-Gyj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1793" y="-688"/>
+            <point key="canvasLocation" x="1793" y="-689"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Py1-fy-5fl">
@@ -393,7 +394,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="ows-cn-A7N">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="eZH-it-wbF" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="mainTabBar" automaticallyAdjustsScrollViewInsets="NO" id="eZH-it-wbF" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FeG-b1-5Ug">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -407,7 +408,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Un-2l-3we" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1073" y="111"/>
+            <point key="canvasLocation" x="938" y="134"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1ht-8T-9P4">
