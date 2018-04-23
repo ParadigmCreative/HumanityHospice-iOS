@@ -11,11 +11,11 @@ import UIKit
 
 class Utilities {
     private static var indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
-    public static func showActivityIndicator(vc: UIViewController) {
+    public static func showActivityIndicator(view: UIView) {
         self.indicator.color = #colorLiteral(red: 0.4605029225, green: 0.447249949, blue: 0.7566576004, alpha: 1)
-        self.indicator.center = vc.view.center
+        self.indicator.center = view.center
         self.indicator.hidesWhenStopped = true
-        vc.view.addSubview(indicator)
+        view.addSubview(indicator)
         self.indicator.startAnimating()
     }
     
@@ -38,11 +38,20 @@ extension UIViewController {
     }
     
     func showIndicator() {
-        Utilities.showActivityIndicator(vc: self)
+        Utilities.showActivityIndicator(view: self.view)
     }
 
     func closeIndicator() {
         Utilities.closeActivityIndicator()
+    }
+    
+    func beginSignOutProcess() {
+        if let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "landingNav") as? UINavigationController {
+            self.present(nav, animated: true, completion: {
+                DatabaseHandler
+                Utilities.closeActivityIndicator()
+            })
+        }
     }
     
 }

@@ -12,9 +12,11 @@ import DZNEmptyDataSet
 
 protocol MenuHandlerDelegate {
     func setBaseView(view: UIView)
+    func setHandingController(vc: UIViewController)
 }
 
 class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+    
     
     var isMenuShowing: Bool?
     
@@ -39,6 +41,25 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selected = items[indexPath.row]
+        
+        if selected == items[0] {
+            // Journal
+        } else if selected == items[1] {
+            // Board
+        } else if selected == items[2] {
+            // Album
+        } else if selected == items[3] {
+            // Create Fam Acct
+        } else if selected == items[4] {
+            // Invite
+        } else if selected == items[5] {
+            // Sign Out
+            Utilities.showActivityIndicator(view: self)
+            
+        } else if selected == items[6] {
+            // About
+        }
         
     }
     
@@ -53,10 +74,20 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         self.listingTableView.emptyDataSetDelegate = self
     }
     
+    func setupHeader() {
+        nameLabel.text = "\(AppSettings.currentAppUser?.firstName) \(AppSettings.currentAppUser?.lastName)"
+        emailLabel.text = AppSettings.currentFBUser?.email
+    }
+    
     // MARK: - MenuHandler Delegate
     var baseView: UIView?
     func setBaseView(view: UIView) {
         baseView = view
+    }
+    
+    var handlingController: UIViewController?
+    func setHandingController(vc: UIViewController) {
+        self.handlingController = vc
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

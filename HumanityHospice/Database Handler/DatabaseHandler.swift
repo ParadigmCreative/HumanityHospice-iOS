@@ -12,6 +12,12 @@ import Firebase
 class DatabaseHandler {
     
     // AUTH
+    /// Signs in a user using Firebase/Auth
+    ///
+    /// - Parameters:
+    ///   - email: Email address User used to sign up
+    ///   - password: Password user used to sign up
+    ///   - completion: completion hands back optional error, and optional user
     static func signIn(email: String, password: String, completion: @escaping (User?, Error?)->()) {
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             if error != nil {
@@ -19,6 +25,76 @@ class DatabaseHandler {
             } else {
                 if user != nil {
                     completion(user, nil)
+                }
+            }
+        }
+    }
+    
+    /// Iterates through an array of possible Database headers, finds the header that has a child with the supplied user uid, sets the AppSettings.userType, and calls for a data pull at the specified location
+    ///
+    /// - Parameters:
+    ///   - user: The current Firebase user
+    static func fetchData(for user: User) {
+        let ref = Database.database().reference()
+        let paths = ["Patients", "Staff", "Readers", "Family"]
+        var hasChild = false
+        var selectedPath: DatabaseReference?
+        
+        for path in paths {
+            let userPath = ref.child(path).child(user.uid)
+            checkLocation(ref: userPath, completion: { (isPath) in
+                if isPath {
+                    hasChild = true
+                    selectedPath = userPath
+                    let type = getType(type: path)
+                    AppSettings.userType = type
+                    pullDataFrom(kind: path)
+                }
+            })
+        }
+    }
+    
+    /// Checks each location supplied to see if the location contains a child with the current Firebase user UID
+    ///
+    /// - Parameters:
+    ///   - ref: The reference to check
+    ///   - completion: Hands back true
+    private static func checkLocation(ref: DatabaseReference, completion: @escaping (Bool)->()) {
+        ref.observeSingleEvent(of: .value) { (snap) in
+            if snap.childrenCount > 0 {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
+    private static func pullDataFrom(kind: String) {
+        Database.database().reference().child(kind).child(AppSettings.currentFBUser!.uid).observeSingleEvent(of: .value) { (snapshot) in
+            if let data = snapshot.value as? [String:Any] {
+                switch AppSettings.userType! {
+                case .Patient:
+                    let familyID = data["FamilyID"] as! String
+                    let inviteCode = data["InviteCode"] as! String
+                    let meta = data["MetaData"] as! [String: Any]
+                    let DOB = meta["DOB"] as! TimeInterval
+                    let first = meta["firstName"] as! String
+                    let last = meta["lastName"] as! String
+                    
+                    let user = Patient(id: AppSettings.currentFBUser!.uid,
+                                       firstName: first, lastName: last, DOB: DOB, nurse: nil,
+                                       inviteCode: inviteCode, familyID: familyID)
+                    AppSettings.currentAppUser = user
+                case .Reader:
+                    let readingFrom = data["ReadingFrom"] as! String
+                    let meta = data["MetaData"] as! [String: Any]
+                    let first = meta["firstName"] as! String
+                    let last = meta["lastName"] as! String
+                    let user = Reader(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, readingFrom: readingFrom, patients: nil)
+                    AppSettings.currentAppUser = user
+                    
+                default:
+                    break
                 }
             }
         }
@@ -72,8 +148,8 @@ class DatabaseHandler {
             userRef = ref.child("Readers").child(reader.id)
             
             let data: [String: Any] = ["MetaData": ["firstName": reader.firstName,
-                                     "lastName": reader.lastName],
-                        "ReadingFrom": reader.readingFrom]
+                                                    "lastName": reader.lastName],
+                                       "ReadingFrom": reader.readingFrom]
             
             dataToSend = data
             
@@ -134,7 +210,7 @@ class DatabaseHandler {
         case .Reader:
             let appuser = Reader(id: user.uid,
                                  firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last,
-                                 readingFrom: nil, patients: nil)
+                                 readingFrom: "", patients: nil)
             return appuser
         default:
             print("Error")
@@ -161,6 +237,21 @@ class DatabaseHandler {
         case Patient
         case Family
         case Reader
+    }
+    
+    static func getType(type: String) -> UserType {
+        switch type {
+        case "Staff":
+            return .Staff
+        case "Patient":
+            return .Patient
+        case "Family":
+            return .Family
+        case "Reader":
+            return .Reader
+        default:
+            return .Staff
+        }
     }
     
     struct Staff: AppUser {
@@ -191,7 +282,7 @@ class DatabaseHandler {
         var id: String
         var firstName: String
         var lastName: String
-        var readingFrom: Patient?
+        var readingFrom: String
         var patients: [Patient]?
     }
     

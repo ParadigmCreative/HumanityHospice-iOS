@@ -18,7 +18,6 @@ class JournalTableViewController: UITableViewController {
 
         MenuHandler.initialize(vc: self)
         menuDelegate = MenuHandler.staticMenu
-        menuDelegate?.setBaseView(view: self.view)
         
     }
 
