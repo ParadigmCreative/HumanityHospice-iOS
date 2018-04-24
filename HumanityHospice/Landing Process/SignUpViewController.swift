@@ -8,8 +8,9 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDelegate {
 
+    // MARK: - View
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,10 +23,15 @@ class SignUpViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Outlets
     @IBOutlet weak var firstName: UITextField!
     @IBOutlet weak var lastName: UITextField!
     @IBOutlet weak var patientButton: UIButton!
     @IBOutlet weak var friendButton: UIButton!
+    
+    @IBOutlet var inviteCodePopUp: InviteCodePopUp!
+    
+    // MARK: - Setup
     
     func masterSetup() {
         setupButtons()
@@ -41,6 +47,8 @@ class SignUpViewController: UIViewController {
         firstName.setupTextField()
         lastName.setupTextField()
     }
+    
+    // MARK: - Class Functionality
     
     func verifyTextFields(completion: (String, String)->()) {
         
@@ -76,21 +84,84 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func friendSignUp(_ sender: Any) {
-        AppSettings.userType = DatabaseHandler.UserType.Reader
+        verifyTextFields { (first, last) in
+            
+            let name = (first, last)
+            AppSettings.signUpName = name
+            AppSettings.userType = DatabaseHandler.UserType.Reader
+            
+        }
     }
     
     
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - Invite Code
+    private func showPopUp() {
+        inviteCodePopUp.initialize()
+        self.view.addSubview(inviteCodePopUp)
+        inviteCodePopUp.center = self.view.center
+        inviteCodePopUp.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.inviteCodePopUp.transform = CGAffineTransform.identity
+        })
     }
-    */
+    
+    private func closePopup() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.inviteCodePopUp.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        }) { (done) in
+            self.inviteCodePopUp.removeFromSuperview()
+        }
+    }
+    
+    func invalidCode() {
+        closePopup()
+    }
+    
+    func validCode(code: String) {
+        Utilities.showActivityIndicator(view: self.view)
+        // Query DB
+        DatabaseHandler.checkDBForInviteCode(code: code) { (success, code) in
+            if success {
+                if let code = code {
+                    // show success
+                    self.inviteCodePopUp.showSuccess()
+                    // push to next screen
+                }
+            } else {
+                // show failure
+                // set TF as first responder
+            }
+        }
+    }
+    
+    func completed() {
+        closePopup()
+    }
+    
+    
+   
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

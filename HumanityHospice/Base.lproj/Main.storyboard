@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="per-ut-bHQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="per-ut-bHQ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -227,14 +227,63 @@
                     <connections>
                         <outlet property="firstName" destination="G4o-kE-V4q" id="maj-Sd-K4F"/>
                         <outlet property="friendButton" destination="nfw-9g-pw8" id="9Hf-Mb-BbI"/>
+                        <outlet property="inviteCodePopUp" destination="cls-4s-H6A" id="rfL-Gb-TfA"/>
                         <outlet property="lastName" destination="eop-SR-xgH" id="bAq-8J-rfP"/>
                         <outlet property="patientButton" destination="dmx-AQ-io6" id="pIq-dx-URs"/>
                         <segue destination="ntU-YH-aJs" kind="show" identifier="showSignUp" id="KCD-ZJ-a8O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t86-xo-74d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="cls-4s-H6A" customClass="InviteCodePopUp" customModule="HumanityHospice" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="298" height="203"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invite Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6I-Hk-ifU">
+                            <rect key="frame" x="106" y="35" width="86.5" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ex: ABCDE" textAlignment="center" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Hy4-9x-LBK">
+                            <rect key="frame" x="99" y="86" width="100" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="aW0-Ka-t1H"/>
+                                <constraint firstAttribute="width" constant="100" id="u03-7e-08J"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vE0-VD-fnR">
+                            <rect key="frame" x="61.5" y="153" width="175" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="4Yu-lu-VQi"/>
+                                <constraint firstAttribute="width" constant="175" id="LBx-Q5-POQ"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="submit:" destination="cls-4s-H6A" eventType="touchUpInside" id="7OX-bt-7us"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.41568627450980394" green="0.40392156862745099" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="vE0-VD-fnR" firstAttribute="centerX" secondItem="cls-4s-H6A" secondAttribute="centerX" id="4Wo-3r-soz"/>
+                        <constraint firstItem="Hy4-9x-LBK" firstAttribute="top" secondItem="d6I-Hk-ifU" secondAttribute="bottom" constant="30" id="Bj7-30-Oqw"/>
+                        <constraint firstItem="Hy4-9x-LBK" firstAttribute="centerX" secondItem="cls-4s-H6A" secondAttribute="centerX" id="EXn-tx-uMa"/>
+                        <constraint firstItem="d6I-Hk-ifU" firstAttribute="top" secondItem="vHC-dB-DoG" secondAttribute="top" constant="35" id="UBu-7w-mKw"/>
+                        <constraint firstItem="d6I-Hk-ifU" firstAttribute="centerX" secondItem="cls-4s-H6A" secondAttribute="centerX" id="dJr-fM-I2h"/>
+                        <constraint firstItem="vHC-dB-DoG" firstAttribute="bottom" secondItem="vE0-VD-fnR" secondAttribute="bottom" constant="20" id="e65-IM-jOi"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="vHC-dB-DoG"/>
+                    <connections>
+                        <outlet property="codeTF" destination="Hy4-9x-LBK" id="ES2-kD-QAi"/>
+                        <outlet property="headerLabel" destination="d6I-Hk-ifU" id="5TG-Ge-b4g"/>
+                        <outlet property="submitButton" destination="vE0-VD-fnR" id="jz9-qa-cwG"/>
+                    </connections>
+                </view>
             </objects>
-            <point key="canvasLocation" x="1073" y="-1128"/>
+            <point key="canvasLocation" x="1073" y="-948"/>
         </scene>
         <!--Complete Sign Up View Controller-->
         <scene sceneID="QDm-9g-w3g">

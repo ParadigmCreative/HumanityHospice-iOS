@@ -243,6 +243,20 @@ class DatabaseHandler {
         return code
     }
     
+    static func checkDBForInviteCode(code: String, completion: @escaping (Bool, String?)->()) {
+        let ref = Database.database().reference()
+        ref.child("InviteCodes").child(code).observeSingleEvent(of: .value) { (snap) in
+            if snap.hasChildren() {
+                if let data = snap.value as? [String: Any] {
+                    let patient = data["patient"] as! String
+                    completion(true, patient)
+                }
+            } else {
+                completion(false, nil)
+            }
+        }
+    }
+    
     
     enum UserType {
         case Staff
