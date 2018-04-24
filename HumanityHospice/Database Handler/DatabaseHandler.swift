@@ -112,6 +112,18 @@ class DatabaseHandler {
         }
     }
     
+    static func signOut() {
+        do {
+            try Auth.auth().signOut()
+            while Auth.auth().currentUser != nil {
+                print("Waiting to signout")
+            }
+            AppSettings.clearAppSettings()
+        } catch  {
+            print(error.localizedDescription)
+        }
+    }
+    
     // DATABASE
     /// Creates the database reference to the newly created user
     ///

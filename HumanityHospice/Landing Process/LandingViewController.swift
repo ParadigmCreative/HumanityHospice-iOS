@@ -22,9 +22,7 @@ class LandingViewController: UIViewController {
         if Auth.auth().currentUser != nil {
             AppSettings.currentFBUser = Auth.auth().currentUser
             if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
-                DatabaseHandler.fetchData(for: AppSettings.currentFBUser!, completion: { (user) in
-                    print(user)
-                })
+                DatabaseHandler.fetchData(for: AppSettings.currentFBUser!)
                 self.present(tabbar, animated: true, completion: nil)
             }
         }

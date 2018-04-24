@@ -56,7 +56,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         } else if selected == items[5] {
             // Sign Out
             Utilities.showActivityIndicator(view: self)
-            
+            handlingController?.beginSignOutProcess()
         } else if selected == items[6] {
             // About
         }

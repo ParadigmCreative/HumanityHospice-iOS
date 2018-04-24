@@ -46,9 +46,9 @@ extension UIViewController {
     }
     
     func beginSignOutProcess() {
+        DatabaseHandler.signOut()
         if let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "landingNav") as? UINavigationController {
             self.present(nav, animated: true, completion: {
-                DatabaseHandler
                 Utilities.closeActivityIndicator()
             })
         }

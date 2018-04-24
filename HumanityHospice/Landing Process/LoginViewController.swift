@@ -77,6 +77,11 @@ class LoginViewController: UIViewController {
                     self.showAlert(title: "Hmm...", message: error!.localizedDescription)
                 } else {
                     print("Login Successful", user!.email)
+                    DatabaseHandler.fetchData(for: user!)
+                    let tabbar = UIStoryboard(name: "Main", bundle: nil)
+                    if let tabbar = tabbar.instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
+                        self.present(tabbar, animated: true, completion: nil)
+                    }
                 }
             })
         }
