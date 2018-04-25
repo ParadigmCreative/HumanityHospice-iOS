@@ -16,10 +16,10 @@ class MenuHandler {
     static func initialize(vc: UIViewController) {
         if let menu = Bundle.main.loadNibNamed("Menu", owner: vc, options: nil)?.first as? MenuView {
             staticMenu = menu
+            staticMenu!.setupHeader()
+            staticMenu!.setHandingController(vc: vc)
+            staticMenu!.setBaseView(view: vc.view)
         }
-        staticMenu?.setupHeader()
-        staticMenu?.setHandingController(vc: vc)
-        staticMenu?.setBaseView(view: vc.view)
     }
     
     static func openMenu(vc: UIViewController) {

@@ -16,6 +16,7 @@ class JournalTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         MenuHandler.initialize(vc: self)
         menuDelegate = MenuHandler.staticMenu
         

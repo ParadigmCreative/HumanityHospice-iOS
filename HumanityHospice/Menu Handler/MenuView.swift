@@ -75,8 +75,13 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     }
     
     func setupHeader() {
-        nameLabel.text = "\(AppSettings.currentAppUser?.firstName) \(AppSettings.currentAppUser?.lastName)"
-        emailLabel.text = AppSettings.currentFBUser?.email
+        guard let email = AppSettings.currentFBUser?.email else { return }
+        emailLabel.text = email
+        guard let first = AppSettings.currentAppUser?.firstName else { return }
+        guard let last  = AppSettings.currentAppUser?.lastName else { return }
+
+        
+        nameLabel.text = "\(first) \(last)"
     }
     
     // MARK: - MenuHandler Delegate

@@ -54,7 +54,7 @@ class InviteCodePopUp: UIView, UITextFieldDelegate {
     }
     
     private func setupSuccessLabel() {
-        self.successLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 55))
+        self.successLabel = UILabel(frame: self.headerLabel.frame)
         self.successLabel?.adjustsFontSizeToFitWidth = true
         self.successLabel?.text = "Success!"
         
@@ -87,8 +87,8 @@ class InviteCodePopUp: UIView, UITextFieldDelegate {
             self.submitButton.isHidden = true
             
             UIView.animate(withDuration: 0.3, animations: {
-                self.addSubview(self.successLabel!)
                 self.setupSuccessLabel()
+                self.addSubview(self.successLabel!)
                 self.successLabel?.center = self.center
             }, completion: { (done) in
                 Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { (timer) in
@@ -115,7 +115,6 @@ class InviteCodePopUp: UIView, UITextFieldDelegate {
         
         return true
     }
-    
 }
 
 protocol InviteCodeDelegate {

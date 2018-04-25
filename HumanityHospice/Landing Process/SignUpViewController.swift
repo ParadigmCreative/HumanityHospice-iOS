@@ -85,7 +85,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     
     @IBAction func friendSignUp(_ sender: Any) {
         verifyTextFields { (first, last) in
-            
+            showPopUp()
             let name = (first, last)
             AppSettings.signUpName = name
             AppSettings.userType = DatabaseHandler.UserType.Reader
@@ -96,6 +96,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     
     // MARK: - Invite Code
     private func showPopUp() {
+        inviteCodePopUp.inviteCodeDelegate = self
         inviteCodePopUp.initialize()
         self.view.addSubview(inviteCodePopUp)
         inviteCodePopUp.center = self.view.center
@@ -118,29 +119,39 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
         closePopup()
     }
     
+    private var staticCode: String?
     func validCode(code: String) {
         Utilities.showActivityIndicator(view: self.view)
         // Query DB
         DatabaseHandler.checkDBForInviteCode(code: code) { (success, code) in
             if success {
                 if let code = code {
+                    self.staticCode = code
                     // show success
                     self.inviteCodePopUp.showSuccess()
-                    // push to next screen
                 }
             } else {
                 // show failure
-                // set TF as first responder
+                self.showAlert(title: "Hmm...", message: "That invite code doesn't exist.")
+                Utilities.closeActivityIndicator()
             }
         }
     }
     
     func completed() {
+        Utilities.closeActivityIndicator()
         closePopup()
+        self.performSegue(withIdentifier: "showSignUp", sender: staticCode!)
     }
     
-    
    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? CompleteSignUpViewController {
+            if let code = sender as? String {
+                vc.inviteCode = code
+            }
+        }
+    }
 
 }
 

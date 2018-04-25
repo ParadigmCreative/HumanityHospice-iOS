@@ -27,6 +27,8 @@ class CompleteSignUpViewController: UIViewController {
     @IBOutlet weak var reenterPasswordTF: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
     
+    var inviteCode: String?
+    
     func masterSetup() {
         setupButtons()
         setupTextfields()
