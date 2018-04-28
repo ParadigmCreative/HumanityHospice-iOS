@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +34,9 @@ class LoginViewController: UIViewController {
     }
     
     func setupTextField() {
+        emailTF.delegate = self
+        passwordTF.delegate = self
+        
         emailTF.setupTextField()
         passwordTF.setupTextField()
     }
@@ -88,22 +91,16 @@ class LoginViewController: UIViewController {
         }
     }
     
-    
-    
-    
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailTF {
+            passwordTF.becomeFirstResponder()
+        } else if textField == passwordTF {
+            textField.resignFirstResponder()
+        }
+        
+        return true
     }
-    */
+    
 
 }
 

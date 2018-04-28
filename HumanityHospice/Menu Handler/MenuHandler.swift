@@ -24,12 +24,12 @@ class MenuHandler {
     
     static func openMenu(vc: UIViewController) {
         staticMenu?.setupTable()
-        UIApplication.shared.keyWindow?.addSubview(staticMenu!)
+
         staticMenu?.frame = CGRect(x: 0 - UIScreen.main.bounds.width,
                                    y: 0,
                                    width: UIScreen.main.bounds.width,
                                    height: UIScreen.main.bounds.height)
-      
+        UIApplication.shared.keyWindow?.addSubview(staticMenu!)
         
         UIView.animate(withDuration: 0.2, animations: {
             staticMenu?.frame = CGRect(x: 0,
@@ -39,10 +39,7 @@ class MenuHandler {
         }) { (done) in
             staticMenu?.snp.removeConstraints()
             staticMenu!.snp.makeConstraints({ (make) in
-                make.top.equalToSuperview()
-                make.bottom.equalToSuperview()
-                make.left.equalToSuperview()
-                make.right.equalToSuperview()
+                make.edges.equalToSuperview()
 
                 staticMenu?.mainAreaView.snp.removeConstraints()
                 staticMenu?.mainAreaView.snp.makeConstraints({ (make) in

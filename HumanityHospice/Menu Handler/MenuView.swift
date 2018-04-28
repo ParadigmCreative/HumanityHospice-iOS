@@ -36,6 +36,9 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = MenuTableViewCell(style: .default, reuseIdentifier: "cell")
+        
+        // TODO: add icon for each cell
+        
         cell.textLabel?.text = items[indexPath.row]
         return cell
     }
