@@ -1,26 +1,23 @@
 //
-//  JournalTableViewController.swift
+//  EncourangementBoard.swift
 //  HumanityHospice
 //
-//  Created by OSU App Center on 4/19/18.
+//  Created by App Center on 4/30/18.
 //  Copyright © 2018 Oklahoma State University. All rights reserved.
 //
 
 import UIKit
 
-class JournalTableViewController: UITableViewController {
+class EncourangementBoard: UITableViewController {
 
-    
-    var menuDelegate: MenuHandlerDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        MenuHandler.initialize(vc: self)
-        menuDelegate = MenuHandler.staticMenu
-        setup()
-        
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,10 +25,7 @@ class JournalTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - General Setup
-    func setup() {
-        self.tabBarController?.tabBar.isHidden = true
-    }
+    
 
     // MARK: - Table view data source
 
@@ -90,29 +84,20 @@ class JournalTableViewController: UITableViewController {
     }
     */
 
-  
+    /*
     // MARK: - Navigation
-    var menuIsShowing: Bool = false
-    @IBAction func toggleMenu(_ sender: Any) {
-        
-        MenuHandler.openMenu(vc: self)
-        
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
     }
+    */
+    
+    @IBAction func toggleMenu(_ sender: Any) {
+        MenuHandler.openMenu(vc: self)
+    }
+    
+    
 
-    
-    
-    
-    
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -56,4 +56,18 @@ extension UIViewController {
     
 }
 
+extension UIFont {
+    func setFont() -> UIFont {
+        let systemFont = UIFont.systemFont(ofSize: 20.0, weight: UIFont.Weight.light)
+        let smallCapsDesc = systemFont.fontDescriptor.addingAttributes([
+            UIFontDescriptor.AttributeName.featureSettings: [
+                [UIFontDescriptor.FeatureKey.featureIdentifier: kLowerCaseType,
+                 UIFontDescriptor.FeatureKey.typeIdentifier: kUpperCaseSmallCapsSelector]]
+            ])
+        let font = UIFont(descriptor: smallCapsDesc, size: systemFont.pointSize)
+        
+        return font
+    }
+}
+
 

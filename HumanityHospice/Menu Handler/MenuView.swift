@@ -40,6 +40,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         // TODO: add icon for each cell
         
         cell.textLabel?.text = items[indexPath.row]
+        cell.textLabel?.font = UIFont().setFont()
         return cell
     }
     
@@ -48,22 +49,38 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         
         if selected == items[0] {
             // Journal
+            MenuHandler.tabbar?.selectedIndex = 0
+            MenuHandler.closeMenu()
         } else if selected == items[1] {
             // Board
+            MenuHandler.tabbar?.selectedIndex = 1
+            MenuHandler.closeMenu()
         } else if selected == items[2] {
             // Album
+            MenuHandler.tabbar?.selectedIndex = 2
+            MenuHandler.closeMenu()
         } else if selected == items[3] {
             // Create Fam Acct
+            MenuHandler.tabbar?.selectedIndex = 3
+            MenuHandler.closeMenu()
         } else if selected == items[4] {
             // Invite
+            MenuHandler.tabbar?.selectedIndex = 4
+            MenuHandler.closeMenu()
         } else if selected == items[5] {
             // Sign Out
             Utilities.showActivityIndicator(view: self)
             handlingController?.beginSignOutProcess()
         } else if selected == items[6] {
             // About
+            MenuHandler.tabbar?.selectedIndex = 6
+            MenuHandler.closeMenu()
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60.0
     }
     
     func setupTable() {
@@ -80,11 +97,13 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     func setupHeader() {
         guard let email = AppSettings.currentFBUser?.email else { return }
         emailLabel.text = email
+        emailLabel.font = UIFont().setFont()
+        
         guard let first = AppSettings.currentAppUser?.firstName else { return }
         guard let last  = AppSettings.currentAppUser?.lastName else { return }
 
-        
         nameLabel.text = "\(first) \(last)"
+        nameLabel.font = UIFont().setFont()
     }
     
     // MARK: - MenuHandler Delegate
