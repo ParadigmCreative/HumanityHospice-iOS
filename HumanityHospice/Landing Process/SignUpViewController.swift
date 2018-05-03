@@ -120,13 +120,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     }
     
     private var staticCode: String?
+    private var followingPID: String?
     func validCode(code: String) {
         Utilities.showActivityIndicator(view: self.view)
         // Query DB
-        DatabaseHandler.checkDBForInviteCode(code: code) { (success, code) in
+        DatabaseHandler.checkDBForInviteCode(code: code) { (success, pid) in
             if success {
-                if let code = code {
-                    self.staticCode = code
+                if let pid = pid {
+//                    self.staticCode = code
+                    self.followingPID = pid
                     // show success
                     self.inviteCodePopUp.showSuccess()
                 }
@@ -141,14 +143,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     func completed() {
         Utilities.closeActivityIndicator()
         closePopup()
-        self.performSegue(withIdentifier: "showSignUp", sender: staticCode!)
+        self.performSegue(withIdentifier: "showSignUp", sender: self)
     }
     
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? CompleteSignUpViewController {
-            if let code = sender as? String {
-                vc.inviteCode = code
+            if let vwc = sender as? SignUpViewController {
+                if let pid = vwc.followingPID {
+                    vc.pidToFollow = pid
+                }
             }
         }
     }

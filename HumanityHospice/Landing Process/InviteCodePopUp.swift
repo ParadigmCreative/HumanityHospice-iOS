@@ -100,7 +100,7 @@ class InviteCodePopUp: UIView, UITextFieldDelegate {
     
     @IBAction func submit(_ sender: Any) {
         if let text = codeTF.text {
-            if text.count == 5 {
+            if text.count == 6 {
                 inviteCodeDelegate?.validCode(code: text)
             } else {
                 inviteCodeDelegate?.invalidCode()

@@ -147,6 +147,9 @@ class DatabaseHandler {
                                        "InviteCode": patient.inviteCode,
                                        "FamilyID": patient.familyID ?? ""]
             dataToSend = data
+            
+            self.addInviteCode(code: patient.inviteCode!, uid: patient.id)
+            
         case .Family:
             let familyMember = user as! Family
             userRef = ref.child("Family").child(familyMember.id)
@@ -208,7 +211,14 @@ class DatabaseHandler {
                 completion(nil, true)
             }
         }
-        
+    }
+    
+    static func addUserToFollow(pid: String, userID: String) {
+        Database.database().reference().child("Readers").child(userID).child("Patients").child(pid).setValue(true)
+    }
+    
+    static func setCurrentPatientToReadFrom(patientID: String, followerID: String) {
+        Database.database().reference().child("Readers").child(followerID).child("ReadingFrom").setValue(patientID)
     }
     
     static func createAppUser(user: User) -> AppUser? {
@@ -243,6 +253,10 @@ class DatabaseHandler {
         return code
     }
     
+    static func addInviteCode(code: String, uid: String) {
+        Database.database().reference().child("InviteCodes").child(code).child("patient").setValue(uid)
+    }
+    
     static func checkDBForInviteCode(code: String, completion: @escaping (Bool, String?)->()) {
         let ref = Database.database().reference()
         ref.child("InviteCodes").child(code).observeSingleEvent(of: .value) { (snap) in
@@ -257,6 +271,83 @@ class DatabaseHandler {
         }
     }
     
+    // MARK: - Journal Posts
+    public static func getData(completion: @escaping ([Post])->()) {
+        let ref = Database.database().reference().child("Journals")
+        var userRef: DatabaseReference?
+        
+        switch AppSettings.userType! {
+        case .Patient:
+            if let user = AppSettings.currentAppUser as? Patient {
+                let uRef = ref.child(user.id)
+                userRef = uRef
+            }
+        case .Reader:
+            if let user = AppSettings.currentAppUser as? Reader {
+                let uref = ref.child(user.readingFrom)
+                userRef = uref
+            }
+        case .Family:
+            if let user = AppSettings.currentAppUser as? Family {
+                let uref = ref.child(user.patient.id)
+                userRef = uref
+            }
+        default:
+            print("User is staff")
+        }
+        
+        if userRef != nil {
+            userRef!.observeSingleEvent(of: .value) { (snap) in
+                if snap.childrenCount > 0 {
+                    if let postList = snap.children.allObjects as? [DataSnapshot] {
+                        
+                        var posts: [Post] = []
+                        for data in postList {
+                            if let post = data.value as? [String: AnyObject] {
+                                let timestamp = post["timestamp"] as! TimeInterval
+                                let poster = post["poster"] as! String
+                                let message = post["post"] as! String
+                                
+                                // get comments, if any
+                                var comments: [Post] = []
+                                if let commentList = post["comments"] as? [DataSnapshot] {
+                                    for commentData in commentList {
+                                        if let comment = commentData.value as? [String: AnyObject] {
+                                            let timestamp = comment["timestamp"] as! TimeInterval
+                                            let poster = comment["poster"] as! String
+                                            let message = comment["post"] as! String
+                                            
+                                            let newComment = Post(timestamp: timestamp, message: message, poster: poster, comments: nil, isComment: true)
+                                            comments.append(newComment)
+                                        }
+                                    }
+                                }
+                                
+                                let newPost = Post(timestamp: timestamp, message: message, poster: poster, comments: comments, isComment: false)
+                                posts.append(newPost)
+                            }
+                        }
+                        
+                        for post in posts {
+                            if post.comments != nil {
+                                post.comments!.sort(by: { (p1, p2) -> Bool in
+                                    return p1.timestamp > p2.timestamp
+                                })
+                            }
+                        }
+                        
+                        
+                        completion(posts)
+                        
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    
+    // MARK: - Object Stuff
     
     enum UserType {
         case Staff
@@ -317,14 +408,6 @@ class DatabaseHandler {
         var posts: [Post]
     }
     
-    struct Post: DatabaseObject {
-        var id: String
-        let poster: String
-        let timestamp: TimeInterval
-        let message: String
-        let comments: [Post]?
-        var isComment: Bool?
-    }
     
     struct Board: DatabaseObject {
         var id: String
@@ -369,6 +452,22 @@ extension AppUser {
                 completion(nil)
             }
         })
+    }
+}
+
+class Post {
+    let timestamp: TimeInterval
+    let message: String
+    let poster: String
+    var comments: [Post]?
+    var isComment: Bool?
+    
+    init(timestamp: TimeInterval, message: String, poster: String, comments: [Post]?, isComment: Bool?) {
+        self.timestamp = timestamp
+        self.message = message
+        self.poster = poster
+        self.comments = comments
+        self.isComment = isComment
     }
 }
 

@@ -19,5 +19,7 @@ class AppSettings {
     public static func clearAppSettings() {
         currentFBUser = nil
         currentAppUser = nil
+        signUpName = nil
+        userType = nil
     }
 }

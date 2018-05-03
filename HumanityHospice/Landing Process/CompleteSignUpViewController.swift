@@ -28,6 +28,7 @@ class CompleteSignUpViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     
     var inviteCode: String?
+    var pidToFollow: String?
     
     func masterSetup() {
         setupButtons()
@@ -117,6 +118,12 @@ class CompleteSignUpViewController: UIViewController {
                                         self.closeIndicator()
                                     } else {
                                         print("Created new user:", appuser!.firstName)
+                                        
+                                        if AppSettings.userType == DatabaseHandler.UserType.Reader {
+                                            if let id = self.pidToFollow {
+                                                DatabaseHandler.addUserToFollow(pid: id, userID: appuser!.id)
+                                            }
+                                        }
                                         
                                         // if creation is successful, set
                                         AppSettings.currentAppUser = appuser

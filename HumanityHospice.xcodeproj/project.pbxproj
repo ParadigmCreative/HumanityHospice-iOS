@@ -9,7 +9,12 @@
 /* Begin PBXBuildFile section */
 		45CC808BBCBB3FAB849094AB /* Pods_HumanityHospiceUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F664BA10DC443AE4590D0D3C /* Pods_HumanityHospiceUITests.framework */; };
 		675AC0BCE46E3895811EB7D5 /* Pods_HumanityHospice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B7D5CA25AA5987CE2BB4CC /* Pods_HumanityHospice.framework */; };
+		7335B2AF209BC37100AD5B1B /* JournalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */; };
 		7357DE652097CC6000AED945 /* EncourangementBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE642097CC6000AED945 /* EncourangementBoard.swift */; };
+		7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6620980B6000AED945 /* PhotoAlbum.swift */; };
+		7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */; };
+		7357DE6B20980B9700AED945 /* InviteReaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6A20980B9700AED945 /* InviteReaders.swift */; };
+		7357DE6D20980BA700AED945 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6C20980BA700AED945 /* AboutViewController.swift */; };
 		73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */; };
 		809963FACA7973222ED35534 /* Pods_HumanityHospiceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E36CE8881F55E0DC4A9EE78 /* Pods_HumanityHospiceTests.framework */; };
 		A57636C02086F1130096C452 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A57636BF2086F1130096C452 /* GoogleService-Info.plist */; };
@@ -57,7 +62,12 @@
 		2E36CE8881F55E0DC4A9EE78 /* Pods_HumanityHospiceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HumanityHospiceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		30F6286BE3EB9A9460CF6520 /* Pods-HumanityHospiceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospiceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospiceTests/Pods-HumanityHospiceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		49B7D5CA25AA5987CE2BB4CC /* Pods_HumanityHospice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HumanityHospice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTableViewCell.swift; sourceTree = "<group>"; };
 		7357DE642097CC6000AED945 /* EncourangementBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncourangementBoard.swift; sourceTree = "<group>"; };
+		7357DE6620980B6000AED945 /* PhotoAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
+		7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFamilyAccount.swift; sourceTree = "<group>"; };
+		7357DE6A20980B9700AED945 /* InviteReaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteReaders.swift; sourceTree = "<group>"; };
+		7357DE6C20980BA700AED945 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodePopUp.swift; sourceTree = "<group>"; };
 		A0742E56CFABA503B832FF38 /* Pods-HumanityHospice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospice.release.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospice/Pods-HumanityHospice.release.xcconfig"; sourceTree = "<group>"; };
 		A57636BF2086F1130096C452 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -130,6 +140,15 @@
 				0212EE8A2ECDBD6D52C5E2A4 /* Pods-HumanityHospiceUITests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		7335B2B0209BC37800AD5B1B /* Journal */ = {
+			isa = PBXGroup;
+			children = (
+				A5FC5C192089367D0084BA9B /* JournalTableViewController.swift */,
+				7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */,
+			);
+			path = Journal;
 			sourceTree = "<group>";
 		};
 		A57CC3F120881C3000C9D776 /* Database Handler */ = {
@@ -226,8 +245,12 @@
 		A5FC5C1B208936830084BA9B /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				A5FC5C192089367D0084BA9B /* JournalTableViewController.swift */,
+				7335B2B0209BC37800AD5B1B /* Journal */,
 				7357DE642097CC6000AED945 /* EncourangementBoard.swift */,
+				7357DE6620980B6000AED945 /* PhotoAlbum.swift */,
+				7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */,
+				7357DE6A20980B9700AED945 /* InviteReaders.swift */,
+				7357DE6C20980BA700AED945 /* AboutViewController.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -468,11 +491,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				7357DE652097CC6000AED945 /* EncourangementBoard.swift in Sources */,
+				7357DE6B20980B9700AED945 /* InviteReaders.swift in Sources */,
 				A5D3F978208D31870079B713 /* AppSettings.swift in Sources */,
 				A5D3F974208D26BA0079B713 /* SignUpViewController.swift in Sources */,
 				A5D3F970208D18540079B713 /* LoginViewController.swift in Sources */,
+				7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */,
 				A5D00665208938C30079CD49 /* MenuHandler.swift in Sources */,
+				7335B2AF209BC37100AD5B1B /* JournalTableViewCell.swift in Sources */,
 				A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */,
+				7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */,
+				7357DE6D20980BA700AED945 /* AboutViewController.swift in Sources */,
 				A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */,
 				73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */,
 				A5BBD4352086EC3700B80BD0 /* ViewController.swift in Sources */,
