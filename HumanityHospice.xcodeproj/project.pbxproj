@@ -10,6 +10,7 @@
 		45CC808BBCBB3FAB849094AB /* Pods_HumanityHospiceUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F664BA10DC443AE4590D0D3C /* Pods_HumanityHospiceUITests.framework */; };
 		675AC0BCE46E3895811EB7D5 /* Pods_HumanityHospice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B7D5CA25AA5987CE2BB4CC /* Pods_HumanityHospice.framework */; };
 		7335B2AF209BC37100AD5B1B /* JournalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */; };
+		7335B2B2209BDFF700AD5B1B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */; };
 		7357DE652097CC6000AED945 /* EncourangementBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE642097CC6000AED945 /* EncourangementBoard.swift */; };
 		7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6620980B6000AED945 /* PhotoAlbum.swift */; };
 		7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */; };
@@ -63,6 +64,7 @@
 		30F6286BE3EB9A9460CF6520 /* Pods-HumanityHospiceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospiceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospiceTests/Pods-HumanityHospiceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		49B7D5CA25AA5987CE2BB4CC /* Pods_HumanityHospice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HumanityHospice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTableViewCell.swift; sourceTree = "<group>"; };
+		7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		7357DE642097CC6000AED945 /* EncourangementBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncourangementBoard.swift; sourceTree = "<group>"; };
 		7357DE6620980B6000AED945 /* PhotoAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
 		7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFamilyAccount.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			children = (
 				A5FC5C192089367D0084BA9B /* JournalTableViewController.swift */,
 				7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */,
+				7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */,
 			);
 			path = Journal;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */,
 				A5D3F976208D2E8C0079B713 /* CompleteSignUpViewController.swift in Sources */,
 				A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */,
+				7335B2B2209BDFF700AD5B1B /* NewPostViewController.swift in Sources */,
 				A5FC5C1A2089367D0084BA9B /* JournalTableViewController.swift in Sources */,
 				A5D3F972208D23470079B713 /* Utilities.swift in Sources */,
 				A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */,

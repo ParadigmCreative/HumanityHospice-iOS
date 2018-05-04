@@ -51,7 +51,6 @@ class JournalTableViewController: UITableViewController {
         cell.nameLabel.text = posts[indexPath.row].poster
         cell.message.text = posts[indexPath.row].message
         cell.userImage.image = #imageLiteral(resourceName: "Logo")
-        cell.
         
         return cell
     }
@@ -68,6 +67,13 @@ class JournalTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
+    
+    
+    // MARK: - Write New Post
+    @IBAction func newPost(_ sender: Any) {
+        self.performSegue(withIdentifier: "showNewPost", sender: self)
+    }
+    
  
 
   
