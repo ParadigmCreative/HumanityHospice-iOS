@@ -34,7 +34,7 @@ class DatabaseHandler {
     ///
     /// - Parameters:
     ///   - user: The current Firebase user
-    static func fetchData(for user: User) {
+    static func fetchData(for user: User, completion: @escaping ()->()) {
         let ref = Database.database().reference()
         let paths = ["Patients", "Staff", "Readers", "Family"]
         var hasChild = false
@@ -48,7 +48,11 @@ class DatabaseHandler {
                     selectedPath = userPath
                     let type = getType(type: path)
                     AppSettings.userType = type
-                    pullDataFrom(kind: path)
+                    pullDataFrom(kind: path, completion: { (done) in
+                        if done {
+                            completion()
+                        }
+                    })
                 }
             })
         }
@@ -69,7 +73,7 @@ class DatabaseHandler {
         }
     }
     
-    private static func pullDataFrom(kind: String) {
+    private static func pullDataFrom(kind: String, completion: @escaping (Bool)->()) {
         Database.database().reference().child(kind).child(AppSettings.currentFBUser!.uid).observeSingleEvent(of: .value) { (snapshot) in
             if let data = snapshot.value as? [String:Any] {
                 switch AppSettings.userType! {
@@ -85,6 +89,8 @@ class DatabaseHandler {
                                        firstName: first, lastName: last, DOB: DOB, nurse: nil,
                                        inviteCode: inviteCode, familyID: familyID)
                     AppSettings.currentAppUser = user
+                    AppSettings.currentPatient = user.id
+                    completion(true)
                 case .Reader:
                     let readingFrom = data["ReadingFrom"] as! String
                     let meta = data["MetaData"] as! [String: Any]
@@ -92,7 +98,8 @@ class DatabaseHandler {
                     let last = meta["lastName"] as! String
                     let user = Reader(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, readingFrom: readingFrom, patients: nil)
                     AppSettings.currentAppUser = user
-                    
+                    AppSettings.currentPatient = user.readingFrom
+                    completion(true)
                 default:
                     break
                 }
@@ -164,7 +171,7 @@ class DatabaseHandler {
             
             let data: [String: Any] = ["MetaData": ["firstName": reader.firstName,
                                                     "lastName": reader.lastName],
-                                       "ReadingFrom": reader.readingFrom]
+                                       "ReadingFrom": AppSettings.currentPatient ?? ""]
             
             dataToSend = data
             
@@ -272,7 +279,7 @@ class DatabaseHandler {
     }
     
     // MARK: - Journal Posts
-    public static func getData(completion: @escaping ([Post])->()) {
+    public static func getPostsFromDB(completion: @escaping ([Post])->()) {
         let ref = Database.database().reference().child("Journals")
         var userRef: DatabaseReference?
         
@@ -328,6 +335,7 @@ class DatabaseHandler {
                             }
                         }
                         
+                        var sortedPosts: [Post] = []
                         for post in posts {
                             if post.comments != nil {
                                 post.comments!.sort(by: { (p1, p2) -> Bool in
@@ -336,14 +344,25 @@ class DatabaseHandler {
                             }
                         }
                         
+                        sortedPosts = posts.sorted(by: { (p1, p2) -> Bool in
+                            return p1.timestamp > p2.timestamp
+                        })
                         
-                        completion(posts)
+                        completion(sortedPosts)
                         
                     }
                 }
             }
         }
         
+    }
+    
+    public static func postToDatabase(poster: String, name: String, message: String) {
+        let ref = Database.database().reference().child("Journals").child(poster).childByAutoId()
+        let data: [String: Any] = ["poster": name,
+                                   "post": message,
+                                   "timestamp": Date().timeIntervalSince1970]
+        ref.setValue(data)
     }
     
     
@@ -356,15 +375,15 @@ class DatabaseHandler {
         case Reader
     }
     
-    static func getType(type: String) -> UserType {
+    private static func getType(type: String) -> UserType {
         switch type {
         case "Staff":
             return .Staff
-        case "Patient":
+        case "Patients":
             return .Patient
         case "Family":
             return .Family
-        case "Reader":
+        case "Readers":
             return .Reader
         default:
             return .Staff

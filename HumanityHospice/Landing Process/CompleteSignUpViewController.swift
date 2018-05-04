@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CompleteSignUpViewController: UIViewController {
+class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +40,10 @@ class CompleteSignUpViewController: UIViewController {
     }
     
     func setupTextfields() {
+        emailTF.delegate = self
+        passwordTF.delegate = self
+        reenterPasswordTF.delegate = self
+        
         emailTF.setupTextField()
         passwordTF.setupTextField()
         reenterPasswordTF.setupTextField()
@@ -117,12 +121,15 @@ class CompleteSignUpViewController: UIViewController {
                                         self.showAlert(title: "Hmm...", message: error!.localizedDescription)
                                         self.closeIndicator()
                                     } else {
-                                        print("Created new user:", appuser!.firstName)
+                                        print("Created new user:", appuser!.firstName, " ", appuser!.lastName)
                                         
                                         if AppSettings.userType == DatabaseHandler.UserType.Reader {
                                             if let id = self.pidToFollow {
                                                 DatabaseHandler.addUserToFollow(pid: id, userID: appuser!.id)
+                                                AppSettings.currentPatient = id
                                             }
+                                        } else if AppSettings.userType == DatabaseHandler.UserType.Patient {
+                                            AppSettings.currentPatient = AppSettings.currentFBUser!.uid
                                         }
                                         
                                         // if creation is successful, set
@@ -151,6 +158,18 @@ class CompleteSignUpViewController: UIViewController {
         }
     }
     
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailTF {
+            passwordTF.becomeFirstResponder()
+        } else if textField == passwordTF {
+            reenterPasswordTF.becomeFirstResponder()
+        } else if textField == reenterPasswordTF {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
 
     /*
     // MARK: - Navigation

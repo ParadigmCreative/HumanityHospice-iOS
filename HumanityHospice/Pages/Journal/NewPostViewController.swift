@@ -67,6 +67,21 @@ class NewPostViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func submitPost(_ sender: Any) {
         print("POST!")
+        
+        checkTextView { (verified, message) in
+            if verified {
+                self.showVerificationAlert(completion: { (confirmed) in
+                    if confirmed {
+                        DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!,
+                                                       name: "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)", message: message!)
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                })
+            } else {
+                showAlert(title: "Hmm...", message: "Please make sure you've ")
+            }
+        }
+        
     }
     
     @IBAction func attachPhoto(_ sender: Any) {
@@ -77,6 +92,32 @@ class NewPostViewController: UIViewController, UITextViewDelegate {
         self.messageTF.resignFirstResponder()
     }
     
+    func checkTextView(completion: (Bool, String?)->()) {
+        if let text = messageTF.text {
+            if text.count > 0 {
+                completion(true, text)
+            } else {
+                completion(false, nil)
+            }
+        }
+    }
+    
+    func showVerificationAlert(completion: @escaping (Bool)->()) {
+        let alert = UIAlertController(title: "Attention!", message: "Are you sure you want to post to the Journal?", preferredStyle: .alert)
+        let yes = UIAlertAction(title: "Yes", style: .default) { (alert) in
+            completion(true)
+        }
+        
+        let no = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
+            completion(false)
+        }
+        
+        alert.addAction(yes)
+        alert.addAction(no)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
     // MARK: - Text View
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -84,14 +125,5 @@ class NewPostViewController: UIViewController, UITextViewDelegate {
     }
     
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

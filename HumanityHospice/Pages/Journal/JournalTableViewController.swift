@@ -20,7 +20,12 @@ class JournalTableViewController: UITableViewController {
         MenuHandler.initialize(vc: self)
         menuDelegate = MenuHandler.staticMenu
         setup()
+        getPosts()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getPosts()
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,6 +55,8 @@ class JournalTableViewController: UITableViewController {
 
         cell.nameLabel.text = posts[indexPath.row].poster
         cell.message.text = posts[indexPath.row].message
+        cell.message.layer.cornerRadius = 5
+        cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
         cell.userImage.image = #imageLiteral(resourceName: "Logo")
         
         return cell
@@ -62,9 +69,11 @@ class JournalTableViewController: UITableViewController {
     // MARK: - Get Data
     var posts: [Post] = []
     private func getPosts() {
-        DatabaseHandler.getData { (posts) in
-            self.posts = posts
-            self.tableView.reloadData()
+        DispatchQueue.main.async {
+            DatabaseHandler.getPostsFromDB { (posts) in
+                self.posts = posts
+                self.tableView.reloadData()
+            }
         }
     }
     

@@ -12,6 +12,8 @@ import Firebase
 class AppSettings {
     public static var currentFBUser: User?
     public static var currentAppUser: AppUser?
+    public static var currentPatient: String?
+    public static var currentPatientName: String?
     
     public static var signUpName: (first: String, last: String)?
     public static var userType: DatabaseHandler.UserType?

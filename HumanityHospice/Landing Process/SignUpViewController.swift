@@ -44,6 +44,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     }
     
     func setupTextFields() {
+        firstName.delegate = self
+        lastName.delegate = self
+        
         firstName.setupTextField()
         lastName.setupTextField()
     }
@@ -93,6 +96,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == firstName {
+            lastName.becomeFirstResponder()
+        } else if textField == lastName {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
     
     // MARK: - Invite Code
     private func showPopUp() {
@@ -129,6 +142,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
                 if let pid = pid {
 //                    self.staticCode = code
                     self.followingPID = pid
+                    AppSettings.currentPatient = pid
                     // show success
                     self.inviteCodePopUp.showSuccess()
                 }
@@ -156,6 +170,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
             }
         }
     }
+    
+    
 
 }
 

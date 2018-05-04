@@ -19,11 +19,14 @@ class LandingViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        Utilities.showActivityIndicator(view: self.view)
         if Auth.auth().currentUser != nil {
             AppSettings.currentFBUser = Auth.auth().currentUser
             if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
-                DatabaseHandler.fetchData(for: AppSettings.currentFBUser!)
-                self.present(tabbar, animated: true, completion: nil)
+                DatabaseHandler.fetchData(for: AppSettings.currentFBUser!, completion: {
+                    Utilities.closeActivityIndicator()
+                    self.present(tabbar, animated: true, completion: nil)
+                })
             }
         }
     }

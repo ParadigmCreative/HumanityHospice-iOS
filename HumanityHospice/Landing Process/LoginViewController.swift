@@ -81,11 +81,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     print("Login Successful", user!.email)
                     AppSettings.currentFBUser = user
-                    DatabaseHandler.fetchData(for: user!)
-                    let tabbar = UIStoryboard(name: "Main", bundle: nil)
-                    if let tabbar = tabbar.instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
-                        self.present(tabbar, animated: true, completion: nil)
-                    }
+                    DatabaseHandler.fetchData(for: user!, completion: {
+                        let tabbar = UIStoryboard(name: "Main", bundle: nil)
+                        if let tabbar = tabbar.instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
+                            Utilities.closeActivityIndicator()
+                            self.present(tabbar, animated: true, completion: nil)
+                        }
+                    })
                 }
             })
         }
