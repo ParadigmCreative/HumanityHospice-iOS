@@ -7,15 +7,24 @@
 //
 
 import UIKit
+import WebKit
 
 class AboutViewController: UIViewController {
 
+    
+    
+    @IBOutlet weak var webView: WKWebView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let url = URL(string: "http://www.humanityhospice.com")!
+        let urlR = URLRequest(url: url)
+        webView.load(urlR)
+        print("ABOUT PAGE")
+    
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -31,6 +40,7 @@ class AboutViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
     @IBAction func openMenu(_ sender: Any) {
         MenuHandler.openMenu(vc: self)
     }

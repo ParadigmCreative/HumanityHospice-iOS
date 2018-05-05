@@ -36,6 +36,13 @@ class JournalTableViewController: UITableViewController {
     // MARK: - General Setup
     func setup() {
         self.tabBarController?.tabBar.isHidden = true
+        
+        if let type = AppSettings.userType {
+            if type != .Patient {
+                self.newPostButton.isEnabled = false
+                self.navigationItem.rightBarButtonItem = nil
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -69,16 +76,18 @@ class JournalTableViewController: UITableViewController {
     // MARK: - Get Data
     var posts: [Post] = []
     private func getPosts() {
-        DispatchQueue.main.async {
-            DatabaseHandler.getPostsFromDB { (posts) in
-                self.posts = posts
-                self.tableView.reloadData()
-            }
+        DatabaseHandler.getPostsFromDB { (posts) in
+            
+            // if patient, add first welcome post
+            
+            self.posts = posts
+            self.tableView.reloadData()
         }
     }
     
     
     // MARK: - Write New Post
+    @IBOutlet weak var newPostButton: UIBarButtonItem!
     @IBAction func newPost(_ sender: Any) {
         self.performSegue(withIdentifier: "showNewPost", sender: self)
     }

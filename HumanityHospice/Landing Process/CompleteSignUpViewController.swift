@@ -123,10 +123,15 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                                     } else {
                                         print("Created new user:", appuser!.firstName, " ", appuser!.lastName)
                                         
+                                        // SET CURRENT PATIENT
                                         if AppSettings.userType == DatabaseHandler.UserType.Reader {
                                             if let id = self.pidToFollow {
                                                 DatabaseHandler.addUserToFollow(pid: id, userID: appuser!.id)
                                                 AppSettings.currentPatient = id
+                                                if var user = appuser as? DatabaseHandler.Reader {
+                                                    user.readingFrom = id
+                                                }
+                                                print("Set currentPatient to:", id)
                                             }
                                         } else if AppSettings.userType == DatabaseHandler.UserType.Patient {
                                             AppSettings.currentPatient = AppSettings.currentFBUser!.uid

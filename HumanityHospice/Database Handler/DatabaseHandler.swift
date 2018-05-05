@@ -40,9 +40,12 @@ class DatabaseHandler {
         var hasChild = false
         var selectedPath: DatabaseReference?
         
+        var counter = 0
         for path in paths {
             let userPath = ref.child(path).child(user.uid)
             checkLocation(ref: userPath, completion: { (isPath) in
+                counter += 1
+                
                 if isPath {
                     hasChild = true
                     selectedPath = userPath
@@ -53,6 +56,16 @@ class DatabaseHandler {
                             completion()
                         }
                     })
+                }
+                
+                if counter == paths.count {
+                    if hasChild == false && selectedPath == nil {
+                        do {
+                            try! Auth.auth().signOut()
+                            Utilities.closeActivityIndicator()
+                            print("Signed Out bc failure to grab data")
+                        }
+                    }
                 }
             })
         }
@@ -291,8 +304,13 @@ class DatabaseHandler {
             }
         case .Reader:
             if let user = AppSettings.currentAppUser as? Reader {
-                let uref = ref.child(user.readingFrom)
-                userRef = uref
+                if user.readingFrom != "" {
+                    let uref = ref.child(user.readingFrom)
+                    userRef = uref
+                } else {
+                    let uref = ref.child(AppSettings.currentPatient!)
+                    userRef = uref
+                }
             }
         case .Family:
             if let user = AppSettings.currentAppUser as? Family {
@@ -306,6 +324,8 @@ class DatabaseHandler {
         if userRef != nil {
             userRef!.observeSingleEvent(of: .value) { (snap) in
                 if snap.childrenCount > 0 {
+                    
+                    // the entire list
                     if let postList = snap.children.allObjects as? [DataSnapshot] {
                         
                         var posts: [Post] = []

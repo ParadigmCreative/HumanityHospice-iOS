@@ -28,6 +28,8 @@ class LandingViewController: UIViewController {
                     self.present(tabbar, animated: true, completion: nil)
                 })
             }
+        } else {
+            Utilities.closeActivityIndicator()
         }
     }
 

@@ -94,6 +94,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="newPostButton" destination="JCF-5n-Kb9" id="AY9-y4-eLU"/>
                         <segue destination="8EB-7d-nMV" kind="presentation" identifier="showNewPost" id="bzZ-xL-W5a"/>
                     </connections>
                 </tableViewController>
@@ -378,7 +379,23 @@
                     <view key="view" contentMode="scaleToFill" id="IGd-gX-VO9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IL8-jh-C4B">
+                                <rect key="frame" x="0.0" y="64" width="375" height="510"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="IL8-jh-C4B" firstAttribute="trailing" secondItem="adt-wU-SbJ" secondAttribute="trailing" id="6fT-vG-NBO"/>
+                            <constraint firstItem="IL8-jh-C4B" firstAttribute="bottom" secondItem="adt-wU-SbJ" secondAttribute="bottom" id="eor-Xa-2Pp"/>
+                            <constraint firstItem="IL8-jh-C4B" firstAttribute="top" secondItem="adt-wU-SbJ" secondAttribute="top" id="oBz-ir-Uys"/>
+                            <constraint firstItem="IL8-jh-C4B" firstAttribute="leading" secondItem="adt-wU-SbJ" secondAttribute="leading" id="tzA-wY-cYz"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="adt-wU-SbJ"/>
                     </view>
                     <toolbarItems/>
@@ -391,10 +408,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="webView" destination="IL8-jh-C4B" id="VvJ-1F-4Zo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fao-cM-68W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5806" y="880"/>
+            <point key="canvasLocation" x="5805.6000000000004" y="879.31034482758628"/>
         </scene>
         <!--Landing View Controller-->
         <scene sceneID="1dM-6Y-H9S">
