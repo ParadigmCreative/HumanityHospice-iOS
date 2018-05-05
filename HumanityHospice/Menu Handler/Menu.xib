@@ -39,13 +39,21 @@
                                 <outlet property="delegate" destination="-1" id="fgC-6N-K5n"/>
                             </connections>
                         </tableView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Axx-4M-fhh">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile Default" translatesAutoresizingMaskIntoConstraints="NO" id="Axx-4M-fhh">
                             <rect key="frame" x="16" y="65" width="60" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="Y6F-l4-Ea4"/>
                                 <constraint firstAttribute="height" constant="60" id="r6q-Oa-5oT"/>
                             </constraints>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iba-nS-4FV">
+                            <rect key="frame" x="16" y="65" width="60" height="60"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Edit">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -82,6 +90,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="editProfileImageButton" destination="Iba-nS-4FV" id="qSR-is-mTN"/>
                 <outlet property="emailLabel" destination="sHl-wf-YSI" id="97M-71-Lwz"/>
                 <outlet property="exitAreaView" destination="Wi7-Sx-pDH" id="5u6-Mn-abo"/>
                 <outlet property="listingTableView" destination="wqc-vY-iFy" id="Iqa-xM-1le"/>
@@ -93,6 +102,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Logo" width="100" height="100"/>
+        <image name="Profile Default" width="77" height="76"/>
     </resources>
 </document>

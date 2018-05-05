@@ -100,7 +100,7 @@ class DatabaseHandler {
                     
                     let user = Patient(id: AppSettings.currentFBUser!.uid,
                                        firstName: first, lastName: last, DOB: DOB, nurse: nil,
-                                       inviteCode: inviteCode, familyID: familyID)
+                                       inviteCode: inviteCode, familyID: familyID, profilePic: nil)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.id
                     completion(true)
@@ -109,7 +109,7 @@ class DatabaseHandler {
                     let meta = data["MetaData"] as! [String: Any]
                     let first = meta["firstName"] as! String
                     let last = meta["lastName"] as! String
-                    let user = Reader(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, readingFrom: readingFrom, patients: nil)
+                    let user = Reader(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, readingFrom: readingFrom, patients: nil, profilePic: nil)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.readingFrom
                     completion(true)
@@ -118,6 +118,10 @@ class DatabaseHandler {
                 }
             }
         }
+    }
+    
+    static func getProfilePicture(dbRef: DatabaseReference, completion: (Bool)->()) {
+        
     }
     
     static func signUp(email: String, password: String, completion: @escaping (User?, Error?)->()) {
@@ -247,12 +251,12 @@ class DatabaseHandler {
             let code = self.generateUserInviteCode()
             let appuser = Patient(id: user.uid,
                                   firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last,
-                                  DOB: nil, nurse: nil, inviteCode: code, familyID: nil)
+                                  DOB: nil, nurse: nil, inviteCode: code, familyID: nil, profilePic: nil)
             return appuser
         case .Reader:
             let appuser = Reader(id: user.uid,
                                  firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last,
-                                 readingFrom: "", patients: nil)
+                                 readingFrom: "", patients: nil, profilePic: nil)
             return appuser
         default:
             print("Error")
@@ -425,6 +429,7 @@ class DatabaseHandler {
         var nurse: Staff?
         let inviteCode: String?
         let familyID: String?
+        var profilePic: UIImage? = nil
     }
     
     struct Family: AppUser {
@@ -432,6 +437,7 @@ class DatabaseHandler {
         var firstName: String
         var lastName: String
         let patient: Patient
+        var profilePic: UIImage? = nil
     }
     
     struct Reader: AppUser {
@@ -440,6 +446,7 @@ class DatabaseHandler {
         var lastName: String
         var readingFrom: String
         var patients: [Patient]?
+        var profilePic: UIImage? = nil
     }
     
     struct Journal: DatabaseObject {

@@ -25,6 +25,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var mainAreaView: UIView!
     @IBOutlet weak var exitAreaView: UIView!
+    @IBOutlet weak var editProfileImageButton: UIButton!
     
     
     // MARK: - TableView
@@ -104,6 +105,10 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
 
         nameLabel.text = "\(first) \(last)"
         nameLabel.font = UIFont().setFont()
+    }
+    
+    func setupProfilePicture() {
+        
     }
     
     // MARK: - MenuHandler Delegate
