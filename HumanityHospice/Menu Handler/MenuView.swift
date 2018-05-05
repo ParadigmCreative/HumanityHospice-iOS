@@ -73,7 +73,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
             handlingController?.beginSignOutProcess()
         } else if selected == items[6] {
             // About
-            MenuHandler.tabbar?.selectedIndex = 6
+            MenuHandler.tabbar!.selectedIndex = 5
             MenuHandler.closeMenu()
         }
         

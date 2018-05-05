@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class AboutViewController: UIViewController {
+class AboutViewController: UIViewController, WKNavigationDelegate {
 
     
     
@@ -19,16 +19,31 @@ class AboutViewController: UIViewController {
         super.viewDidLoad()
 
         let url = URL(string: "http://www.humanityhospice.com")!
+        webView.allowsBackForwardNavigationGestures = true
         let urlR = URLRequest(url: url)
         webView.load(urlR)
         print("ABOUT PAGE")
-    
+        Utilities.showActivityIndicator(view: self.view)
+        webView.navigationDelegate = self
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let url = URL(string: "http://www.humanityhospice.com")!
+        webView.allowsBackForwardNavigationGestures = true
+        let urlR = URLRequest(url: url)
+        webView.load(urlR)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        Utilities.closeActivityIndicator()
+    }
+    
+    
     
 
     /*
