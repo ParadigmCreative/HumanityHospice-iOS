@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import DZNEmptyDataSet
+import ImagePicker
 
 protocol MenuHandlerDelegate {
     func setBaseView(view: UIView)
@@ -26,7 +27,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     @IBOutlet weak var mainAreaView: UIView!
     @IBOutlet weak var exitAreaView: UIView!
     @IBOutlet weak var editProfileImageButton: UIButton!
-    
+    var imagePicker = ImagePickerController()
     
     // MARK: - TableView
     var items = ["My Journal", "Encouragement Board", "My Photo Album", "Create Family Account", "Invite People", "Sign Out", "About Humanity Hospice"]
@@ -96,6 +97,8 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     }
     
     func setupHeader() {
+        checkForProfilePicture()
+
         guard let email = AppSettings.currentFBUser?.email else { return }
         emailLabel.text = email
         emailLabel.font = UIFont().setFont()
@@ -107,9 +110,35 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         nameLabel.font = UIFont().setFont()
     }
     
-    func setupProfilePicture() {
-        
+    func checkForProfilePicture() {
+        if let img = ProfilePickerHandler.chosenPhoto {
+            setupProfilePicture(img: img)
+        } else {
+            DatabaseHandler.getProfilePicture { (done) in
+                if done {
+                    if let img = ProfilePickerHandler.chosenPhoto {
+                        self.setupProfilePicture(img: img)
+                    }
+                }
+            }
+        }
     }
+    
+    func setupProfilePicture(img: UIImage) {
+        logoImageView.image = img
+//        logoImageView.contentMode = .scaleAspectFit
+        logoImageView.setupProfilePicture()
+        editProfileImageButton.setTitle("", for: .normal)
+    }
+    
+    @IBAction func editProfilePicture(_ sender: Any) {
+        if let vc = handlingController {
+            ProfilePickerHandler.open(vc: vc)
+        }
+    }
+    
+    
+    
     
     // MARK: - MenuHandler Delegate
     var baseView: UIView?

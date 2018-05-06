@@ -41,6 +41,7 @@ PODS:
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.1.1)"
   - GTMSessionFetcher/Core (1.1.10)
+  - ImagePicker (3.0.0)
   - Realm (2.8.3):
     - Realm/Headers (= 2.8.3)
   - Realm/Headers (2.8.3)
@@ -53,6 +54,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Database
   - Firebase/Storage
+  - ImagePicker
   - RealmSwift
   - SnapKit (~> 4.0)
 
@@ -68,6 +70,7 @@ SPEC REPOS:
     - FirebaseStorage
     - GoogleToolboxForMac
     - GTMSessionFetcher
+    - ImagePicker
     - Realm
     - RealmSwift
     - SnapKit
@@ -83,10 +86,11 @@ SPEC CHECKSUMS:
   FirebaseStorage: 8110a1ed2034c8fbfd83890d2acc9cdbbd99afec
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
+  ImagePicker: 973953c25960fe04729a7082a56194321c6762d2
   Realm: 3601ef091c8c499a31101d8563b991e75546cdce
   RealmSwift: 8183818515471b01a99abdd2970f8e4fd52b6f4a
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 9190d910f7bd431472886be646653557a7c6f6b9
+PODFILE CHECKSUM: 58df0ac3ef635e9091cdf0c7ca1da564fcf6fc41
 
 COCOAPODS: 1.5.0

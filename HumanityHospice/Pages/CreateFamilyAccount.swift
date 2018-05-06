@@ -13,6 +13,7 @@ class CreateFamilyAccount: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        MenuHandler.staticMenu?.setHandingController(vc: self)
         print("Family")
     }
 

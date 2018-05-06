@@ -11,6 +11,8 @@
 		675AC0BCE46E3895811EB7D5 /* Pods_HumanityHospice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B7D5CA25AA5987CE2BB4CC /* Pods_HumanityHospice.framework */; };
 		7335B2AF209BC37100AD5B1B /* JournalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */; };
 		7335B2B2209BDFF700AD5B1B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */; };
+		7335B2B4209FA41400AD5B1B /* ProfilePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B3209FA41400AD5B1B /* ProfilePickerDelegate.swift */; };
+		7335B2B6209FAFA000AD5B1B /* ProfilePickerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B5209FAFA000AD5B1B /* ProfilePickerHandler.swift */; };
 		7357DE652097CC6000AED945 /* EncourangementBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE642097CC6000AED945 /* EncourangementBoard.swift */; };
 		7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6620980B6000AED945 /* PhotoAlbum.swift */; };
 		7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */; };
@@ -65,6 +67,8 @@
 		49B7D5CA25AA5987CE2BB4CC /* Pods_HumanityHospice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HumanityHospice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTableViewCell.swift; sourceTree = "<group>"; };
 		7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
+		7335B2B3209FA41400AD5B1B /* ProfilePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePickerDelegate.swift; sourceTree = "<group>"; };
+		7335B2B5209FAFA000AD5B1B /* ProfilePickerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePickerHandler.swift; sourceTree = "<group>"; };
 		7357DE642097CC6000AED945 /* EncourangementBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncourangementBoard.swift; sourceTree = "<group>"; };
 		7357DE6620980B6000AED945 /* PhotoAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
 		7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFamilyAccount.swift; sourceTree = "<group>"; };
@@ -154,6 +158,15 @@
 			path = Journal;
 			sourceTree = "<group>";
 		};
+		7335B2B7209FC2E900AD5B1B /* Profile Picture */ = {
+			isa = PBXGroup;
+			children = (
+				7335B2B3209FA41400AD5B1B /* ProfilePickerDelegate.swift */,
+				7335B2B5209FAFA000AD5B1B /* ProfilePickerHandler.swift */,
+			);
+			path = "Profile Picture";
+			sourceTree = "<group>";
+		};
 		A57CC3F120881C3000C9D776 /* Database Handler */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +250,7 @@
 		A5FC5C1620892FAB0084BA9B /* Menu Handler */ = {
 			isa = PBXGroup;
 			children = (
+				7335B2B7209FC2E900AD5B1B /* Profile Picture */,
 				A5FC5C1420892FA60084BA9B /* Menu.xib */,
 				A5FC5C1220892CA00084BA9B /* MenuView.swift */,
 				A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */,
@@ -468,6 +482,7 @@
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -477,6 +492,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -501,12 +517,14 @@
 				7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */,
 				A5D00665208938C30079CD49 /* MenuHandler.swift in Sources */,
 				7335B2AF209BC37100AD5B1B /* JournalTableViewCell.swift in Sources */,
+				7335B2B6209FAFA000AD5B1B /* ProfilePickerHandler.swift in Sources */,
 				A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */,
 				7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */,
 				7357DE6D20980BA700AED945 /* AboutViewController.swift in Sources */,
 				A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */,
 				73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */,
 				A5BBD4352086EC3700B80BD0 /* ViewController.swift in Sources */,
+				7335B2B4209FA41400AD5B1B /* ProfilePickerDelegate.swift in Sources */,
 				A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */,
 				A5D3F976208D2E8C0079B713 /* CompleteSignUpViewController.swift in Sources */,
 				A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */,

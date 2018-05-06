@@ -13,6 +13,7 @@ import SnapKit
 class MenuHandler {
     static var staticMenu: MenuView?
     static var tabbar: UITabBarController?
+    static var pickerDelegate = ProfilePickerDelegate()
     
     static func initialize(vc: UIViewController) {
         if let menu = Bundle.main.loadNibNamed("Menu", owner: vc, options: nil)?.first as? MenuView {
@@ -21,6 +22,7 @@ class MenuHandler {
             staticMenu!.setHandingController(vc: vc)
             staticMenu!.setBaseView(view: vc.view)
             self.tabbar = vc.tabBarController
+            
         }
     }
     

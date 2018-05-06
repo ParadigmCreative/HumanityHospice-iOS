@@ -15,6 +15,8 @@ class PhotoAlbum: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        MenuHandler.staticMenu?.setHandingController(vc: self)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

@@ -120,8 +120,61 @@ class DatabaseHandler {
         }
     }
     
-    static func getProfilePicture(dbRef: DatabaseReference, completion: (Bool)->()) {
+    static func getProfilePicture(completion: @escaping (Bool)->()) {
+        if let user = AppSettings.currentFBUser {
+            if let url = user.photoURL {
+                let ref = Storage.storage().reference(forURL: url.absoluteString)
+                ref.getData(maxSize: 20 * 1024 * 1024) { (data, error) in
+                    if error != nil {
+                        print(error!.localizedDescription)
+                        completion(false)
+                    } else {
+                        if let data = data {
+                            if let img = UIImage(data: data) {
+                                ProfilePickerHandler.chosenPhoto = img
+                                completion(true)
+                            } else {
+                                completion(false)
+                            }
+                        }
+                    }
+                }
+            } else {
+                completion(false)
+            }
+        } else {
+            completion(false)
+        }
+    }
+    
+    static func setProfilePicture(completion: @escaping (Bool)->()) {
+        let ref = Storage.storage().reference().child("ProfilePictures").child(AppSettings.currentFBUser!.uid)
+        let name = "ProfilePicture.png"
+        let profilePicRef = ref.child(name)
         
+        if let img = ProfilePickerHandler.chosenPhoto {
+            if let data = UIImagePNGRepresentation(img) {
+                profilePicRef.putData(data, metadata: nil, completion: { (metadata, error) in
+                    if error != nil {
+                        print(error!.localizedDescription)
+                    } else {
+                        if let url = metadata?.downloadURLs![0] {
+                            print("Download URL:", url)
+                            
+                            let req = Auth.auth().currentUser?.createProfileChangeRequest()
+                            req?.photoURL = url
+                            req?.commitChanges(completion: { (error) in
+                                if error != nil {
+                                    print(error!.localizedDescription)
+                                } else {
+                                    completion(true)
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+        }
     }
     
     static func signUp(email: String, password: String, completion: @escaping (User?, Error?)->()) {

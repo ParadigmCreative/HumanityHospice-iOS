@@ -13,7 +13,9 @@ class InviteReaders: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        MenuHandler.staticMenu?.setHandingController(vc: self)
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
