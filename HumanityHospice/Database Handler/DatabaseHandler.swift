@@ -147,7 +147,7 @@ class DatabaseHandler {
         }
     }
     
-    static func setProfilePicture(completion: @escaping (Bool)->()) {
+    static func setProfilePicture(completion: @escaping (Bool, String?)->()) {
         let ref = Storage.storage().reference().child("ProfilePictures").child(AppSettings.currentFBUser!.uid)
         let name = "ProfilePicture.png"
         let profilePicRef = ref.child(name)
@@ -156,7 +156,8 @@ class DatabaseHandler {
             if let data = UIImagePNGRepresentation(img) {
                 profilePicRef.putData(data, metadata: nil, completion: { (metadata, error) in
                     if error != nil {
-                        print(error!.localizedDescription)
+                        Utilities.closeActivityIndicator()
+                        completion(false, error!.localizedDescription)
                     } else {
                         if let url = metadata?.downloadURLs![0] {
                             print("Download URL:", url)
@@ -165,14 +166,20 @@ class DatabaseHandler {
                             req?.photoURL = url
                             req?.commitChanges(completion: { (error) in
                                 if error != nil {
-                                    print(error!.localizedDescription)
+                                    completion(false, error!.localizedDescription)
+                                    Utilities.closeActivityIndicator()
                                 } else {
-                                    completion(true)
+                                    Utilities.closeActivityIndicator()
+                                    completion(true, nil)
                                 }
                             })
+                        } else {
+                            completion(false, "Couldn't get URL from meta data")
                         }
                     }
                 })
+            } else {
+                completion(false, "Couldn't cast data to image")
             }
         }
     }

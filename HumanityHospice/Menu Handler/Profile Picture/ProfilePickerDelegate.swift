@@ -17,11 +17,14 @@ class ProfilePickerDelegate: ImagePickerDelegate {
     
     func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         if let img = images.first {
+            Utilities.showActivityIndicator(view: imagePicker.view)
             ProfilePickerHandler.chosenPhoto = img
             MenuHandler.staticMenu?.setupProfilePicture(img: img)
-            DatabaseHandler.setProfilePicture { (done) in
+            DatabaseHandler.setProfilePicture { (done, error)  in
                 if done {
                     print("Done setting profile image to storage")
+                } else {
+                    print(error)
                 }
             }
         }

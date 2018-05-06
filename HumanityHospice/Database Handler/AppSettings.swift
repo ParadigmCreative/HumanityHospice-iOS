@@ -21,7 +21,10 @@ class AppSettings {
     public static func clearAppSettings() {
         currentFBUser = nil
         currentAppUser = nil
+        currentPatient = nil
+        currentPatientName = nil
         signUpName = nil
         userType = nil
+        ProfilePickerHandler.chosenPhoto = nil
     }
 }
