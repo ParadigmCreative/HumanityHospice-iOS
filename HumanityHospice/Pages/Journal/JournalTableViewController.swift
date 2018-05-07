@@ -64,6 +64,8 @@ class JournalTableViewController: UITableViewController {
         if post.hasImage {
             let cell = tableView.dequeueReusableCell(withIdentifier: "postWithImage", for: indexPath) as! PostWithImageTableViewCell
             
+            cell.post = post
+            
             cell.nameLabel.text = post.poster
             cell.message.text = post.message
             cell.postPhoto.image = post.postImage
@@ -98,20 +100,7 @@ class JournalTableViewController: UITableViewController {
             
             // if patient, add first welcome post
             
-            var sortedPosts: [Post] = []
-            for post in posts {
-                if post.comments != nil {
-                    post.comments!.sort(by: { (p1, p2) -> Bool in
-                        return p1.timestamp > p2.timestamp
-                    })
-                }
-            }
-            
-            sortedPosts = posts.sorted(by: { (p1, p2) -> Bool in
-                return p1.timestamp > p2.timestamp
-            })
-            
-            self.posts = sortedPosts
+            self.posts = posts
             self.tableView.reloadData()
         }
     }

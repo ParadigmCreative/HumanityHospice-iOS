@@ -23,6 +23,31 @@ class PostWithImageTableViewCell: JournalTableViewCell {
 
     @IBOutlet weak var postPhoto: UIImageView!
     
+    var post: Post! {
+        didSet {
+            if post.postImage == nil {
+                setupUI()
+            } else {
+                DispatchQueue.main.async {
+                    self.postPhoto.image = self.post.postImage
+                }
+            }
+        }
+    }
+    
+    func setupUI() {
+        DatabaseHandler.getImageFromStorage(url: post.imageURL!) { (image, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+            } else {
+                self.post.postImage = image
+                DispatchQueue.main.async {
+                    self.postPhoto.image = image
+                }
+            }
+        }
+        self.postPhoto.layer.cornerRadius = 5
+    }
     
 
 }

@@ -426,8 +426,22 @@ class DatabaseHandler {
                                     posts.append(newPost)
                                 }
                             }
-                            
                         }
+                        
+                        var sortedPosts: [Post] = []
+                        for post in posts {
+                            if post.comments != nil {
+                                post.comments!.sort(by: { (p1, p2) -> Bool in
+                                    return p1.timestamp > p2.timestamp
+                                })
+                            }
+                        }
+                        
+                        sortedPosts = posts.sorted(by: { (p1, p2) -> Bool in
+                            return p1.timestamp > p2.timestamp
+                        })
+                        
+                        completion(sortedPosts)
                     }
                 }
             }
