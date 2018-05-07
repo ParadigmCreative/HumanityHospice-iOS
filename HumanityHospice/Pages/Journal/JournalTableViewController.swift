@@ -58,15 +58,33 @@ class JournalTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! JournalTableViewCell
-
-        cell.nameLabel.text = posts[indexPath.row].poster
-        cell.message.text = posts[indexPath.row].message
-        cell.message.layer.cornerRadius = 5
-        cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
-        cell.userImage.image = #imageLiteral(resourceName: "Logo")
         
-        return cell
+        let post = posts[indexPath.row]
+
+        if post.hasImage {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "postWithImage", for: indexPath) as! PostWithImageTableViewCell
+            
+            cell.nameLabel.text = post.poster
+            cell.message.text = post.message
+            cell.postPhoto.image = post.postImage
+            
+            cell.message.layer.cornerRadius = 5
+            cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
+            cell.userImage.image = #imageLiteral(resourceName: "Logo")
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! JournalTableViewCell
+            
+            cell.nameLabel.text = post.poster
+            cell.message.text = post.message
+            
+            cell.message.layer.cornerRadius = 5
+            cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
+            cell.userImage.image = #imageLiteral(resourceName: "Logo")
+            
+            return cell
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -80,7 +98,20 @@ class JournalTableViewController: UITableViewController {
             
             // if patient, add first welcome post
             
-            self.posts = posts
+            var sortedPosts: [Post] = []
+            for post in posts {
+                if post.comments != nil {
+                    post.comments!.sort(by: { (p1, p2) -> Bool in
+                        return p1.timestamp > p2.timestamp
+                    })
+                }
+            }
+            
+            sortedPosts = posts.sorted(by: { (p1, p2) -> Bool in
+                return p1.timestamp > p2.timestamp
+            })
+            
+            self.posts = sortedPosts
             self.tableView.reloadData()
         }
     }

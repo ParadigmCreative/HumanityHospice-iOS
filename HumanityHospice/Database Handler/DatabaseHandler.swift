@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import UIKit
 
 class DatabaseHandler {
     
@@ -356,6 +357,7 @@ class DatabaseHandler {
     }
     
     // MARK: - Journal Posts
+    public static var postWatcherDelegate: PostWatcher?
     public static func getPostsFromDB(completion: @escaping ([Post])->()) {
         let ref = Database.database().reference().child("Journals")
         var userRef: DatabaseReference?
@@ -414,39 +416,88 @@ class DatabaseHandler {
                                     }
                                 }
                                 
-                                let newPost = Post(timestamp: timestamp, message: message, poster: poster, comments: comments, isComment: false)
-                                posts.append(newPost)
+                                if let imageURL = post["postImageURL"] as? String {
+                                    let newPost = Post(timestamp: timestamp, message: message, poster: poster, comments: comments, isComment: false)
+                                    newPost.hasImage = true
+                                    newPost.imageURL = URL(string: imageURL)!
+                                    posts.append(newPost)
+                                } else {
+                                    let newPost = Post(timestamp: timestamp, message: message, poster: poster, comments: comments, isComment: false)
+                                    posts.append(newPost)
+                                }
                             }
+                            
                         }
-                        
-                        var sortedPosts: [Post] = []
-                        for post in posts {
-                            if post.comments != nil {
-                                post.comments!.sort(by: { (p1, p2) -> Bool in
-                                    return p1.timestamp > p2.timestamp
-                                })
-                            }
-                        }
-                        
-                        sortedPosts = posts.sorted(by: { (p1, p2) -> Bool in
-                            return p1.timestamp > p2.timestamp
-                        })
-                        
-                        completion(sortedPosts)
-                        
                     }
                 }
             }
         }
-        
     }
     
-    public static func postToDatabase(poster: String, name: String, message: String) {
-        let ref = Database.database().reference().child("Journals").child(poster).childByAutoId()
-        let data: [String: Any] = ["poster": name,
-                                   "post": message,
-                                   "timestamp": Date().timeIntervalSince1970]
-        ref.setValue(data)
+    private static func resolveImagePosts(posts: [Post]) {
+        var postsToPass: [Post] = []
+        for post in posts {
+            getImageFromStorage(url: post.imageURL!, completion: { (image, error) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    post.postImage = image
+                    postsToPass.append(post)
+                }
+            })
+        }
+    }
+    
+    public static func postToDatabase(poster: String, name: String, message: String, imageURL: String?, completion: ()->()) {
+        
+        if imageURL != nil {
+            let ref = Database.database().reference().child("Journals").child(poster).childByAutoId()
+            let data: [String: Any] = ["poster": name,
+                                       "post": message,
+                                       "timestamp": Date().timeIntervalSince1970,
+                                       "postImageURL": imageURL!]
+            ref.setValue(data)
+            completion()
+        } else {
+            let ref = Database.database().reference().child("Journals").child(poster).childByAutoId()
+            let data: [String: Any] = ["poster": name,
+                                       "post": message,
+                                       "timestamp": Date().timeIntervalSince1970]
+            ref.setValue(data)
+            completion()
+        }
+    }
+    
+    public static func postImageToDatabase(image: UIImage, completion: @escaping (String?, Error?)->()) {
+        if let data = UIImagePNGRepresentation(image) {
+            let uid = AppSettings.currentFBUser!.uid
+            let date = Date().timeIntervalSince1970.rounded()
+            let ref = Storage.storage().reference().child("Journals").child(uid).child("PostImages").child("post-\(date)")
+            ref.putData(data, metadata: nil) { (meta, error) in
+                if error != nil {
+                    completion(nil, error)
+                } else {
+                    if let url = meta!.downloadURLs!.first {
+                        completion(url.absoluteString, nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    public static func getImageFromStorage(url: URL, completion: @escaping (UIImage?, Error?)->()) {
+        let ref = Storage.storage().reference(forURL: url.absoluteString)
+        ref.getData(maxSize: 20 * 1024 * 1024) { (data, error) in
+            if error != nil {
+                completion(nil, error!)
+            } else {
+                if let data = data {
+                    if let img = UIImage(data: data) {
+                        completion(img, nil)
+                    }
+                }
+            }
+        }
     }
     
     
@@ -543,6 +594,10 @@ protocol DatabaseObject {
     var id: String { get set }
 }
 
+protocol PostWatcher {
+    func didCompletePostFetch(posts: [Post])
+}
+
 extension AppUser {
     func changeName(changingFirst: Bool, newName: String, completion: @escaping (Error?)->()) {
         let request = Auth.auth().currentUser?.createProfileChangeRequest()
@@ -567,6 +622,9 @@ class Post {
     let poster: String
     var comments: [Post]?
     var isComment: Bool?
+    var hasImage: Bool = false
+    var postImage: UIImage?
+    var imageURL: URL?
     
     init(timestamp: TimeInterval, message: String, poster: String, comments: [Post]?, isComment: Bool?) {
         self.timestamp = timestamp

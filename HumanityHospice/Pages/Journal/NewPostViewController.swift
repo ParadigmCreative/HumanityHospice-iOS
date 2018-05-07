@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class NewPostViewController: UIViewController, UITextViewDelegate {
+class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelectorDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +23,7 @@ class NewPostViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var toolbar: UIView!
     @IBOutlet weak var attachPhotoButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var imagePreview: UIImageView!
     
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +35,8 @@ class NewPostViewController: UIViewController, UITextViewDelegate {
     func setup() {
         setupButtons()
         messageTF.inputAccessoryView = toolbar
+        imagePreview.isHidden = true
+        messageTF.becomeFirstResponder()
     }
     
     func setupButtons() {
@@ -71,10 +74,33 @@ class NewPostViewController: UIViewController, UITextViewDelegate {
         checkTextView { (verified, message) in
             if verified {
                 self.showVerificationAlert(completion: { (confirmed) in
+                    Utilities.showActivityIndicator(view: self.view)
                     if confirmed {
-                        DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!,
-                                                       name: "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)", message: message!)
-                        self.dismiss(animated: true, completion: nil)
+                        if self.imagePreview.image == nil {
+                            let name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
+                            DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!,
+                                                           name: name,
+                                                           message: message!,
+                                                           imageURL: nil, completion: {
+                                                            Utilities.closeActivityIndicator()
+                                                            self.dismiss(animated: true, completion: nil)
+                            })
+                        } else {
+                            let name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
+                            if let img = self.imagePreview.image {
+                                DatabaseHandler.postImageToDatabase(image: img, completion: { (url, error) in
+                                    if error != nil {
+                                        print(error!.localizedDescription)
+                                    } else {
+                                        DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!, name: name, message: message!, imageURL: url!, completion: {
+                                            Utilities.closeActivityIndicator()
+                                            self.dismiss(animated: true, completion: nil)
+                                        })
+                                    }
+                                })
+                            }
+                            
+                        }
                     }
                 })
             } else {
@@ -85,7 +111,13 @@ class NewPostViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func attachPhoto(_ sender: Any) {
-        print("ADD PHOTO")
+        ImageSelector.delegate = self
+        ImageSelector.open(vc: self)
+    }
+    
+    func userDidSelectImage(image: UIImage) {
+        self.imagePreview.image = image
+        self.imagePreview.isHidden = false
     }
     
     @IBAction func cancel(_ sender: Any) {
