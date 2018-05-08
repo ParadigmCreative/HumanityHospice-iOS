@@ -25,7 +25,11 @@ class JournalTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getPosts()
+        if ImageViewer.isViewing {
+            // don't update
+        } else {
+            getPosts()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,6 +68,7 @@ class JournalTableViewController: UITableViewController {
         if post.hasImage {
             let cell = tableView.dequeueReusableCell(withIdentifier: "postWithImage", for: indexPath) as! PostWithImageTableViewCell
             
+            Utilities.showActivityIndicator(view: cell)
             cell.post = post
             
             cell.nameLabel.text = post.poster
@@ -73,6 +78,7 @@ class JournalTableViewController: UITableViewController {
             cell.message.layer.cornerRadius = 5
             cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
             cell.userImage.image = #imageLiteral(resourceName: "Logo")
+            cell.postPhoto.layer.cornerRadius = 5
             
             return cell
         } else {
@@ -90,7 +96,7 @@ class JournalTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        posts[indexPath.row].viewImage(vc: self)
     }
     
     // MARK: - Get Data

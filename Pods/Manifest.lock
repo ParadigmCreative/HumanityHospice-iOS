@@ -1,4 +1,5 @@
 PODS:
+  - Cache (4.2.0)
   - DZNEmptyDataSet (1.8.1)
   - Firebase/Auth (4.0.3):
     - Firebase/Core
@@ -41,7 +42,13 @@ PODS:
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.1.1)"
   - GTMSessionFetcher/Core (1.1.10)
+  - Hue (3.0.1)
   - ImagePicker (3.0.0)
+  - Imaginary (3.0.3):
+    - Cache (~> 4.0)
+  - Lightbox (2.1.2):
+    - Hue (~> 3.0)
+    - Imaginary (~> 3.0)
   - Realm (2.8.3):
     - Realm/Headers (= 2.8.3)
   - Realm/Headers (2.8.3)
@@ -55,11 +62,13 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - ImagePicker
+  - Lightbox
   - RealmSwift
   - SnapKit (~> 4.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - Cache
     - DZNEmptyDataSet
     - Firebase
     - FirebaseAnalytics
@@ -70,12 +79,16 @@ SPEC REPOS:
     - FirebaseStorage
     - GoogleToolboxForMac
     - GTMSessionFetcher
+    - Hue
     - ImagePicker
+    - Imaginary
+    - Lightbox
     - Realm
     - RealmSwift
     - SnapKit
 
 SPEC CHECKSUMS:
+  Cache: f28f8dd64b632155aabf9b3906b036a659048251
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Firebase: 9e33fdfbca37cab635c693883caa90a4475b842b
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
@@ -86,11 +99,14 @@ SPEC CHECKSUMS:
   FirebaseStorage: 8110a1ed2034c8fbfd83890d2acc9cdbbd99afec
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
+  Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
   ImagePicker: 973953c25960fe04729a7082a56194321c6762d2
+  Imaginary: 9b45836a5af881f452a86e0a1215772ae4712d00
+  Lightbox: 2dc267df8be2285bc7724cb11cbbf4aaaf59dced
   Realm: 3601ef091c8c499a31101d8563b991e75546cdce
   RealmSwift: 8183818515471b01a99abdd2970f8e4fd52b6f4a
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 58df0ac3ef635e9091cdf0c7ca1da564fcf6fc41
+PODFILE CHECKSUM: cd5f6a634db1e9fe8aae508d49aefb779c168227
 
 COCOAPODS: 1.5.0

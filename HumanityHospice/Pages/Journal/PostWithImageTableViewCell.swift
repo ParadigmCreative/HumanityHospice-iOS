@@ -43,10 +43,10 @@ class PostWithImageTableViewCell: JournalTableViewCell {
                 self.post.postImage = image
                 DispatchQueue.main.async {
                     self.postPhoto.image = image
+                    Utilities.closeActivityIndicator()
                 }
             }
         }
-        self.postPhoto.layer.cornerRadius = 5
     }
     
 

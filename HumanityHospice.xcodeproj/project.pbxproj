@@ -20,6 +20,7 @@
 		7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */; };
 		7357DE6B20980B9700AED945 /* InviteReaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6A20980B9700AED945 /* InviteReaders.swift */; };
 		7357DE6D20980BA700AED945 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6C20980BA700AED945 /* AboutViewController.swift */; };
+		737118B720A12C0500656F8E /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737118B620A12C0500656F8E /* ImageViewer.swift */; };
 		73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */; };
 		809963FACA7973222ED35534 /* Pods_HumanityHospiceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E36CE8881F55E0DC4A9EE78 /* Pods_HumanityHospiceTests.framework */; };
 		A57636C02086F1130096C452 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A57636BF2086F1130096C452 /* GoogleService-Info.plist */; };
@@ -78,6 +79,7 @@
 		7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFamilyAccount.swift; sourceTree = "<group>"; };
 		7357DE6A20980B9700AED945 /* InviteReaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteReaders.swift; sourceTree = "<group>"; };
 		7357DE6C20980BA700AED945 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		737118B620A12C0500656F8E /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodePopUp.swift; sourceTree = "<group>"; };
 		A0742E56CFABA503B832FF38 /* Pods-HumanityHospice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospice.release.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospice/Pods-HumanityHospice.release.xcconfig"; sourceTree = "<group>"; };
 		A57636BF2086F1130096C452 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				7335B2BA209FD48F00AD5B1B /* ImageSelector.swift */,
+				737118B620A12C0500656F8E /* ImageViewer.swift */,
 			);
 			path = "Image Selector";
 			sourceTree = "<group>";
@@ -493,20 +496,28 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HumanityHospice/Pods-HumanityHospice-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Cache/Cache.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
 				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
+				"${BUILT_PRODUCTS_DIR}/Imaginary/Imaginary.framework",
+				"${BUILT_PRODUCTS_DIR}/Lightbox/Lightbox.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Imaginary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lightbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -546,6 +557,7 @@
 				A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */,
 				7335B2B2209BDFF700AD5B1B /* NewPostViewController.swift in Sources */,
 				A5FC5C1A2089367D0084BA9B /* JournalTableViewController.swift in Sources */,
+				737118B720A12C0500656F8E /* ImageViewer.swift in Sources */,
 				A5D3F972208D23470079B713 /* Utilities.swift in Sources */,
 				A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */,
 			);

@@ -14,6 +14,7 @@ pod 'RealmSwift'
 pod 'DZNEmptyDataSet'
 pod 'SnapKit', '~> 4.0'
 pod 'ImagePicker'
+pod 'Lightbox'
 
   target 'HumanityHospiceTests' do
     inherit! :search_paths
