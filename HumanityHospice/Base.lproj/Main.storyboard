@@ -425,18 +425,70 @@
             </objects>
             <point key="canvasLocation" x="4301" y="126"/>
         </scene>
-        <!--Invite Readers-->
+        <!--Invite People-->
         <scene sceneID="fdD-m6-swr">
             <objects>
                 <viewController id="4bT-RU-Nor" customClass="InviteReaders" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7aw-pF-RIi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0TF-OC-THK">
+                                <rect key="frame" x="48" y="184" width="279" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="copyCode:" destination="4bT-RU-Nor" eventType="touchUpInside" id="4Lo-bO-Oa4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o6K-w8-IyF">
+                                <rect key="frame" x="48" y="299" width="279" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="copyURL:" destination="4bT-RU-Nor" eventType="touchUpInside" id="wI8-s3-sh1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcD-gN-VZK">
+                                <rect key="frame" x="62" y="401" width="250" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Share My Access Code"/>
+                                <connections>
+                                    <action selector="shareCode:" destination="4bT-RU-Nor" eventType="touchUpInside" id="vgP-EP-NVL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDI-5S-wuK">
+                                <rect key="frame" x="62" y="474" width="250" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Share My Web URL"/>
+                                <connections>
+                                    <action selector="shareURL:" destination="4bT-RU-Nor" eventType="touchUpInside" id="gKy-KU-BLC"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Private Access Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrG-Qb-a30">
+                                <rect key="frame" x="90" y="155" width="193" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Private Access Web URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R8c-ex-0GM">
+                                <rect key="frame" x="75" y="270" width="224" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="tde-ns-WPu"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="7rB-Lr-fo8">
+                    <navigationItem key="navigationItem" title="Invite People" id="7rB-Lr-fo8">
                         <barButtonItem key="leftBarButtonItem" image="Menu" id="PJi-Hp-Bos">
                             <color key="tintColor" red="0.41568627450000001" green="0.4039215686" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
@@ -445,10 +497,37 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="URLButton" destination="o6K-w8-IyF" id="bfL-B1-iNp"/>
+                        <outlet property="URLLabel" destination="R8c-ex-0GM" id="laY-vp-dg7"/>
+                        <outlet property="accessCodeButton" destination="0TF-OC-THK" id="M5e-Jc-LhV"/>
+                        <outlet property="accessLabel" destination="qrG-Qb-a30" id="Kr1-Wh-D81"/>
+                        <outlet property="copyConfirmationView" destination="eW4-TJ-qKT" id="IBX-fD-TCW"/>
+                        <outlet property="shareAccessCodeButton" destination="vcD-gN-VZK" id="aEz-yx-qkj"/>
+                        <outlet property="shareWebURLButton" destination="gDI-5S-wuK" id="jeH-of-e4x"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7na-zD-BsN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="eW4-TJ-qKT">
+                    <rect key="frame" x="0.0" y="0.0" width="195" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copied!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pph-BU-J92">
+                            <rect key="frame" x="53.5" y="48" width="88.5" height="32"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.8862745098" green="0.90980392160000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="Pph-BU-J92" firstAttribute="centerX" secondItem="eW4-TJ-qKT" secondAttribute="centerX" id="BB7-Zi-dsz"/>
+                        <constraint firstItem="Pph-BU-J92" firstAttribute="centerY" secondItem="eW4-TJ-qKT" secondAttribute="centerY" id="caF-VW-JVT"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="R9X-ty-LXv"/>
+                </view>
             </objects>
-            <point key="canvasLocation" x="5071" y="880"/>
+            <point key="canvasLocation" x="5070" y="932"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="r8h-ae-GWw">

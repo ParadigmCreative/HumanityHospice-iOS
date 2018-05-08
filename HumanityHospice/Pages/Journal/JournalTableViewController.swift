@@ -74,6 +74,7 @@ class JournalTableViewController: UITableViewController {
             cell.nameLabel.text = post.poster
             cell.message.text = post.message
             cell.postPhoto.image = post.postImage
+            Utilities.closeActivityIndicator()
             
             cell.message.layer.cornerRadius = 5
             cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
