@@ -41,6 +41,19 @@ class InviteReaders: UIViewController {
         URLButton.layer.borderColor = UIColor.gray.cgColor
         URLButton.layer.borderWidth = 1
         URLButton.layer.cornerRadius = 5
+        
+        requestAccessCode()
+        
+    }
+    
+    private func requestAccessCode() {
+        if let user = AppSettings.currentAppUser as? DatabaseHandler.Patient {
+            if let code = user.inviteCode {
+                DispatchQueue.main.async {
+                    self.accessCodeButton.setTitle(code, for: .normal)
+                }
+            }
+        }
     }
     
     private func showConfirmation() {

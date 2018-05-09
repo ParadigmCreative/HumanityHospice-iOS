@@ -31,11 +31,6 @@ class JournalTableViewController: UITableViewController {
             getPosts()
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: - General Setup
     func setup() {
@@ -68,13 +63,14 @@ class JournalTableViewController: UITableViewController {
         if post.hasImage {
             let cell = tableView.dequeueReusableCell(withIdentifier: "postWithImage", for: indexPath) as! PostWithImageTableViewCell
             
-            Utilities.showActivityIndicator(view: cell)
+            let indicator = Utilities.createActivityIndicator(view: cell)
+            cell.indicator = indicator
             cell.post = post
             
             cell.nameLabel.text = post.poster
             cell.message.text = post.message
             cell.postPhoto.image = post.postImage
-            Utilities.closeActivityIndicator()
+            cell.postPhoto.clipsToBounds = true
             
             cell.message.layer.cornerRadius = 5
             cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
@@ -102,7 +98,7 @@ class JournalTableViewController: UITableViewController {
     
     // MARK: - Get Data
     var posts: [Post] = []
-    private func getPosts() {
+    func getPosts() {
         DatabaseHandler.getPostsFromDB { (posts) in
             
             // if patient, add first welcome post

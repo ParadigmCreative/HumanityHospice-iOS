@@ -76,12 +76,17 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
                 self.showVerificationAlert(completion: { (confirmed) in
                     Utilities.showActivityIndicator(view: self.view)
                     if confirmed {
+                        self.cancelButton.isEnabled = false
+                        self.submitPostButton.isEnabled = false
+                        self.attachPhotoButton.isEnabled = false
+                        
                         if self.imagePreview.image == nil {
                             let name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
                             DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!,
                                                            name: name,
                                                            message: message!,
-                                                           imageURL: nil, completion: {
+                                                           imageURL: nil,
+                                                           completion: {
                                                             Utilities.closeActivityIndicator()
                                                             self.dismiss(animated: true, completion: nil)
                             })

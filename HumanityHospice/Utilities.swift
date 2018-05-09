@@ -23,6 +23,16 @@ class Utilities {
         self.indicator.stopAnimating()
         self.indicator.removeFromSuperview()
     }
+    
+    public static func createActivityIndicator(view: UIView) -> UIActivityIndicatorView {
+        var indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+        indicator.color = #colorLiteral(red: 0.4605029225, green: 0.447249949, blue: 0.7566576004, alpha: 1)
+        indicator.center = view.center
+        indicator.hidesWhenStopped = true
+        view.addSubview(indicator)
+        indicator.startAnimating()
+        return indicator
+    }
 }
 
 

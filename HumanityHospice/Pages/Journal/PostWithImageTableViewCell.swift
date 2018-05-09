@@ -22,6 +22,7 @@ class PostWithImageTableViewCell: JournalTableViewCell {
     }
 
     @IBOutlet weak var postPhoto: UIImageView!
+    var indicator: UIActivityIndicatorView!
     
     var post: Post! {
         didSet {
@@ -43,7 +44,8 @@ class PostWithImageTableViewCell: JournalTableViewCell {
                 self.post.postImage = image
                 DispatchQueue.main.async {
                     self.postPhoto.image = image
-                    Utilities.closeActivityIndicator()
+                    self.indicator.stopAnimating()
+                    self.indicator.removeFromSuperview()
                 }
             }
         }

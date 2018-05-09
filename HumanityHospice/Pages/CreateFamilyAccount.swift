@@ -15,6 +15,9 @@ class CreateFamilyAccount: UIViewController {
 
         MenuHandler.staticMenu?.setHandingController(vc: self)
         print("Family")
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,5 +38,7 @@ class CreateFamilyAccount: UIViewController {
     @IBAction func openMenu(_ sender: Any) {
         MenuHandler.openMenu(vc: self)
     }
+    
+
     
 }
