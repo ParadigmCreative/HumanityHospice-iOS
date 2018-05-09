@@ -514,6 +514,37 @@ class DatabaseHandler {
         }
     }
     
+    // MARK: - Encouragement Board
+    
+    public static func getEBPosts(completion: @escaping ([EBPost])->()) {
+        let ref = Database.database().reference().child("EncouragementBoard")
+        guard let patient = AppSettings.currentPatient else { return }
+        let userRef = ref.child(patient)
+        
+        userRef.observeSingleEvent(of: .value) { (snap) in
+            if snap.childrenCount > 0 {
+                if let children = snap.children.allObjects as? [DataSnapshot] {
+                    
+                    var posts: [EBPost] = []
+                    
+                    for data in children {
+                        if let post = data.value as? [String: AnyObject] {
+                            let name = post["poster"] as! String
+                            let poster = post["posterID"] as! String
+                            let timestamp = post["timestamp"] as! TimeInterval
+                            let message = post["message"] as! String
+                            
+                            let newPost = EBPost(timestamp: timestamp, message: message, posterID: poster, posterName: name)
+                            posts.append(newPost)
+                        }
+                    }
+                    
+                    completion(posts)
+                }
+            }
+        }
+    }
+    
     
     // MARK: - Object Stuff
     
@@ -648,6 +679,29 @@ class Post {
         self.isComment = isComment
     }
 }
+
+class EBPost {
+    let timestamp: TimeInterval
+    let message: String
+    let posterName: String
+    let posterID: String
+    
+    init(timestamp: TimeInterval, message: String, posterID: String, posterName: String) {
+        self.timestamp = timestamp
+        self.message = message
+        self.posterID = posterID
+        self.posterName = posterName
+    }
+}
+
+
+
+
+
+
+
+
+
 
 
 

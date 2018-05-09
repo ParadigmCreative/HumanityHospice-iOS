@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import DZNEmptyDataSet
 
-class JournalTableViewController: UITableViewController {
+class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
 
     
     var menuDelegate: MenuHandlerDelegate?
@@ -35,7 +36,7 @@ class JournalTableViewController: UITableViewController {
     // MARK: - General Setup
     func setup() {
         self.tabBarController?.tabBar.isHidden = true
-        
+        setupEmptyDataSet()
         if let type = AppSettings.userType {
             if type != .Patient {
                 self.newPostButton.isEnabled = false
@@ -115,7 +116,28 @@ class JournalTableViewController: UITableViewController {
         self.performSegue(withIdentifier: "showNewPost", sender: self)
     }
     
- 
+    // MARK: - Empty Dataset
+    
+    func setupEmptyDataSet() {
+        self.tableView.emptyDataSetSource = self
+        self.tableView.emptyDataSetDelegate = self
+        
+        self.tableView.tableFooterView = UIView()
+        
+    }
+    
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let title = "No posts yet!"
+        let attStr = NSAttributedString(string: title)
+        return attStr
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let desc = "Click the 'compose' button at the top to write your first Journal entry!"
+        let attr = NSAttributedString(string: desc)
+        return attr
+    }
 
   
     // MARK: - Navigation
