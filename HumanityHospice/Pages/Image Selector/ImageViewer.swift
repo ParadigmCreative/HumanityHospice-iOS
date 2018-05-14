@@ -54,9 +54,11 @@ class ViewerDelegate: LightboxControllerPageDelegate, LightboxControllerDismissa
 
 extension Post {
     func viewImage(vc: UIViewController) {
-        if let image = self.postImage {
-            ImageViewer.initialize(image: image, text: self.message)
-            ImageViewer.open(vc: vc)
+        if let data = self.postImage {
+            if let image = data.getImageFromData() {
+                ImageViewer.initialize(image: image, text: self.message)
+                ImageViewer.open(vc: vc)
+            }
         }
     }
 }

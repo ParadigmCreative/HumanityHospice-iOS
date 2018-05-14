@@ -15,6 +15,7 @@
 		7335B2B6209FAFA000AD5B1B /* ProfilePickerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B5209FAFA000AD5B1B /* ProfilePickerHandler.swift */; };
 		7335B2B9209FCB0100AD5B1B /* PostWithImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B8209FCB0100AD5B1B /* PostWithImageTableViewCell.swift */; };
 		7335B2BB209FD48F00AD5B1B /* ImageSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2BA209FD48F00AD5B1B /* ImageSelector.swift */; };
+		7338482E20A7F50000EC6D01 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7338482D20A7F50000EC6D01 /* Posts.swift */; };
 		7357DE652097CC6000AED945 /* EncourangementBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE642097CC6000AED945 /* EncourangementBoard.swift */; };
 		7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6620980B6000AED945 /* PhotoAlbum.swift */; };
 		7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */; };
@@ -23,6 +24,7 @@
 		737118B720A12C0500656F8E /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737118B620A12C0500656F8E /* ImageViewer.swift */; };
 		73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */; };
 		73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */; };
+		73ED2C3820A903CF005D7AF8 /* RealmHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */; };
 		73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */; };
 		809963FACA7973222ED35534 /* Pods_HumanityHospiceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E36CE8881F55E0DC4A9EE78 /* Pods_HumanityHospiceTests.framework */; };
 		A57636C02086F1130096C452 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A57636BF2086F1130096C452 /* GoogleService-Info.plist */; };
@@ -76,6 +78,7 @@
 		7335B2B5209FAFA000AD5B1B /* ProfilePickerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePickerHandler.swift; sourceTree = "<group>"; };
 		7335B2B8209FCB0100AD5B1B /* PostWithImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWithImageTableViewCell.swift; sourceTree = "<group>"; };
 		7335B2BA209FD48F00AD5B1B /* ImageSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelector.swift; sourceTree = "<group>"; };
+		7338482D20A7F50000EC6D01 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
 		7357DE642097CC6000AED945 /* EncourangementBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncourangementBoard.swift; sourceTree = "<group>"; };
 		7357DE6620980B6000AED945 /* PhotoAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
 		7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFamilyAccount.swift; sourceTree = "<group>"; };
@@ -84,6 +87,7 @@
 		737118B620A12C0500656F8E /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncouragementBoardTableViewCell.swift; sourceTree = "<group>"; };
 		73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEBPostViewController.swift; sourceTree = "<group>"; };
+		73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHandler.swift; sourceTree = "<group>"; };
 		73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodePopUp.swift; sourceTree = "<group>"; };
 		A0742E56CFABA503B832FF38 /* Pods-HumanityHospice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospice.release.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospice/Pods-HumanityHospice.release.xcconfig"; sourceTree = "<group>"; };
 		A57636BF2086F1130096C452 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -235,6 +239,8 @@
 				A5BBD4362086EC3700B80BD0 /* Main.storyboard */,
 				A5BBD4342086EC3700B80BD0 /* ViewController.swift */,
 				A5D3F971208D23470079B713 /* Utilities.swift */,
+				7338482D20A7F50000EC6D01 /* Posts.swift */,
+				73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */,
 				A5D3F96E208D0D1C0079B713 /* Landing Process */,
 				A57CC3F120881C3000C9D776 /* Database Handler */,
 				A5FC5C1620892FAB0084BA9B /* Menu Handler */,
@@ -554,6 +560,7 @@
 				A5D3F974208D26BA0079B713 /* SignUpViewController.swift in Sources */,
 				73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */,
 				A5D3F970208D18540079B713 /* LoginViewController.swift in Sources */,
+				73ED2C3820A903CF005D7AF8 /* RealmHandler.swift in Sources */,
 				7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */,
 				7335B2B9209FCB0100AD5B1B /* PostWithImageTableViewCell.swift in Sources */,
 				A5D00665208938C30079CD49 /* MenuHandler.swift in Sources */,
@@ -564,6 +571,7 @@
 				7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */,
 				73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */,
 				7357DE6D20980BA700AED945 /* AboutViewController.swift in Sources */,
+				7338482E20A7F50000EC6D01 /* Posts.swift in Sources */,
 				A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */,
 				73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */,
 				A5BBD4352086EC3700B80BD0 /* ViewController.swift in Sources */,

@@ -10,6 +10,16 @@ import UIKit
 
 class CreateFamilyAccount: UIViewController {
 
+    
+    @IBOutlet weak var firstName: UITextField!
+    @IBOutlet weak var lastName: UITextField!
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var pass1: UITextField!
+    @IBOutlet weak var pass2: UITextField!
+    @IBOutlet weak var signupButton: UIButton!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,11 +29,55 @@ class CreateFamilyAccount: UIViewController {
         
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func setup() {
+        signupButton.setupMainButton()
+        
     }
+
+    func createFamilyAccount(first: String, last: String, email: String, password: String) {
+        checkTextView { (first, last, email, pass) in
+            print(first, last, email, pass)
+        }
+    }
+    
+    func checkTextView(completion: (String, String, String, String)->()) {
+        guard firstName.text!.count > 0 else { return }
+        guard lastName.text!.count > 0 else { return }
+        guard email.text!.count > 0 else { return }
+        guard pass1.text!.count > 0 else { return }
+        guard pass2.text!.count > 0 else { return }
+        
+        guard let first = firstName.text else { return }
+        guard let last = lastName.text else { return }
+        guard let email = email.text else { return }
+        guard pass1.text == pass2.text else { return }
+        
+        guard let pass = pass1.text else { return }
+        
+        completion(first, last, email, pass)
+        
+    }
+    
+    func showVerificationAlert(completion: @escaping (Bool)->()) {
+        let alert = UIAlertController(title: "Attention!", message: "Are you sure you want to post to the Journal?", preferredStyle: .alert)
+        let yes = UIAlertAction(title: "Yes", style: .default) { (alert) in
+            completion(true)
+        }
+        
+        let no = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
+            completion(false)
+        }
+        
+        alert.addAction(yes)
+        alert.addAction(no)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    
+    
     
 
     /*

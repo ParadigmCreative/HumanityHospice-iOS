@@ -15,11 +15,13 @@ class Utilities {
         self.indicator.color = #colorLiteral(red: 0.4605029225, green: 0.447249949, blue: 0.7566576004, alpha: 1)
         self.indicator.center = view.center
         self.indicator.hidesWhenStopped = true
+        UIApplication.shared.beginIgnoringInteractionEvents()
         view.addSubview(indicator)
         self.indicator.startAnimating()
     }
     
     public static func closeActivityIndicator() {
+        UIApplication.shared.endIgnoringInteractionEvents()
         self.indicator.stopAnimating()
         self.indicator.removeFromSuperview()
     }

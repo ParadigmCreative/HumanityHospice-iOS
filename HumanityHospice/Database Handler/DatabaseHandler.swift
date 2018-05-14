@@ -9,8 +9,11 @@
 import Foundation
 import Firebase
 import UIKit
+import RealmSwift
 
 class DatabaseHandler {
+    
+    static let realm = try! Realm()
     
     // AUTH
     /// Signs in a user using Firebase/Auth
@@ -358,7 +361,7 @@ class DatabaseHandler {
     
     // MARK: - Journal Posts
     public static var postWatcherDelegate: PostWatcher?
-    public static func getPostsFromDB(completion: @escaping ([Post])->()) {
+    public static func getPostsFromDB(completion: @escaping ([Post]?)->()) {
         let ref = Database.database().reference().child("Journals")
         var userRef: DatabaseReference?
         
@@ -400,6 +403,7 @@ class DatabaseHandler {
                                 let timestamp = post["timestamp"] as! TimeInterval
                                 let poster = post["poster"] as! String
                                 let message = post["post"] as! String
+                                let id = data.key
                                 
                                 // get comments, if any
                                 var comments: [Post] = []
@@ -409,57 +413,192 @@ class DatabaseHandler {
                                             let timestamp = comment["timestamp"] as! TimeInterval
                                             let poster = comment["poster"] as! String
                                             let message = comment["post"] as! String
+                                            let id = commentData.key
                                             
-                                            let newComment = Post(timestamp: timestamp, message: message, poster: poster, comments: nil, isComment: true)
+                                            let newComment = Post()
+                                            newComment.id = id
+                                            newComment.timestamp = timestamp
+                                            newComment.message = message
+                                            newComment.poster = poster
+                                            newComment.isComment = true
+                                            
                                             comments.append(newComment)
                                         }
                                     }
+                                    
+                                    try! realm.write {
+                                        realm.add(comments)
+                                    }
                                 }
                                 
+                                // create new object
+                                let newPost = Post()
+                                newPost.timestamp = timestamp
+                                newPost.id = id
+                                newPost.message = message
+                                newPost.poster = poster
+                                
+                                // add comments, if any
+                                if comments.count > 0 {
+                                    newPost.comments.append(objectsIn: comments)
+                                }
+                                
+                                // add image, if any
                                 if let imageURL = post["postImageURL"] as? String {
-                                    let newPost = Post(timestamp: timestamp, message: message, poster: poster, comments: comments, isComment: false)
                                     newPost.hasImage = true
-                                    newPost.imageURL = URL(string: imageURL)!
+                                    newPost.imageURL = imageURL
                                     posts.append(newPost)
                                 } else {
-                                    let newPost = Post(timestamp: timestamp, message: message, poster: poster, comments: comments, isComment: false)
+                                    newPost.hasImage = false
+                                    newPost.imageURL = nil
                                     posts.append(newPost)
                                 }
                             }
                         }
-                        
-                        var sortedPosts: [Post] = []
                         for post in posts {
-                            if post.comments != nil {
-                                post.comments!.sort(by: { (p1, p2) -> Bool in
+                            if post.comments.count > 1 {
+                                let sorted = post.comments.sorted(by: { (p1, p2) -> Bool in
                                     return p1.timestamp > p2.timestamp
                                 })
+                                post.comments.removeAll()
+                                post.comments.append(objectsIn: sorted)
                             }
                         }
-                        
-                        sortedPosts = posts.sorted(by: { (p1, p2) -> Bool in
+                        let sortedPosts: [Post] = posts.sorted(by: { (p1, p2) -> Bool in
                             return p1.timestamp > p2.timestamp
                         })
                         
+                        try! realm.write {
+                            realm.add(sortedPosts)
+                        }
+
                         completion(sortedPosts)
+                    } else {
+                        completion(nil)
                     }
                 }
             }
         }
     }
     
-    private static func resolveImagePosts(posts: [Post]) {
-        var postsToPass: [Post] = []
-        for post in posts {
-            getImageFromStorage(url: post.imageURL!, completion: { (image, error) in
-                if error != nil {
-                    print(error!.localizedDescription)
+    public static var isFirstLoad = true
+    public static func listenForPostAdded(completion: @escaping ()->()) {
+        
+        let ref = Database.database().reference().child("Journals")
+        var userRef: DatabaseReference?
+        
+        switch AppSettings.userType! {
+        case .Patient:
+            if let user = AppSettings.currentAppUser as? Patient {
+                let uRef = ref.child(user.id)
+                userRef = uRef
+            }
+        case .Reader:
+            if let user = AppSettings.currentAppUser as? Reader {
+                if user.readingFrom != "" {
+                    let uref = ref.child(user.readingFrom)
+                    userRef = uref
                 } else {
-                    post.postImage = image
-                    postsToPass.append(post)
+                    let uref = ref.child(AppSettings.currentPatient!)
+                    userRef = uref
                 }
-            })
+            }
+        case .Family:
+            if let user = AppSettings.currentAppUser as? Family {
+                let uref = ref.child(user.patient.id)
+                userRef = uref
+            }
+        default:
+            print("User is staff")
         }
+        
+        if userRef != nil {
+            userRef!.observe(.childAdded) { (snap) in
+                var posts: [Post] = []
+                if let post = snap.value as? [String: AnyObject] {
+                    let timestamp = post["timestamp"] as! TimeInterval
+                    let poster = post["poster"] as! String
+                    let message = post["post"] as! String
+                    let id = snap.key
+                    
+                    // get comments, if any
+                    var comments: [Post] = []
+                    if let commentList = post["comments"] as? [DataSnapshot] {
+                        for commentData in commentList {
+                            if let comment = commentData.value as? [String: AnyObject] {
+                                let timestamp = comment["timestamp"] as! TimeInterval
+                                let poster = comment["poster"] as! String
+                                let message = comment["post"] as! String
+                                let id = commentData.key
+                                
+                                let newComment = Post()
+                                newComment.id = id
+                                newComment.timestamp = timestamp
+                                newComment.message = message
+                                newComment.poster = poster
+                                newComment.isComment = true
+                                
+                                comments.append(newComment)
+                            }
+                        }
+                        
+                        try! realm.write {
+                            realm.add(comments)
+                        }
+                    }
+                    
+                    // create new object
+                    let newPost = Post()
+                    newPost.timestamp = timestamp
+                    newPost.id = id
+                    newPost.message = message
+                    newPost.poster = poster
+                    
+                    // add comments, if any
+                    if comments.count > 0 {
+                        newPost.comments.append(objectsIn: comments)
+                    }
+                    
+                    // add image, if any
+                    if let imageURL = post["postImageURL"] as? String {
+                        newPost.hasImage = true
+                        newPost.imageURL = imageURL
+                        posts.append(newPost)
+                    } else {
+                        newPost.hasImage = false
+                        newPost.imageURL = nil
+                        posts.append(newPost)
+                    }
+                }
+                    
+                for post in posts {
+                    if post.comments.count > 1 {
+                        
+                        let sorted = post.comments.sorted(by: { (p1, p2) -> Bool in
+                            return p1.timestamp > p2.timestamp
+                        })
+                        
+                        post.comments.removeAll()
+                        post.comments.append(objectsIn: sorted)
+                        
+                    }
+                }
+                
+                let sortedPosts: [Post] = posts.sorted(by: { (p1, p2) -> Bool in
+                    return p1.timestamp > p2.timestamp
+                })
+                
+                try! realm.write {
+                    realm.add(sortedPosts, update: true)
+                }
+                
+                completion()
+            }
+        }
+    }
+    
+    public static func removePostFromDB() {
+        
     }
     
     public static func postToDatabase(poster: String, name: String, message: String, imageURL: String?, completion: ()->()) {
@@ -485,7 +624,7 @@ class DatabaseHandler {
     public static func postImageToDatabase(image: UIImage, completion: @escaping (String?, Error?)->()) {
         if let data = UIImagePNGRepresentation(image) {
             let uid = AppSettings.currentFBUser!.uid
-            let date = Date().timeIntervalSince1970.rounded()
+            let date = Int(Date().timeIntervalSince1970.rounded())
             let ref = Storage.storage().reference().child("Journals").child(uid).child("PostImages").child("post-\(date)")
             ref.putData(data, metadata: nil) { (meta, error) in
                 if error != nil {
@@ -497,6 +636,23 @@ class DatabaseHandler {
                 }
             }
         }
+    }
+    
+    public static var currentPostStack: [String] = []
+    public static func checkForImageChanges(urlFromDB url: URL) -> Bool {
+        let ref = Storage.storage().reference(forURL: url.absoluteString)
+        let name = ref.name
+        
+        for img in currentPostStack {
+            if img == name {
+                return true
+            } else {
+                currentPostStack.append(name)
+                return false
+            }
+        }
+        
+        return false
     }
     
     public static func getImageFromStorage(url: URL, completion: @escaping (UIImage?, Error?)->()) {
@@ -532,17 +688,40 @@ class DatabaseHandler {
                             let name = post["poster"] as! String
                             let poster = post["posterID"] as! String
                             let timestamp = post["timestamp"] as! TimeInterval
-                            let message = post["message"] as! String
+                            let message = post["post"] as! String
                             
-                            let newPost = EBPost(timestamp: timestamp, message: message, posterID: poster, posterName: name)
+//                            let newPost = EBPost(timestamp: timestamp, message: message, posterID: poster, posterName: name)
+//                            posts.append(newPost)
+                            
+                            let newPost = EBPost()
+                            newPost.timestamp = timestamp
+                            newPost.message = message
+                            newPost.posterID = poster
+                            newPost.posterName = name
+                            
                             posts.append(newPost)
+                            
                         }
+                    }
+                    
+                    try! realm.write {
+                        realm.add(posts)
                     }
                     
                     completion(posts)
                 }
             }
         }
+    }
+    
+    public static func postEBToDatabase(posterID: String, posterName: String, message: String, completion: ()->()) {
+        let data: [String: Any] = ["posterID": posterID,
+                                   "poster": posterName,
+                                   "post": message,
+                                   "timestamp": Date().timeIntervalSince1970]
+        let ref = Database.database().reference().child("EncouragementBoard").child(AppSettings.currentPatient!).childByAutoId()
+        ref.setValue(data)
+        completion()
     }
     
     
@@ -661,7 +840,7 @@ extension AppUser {
     }
 }
 
-class Post {
+class dPost {
     let timestamp: TimeInterval
     let message: String
     let poster: String
@@ -680,7 +859,7 @@ class Post {
     }
 }
 
-class EBPost {
+class dEBPost {
     let timestamp: TimeInterval
     let message: String
     let posterName: String

@@ -30,9 +30,6 @@ class NewEBPostViewController: UIViewController, UITextViewDelegate {
     
     
     
-    
-    
-    
     // MARK: - Setup
     func setup() {
         setupButtons()
@@ -64,7 +61,21 @@ class NewEBPostViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func submitPost(_ sender: Any) {
-        
+        checkTextView { (done, text) in
+            if done {
+                showVerificationAlert(completion: { (verified) in
+                    if verified {
+                        Utilities.showActivityIndicator(view: self.view)
+                        let uid = AppSettings.currentAppUser!.id
+                        let name = AppSettings.currentAppUser!.fullName()
+                        DatabaseHandler.postEBToDatabase(posterID: uid, posterName: name, message: text!, completion: {
+                            Utilities.closeActivityIndicator()
+                            self.dismiss(animated: true, completion: nil)
+                        })
+                    }
+                })
+            }
+        }
     }
     
     @IBAction func exit(_ sender: Any) {
@@ -72,6 +83,15 @@ class NewEBPostViewController: UIViewController, UITextViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
+    func checkTextView(completion: (Bool, String?)->()) {
+        if let text = messageTF.text {
+            if text.count > 0 {
+                completion(true, text)
+            } else {
+                completion(false, nil)
+            }
+        }
+    }
     
     func showVerificationAlert(completion: @escaping (Bool)->()) {
         let alert = UIAlertController(title: "Attention!", message: "Are you sure you want to post to the Journal?", preferredStyle: .alert)

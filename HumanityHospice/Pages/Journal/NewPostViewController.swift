@@ -112,7 +112,6 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
                 showAlert(title: "Hmm...", message: "Please make sure you've ")
             }
         }
-        
     }
     
     @IBAction func attachPhoto(_ sender: Any) {

@@ -21,20 +21,17 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         MenuHandler.initialize(vc: self)
         menuDelegate = MenuHandler.staticMenu
         setup()
-        getPosts()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if ImageViewer.isViewing {
-            // don't update
-        } else {
-            getPosts()
-        }
+        
     }
     
     // MARK: - General Setup
     func setup() {
+        resetPosts()
+        getPosts()
         self.tabBarController?.tabBar.isHidden = true
         setupEmptyDataSet()
         if let type = AppSettings.userType {
@@ -43,6 +40,10 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
                 self.navigationItem.rightBarButtonItem = nil
             }
         }
+    }
+    
+    func resetPosts() {
+        RealmHandler.resetJournalPosts()
     }
 
     // MARK: - Table view data source
@@ -70,7 +71,6 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             
             cell.nameLabel.text = post.poster
             cell.message.text = post.message
-            cell.postPhoto.image = post.postImage
             cell.postPhoto.clipsToBounds = true
             
             cell.message.layer.cornerRadius = 5
@@ -101,9 +101,22 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     var posts: [Post] = []
     func getPosts() {
         DatabaseHandler.getPostsFromDB { (posts) in
-            
-            // if patient, add first welcome post
-            
+            if let posts = posts {
+                self.posts = posts
+            }
+            self.tableView.reloadData()
+            self.listenForRemoval()
+            self.listenForAddition()
+        }
+    }
+    
+    func listenForRemoval() {
+        
+    }
+    
+    func listenForAddition() {
+        DatabaseHandler.listenForPostAdded {
+            let posts = RealmHandler.getPostList()
             self.posts = posts
             self.tableView.reloadData()
         }

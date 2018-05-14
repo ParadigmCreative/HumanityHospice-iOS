@@ -16,13 +16,20 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
         
         MenuHandler.staticMenu?.setHandingController(vc: self)
         setupEmptyDataSet()
-        getPosts()
         
+        if let type = AppSettings.userType {
+            if type == .Patient {
+                self.newPostButton.isEnabled = false
+                self.navigationItem.rightBarButtonItem = nil
+            }
+        }
+        
+        getPosts()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        getPosts()
     }
     
     
@@ -41,20 +48,22 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "EBCell", for: indexPath) as! EncouragementBoardTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ebpost", for: indexPath) as! EncouragementBoardTableViewCell
         
+        let post = ebposts[indexPath.row]
         
+        cell.messageTF.text = post.message
+        cell.nameLabel.text = post.posterName
+        cell.messageTF.layer.cornerRadius = 5
+        cell.messageTF.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
         
         return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
     }
     
     //MARK: - Button Actions
     
     // newPostButton
+    @IBOutlet weak var newPostButton: UIBarButtonItem!
     @IBAction  func newPost(_ sender: Any) {
         performSegue(withIdentifier: "showNewPostVC", sender: self)
     }
@@ -62,7 +71,42 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
     func getPosts() {
         DatabaseHandler.getEBPosts { (posts) in
             if posts.count > 0 {
-                self.ebposts = posts
+                
+                let postsToSet = self.setPosts(posts: posts)
+                
+                self.ebposts = postsToSet
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func sortPosts(posts: [EBPost]) -> [EBPost] {
+        let sorted = posts.sorted { (p1, p2) -> Bool in
+            return p1.timestamp > p2.timestamp
+        }
+        return sorted
+    }
+    
+    func setPosts(posts: [EBPost]) -> [EBPost] {
+        switch AppSettings.userType! {
+        case .Patient:
+            // Get everything
+            
+            let sorted = sortPosts(posts: posts)
+            return sorted
+            
+        case .Family, .Reader, .Staff:
+            // Get only the ones that match the ID
+            
+            if let uid = AppSettings.currentFBUser?.uid {
+                let filtered = posts.filter { (post) -> Bool in
+                    return post.posterID == uid
+                }
+                
+                let sorted = sortPosts(posts: filtered)
+                return sorted
+            } else {
+                return []
             }
         }
     }
@@ -88,6 +132,12 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
         let desc = "Share your invite code to allow people to post in your Encouragement Board!"
         let attr = NSAttributedString(string: desc)
         return attr
+    }
+    
+    @IBAction func toggleMenu(_ sender: Any) {
+        
+        MenuHandler.openMenu(vc: self)
+        
     }
 
 }

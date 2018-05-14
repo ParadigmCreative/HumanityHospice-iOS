@@ -28,3 +28,10 @@ class AppSettings {
         ProfilePickerHandler.chosenPhoto = nil
     }
 }
+
+extension AppUser {
+    func fullName() -> String {
+        let name = "\(self.firstName) \(self.lastName)"
+        return name
+    }
+}
