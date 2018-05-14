@@ -34,7 +34,6 @@ class PostWithImageTableViewCell: JournalTableViewCell {
                         self.postPhoto.image = img
                         self.indicator.stopAnimating()
                         self.indicator.removeFromSuperview()
-                        UIApplication.shared.endIgnoringInteractionEvents()
                     }
                 }
             }

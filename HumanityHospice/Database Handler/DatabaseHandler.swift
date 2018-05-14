@@ -482,6 +482,7 @@ class DatabaseHandler {
     }
     
     public static var isFirstLoad = true
+    public static var addedListenerHandle: DatabaseHandle?
     public static func listenForPostAdded(completion: @escaping ()->()) {
         
         let ref = Database.database().reference().child("Journals")
@@ -513,7 +514,7 @@ class DatabaseHandler {
         }
         
         if userRef != nil {
-            userRef!.observe(.childAdded) { (snap) in
+            let handle = userRef!.observe(.childAdded) { (snap) in
                 var posts: [Post] = []
                 if let post = snap.value as? [String: AnyObject] {
                     let timestamp = post["timestamp"] as! TimeInterval
@@ -594,6 +595,8 @@ class DatabaseHandler {
                 
                 completion()
             }
+            
+            addedListenerHandle = handle
         }
     }
     
