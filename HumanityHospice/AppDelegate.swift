@@ -47,6 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Database.database().reference().removeObserver(withHandle: handle)
         }
         
+        if let handle2 = DatabaseHandler.removedListenerHandle {
+            Database.database().reference().removeObserver(withHandle: handle2)
+        }
+        
     }
 
 

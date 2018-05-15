@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateFamilyAccount: UIViewController {
+class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
 
     
     @IBOutlet weak var firstName: UITextField!
@@ -25,13 +25,18 @@ class CreateFamilyAccount: UIViewController {
 
         MenuHandler.staticMenu?.setHandingController(vc: self)
         print("Family")
-        
+        setup()
         
         
     }
     
     func setup() {
         signupButton.setupMainButton()
+        firstName.delegate = self
+        lastName.delegate = self
+        email.delegate = self
+        pass1.delegate = self
+        pass2.delegate = self
         
     }
 
@@ -93,6 +98,36 @@ class CreateFamilyAccount: UIViewController {
         MenuHandler.openMenu(vc: self)
     }
     
+    
+    // MARK: - TextField Delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == firstName {
+            lastName.becomeFirstResponder()
+        } else if textField == lastName {
+            email.becomeFirstResponder()
+        } else if textField == email {
+            pass1.becomeFirstResponder()
+        } else if textField == pass1 {
+            pass2.becomeFirstResponder()
+        } else if textField == pass2 {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
 
     
 }
+
+
+
+
+
+
+
+
+
+
+
+

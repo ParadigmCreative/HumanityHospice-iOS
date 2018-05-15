@@ -476,6 +476,8 @@ class DatabaseHandler {
                     } else {
                         completion(nil)
                     }
+                } else {
+                    completion(nil)
                 }
             }
         }
@@ -483,6 +485,7 @@ class DatabaseHandler {
     
     public static var isFirstLoad = true
     public static var addedListenerHandle: DatabaseHandle?
+    public static var removedListenerHandle: DatabaseHandle?
     public static func listenForPostAdded(completion: @escaping ()->()) {
         
         let ref = Database.database().reference().child("Journals")
@@ -589,19 +592,65 @@ class DatabaseHandler {
                     return p1.timestamp > p2.timestamp
                 })
                 
+                
+                // Make sure post is written
+                let postCheck = RealmHandler.getPostList()
+                print("Before:", postCheck.count)
                 try! realm.write {
                     realm.add(sortedPosts, update: true)
                 }
-                
                 completion()
             }
             
             addedListenerHandle = handle
         }
     }
-    
-    public static func removePostFromDB() {
+
+    public static func listenForPostRemoved(completion: @escaping ()->()) {
+        let ref = Database.database().reference().child("Journals")
+        var userRef: DatabaseReference?
         
+        switch AppSettings.userType! {
+        case .Patient:
+            if let user = AppSettings.currentAppUser as? Patient {
+                let uRef = ref.child(user.id)
+                userRef = uRef
+            }
+        case .Reader:
+            if let user = AppSettings.currentAppUser as? Reader {
+                if user.readingFrom != "" {
+                    let uref = ref.child(user.readingFrom)
+                    userRef = uref
+                } else {
+                    let uref = ref.child(AppSettings.currentPatient!)
+                    userRef = uref
+                }
+            }
+        case .Family:
+            if let user = AppSettings.currentAppUser as? Family {
+                let uref = ref.child(user.patient.id)
+                userRef = uref
+            }
+        default:
+            print("User is staff")
+        }
+        
+        if userRef != nil {
+            let handle = userRef!.observe(.childRemoved) { (snap) in
+                if let post = snap.value as? [String: AnyObject] {
+                    let id = snap.key
+                    
+                    if let delete = RealmHandler.getPost(id: id) {
+                        RealmHandler.delete(post: delete, completion: { (done) in
+                            if done {
+                                completion()
+                            }
+                        })
+                    }
+                }
+            }
+            removedListenerHandle = handle
+        }
     }
     
     public static func postToDatabase(poster: String, name: String, message: String, imageURL: String?, completion: ()->()) {
@@ -621,6 +670,31 @@ class DatabaseHandler {
                                        "timestamp": Date().timeIntervalSince1970]
             ref.setValue(data)
             completion()
+        }
+    }
+    public static func removeFromDatabase(post: Post, completion: @escaping (Bool)->()) {
+        if post.hasImage {
+            if let url = post.imageURL {
+                let ref = Storage.storage().reference(forURL: url)
+                ref.delete { (error) in
+                    if error != nil {
+                        print("Error! Couldn't delete the photo at that location")
+                        completion(false)
+                    } else {
+                        print("Successfully deleted Photo from storage")
+                        
+                        let patient = Database.database().reference().child("Journals").child(AppSettings.currentPatient!)
+                        let pRef = patient.child(post.id)
+                        pRef.setValue(nil)
+                        completion(true)
+                    }
+                }
+            }
+        } else {
+            let patient = Database.database().reference().child("Journals").child(AppSettings.currentPatient!)
+            let pRef = patient.child(post.id)
+            pRef.setValue(nil)
+            completion(true)
         }
     }
     

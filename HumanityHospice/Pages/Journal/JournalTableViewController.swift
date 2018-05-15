@@ -31,7 +31,8 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     // MARK: - General Setup
     func setup() {
         resetPosts()
-        getPosts()
+        listenForAddition()
+        listenForRemoval()
         self.tabBarController?.tabBar.isHidden = true
         setupEmptyDataSet()
         if let type = AppSettings.userType {
@@ -97,6 +98,25 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         posts[indexPath.row].viewImage(vc: self)
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if AppSettings.userType == DatabaseHandler.UserType.Patient {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let post = self.posts[indexPath.row]
+            DatabaseHandler.removeFromDatabase(post: post) { (done) in
+                if done {
+                    print("Deleted From Firebase")
+                }
+            }
+        }
+    }
+    
     // MARK: - Get Data
     var posts: [Post] = []
     func getPosts() {
@@ -105,18 +125,22 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
                 self.posts = posts
             }
             self.tableView.reloadData()
-            self.listenForRemoval()
-            self.listenForAddition()
         }
     }
     
     func listenForRemoval() {
-        
+        DatabaseHandler.listenForPostRemoved {
+            let posts = RealmHandler.getPostList()
+            print("After:", posts.count)
+            self.posts = posts
+            self.tableView.reloadData()
+        }
     }
     
     func listenForAddition() {
         DatabaseHandler.listenForPostAdded {
             let posts = RealmHandler.getPostList()
+            print("After:", posts.count)
             self.posts = posts
             self.tableView.reloadData()
         }

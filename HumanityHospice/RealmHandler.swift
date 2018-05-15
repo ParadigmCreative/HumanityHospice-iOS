@@ -31,4 +31,19 @@ class RealmHandler {
         
         return sorted
     }
+    
+    public static func getPost(id: String) -> Post? {
+        if let post = realm.object(ofType: Post.self, forPrimaryKey: id) {
+            return post
+        } else {
+            return nil
+        }
+    }
+    
+    public static func delete(post: Post, completion: (Bool)->()) {
+        try! realm.write {
+            realm.delete(post)
+            completion(true)
+        }
+    }
 }
