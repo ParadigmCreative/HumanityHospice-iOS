@@ -36,7 +36,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         self.tabBarController?.tabBar.isHidden = true
         setupEmptyDataSet()
         if let type = AppSettings.userType {
-            if type != .Patient {
+            if type != .Patient || type != .Family {
                 self.newPostButton.isEnabled = false
                 self.navigationItem.rightBarButtonItem = nil
             }

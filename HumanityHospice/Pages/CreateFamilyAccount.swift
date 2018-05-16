@@ -87,6 +87,7 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
                 if verified {
                     DatabaseHandler.createFamilAccount(first: first, last: last, email: email, pass: pass, completion: {
                         print("Done creating family account!")
+                        self.clearFields()
                     })
                 } else {
                     print("Cancelled")
@@ -95,7 +96,13 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
+    func clearFields() {
+        firstName.text = ""
+        lastName.text = ""
+        email.text = ""
+        pass1.text = ""
+        pass2.text = ""
+    }
     
 
     /*

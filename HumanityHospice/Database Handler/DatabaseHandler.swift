@@ -200,15 +200,26 @@ class DatabaseHandler {
         }
     }
     
+    public static var secondaryAuth: Auth?
+    public static func setupSecondaryAuth() {
+        if let secondaryApp = FirebaseApp.app(name: "CreatingUsersApp") {
+            let secondaryAppAuth = Auth.auth(app: secondaryApp)
+            secondaryAuth = secondaryAppAuth
+        } else {
+            FirebaseApp.configure(name: "CreatingUsersApp", options: FirebaseApp.app()!.options)
+            if let secondaryApp = FirebaseApp.app(name: "CreatingUsersApp") {
+                let secondaryAppAuth = Auth.auth(app: secondaryApp)
+                secondaryAuth = secondaryAppAuth
+            }
+        }
+    }
     public static func createFamilAccount(first: String,
                                           last: String,
                                           email: String,
                                           pass: String, completion: @escaping ()->()) {
-        FirebaseApp.configure(name: "CreatingUsersApp", options: FirebaseApp.app()!.options)
         
-        if let secondaryApp = FirebaseApp.app(name: "CreatingUsersApp") {
-            let secondaryAppAuth = Auth.auth(app: secondaryApp)
-            secondaryAppAuth.createUser(withEmail: email, password: pass) { (user, error) in
+        if let secondaryAuth = secondaryAuth {
+            secondaryAuth.createUser(withEmail: email, password: pass) { (user, error) in
                 if error != nil {
                     print(error!.localizedDescription)
                 } else {
@@ -242,7 +253,49 @@ class DatabaseHandler {
                             }
                         })
                     } else {
-                        
+                        print("Did nopt get user back")
+                    }
+                }
+            }
+        } else {
+            setupSecondaryAuth()
+            if let secondaryAuth = secondaryAuth {
+                secondaryAuth.createUser(withEmail: email, password: pass) { (user, error) in
+                    if error != nil {
+                        print(error!.localizedDescription)
+                    } else {
+                        if user != nil {
+                            print("User Created! \(user!.uid) Updating Info")
+                            let req = user?.createProfileChangeRequest()
+                            req?.displayName = "\(first) \(last)"
+                            req?.commitChanges(completion: { (error) in
+                                if error != nil {
+                                    print("Couldn't perform profile changes")
+                                } else {
+                                    print("Successfully changed profile information")
+                                    if let patient = AppSettings.currentPatient {
+                                        let appuser = Family(id: user!.uid,
+                                                             firstName: first,
+                                                             lastName: last,
+                                                             patient: patient,
+                                                             profilePic: nil)
+                                        
+                                        DatabaseHandler.createUserReference(type: .Family,
+                                                                            user: appuser,
+                                                                            completion: { (error, done) in
+                                                                                if error != nil {
+                                                                                    print("Error! :", error!.localizedDescription)
+                                                                                } else {
+                                                                                    print("Created Family Account Reference")
+                                                                                    completion()
+                                                                                }
+                                        })
+                                    }
+                                }
+                            })
+                        } else {
+                            print("Did not get a user back")
+                        }
                     }
                 }
             }
