@@ -200,6 +200,55 @@ class DatabaseHandler {
         }
     }
     
+    public static func createFamilAccount(first: String,
+                                          last: String,
+                                          email: String,
+                                          pass: String, completion: @escaping ()->()) {
+        FirebaseApp.configure(name: "CreatingUsersApp", options: FirebaseApp.app()!.options)
+        
+        if let secondaryApp = FirebaseApp.app(name: "CreatingUsersApp") {
+            let secondaryAppAuth = Auth.auth(app: secondaryApp)
+            secondaryAppAuth.createUser(withEmail: email, password: pass) { (user, error) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    if user != nil {
+                        print("User Created! \(user!.uid) Updating Info")
+                        let req = user?.createProfileChangeRequest()
+                        req?.displayName = "\(first) \(last)"
+                        req?.commitChanges(completion: { (error) in
+                            if error != nil {
+                                print("Couldn't perform profile changes")
+                            } else {
+                                print("Successfully changed profile information")
+                                if let patient = AppSettings.currentPatient {
+                                    let appuser = Family(id: user!.uid,
+                                                         firstName: first,
+                                                         lastName: last,
+                                                         patient: patient,
+                                                         profilePic: nil)
+                                    
+                                    DatabaseHandler.createUserReference(type: .Family,
+                                                                        user: appuser,
+                                                                        completion: { (error, done) in
+                                                                            if error != nil {
+                                                                                print("Error! :", error!.localizedDescription)
+                                                                            } else {
+                                                                                print("Created Family Account Reference")
+                                                                                completion()
+                                                                            }
+                                    })
+                                }
+                            }
+                        })
+                    } else {
+                        
+                    }
+                }
+            }
+        }
+    }
+    
     static func signOut() {
         do {
             try Auth.auth().signOut()
@@ -244,7 +293,7 @@ class DatabaseHandler {
             
             let data: [String: Any] = ["MetaData": ["firstName": familyMember.firstName,
                                                     "lastName": familyMember.lastName],
-                                       "Patient": familyMember.patient.id]
+                                       "Patient": familyMember.patient]
             dataToSend = data
         case .Reader:
             let reader = user as! Reader
@@ -383,7 +432,7 @@ class DatabaseHandler {
             }
         case .Family:
             if let user = AppSettings.currentAppUser as? Family {
-                let uref = ref.child(user.patient.id)
+                let uref = ref.child(user.patient)
                 userRef = uref
             }
         default:
@@ -509,7 +558,7 @@ class DatabaseHandler {
             }
         case .Family:
             if let user = AppSettings.currentAppUser as? Family {
-                let uref = ref.child(user.patient.id)
+                let uref = ref.child(user.id)
                 userRef = uref
             }
         default:
@@ -628,7 +677,7 @@ class DatabaseHandler {
             }
         case .Family:
             if let user = AppSettings.currentAppUser as? Family {
-                let uref = ref.child(user.patient.id)
+                let uref = ref.child(user.id)
                 userRef = uref
             }
         default:
@@ -848,7 +897,7 @@ class DatabaseHandler {
         var id: String
         var firstName: String
         var lastName: String
-        let patient: Patient
+        let patient: String
         var profilePic: UIImage? = nil
     }
     

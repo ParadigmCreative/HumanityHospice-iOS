@@ -64,8 +64,8 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
         
     }
     
-    func showVerificationAlert(completion: @escaping (Bool)->()) {
-        let alert = UIAlertController(title: "Attention!", message: "Are you sure you want to post to the Journal?", preferredStyle: .alert)
+    func showVerificationAlert(member: String, completion: @escaping (Bool)->()) {
+        let alert = UIAlertController(title: "Attention!", message: "Are you sure you want to add \(member) as a family member?", preferredStyle: .alert)
         let yes = UIAlertAction(title: "Yes", style: .default) { (alert) in
             completion(true)
         }
@@ -81,6 +81,19 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
     }
     
     
+    @IBAction func createFamilyAccount(_ sender: Any) {
+        checkTextView { (first, last, email, pass) in
+            showVerificationAlert(member: first, completion: { (verified) in
+                if verified {
+                    DatabaseHandler.createFamilAccount(first: first, last: last, email: email, pass: pass, completion: {
+                        print("Done creating family account!")
+                    })
+                } else {
+                    print("Cancelled")
+                }
+            })
+        }
+    }
     
     
     
