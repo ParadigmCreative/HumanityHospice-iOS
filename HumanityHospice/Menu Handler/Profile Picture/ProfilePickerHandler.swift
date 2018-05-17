@@ -33,7 +33,7 @@ class ProfilePickerHandler {
     }
     
     static func close() {
-        picker?.dismiss(animated: true, completion: nil)
+        picker!.dismiss(animated: true, completion: nil)
     }
     
     

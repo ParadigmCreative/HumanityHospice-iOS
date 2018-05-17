@@ -216,12 +216,13 @@ class DatabaseHandler {
     public static func createFamilAccount(first: String,
                                           last: String,
                                           email: String,
-                                          pass: String, completion: @escaping ()->()) {
+                                          pass: String, completion: @escaping (Error?)->()) {
         
         if let secondaryAuth = secondaryAuth {
             secondaryAuth.createUser(withEmail: email, password: pass) { (user, error) in
                 if error != nil {
                     print(error!.localizedDescription)
+                    completion(error!)
                 } else {
                     if user != nil {
                         print("User Created! \(user!.uid) Updating Info")
@@ -230,6 +231,7 @@ class DatabaseHandler {
                         req?.commitChanges(completion: { (error) in
                             if error != nil {
                                 print("Couldn't perform profile changes")
+                                completion(error!)
                             } else {
                                 print("Successfully changed profile information")
                                 if let patient = AppSettings.currentPatient {
@@ -244,9 +246,10 @@ class DatabaseHandler {
                                                                         completion: { (error, done) in
                                                                             if error != nil {
                                                                                 print("Error! :", error!.localizedDescription)
+                                                                                completion(error!)
                                                                             } else {
                                                                                 print("Created Family Account Reference")
-                                                                                completion()
+                                                                                completion(nil)
                                                                             }
                                     })
                                 }
@@ -263,6 +266,7 @@ class DatabaseHandler {
                 secondaryAuth.createUser(withEmail: email, password: pass) { (user, error) in
                     if error != nil {
                         print(error!.localizedDescription)
+                        completion(error!)
                     } else {
                         if user != nil {
                             print("User Created! \(user!.uid) Updating Info")
@@ -271,6 +275,7 @@ class DatabaseHandler {
                             req?.commitChanges(completion: { (error) in
                                 if error != nil {
                                     print("Couldn't perform profile changes")
+                                    completion(error!)
                                 } else {
                                     print("Successfully changed profile information")
                                     if let patient = AppSettings.currentPatient {
@@ -280,14 +285,14 @@ class DatabaseHandler {
                                                              patient: patient,
                                                              profilePic: nil)
                                         
-                                        DatabaseHandler.createUserReference(type: .Family,
-                                                                            user: appuser,
+                                        DatabaseHandler.createUserReference(type: .Family, user: appuser,
                                                                             completion: { (error, done) in
                                                                                 if error != nil {
-                                                                                    print("Error! :", error!.localizedDescription)
+                                                                                    print("Error! :",error!.localizedDescription)
+                                                                                    completion(error!)
                                                                                 } else {
                                                                                     print("Created Family Account Reference")
-                                                                                    completion()
+                                                                                    completion(nil)
                                                                                 }
                                         })
                                     }
@@ -299,7 +304,7 @@ class DatabaseHandler {
                     }
                 }
             }
-        }
+    }
     }
     
     static func signOut() {

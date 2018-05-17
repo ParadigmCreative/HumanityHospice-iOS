@@ -23,8 +23,10 @@ class ProfilePickerDelegate: ImagePickerDelegate {
             DatabaseHandler.setProfilePicture { (done, error)  in
                 if done {
                     print("Done setting profile image to storage")
+                    imagePicker.dismiss(animated: true, completion: nil)
                 } else {
                     print(error)
+                    imagePicker.dismiss(animated: true, completion: nil)
                 }
             }
         }

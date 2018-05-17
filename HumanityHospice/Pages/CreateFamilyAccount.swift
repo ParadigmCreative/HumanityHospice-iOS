@@ -48,16 +48,34 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
     }
     
     func checkTextView(completion: (String, String, String, String)->()) {
-        guard firstName.text!.count > 0 else { return }
-        guard lastName.text!.count > 0 else { return }
-        guard email.text!.count > 0 else { return }
-        guard pass1.text!.count > 0 else { return }
-        guard pass2.text!.count > 0 else { return }
+        guard firstName.text!.count > 0 else {
+            self.showAlert(title: "Hmm...", message: "Please enter a first name")
+            return
+        }
+        guard lastName.text!.count > 0 else {
+            self.showAlert(title: "Hmm...", message: "Please enter a last name")
+            return
+        }
+        guard email.text!.count > 0 else {
+            self.showAlert(title: "Hmm...", message: "Please enter a valid email")
+            return
+        }
+        guard pass1.text!.count > 0 else {
+            self.showAlert(title: "Hmm...", message: "Please enter a valid password")
+            return
+        }
+        guard pass2.text!.count > 0 else {
+            self.showAlert(title: "Hmm...", message: "Please re enter your password")
+            return
+        }
         
         guard let first = firstName.text else { return }
         guard let last = lastName.text else { return }
         guard let email = email.text else { return }
-        guard pass1.text == pass2.text else { return }
+        guard pass1.text == pass2.text else {
+            self.showAlert(title: "Hmm...", message: "Your passwords do not match.")
+            return
+        }
         
         guard let pass = pass1.text else { return }
         
@@ -86,10 +104,17 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
         checkTextView { (first, last, email, pass) in
             showVerificationAlert(member: first, completion: { (verified) in
                 if verified {
-                    DatabaseHandler.createFamilAccount(first: first, last: last, email: email, pass: pass, completion: {
-                        print("Done creating family account!")
-                        self.clearFields()
-                        self.showConfirmation()
+                    Utilities.showActivityIndicator(view: self.view)
+                    DatabaseHandler.createFamilAccount(first: first, last: last, email: email, pass: pass, completion: { (error) in
+                        if error != nil {
+                            Utilities.closeActivityIndicator()
+                            self.showAlert(title: "Hmm...", message: error!.localizedDescription)
+                        } else {
+                            print("Done creating family account!")
+                            Utilities.closeActivityIndicator()
+                            self.clearFields()
+                            self.showConfirmation()
+                        }
                     })
                 } else {
                     print("Cancelled")
