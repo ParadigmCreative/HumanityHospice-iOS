@@ -7,27 +7,26 @@
 //
 
 import Foundation
-import Lightbox
+//import Lightbox
+import Serrata
 
 class ImageViewer {
-    private static var viewer = LightboxController()
+//    private static var viewer = LightboxController()
+    private static var viewer = SlideLeafViewController()
     private static var viewerDelegate = ViewerDelegate()
     public static var isViewing: Bool = false
     
     public static func initialize(image: UIImage, text: String) {
-        let img = LightboxImage(image: image, text: text, videoURL: nil)
-        
-        viewer = LightboxController(images: [img], startIndex: 0)
-        viewer.pageDelegate = viewerDelegate
-        viewer.dismissalDelegate = viewerDelegate
-        
-        viewer.dynamicBackground = true
+
+        let leaf = SlideLeaf(image: image, title: "", caption: text)
+        viewer = SlideLeafViewController.make(leafs: [leaf])
+        viewer.delegate = viewerDelegate
         
     }
     
     
     public static func reset() {
-        viewer = LightboxController()
+        viewer = SlideLeafViewController()
         isViewing = false
     }
     
@@ -40,14 +39,14 @@ class ImageViewer {
 }
 
 
-class ViewerDelegate: LightboxControllerPageDelegate, LightboxControllerDismissalDelegate {
+class ViewerDelegate: SlideLeafViewControllerDelegate {
     
-    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
-        print("Page:", page)
+    func slideLeafViewControllerDismissed(slideLeaf: SlideLeaf, pageIndex: Int) {
+        ImageViewer.reset()
     }
     
-    func lightboxControllerWillDismiss(_ controller: LightboxController) {
-        ImageViewer.reset()
+    func tapImageDetailView(slideLeaf: SlideLeaf, pageIndex: Int) {
+        
     }
     
     

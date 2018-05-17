@@ -1,5 +1,4 @@
 PODS:
-  - Cache (4.2.0)
   - DZNEmptyDataSet (1.8.1)
   - Firebase/Auth (5.0.1):
     - Firebase/CoreOnly
@@ -27,19 +26,16 @@ PODS:
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - GTMSessionFetcher/Core (1.1.15)
-  - Hue (3.0.1)
   - ImagePicker (3.0.0)
-  - Imaginary (3.0.3):
-    - Cache (~> 4.0)
+  - Kingfisher (4.8.0)
   - leveldb-library (1.20)
-  - Lightbox (2.1.2):
-    - Hue (~> 3.0)
-    - Imaginary (~> 3.0)
   - Realm (3.5.0):
     - Realm/Headers (= 3.5.0)
   - Realm/Headers (3.5.0)
   - RealmSwift (3.5.0):
     - Realm (= 3.5.0)
+  - Serrata (1.0.10):
+    - Kingfisher
   - SnapKit (4.0.0)
 
 DEPENDENCIES:
@@ -48,13 +44,12 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - ImagePicker
-  - Lightbox
   - RealmSwift
+  - Serrata
   - SnapKit (~> 4.0)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Cache
+  https://github.com/cocoapods/specs.git:
     - DZNEmptyDataSet
     - Firebase
     - FirebaseAuth
@@ -63,17 +58,15 @@ SPEC REPOS:
     - FirebaseStorage
     - GoogleToolboxForMac
     - GTMSessionFetcher
-    - Hue
     - ImagePicker
-    - Imaginary
+    - Kingfisher
     - leveldb-library
-    - Lightbox
     - Realm
     - RealmSwift
+    - Serrata
     - SnapKit
 
 SPEC CHECKSUMS:
-  Cache: f28f8dd64b632155aabf9b3906b036a659048251
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Firebase: d6861c2059d8c32d1e6dd8932e22ada346d90a3a
   FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
@@ -82,15 +75,14 @@ SPEC CHECKSUMS:
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
-  Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
   ImagePicker: 973953c25960fe04729a7082a56194321c6762d2
-  Imaginary: 9b45836a5af881f452a86e0a1215772ae4712d00
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  Lightbox: 2dc267df8be2285bc7724cb11cbbf4aaaf59dced
   Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
   RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
+  Serrata: cfaf2a46ddfa89b202685983246e9c1da68b595b
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: cd5f6a634db1e9fe8aae508d49aefb779c168227
+PODFILE CHECKSUM: ce1ecff1bdbffab8a39aa74ca71b1746f0c26c6a
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.2
