@@ -69,6 +69,8 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
                 cell.image.image = img
             }
         }
+        
+        cell.image.layer.cornerRadius = 5
     
         return cell
     }

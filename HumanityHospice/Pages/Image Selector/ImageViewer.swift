@@ -25,6 +25,7 @@ class ImageViewer {
         
     }
     
+    
     public static func reset() {
         viewer = LightboxController()
         isViewing = false
