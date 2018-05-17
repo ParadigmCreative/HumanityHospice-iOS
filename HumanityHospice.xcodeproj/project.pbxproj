@@ -22,13 +22,13 @@
 		7357DE6B20980B9700AED945 /* InviteReaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6A20980B9700AED945 /* InviteReaders.swift */; };
 		7357DE6D20980BA700AED945 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6C20980BA700AED945 /* AboutViewController.swift */; };
 		735EA43520AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */; };
+		735EA43720AD250300ED339F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 735EA43620AD250200ED339F /* GoogleService-Info.plist */; };
 		737118B720A12C0500656F8E /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737118B620A12C0500656F8E /* ImageViewer.swift */; };
 		73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */; };
 		73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */; };
 		73ED2C3820A903CF005D7AF8 /* RealmHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */; };
 		73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */; };
 		809963FACA7973222ED35534 /* Pods_HumanityHospiceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E36CE8881F55E0DC4A9EE78 /* Pods_HumanityHospiceTests.framework */; };
-		A57636C02086F1130096C452 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A57636BF2086F1130096C452 /* GoogleService-Info.plist */; };
 		A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */; };
 		A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */; };
 		A5BBD4352086EC3700B80BD0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BBD4342086EC3700B80BD0 /* ViewController.swift */; };
@@ -86,13 +86,13 @@
 		7357DE6A20980B9700AED945 /* InviteReaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteReaders.swift; sourceTree = "<group>"; };
 		7357DE6C20980BA700AED945 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
+		735EA43620AD250200ED339F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		737118B620A12C0500656F8E /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncouragementBoardTableViewCell.swift; sourceTree = "<group>"; };
 		73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEBPostViewController.swift; sourceTree = "<group>"; };
 		73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHandler.swift; sourceTree = "<group>"; };
 		73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodePopUp.swift; sourceTree = "<group>"; };
 		A0742E56CFABA503B832FF38 /* Pods-HumanityHospice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospice.release.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospice/Pods-HumanityHospice.release.xcconfig"; sourceTree = "<group>"; };
-		A57636BF2086F1130096C452 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseHandler.swift; sourceTree = "<group>"; };
 		A5BBD42F2086EC3700B80BD0 /* HumanityHospice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HumanityHospice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -259,7 +259,7 @@
 				A5BBD4392086EC3700B80BD0 /* Assets.xcassets */,
 				A5BBD43B2086EC3700B80BD0 /* LaunchScreen.storyboard */,
 				A5BBD43E2086EC3700B80BD0 /* Info.plist */,
-				A57636BF2086F1130096C452 /* GoogleService-Info.plist */,
+				735EA43620AD250200ED339F /* GoogleService-Info.plist */,
 			);
 			path = HumanityHospice;
 			sourceTree = "<group>";
@@ -443,9 +443,9 @@
 			files = (
 				A5BBD43D2086EC3700B80BD0 /* LaunchScreen.storyboard in Resources */,
 				A5FC5C1520892FA60084BA9B /* Menu.xib in Resources */,
-				A57636C02086F1130096C452 /* GoogleService-Info.plist in Resources */,
 				A5BBD43A2086EC3700B80BD0 /* Assets.xcassets in Resources */,
 				A5BBD4382086EC3700B80BD0 /* Main.storyboard in Resources */,
+				735EA43720AD250300ED339F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,7 +522,7 @@
 		};
 		EAEBCF2ECC5A47E56BEF9FAE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -538,6 +538,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -552,6 +553,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -766,15 +768,17 @@
 			baseConfigurationReference = F02E7DD9041FFB21D883E459 /* Pods-HumanityHospice.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4VDXY7JL33;
+				DEVELOPMENT_TEAM = W23QWSXCYJ;
 				INFOPLIST_FILE = HumanityHospice/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospiceApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -783,15 +787,17 @@
 			baseConfigurationReference = A0742E56CFABA503B832FF38 /* Pods-HumanityHospice.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4VDXY7JL33;
+				DEVELOPMENT_TEAM = W23QWSXCYJ;
 				INFOPLIST_FILE = HumanityHospice/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospiceApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

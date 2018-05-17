@@ -23,15 +23,17 @@ class DatabaseHandler {
     ///   - password: Password user used to sign up
     ///   - completion: completion hands back optional error, and optional user
     static func signIn(email: String, password: String, completion: @escaping (User?, Error?)->()) {
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
-                completion(nil, error)
-            } else {
-                if user != nil {
+                if result != nil {
+                    let user = result!.user
                     completion(user, nil)
                 }
+            } else {
+                completion(nil, error)
             }
         }
+        
     }
     
     /// Iterates through an array of possible Database headers, finds the header that has a child with the supplied user uid, sets the AppSettings.userType, and calls for a data pull at the specified location
@@ -158,30 +160,33 @@ class DatabaseHandler {
         
         if let img = ProfilePickerHandler.chosenPhoto {
             if let data = UIImagePNGRepresentation(img) {
-                profilePicRef.putData(data, metadata: nil, completion: { (metadata, error) in
+                
+                profilePicRef.putData(data, metadata: nil) { (metadata, error) in
                     if error != nil {
                         Utilities.closeActivityIndicator()
                         completion(false, error!.localizedDescription)
                     } else {
-                        if let url = metadata?.downloadURLs![0] {
-                            print("Download URL:", url)
-                            
-                            let req = Auth.auth().currentUser?.createProfileChangeRequest()
-                            req?.photoURL = url
-                            req?.commitChanges(completion: { (error) in
-                                if error != nil {
-                                    completion(false, error!.localizedDescription)
-                                    Utilities.closeActivityIndicator()
-                                } else {
-                                    Utilities.closeActivityIndicator()
-                                    completion(true, nil)
+                        if metadata != nil {
+                            if let urlStr = metadata?.path {
+                                if let url = URL(string: urlStr) {
+                                    let req = Auth.auth().currentUser?.createProfileChangeRequest()
+                                    req?.photoURL = url
+                                    req?.commitChanges(completion: { (error) in
+                                        if error != nil {
+                                            completion(false, error!.localizedDescription)
+                                            Utilities.closeActivityIndicator()
+                                        } else {
+                                            Utilities.closeActivityIndicator()
+                                            completion(true, nil)
+                                        }
+                                    })
                                 }
-                            })
+                            }
                         } else {
-                            completion(false, "Couldn't get URL from meta data")
+                            completion(false, "Couldn't get meta data")
                         }
                     }
-                })
+                }
             } else {
                 completion(false, "Couldn't cast data to image")
             }
@@ -189,15 +194,20 @@ class DatabaseHandler {
     }
     
     static func signUp(email: String, password: String, completion: @escaping (User?, Error?)->()) {
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if error != nil {
                 completion(nil, error)
             } else {
-                if user != nil {
-                    completion(user, nil)
+                if result != nil {
+                    if let user = result?.user {
+                        completion(user, nil)
+                    }
+                } else {
+                    completion(nil, error)
                 }
             }
         }
+        
     }
     
     public static var secondaryAuth: Auth?
@@ -219,23 +229,23 @@ class DatabaseHandler {
                                           pass: String, completion: @escaping (Error?)->()) {
         
         if let secondaryAuth = secondaryAuth {
-            secondaryAuth.createUser(withEmail: email, password: pass) { (user, error) in
+            secondaryAuth.createUser(withEmail: email, password: pass) { (result, error) in
                 if error != nil {
                     print(error!.localizedDescription)
                     completion(error!)
                 } else {
-                    if user != nil {
-                        print("User Created! \(user!.uid) Updating Info")
-                        let req = user?.createProfileChangeRequest()
-                        req?.displayName = "\(first) \(last)"
-                        req?.commitChanges(completion: { (error) in
+                    if let user = result?.user {
+                        print("User Created! \(user.uid) Updating Info")
+                        let req = user.createProfileChangeRequest()
+                        req.displayName = "\(first) \(last)"
+                        req.commitChanges(completion: { (error) in
                             if error != nil {
                                 print("Couldn't perform profile changes")
                                 completion(error!)
                             } else {
                                 print("Successfully changed profile information")
                                 if let patient = AppSettings.currentPatient {
-                                    let appuser = Family(id: user!.uid,
+                                    let appuser = Family(id: user.uid,
                                                          firstName: first,
                                                          lastName: last,
                                                          patient: patient,
@@ -263,32 +273,33 @@ class DatabaseHandler {
         } else {
             setupSecondaryAuth()
             if let secondaryAuth = secondaryAuth {
-                secondaryAuth.createUser(withEmail: email, password: pass) { (user, error) in
+                secondaryAuth.createUser(withEmail: email, password: pass) { (result, error) in
                     if error != nil {
                         print(error!.localizedDescription)
                         completion(error!)
                     } else {
-                        if user != nil {
-                            print("User Created! \(user!.uid) Updating Info")
-                            let req = user?.createProfileChangeRequest()
-                            req?.displayName = "\(first) \(last)"
-                            req?.commitChanges(completion: { (error) in
+                        if let user = result?.user {
+                            print("User Created! \(user.uid) Updating Info")
+                            let req = user.createProfileChangeRequest()
+                            req.displayName = "\(first) \(last)"
+                            req.commitChanges(completion: { (error) in
                                 if error != nil {
                                     print("Couldn't perform profile changes")
                                     completion(error!)
                                 } else {
                                     print("Successfully changed profile information")
                                     if let patient = AppSettings.currentPatient {
-                                        let appuser = Family(id: user!.uid,
+                                        let appuser = Family(id: user.uid,
                                                              firstName: first,
                                                              lastName: last,
                                                              patient: patient,
                                                              profilePic: nil)
                                         
-                                        DatabaseHandler.createUserReference(type: .Family, user: appuser,
+                                        DatabaseHandler.createUserReference(type: .Family,
+                                                                            user: appuser,
                                                                             completion: { (error, done) in
                                                                                 if error != nil {
-                                                                                    print("Error! :",error!.localizedDescription)
+                                                                                    print("Error! :", error!.localizedDescription)
                                                                                     completion(error!)
                                                                                 } else {
                                                                                     print("Created Family Account Reference")
@@ -299,12 +310,12 @@ class DatabaseHandler {
                                 }
                             })
                         } else {
-                            print("Did not get a user back")
+                            print("Did nopt get user back")
                         }
                     }
                 }
             }
-    }
+        }
     }
     
     static func signOut() {
@@ -814,8 +825,8 @@ class DatabaseHandler {
                 if error != nil {
                     completion(nil, error)
                 } else {
-                    if let url = meta!.downloadURLs!.first {
-                        completion(url.absoluteString, nil)
+                    if let url = meta?.path {
+                        completion(url, nil)
                     }
                 }
             }
