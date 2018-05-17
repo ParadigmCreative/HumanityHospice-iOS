@@ -30,6 +30,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        if let handle = DatabaseHandler.addedListenerHandle {
+            Database.database().reference().removeObserver(withHandle: handle)
+            print("Removed Journal Added Listener")
+        }
+        
+        if let handle2 = DatabaseHandler.removedListenerHandle {
+            Database.database().reference().removeObserver(withHandle: handle2)
+            print("Removed Journal Removed Listener")
+        }
+        
+        if let handle3 = DatabaseHandler.addedEBPostLister {
+            Database.database().reference().removeObserver(withHandle: handle3)
+            print("Removed Ecouragement Board Added Listener")
+        }
+
+        
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -43,14 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         
-        if let handle = DatabaseHandler.addedListenerHandle {
-            Database.database().reference().removeObserver(withHandle: handle)
-        }
-        
-        if let handle2 = DatabaseHandler.removedListenerHandle {
-            Database.database().reference().removeObserver(withHandle: handle2)
-        }
-        
+
     }
 
 

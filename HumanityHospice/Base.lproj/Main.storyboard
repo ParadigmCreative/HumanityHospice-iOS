@@ -543,11 +543,42 @@
                         <outlet property="pass1" destination="WNL-nM-IjY" id="p2f-Ni-bo7"/>
                         <outlet property="pass2" destination="JGV-km-XVq" id="lab-te-Jac"/>
                         <outlet property="signupButton" destination="jIv-tZ-JdF" id="hVi-pH-xIC"/>
+                        <outlet property="successView" destination="aon-hk-euF" id="m1x-a0-FdV"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" id="aon-hk-euF">
+                    <rect key="frame" x="0.0" y="0.0" width="293" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Success!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JPZ-6h-BgS">
+                            <rect key="frame" x="95" y="20" width="103" height="32"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The family account has been created." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21h-eg-ey3">
+                            <rect key="frame" x="61" y="58" width="171" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="171" id="P0x-rP-XKU"/>
+                                <constraint firstAttribute="height" constant="50" id="yjs-2r-zh2"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.8862745098" green="0.90980392160000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="4B9-aA-WFi" firstAttribute="bottom" secondItem="21h-eg-ey3" secondAttribute="bottom" constant="20" id="AVy-wM-sh4"/>
+                        <constraint firstItem="JPZ-6h-BgS" firstAttribute="top" secondItem="4B9-aA-WFi" secondAttribute="top" constant="20" id="E0s-iu-h7N"/>
+                        <constraint firstItem="JPZ-6h-BgS" firstAttribute="centerX" secondItem="aon-hk-euF" secondAttribute="centerX" id="vyR-Uc-nGf"/>
+                        <constraint firstItem="21h-eg-ey3" firstAttribute="centerX" secondItem="aon-hk-euF" secondAttribute="centerX" id="yGy-YY-i8U"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="4B9-aA-WFi"/>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gvw-gJ-usr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4304.8000000000002" y="879.31034482758628"/>
+            <point key="canvasLocation" x="4300" y="931"/>
         </scene>
         <!--Item-->
         <scene sceneID="F2C-Kj-vL4">
@@ -577,6 +608,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0TF-OC-THK">
                                 <rect key="frame" x="48" y="184" width="279" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Button">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
@@ -587,6 +619,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o6K-w8-IyF">
                                 <rect key="frame" x="48" y="299" width="279" height="84"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Button">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -595,16 +628,20 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcD-gN-VZK">
-                                <rect key="frame" x="62" y="401" width="250" height="45"/>
+                                <rect key="frame" x="62" y="410" width="250" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.41568627450000001" green="0.4039215686" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Share My Access Code"/>
                                 <connections>
                                     <action selector="shareCode:" destination="4bT-RU-Nor" eventType="touchUpInside" id="vgP-EP-NVL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDI-5S-wuK">
-                                <rect key="frame" x="62" y="474" width="250" height="45"/>
+                                <rect key="frame" x="62" y="483" width="250" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.41568627450000001" green="0.4039215686" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Share My Web URL"/>
                                 <connections>
                                     <action selector="shareURL:" destination="4bT-RU-Nor" eventType="touchUpInside" id="gKy-KU-BLC"/>

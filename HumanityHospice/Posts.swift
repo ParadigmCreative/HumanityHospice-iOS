@@ -35,7 +35,7 @@ class Post: Object {
 }
 
 class EBPost: Object {
-    @objc dynamic var id = 0
+    @objc dynamic var id = ""
     @objc dynamic var timestamp: TimeInterval = 0.0
     @objc dynamic var message: String = ""
     @objc dynamic var posterName: String = ""

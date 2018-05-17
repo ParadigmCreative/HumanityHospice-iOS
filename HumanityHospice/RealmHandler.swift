@@ -11,6 +11,9 @@ import RealmSwift
 
 class RealmHandler {
     private static var realm = try! Realm()
+    
+    // MARK: - Journal
+    
     public static func resetJournalPosts() {
         let currentPosts = self.realm.objects(Post.self)
         if currentPosts.count > 0 {
@@ -46,4 +49,18 @@ class RealmHandler {
             completion(true)
         }
     }
+    
+    // MARK: - Encouragement Board
+    
+    public static func getEBPostList() -> [EBPost] {
+        let posts = Array(realm.objects(EBPost.self))
+        
+        let sorted = posts.sorted { (p1, p2) -> Bool in
+            return p1.timestamp > p2.timestamp
+        }
+        
+        return sorted
+    }
+    
+    
 }

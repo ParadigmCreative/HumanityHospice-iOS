@@ -31,9 +31,13 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     
     // MARK: - TableView
     var items = ["My Journal", "Encouragement Board", "My Photo Album", "Create Family Account", "Invite People", "Sign Out", "About Humanity Hospice"]
+    var readerItems = ["Journal", "Encouragement Board", "Photo Album", "Sign Out", "About Humanity Hospice"]
+    
+    var menuItems: [String] = []
+    
     @IBOutlet weak var listingTableView: UITableView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return menuItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -41,40 +45,40 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         
         // TODO: add icon for each cell
         
-        cell.textLabel?.text = items[indexPath.row]
+        cell.textLabel?.text = menuItems[indexPath.row]
         cell.textLabel?.font = UIFont().setFont()
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selected = items[indexPath.row]
+        let selected = menuItems[indexPath.row]
         
-        if selected == items[0] {
+        if selected == "My Journal" || selected == "Journal" {
             // Journal
             MenuHandler.tabbar?.selectedIndex = 0
             MenuHandler.closeMenu()
-        } else if selected == items[1] {
+        } else if selected == "Encouragement Board" {
             // Board
             MenuHandler.tabbar?.selectedIndex = 1
             MenuHandler.closeMenu()
-        } else if selected == items[2] {
+        } else if selected == "My Photo Album" || selected == "Photo Album" {
             // Album
             MenuHandler.tabbar?.selectedIndex = 2
             MenuHandler.closeMenu()
-        } else if selected == items[3] {
+        } else if selected == "Create Family Account" {
             // Create Fam Acct
             MenuHandler.tabbar?.selectedIndex = 3
             MenuHandler.closeMenu()
-        } else if selected == items[4] {
+        } else if selected == "Invite People" {
             // Invite
             MenuHandler.tabbar?.selectedIndex = 4
             MenuHandler.closeMenu()
-        } else if selected == items[5] {
+        } else if selected == "Sign Out" {
             // Sign Out
             Utilities.showActivityIndicator(view: self)
             AppSettings.clearAppSettings()
             handlingController?.beginSignOutProcess()
-        } else if selected == items[6] {
+        } else if selected == "About Humanity Hospice" {
             // About
             MenuHandler.tabbar!.selectedIndex = 5
             MenuHandler.closeMenu()
@@ -87,6 +91,8 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     }
     
     func setupTable() {
+        setupMenuItems()
+        
         self.listingTableView.delegate = self
         self.listingTableView.dataSource = self
         
@@ -109,6 +115,16 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
 
         nameLabel.text = "\(first) \(last)"
         nameLabel.font = UIFont().setFont()
+    }
+    
+    func setupMenuItems() {
+        if let type = AppSettings.userType {
+            if type == .Patient || type == .Family {
+                self.menuItems = items
+            } else {
+                self.menuItems = readerItems
+            }
+        }
     }
     
     func checkForProfilePicture() {

@@ -24,12 +24,10 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
             }
         }
         
-        getPosts()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getPosts()
+        getPostsAndListenForPostAdded()
     }
     
     
@@ -68,17 +66,20 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
         performSegue(withIdentifier: "showNewPostVC", sender: self)
     }
     
-    func getPosts() {
-        DatabaseHandler.getEBPosts { (posts) in
+    func getPostsAndListenForPostAdded() {
+        DatabaseHandler.listenForEBPostAdded(completion: { (posts) in
             if posts.count > 0 {
+                
+                let posts = RealmHandler.getEBPostList()
                 
                 let postsToSet = self.setPosts(posts: posts)
                 
                 self.ebposts = postsToSet
                 self.tableView.reloadData()
             }
-        }
+        })
     }
+
     
     func sortPosts(posts: [EBPost]) -> [EBPost] {
         let sorted = posts.sorted { (p1, p2) -> Bool in
@@ -92,8 +93,7 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
         case .Patient:
             // Get everything
             
-            let sorted = sortPosts(posts: posts)
-            return sorted
+            return posts
             
         case .Family, .Reader, .Staff:
             // Get only the ones that match the ID

@@ -17,6 +17,7 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var pass1: UITextField!
     @IBOutlet weak var pass2: UITextField!
     @IBOutlet weak var signupButton: UIButton!
+    @IBOutlet var successView: UIView!
     
     
     
@@ -88,6 +89,7 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
                     DatabaseHandler.createFamilAccount(first: first, last: last, email: email, pass: pass, completion: {
                         print("Done creating family account!")
                         self.clearFields()
+                        self.showConfirmation()
                     })
                 } else {
                     print("Cancelled")
@@ -102,6 +104,32 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
         email.text = ""
         pass1.text = ""
         pass2.text = ""
+    }
+    
+    private func showConfirmation() {
+        self.view.addSubview(successView)
+        successView.center = self.view.center
+        successView.layer.cornerRadius = 5
+        successView.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        UIView.animate(withDuration: 0.15, animations: {
+            self.successView.transform = CGAffineTransform.identity
+        }) { (done) in
+            if done {
+                Timer.scheduledTimer(withTimeInterval: 2.5, repeats: false, block: { (timer) in
+                    self.closeConfirmation()
+                })
+            }
+        }
+    }
+    
+    private func closeConfirmation() {
+        UIView.animate(withDuration: 0.15, animations: {
+            self.successView.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        }) { (done) in
+            if done {
+                self.successView.removeFromSuperview()
+            }
+        }
     }
     
 

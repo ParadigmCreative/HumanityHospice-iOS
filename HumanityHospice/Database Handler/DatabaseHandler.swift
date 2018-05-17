@@ -850,47 +850,41 @@ class DatabaseHandler {
     }
     
     // MARK: - Encouragement Board
-    
-    public static func getEBPosts(completion: @escaping ([EBPost])->()) {
+    public static var addedEBPostLister: DatabaseHandle?
+    public static func listenForEBPostAdded(completion: @escaping ([EBPost])->()) {
         let ref = Database.database().reference().child("EncouragementBoard")
         guard let patient = AppSettings.currentPatient else { return }
         let userRef = ref.child(patient)
         
-        userRef.observeSingleEvent(of: .value) { (snap) in
+        let handle = userRef.observe(.childAdded, with: { (snap) in
             if snap.childrenCount > 0 {
-                if let children = snap.children.allObjects as? [DataSnapshot] {
+                var posts: [EBPost] = []
                     
-                    var posts: [EBPost] = []
+                if let post = snap.value as? [String: AnyObject] {
+                    let name = post["poster"] as! String
+                    let poster = post["posterID"] as! String
+                    let timestamp = post["timestamp"] as! TimeInterval
+                    let message = post["post"] as! String
                     
-                    for data in children {
-                        if let post = data.value as? [String: AnyObject] {
-                            let name = post["poster"] as! String
-                            let poster = post["posterID"] as! String
-                            let timestamp = post["timestamp"] as! TimeInterval
-                            let message = post["post"] as! String
-                            
-//                            let newPost = EBPost(timestamp: timestamp, message: message, posterID: poster, posterName: name)
-//                            posts.append(newPost)
-                            
-                            let newPost = EBPost()
-                            newPost.timestamp = timestamp
-                            newPost.message = message
-                            newPost.posterID = poster
-                            newPost.posterName = name
-                            
-                            posts.append(newPost)
-                            
-                        }
-                    }
+                    let newPost = EBPost()
+                    newPost.timestamp = timestamp
+                    newPost.message = message
+                    newPost.posterID = poster
+                    newPost.posterName = name
+                    newPost.id = snap.key
                     
-                    try! realm.write {
-                        realm.add(posts)
-                    }
+                    posts.append(newPost)
                     
-                    completion(posts)
                 }
+                
+                try! realm.write {
+                    realm.add(posts, update: true)
+                }
+                
+                completion(posts)
             }
-        }
+        })
+        addedEBPostLister = handle
     }
     
     public static func postEBToDatabase(posterID: String, posterName: String, message: String, completion: ()->()) {
