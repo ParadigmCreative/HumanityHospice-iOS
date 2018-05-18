@@ -1,0 +1,6 @@
+framework module Serrata {
+  umbrella header "Serrata-umbrella.h"
+
+  export *
+  module * { export * }
+}
