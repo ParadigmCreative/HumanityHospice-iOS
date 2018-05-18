@@ -825,9 +825,15 @@ class DatabaseHandler {
                 if error != nil {
                     completion(nil, error)
                 } else {
-                    if let url = meta?.path {
-                        completion(url, nil)
-                    }
+                    ref.downloadURL(completion: { (url, error) in
+                        if error != nil {
+                            print(error!.localizedDescription)
+                        } else {
+                            if let url = url {
+                                completion(url.absoluteString, nil)
+                            }
+                        }
+                    })
                 }
             }
         }
