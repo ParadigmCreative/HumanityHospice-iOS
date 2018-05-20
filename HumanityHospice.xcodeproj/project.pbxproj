@@ -31,7 +31,6 @@
 		73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */; };
 		A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */; };
 		A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */; };
-		A5BBD4352086EC3700B80BD0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BBD4342086EC3700B80BD0 /* ViewController.swift */; };
 		A5BBD4382086EC3700B80BD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5BBD4362086EC3700B80BD0 /* Main.storyboard */; };
 		A5BBD43A2086EC3700B80BD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5BBD4392086EC3700B80BD0 /* Assets.xcassets */; };
 		A5BBD43D2086EC3700B80BD0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5BBD43B2086EC3700B80BD0 /* LaunchScreen.storyboard */; };
@@ -95,7 +94,6 @@
 		A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseHandler.swift; sourceTree = "<group>"; };
 		A5BBD42F2086EC3700B80BD0 /* HumanityHospice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HumanityHospice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A5BBD4342086EC3700B80BD0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A5BBD4372086EC3700B80BD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A5BBD4392086EC3700B80BD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A5BBD43C2086EC3700B80BD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -250,7 +248,6 @@
 			children = (
 				A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */,
 				A5BBD4362086EC3700B80BD0 /* Main.storyboard */,
-				A5BBD4342086EC3700B80BD0 /* ViewController.swift */,
 				A5D3F971208D23470079B713 /* Utilities.swift */,
 				7338482D20A7F50000EC6D01 /* Posts.swift */,
 				73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */,
@@ -572,7 +569,6 @@
 				7338482E20A7F50000EC6D01 /* Posts.swift in Sources */,
 				A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */,
 				73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */,
-				A5BBD4352086EC3700B80BD0 /* ViewController.swift in Sources */,
 				7335B2B4209FA41400AD5B1B /* ProfilePickerDelegate.swift in Sources */,
 				A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */,
 				A5D3F976208D2E8C0079B713 /* CompleteSignUpViewController.swift in Sources */,

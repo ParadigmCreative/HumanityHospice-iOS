@@ -74,15 +74,6 @@ class LandingViewController: UIViewController {
     func setupCopywrite() {
         copywriteLabel.textColor = UIColor.lightGray
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     /*
     // MARK: - Navigation
