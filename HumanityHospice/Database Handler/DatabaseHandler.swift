@@ -25,12 +25,13 @@ class DatabaseHandler {
     static func signIn(email: String, password: String, completion: @escaping (User?, Error?)->()) {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
-                if result != nil {
-                    let user = result!.user
-                    completion(user, nil)
-                }
-            } else {
                 completion(nil, error)
+            } else {
+                if result != nil {
+                    completion(result!.user, nil)
+                } else {
+                    completion(nil, nil)
+                }
             }
         }
         
@@ -154,21 +155,23 @@ class DatabaseHandler {
     }
     
     static func setProfilePicture(completion: @escaping (Bool, String?)->()) {
-        let ref = Storage.storage().reference().child("ProfilePictures").child(AppSettings.currentFBUser!.uid)
+        let ref = Storage.storage().reference()
+        let profRef = ref.child("ProfilePictures").child(AppSettings.currentFBUser!.uid)
         let name = "ProfilePicture.png"
-        let profilePicRef = ref.child(name)
+        let profilePicRef = profRef.child(name)
         
         if let img = ProfilePickerHandler.chosenPhoto {
             if let data = UIImagePNGRepresentation(img) {
-                
                 profilePicRef.putData(data, metadata: nil) { (metadata, error) in
                     if error != nil {
                         Utilities.closeActivityIndicator()
                         completion(false, error!.localizedDescription)
                     } else {
                         if metadata != nil {
-                            if let urlStr = metadata?.path {
-                                if let url = URL(string: urlStr) {
+                            profilePicRef.downloadURL(completion: { (url, error) in
+                                if error != nil {
+                                    completion(false, error!.localizedDescription)
+                                } else {
                                     let req = Auth.auth().currentUser?.createProfileChangeRequest()
                                     req?.photoURL = url
                                     req?.commitChanges(completion: { (error) in
@@ -181,8 +184,9 @@ class DatabaseHandler {
                                         }
                                     })
                                 }
-                            }
+                            })
                         } else {
+                            Utilities.closeActivityIndicator()
                             completion(false, "Couldn't get meta data")
                         }
                     }
