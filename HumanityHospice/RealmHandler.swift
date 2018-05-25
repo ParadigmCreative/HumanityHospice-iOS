@@ -62,5 +62,16 @@ class RealmHandler {
         return sorted
     }
     
+    // MARK: - Photo Album
+    
+    public static func getPhotoAlbumPosts() -> [PhotoAlbumPost] {
+        let posts = Array(realm.objects(PhotoAlbumPost.self))
+        let sorted = posts.sorted { (p1, p2) -> Bool in
+            return p1.timestamp > p2.timestamp
+        }
+        
+        return sorted
+    }
+    
     
 }

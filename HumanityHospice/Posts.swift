@@ -52,7 +52,18 @@ class EBPost: Object {
     }
 }
 
-
+class PhotoAlbumPost: Object {
+    @objc dynamic var id = ""
+    @objc dynamic var timestamp: TimeInterval = 0.0
+    @objc dynamic var url: String = ""
+    @objc dynamic var caption: String? = nil
+    @objc dynamic var image: Data? = nil
+    
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
 
 
 

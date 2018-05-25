@@ -19,9 +19,16 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         
         // Do any additional setup after loading the view.
         
-        getImages { (posts) in
-            self.posts = posts
+        getImages { (posts, images) in
+            let newposts = self.prepareImagesForCollection(posts: posts, PAPs: images)
+            DispatchQueue.main.async {
+                self.posts = newposts
+            }
         }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         
     }
 
@@ -29,23 +36,96 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    var posts: [Post] = []
     
-    func getImages(completion: ([Post])->()) {
-        let posts = RealmHandler.getPostList()
-        if posts.count > 0 {
-            let imagePosts = posts.filter { (p) -> Bool in
-                return p.hasImage
+    var posts: [PhotoAlbumPhotoObject] = []
+    
+    func prepareImagesForCollection(posts: [Post], PAPs: [PhotoAlbumPost]) -> [PhotoAlbumPhotoObject] {
+        
+        var imageposts: [PhotoAlbumPhotoObject] = []
+        
+        for post in posts {
+            if let img = post.postImage!.getImageFromData() {
+                var newPost = PhotoAlbumPhotoObject()
+                newPost.caption = post.message
+                newPost.image = img
+                newPost.timestamp = post.timestamp
+                
+                imageposts.append(newPost)
             }
-            
-            completion(imagePosts)
         }
+        
+        for post in PAPs {
+            if let img = post.image?.getImageFromData() {
+                var newPost = PhotoAlbumPhotoObject()
+                newPost.caption = post.caption
+                newPost.image = img
+                newPost.timestamp = post.timestamp
+                
+                imageposts.append(newPost)
+            }
+        }
+        
+        let sorted = imageposts.sorted { (p1, p2) -> Bool in
+            return p1.timestamp > p2.timestamp
+        }
+        
+        return sorted
+        
+    }
+    
+    func getImages(completion: @escaping ([Post], [PhotoAlbumPost])->()) {
+        
+        DatabaseHandler.getImagesFromStorage { (done) in
+            
+            var jposts: [Post] = []
+            var images: [PhotoAlbumPost] = []
+            
+            if done {
+                let pimages = RealmHandler.getPhotoAlbumPosts()
+                images.append(contentsOf: pimages)
+                
+                let posts = RealmHandler.getPostList()
+                if posts.count > 0 {
+                    let imagePosts = posts.filter { (p) -> Bool in
+                        return p.hasImage
+                    }
+                    
+                    jposts.append(contentsOf: imagePosts)
+                }
+                
+                completion(jposts, images)
+            } else {
+                let pimages = RealmHandler.getPhotoAlbumPosts()
+                images.append(contentsOf: pimages)
+                
+                let posts = RealmHandler.getPostList()
+                if posts.count > 0 {
+                    let imagePosts = posts.filter { (p) -> Bool in
+                        return p.hasImage
+                    }
+                    
+                    jposts.append(contentsOf: imagePosts)
+                }
+                
+                completion(jposts, images)
+            }
+        }
+        
     }
     
     @IBAction func showMenu(_ sender: Any) {
         MenuHandler.openMenu(vc: self)
     }
+    
+    // MARK: - Add New Photo
+    @IBOutlet weak var addPhotoButton: UIBarButtonItem!
+    @IBAction func addPhoto(_ sender: Any) {
+        self.performSegue(withIdentifier: "addNewPhoto", sender: self)
+    }
+    
+    
+    
+    
     
     // MARK: - UICollectionViewDataSource
 
@@ -64,12 +144,7 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoAlbumCollectionViewCell
     
         // Configure the cell
-        if let data = posts[indexPath.row].postImage {
-            if let img = data.getImageFromData() {
-                cell.image.image = img
-            }
-        }
-        
+        cell.image.image = posts[indexPath.row].image
         cell.image.layer.cornerRadius = 5
     
         return cell
@@ -78,8 +153,8 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
     // MARK: UICollectionViewDelegate
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let post = posts[indexPath.row]
         
+        let post = posts[indexPath.row]
         post.viewImage(vc: self)
         
     }
@@ -107,4 +182,17 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
     }
     
 
+}
+
+
+struct PhotoAlbumPhotoObject {
+    var image: UIImage?
+    var caption: String?
+    var timestamp: TimeInterval
+    
+    init() {
+        self.image = nil
+        self.caption = nil
+        self.timestamp = 0.0
+    }
 }

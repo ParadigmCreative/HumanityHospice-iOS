@@ -20,16 +20,19 @@ class LandingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         Utilities.showActivityIndicator(view: self.view)
-        if Auth.auth().currentUser != nil {
-            AppSettings.currentFBUser = Auth.auth().currentUser
-            if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
-                DatabaseHandler.fetchData(for: AppSettings.currentFBUser!, completion: {
-                    Utilities.closeActivityIndicator()
-                    self.present(tabbar, animated: true, completion: nil)
-                })
+        
+        checkForLoggedinUser { (user) in
+            if user != nil {
+                AppSettings.currentFBUser = Auth.auth().currentUser
+                if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
+                    DatabaseHandler.fetchData(for: AppSettings.currentFBUser!, completion: {
+                        Utilities.closeActivityIndicator()
+                        self.present(tabbar, animated: true, completion: nil)
+                    })
+                }
+            } else {
+                Utilities.closeActivityIndicator()
             }
-        } else {
-            Utilities.closeActivityIndicator()
         }
     }
 
@@ -74,6 +77,18 @@ class LandingViewController: UIViewController {
     func setupCopywrite() {
         copywriteLabel.textColor = UIColor.lightGray
     }
+    
+    
+    
+    private func checkForLoggedinUser(completion: (User?)->()) {
+        if let user = Auth.auth().currentUser {
+            completion(user)
+        } else {
+            completion(nil)
+        }
+    }
+    
+    
 
     /*
     // MARK: - Navigation

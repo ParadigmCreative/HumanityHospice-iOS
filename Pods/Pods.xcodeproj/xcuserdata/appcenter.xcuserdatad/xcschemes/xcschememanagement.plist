@@ -96,7 +96,7 @@
 		<key>Kingfisher.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>20</integer>
+			<integer>21</integer>
 		</dict>
 		<key>Lightbox.xcscheme</key>
 		<dict>
@@ -153,7 +153,7 @@
 		<key>Serrata.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>21</integer>
+			<integer>22</integer>
 		</dict>
 		<key>SnapKit.xcscheme</key>
 		<dict>

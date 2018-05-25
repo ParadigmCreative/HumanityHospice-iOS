@@ -10,6 +10,7 @@
 		0BC827D0329B3113D20F14AE /* Pods_HumanityHospice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03038EFFF88515CF212F99CE /* Pods_HumanityHospice.framework */; };
 		43E97C84C788E7BEEEC6E358 /* Pods_HumanityHospiceUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88689F47E062E9DB2AA7EA27 /* Pods_HumanityHospiceUITests.framework */; };
 		462185B3B8495186B44249FB /* Pods_HumanityHospiceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A3A9CE6D5B505135CD48FAB /* Pods_HumanityHospiceTests.framework */; };
+		7310489F20B895C500E52EA9 /* NewPhotoPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7310489E20B895C500E52EA9 /* NewPhotoPostVC.swift */; };
 		7335B2AF209BC37100AD5B1B /* JournalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */; };
 		7335B2B2209BDFF700AD5B1B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */; };
 		7335B2B4209FA41400AD5B1B /* ProfilePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B3209FA41400AD5B1B /* ProfilePickerDelegate.swift */; };
@@ -70,6 +71,7 @@
 		1E33FF942FED71F6A7C1B565 /* Pods-HumanityHospiceUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospiceUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospiceUITests/Pods-HumanityHospiceUITests.release.xcconfig"; sourceTree = "<group>"; };
 		694136AC0962CFC9267913D7 /* Pods-HumanityHospice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospice.release.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospice/Pods-HumanityHospice.release.xcconfig"; sourceTree = "<group>"; };
 		6A3A9CE6D5B505135CD48FAB /* Pods_HumanityHospiceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HumanityHospiceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7310489E20B895C500E52EA9 /* NewPhotoPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhotoPostVC.swift; sourceTree = "<group>"; };
 		7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTableViewCell.swift; sourceTree = "<group>"; };
 		7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		7335B2B3209FA41400AD5B1B /* ProfilePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePickerDelegate.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			children = (
 				7357DE6620980B6000AED945 /* PhotoAlbum.swift */,
 				735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */,
+				7310489E20B895C500E52EA9 /* NewPhotoPostVC.swift */,
 			);
 			path = "Photo Album";
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */,
 				735EA43520AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift in Sources */,
 				7335B2B2209BDFF700AD5B1B /* NewPostViewController.swift in Sources */,
+				7310489F20B895C500E52EA9 /* NewPhotoPostVC.swift in Sources */,
 				A5FC5C1A2089367D0084BA9B /* JournalTableViewController.swift in Sources */,
 				737118B720A12C0500656F8E /* ImageViewer.swift in Sources */,
 				A5D3F972208D23470079B713 /* Utilities.swift in Sources */,

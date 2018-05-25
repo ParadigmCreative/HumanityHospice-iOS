@@ -62,3 +62,17 @@ extension Post {
         }
     }
 }
+
+extension PhotoAlbumPhotoObject {
+    func viewImage(vc: UIViewController) {
+        if let img = self.image {
+            if let text = self.caption {
+                ImageViewer.initialize(image: img, text: text)
+                ImageViewer.open(vc: vc)
+            } else {
+                ImageViewer.initialize(image: img, text: "")
+                ImageViewer.open(vc: vc)
+            }
+        }
+    }
+}

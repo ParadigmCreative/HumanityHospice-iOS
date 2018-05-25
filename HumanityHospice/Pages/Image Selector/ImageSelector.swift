@@ -27,6 +27,7 @@ class ImageSelector {
     }
     
     private static func setup() {
+        
         var configuration = Configuration()
         configuration.doneButtonTitle = "Finish"
         configuration.noImagesTitle = "Sorry! There are no images here!"

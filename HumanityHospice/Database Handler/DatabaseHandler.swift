@@ -29,8 +29,6 @@ class DatabaseHandler {
             } else {
                 if result != nil {
                     completion(result!.user, nil)
-                } else {
-                    completion(nil, nil)
                 }
             }
         }
@@ -923,6 +921,78 @@ class DatabaseHandler {
         completion()
     }
     
+    
+    // MARK: - Photo Album
+    public static func postImageToStorage(image: UIImage, caption: String?, completion: @escaping (Error?)->()) {
+        let uid = Auth.auth().currentUser?.uid
+        let date = Int(Date().timeIntervalSince1970.rounded())
+        let name = "photoalbum-\(date).png"
+        let ref = Storage.storage().reference().child("PhotoAlbum").child(uid!).child(name)
+        guard let data = image.prepareImageForSaving() else { return }
+        ref.putData(data, metadata: nil) { (metadata, error) in
+            if error != nil {
+                completion(error)
+            } else {
+                let dbRef = Database.database().reference().child("PhotoAlbum").child(uid!).childByAutoId()
+                ref.downloadURL(completion: { (url, error) in
+                    if error != nil {
+                        print(error!.localizedDescription)
+                        completion(error)
+                    } else {
+                        if let url = url?.absoluteString {
+                            let dbdata: [String: Any] = ["url": url,
+                                                         "timestamp": Date().timeIntervalSince1970,
+                                                         "caption": caption]
+                            dbRef.setValue(dbdata)
+                            
+                            let newPhoto = PhotoAlbumPost()
+                            newPhoto.caption = caption
+                            newPhoto.url = url
+                            newPhoto.id = dbRef.key
+                            newPhoto.image = data
+                            
+                            try! realm.write {
+                                realm.add(newPhoto)
+                            }
+                            
+                            completion(nil)
+                        }
+                    }
+                })
+            }
+        }
+    }
+    
+    public static var addedPhotoAlbumItem: DatabaseHandle?
+    public static func getImagesFromStorage(completion: @escaping (Bool)->()) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("PhotoAlbum").child(uid)
+        let handle = ref.observe(.childAdded) { (snap) in
+            if snap.childrenCount > 0 {
+                if let imgPost = snap.value as? [String: Any] {
+                    let url = imgPost["url"] as! String
+                    let timestamp = imgPost["timestamp"] as! TimeInterval
+                    let caption = imgPost["caption"] as? String
+                    
+                    let newPAP = PhotoAlbumPost()
+                    newPAP.url = url
+                    newPAP.timestamp = timestamp
+                    newPAP.caption = caption
+                    
+                    try! realm.write {
+                        realm.add(newPAP)
+                    }
+                    completion(true)
+                }
+            } else {
+                completion(false)
+            }
+        }
+        completion(false)
+        
+        addedPhotoAlbumItem = handle
+        
+    }
     
     // MARK: - Object Stuff
     
