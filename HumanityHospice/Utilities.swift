@@ -63,6 +63,8 @@ extension UIViewController {
                 Utilities.closeActivityIndicator()
             })
         }
+        RealmHandler.resetPhotoAlbum()
+        RealmHandler.resetJournalPosts()
     }
     
 }

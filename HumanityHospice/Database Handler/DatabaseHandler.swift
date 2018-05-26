@@ -955,7 +955,7 @@ class DatabaseHandler {
     
     public static var addedPhotoAlbumItem: DatabaseHandle?
     public static func getImagesFromStorage(completion: @escaping ()->()) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = AppSettings.currentPatient else { return }
         let ref = Database.database().reference().child("PhotoAlbum").child(uid)
         let handle = ref.observe(.childAdded) { (snap) in
             if let imgPost = snap.value as? [String: Any] {
