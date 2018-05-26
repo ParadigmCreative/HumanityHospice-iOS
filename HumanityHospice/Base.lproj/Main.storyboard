@@ -1487,17 +1487,6 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NgP-WR-e3d">
                                         <rect key="frame" x="0.0" y="0.0" width="285" height="225"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2i3-kt-oxB">
-                                        <rect key="frame" x="10" y="10" width="20" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="37V-W5-qWY"/>
-                                            <constraint firstAttribute="width" constant="20" id="E1l-Ra-Tdx"/>
-                                        </constraints>
-                                        <state key="normal" backgroundImage="Clear Photo"/>
-                                        <connections>
-                                            <action selector="clearPhoto:" destination="Dts-4A-Kvm" eventType="touchUpInside" id="Yv0-hr-CP0"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -1506,8 +1495,6 @@
                                     <constraint firstAttribute="trailing" secondItem="NgP-WR-e3d" secondAttribute="trailing" id="ST1-Bk-uzP"/>
                                     <constraint firstAttribute="bottom" secondItem="NgP-WR-e3d" secondAttribute="bottom" id="W06-vJ-cC5"/>
                                     <constraint firstAttribute="height" constant="225" id="hVa-Be-D5U"/>
-                                    <constraint firstItem="2i3-kt-oxB" firstAttribute="top" secondItem="yHV-KI-euX" secondAttribute="top" constant="10" id="vvp-uO-p56"/>
-                                    <constraint firstItem="2i3-kt-oxB" firstAttribute="leading" secondItem="yHV-KI-euX" secondAttribute="leading" constant="10" id="yqT-Nj-iep"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1534,7 +1521,6 @@
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="yCG-O9-TDY" id="VEF-IS-ceJ"/>
-                        <outlet property="clearPhotoButton" destination="2i3-kt-oxB" id="1ot-PN-Fhb"/>
                         <outlet property="exitButton" destination="oCg-dY-FLN" id="Tof-eV-rM1"/>
                         <outlet property="imagePreview" destination="NgP-WR-e3d" id="lqr-ow-vqh"/>
                         <outlet property="messageTF" destination="ZEh-h1-qqf" id="h6j-4Y-4ng"/>

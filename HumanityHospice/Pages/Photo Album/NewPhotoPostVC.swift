@@ -24,14 +24,6 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegat
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var imagePreview: UIImageView!
     @IBOutlet weak var exitButton: UIButton!
-    var image: UIImage? {
-        didSet {
-            self.imagePreview.image = self.image
-            self.clearPhotoButton.isHidden = false
-        }
-    }
-    @IBOutlet weak var clearPhotoButton: UIButton!
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -49,7 +41,6 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegat
     // MARK: - Setup
     func setup() {
         setupButtons()
-        clearPhotoButton.isHidden = true
         messageTF.inputAccessoryView = toolbar
         imagePreview.layer.cornerRadius = 10
         imagePreview.isHidden = true
@@ -76,18 +67,6 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegat
         
     }
     
-    @IBAction func clearPhoto(_ sender: Any) {
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.clearPhotoButton.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
-            self.clearPhotoButton.isHidden = true
-        })
-        
-        DispatchQueue.main.async {
-            self.imagePreview.image = nil
-            self.image = nil
-        }
-    }
         
     
     func setupImagePreview() {
@@ -141,12 +120,8 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegat
     }
     
     func userDidSelectImage(image: UIImage) {
-        self.image = image
+        self.imagePreview.image = image
         self.imagePreview.isHidden = false
-        UIView.animate(withDuration: 0.2, animations: {
-            self.clearPhotoButton.transform = CGAffineTransform.identity
-            self.clearPhotoButton.isHidden = false
-        })
     }
     
     @IBAction func cancel(_ sender: Any) {
