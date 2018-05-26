@@ -32,7 +32,6 @@ class Utilities {
         indicator.center = view.center
         indicator.hidesWhenStopped = true
         view.addSubview(indicator)
-        indicator.startAnimating()
         return indicator
     }
 }

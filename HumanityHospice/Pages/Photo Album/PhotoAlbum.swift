@@ -8,21 +8,26 @@
 
 import UIKit
 import DZNEmptyDataSet
+import RealmSwift
 
 class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        RealmHandler.resetPhotoAlbum()
         MenuHandler.staticMenu?.setHandingController(vc: self)
         setupEmptyDataSet()
         
-        // Do any additional setup after loading the view.
+        getImages()
         
-        getImages { (posts, images) in
-            let newposts = self.prepareImagesForCollection(posts: posts, PAPs: images)
-            DispatchQueue.main.async {
-                self.posts = newposts
+        if let type = AppSettings.userType {
+            switch type {
+            case .Reader, .Staff:
+                self.addPhotoButton.isEnabled = false
+                self.navigationItem.rightBarButtonItem = nil 
+            default:
+                print(type)
             }
         }
         
@@ -37,32 +42,36 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         // Dispose of any resources that can be recreated.
     }
     
-    var posts: [PhotoAlbumPhotoObject] = []
+    var posts: [PhotoAlbumCollectionItem] = []
     
-    func prepareImagesForCollection(posts: [Post], PAPs: [PhotoAlbumPost]) -> [PhotoAlbumPhotoObject] {
+    func prepareImagesForCollection(posts: [Post], PAPs: [PhotoAlbumPost]) -> [PhotoAlbumCollectionItem] {
         
-        var imageposts: [PhotoAlbumPhotoObject] = []
+        var imageposts: [PhotoAlbumCollectionItem] = []
         
         for post in posts {
             if let img = post.postImage!.getImageFromData() {
-                var newPost = PhotoAlbumPhotoObject()
+                var newPost = PhotoAlbumCollectionItem()
                 newPost.caption = post.message
                 newPost.image = img
                 newPost.timestamp = post.timestamp
+                newPost.id = post.id
                 
                 imageposts.append(newPost)
             }
         }
         
         for post in PAPs {
+            var newPost = PhotoAlbumCollectionItem()
+            
             if let img = post.image?.getImageFromData() {
-                var newPost = PhotoAlbumPhotoObject()
-                newPost.caption = post.caption
                 newPost.image = img
-                newPost.timestamp = post.timestamp
-                
-                imageposts.append(newPost)
             }
+            newPost.caption = post.caption
+            newPost.timestamp = post.timestamp
+            newPost.url = post.url
+            newPost.id = post.id
+            
+            imageposts.append(newPost)
         }
         
         let sorted = imageposts.sorted { (p1, p2) -> Bool in
@@ -73,44 +82,31 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         
     }
     
-    func getImages(completion: @escaping ([Post], [PhotoAlbumPost])->()) {
-        
-        DatabaseHandler.getImagesFromStorage { (done) in
+    func getImages() {
+        RealmHandler.resetPhotoAlbum()
+        DatabaseHandler.getImagesFromStorage {
             
-            var jposts: [Post] = []
-            var images: [PhotoAlbumPost] = []
+            var journalPosts: [Post] = []
+            var photoAlbumPosts: [PhotoAlbumPost] = []
             
-            if done {
-                let pimages = RealmHandler.getPhotoAlbumPosts()
-                images.append(contentsOf: pimages)
-                
-                let posts = RealmHandler.getPostList()
-                if posts.count > 0 {
-                    let imagePosts = posts.filter { (p) -> Bool in
-                        return p.hasImage
-                    }
-                    
-                    jposts.append(contentsOf: imagePosts)
+            let photoAlbumImages = RealmHandler.getPhotoAlbumPosts()
+            photoAlbumPosts.append(contentsOf: photoAlbumImages)
+            
+            let posts = RealmHandler.getPostList()
+            if posts.count > 0 {
+                let imagePosts = posts.filter { (p) -> Bool in
+                    return p.hasImage
                 }
                 
-                completion(jposts, images)
-            } else {
-                let pimages = RealmHandler.getPhotoAlbumPosts()
-                images.append(contentsOf: pimages)
-                
-                let posts = RealmHandler.getPostList()
-                if posts.count > 0 {
-                    let imagePosts = posts.filter { (p) -> Bool in
-                        return p.hasImage
-                    }
-                    
-                    jposts.append(contentsOf: imagePosts)
-                }
-                
-                completion(jposts, images)
+                journalPosts.append(contentsOf: imagePosts)
+            }
+            
+            let newposts = self.prepareImagesForCollection(posts: journalPosts, PAPs: photoAlbumPosts)
+            DispatchQueue.main.async {
+                self.posts = newposts
+                self.collectionView!.reloadData()
             }
         }
-        
     }
     
     @IBAction func showMenu(_ sender: Any) {
@@ -143,8 +139,14 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoAlbumCollectionViewCell
     
+        let post = posts[indexPath.row]
+        
+        let indicator = Utilities.createActivityIndicator(view: cell)
+        cell.indicator = indicator
+        cell.post = post
+        
         // Configure the cell
-        cell.image.image = posts[indexPath.row].image
+        cell.image.image = post.image
         cell.image.layer.cornerRadius = 5
     
         return cell
@@ -154,9 +156,11 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let post = posts[indexPath.row]
-        post.viewImage(vc: self)
-        
+        let realm = try! Realm()
+        let key = posts[indexPath.row].id
+        if let post = realm.object(ofType: PhotoAlbumPost.self, forPrimaryKey: key) {
+            post.viewImage(vc: self)
+        }
     }
     
     
@@ -185,10 +189,12 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
 }
 
 
-struct PhotoAlbumPhotoObject {
+struct PhotoAlbumCollectionItem {
     var image: UIImage?
     var caption: String?
     var timestamp: TimeInterval
+    var url: String? = nil
+    var id: String = ""
     
     init() {
         self.image = nil

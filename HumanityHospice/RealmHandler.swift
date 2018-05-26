@@ -64,6 +64,19 @@ class RealmHandler {
     
     // MARK: - Photo Album
     
+    public static func resetPhotoAlbum() {
+        let currentPosts = self.realm.objects(PhotoAlbumPost.self)
+        if currentPosts.count > 0 {
+            try! self.realm.write {
+                self.realm.delete(currentPosts)
+            }
+            let posts = realm.objects(Post.self)
+            print("Verifying Cleanout - Number of Photo Album Items:", posts.count)
+        } else {
+            print("Verifying Cleanout - Number of Photo Album Items:", currentPosts.count)
+        }
+    }
+    
     public static func getPhotoAlbumPosts() -> [PhotoAlbumPost] {
         let posts = Array(realm.objects(PhotoAlbumPost.self))
         let sorted = posts.sorted { (p1, p2) -> Bool in

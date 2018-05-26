@@ -50,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Database.database().reference().removeObserver(withHandle: handle4)
             print("Removed Ecouragement Board Added Listener")
         }
+        
+        
 
         
     }

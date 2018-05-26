@@ -945,16 +945,6 @@ class DatabaseHandler {
                                                          "caption": caption]
                             dbRef.setValue(dbdata)
                             
-                            let newPhoto = PhotoAlbumPost()
-                            newPhoto.caption = caption
-                            newPhoto.url = url
-                            newPhoto.id = dbRef.key
-                            newPhoto.image = data
-                            
-                            try! realm.write {
-                                realm.add(newPhoto)
-                            }
-                            
                             completion(nil)
                         }
                     }
@@ -964,32 +954,28 @@ class DatabaseHandler {
     }
     
     public static var addedPhotoAlbumItem: DatabaseHandle?
-    public static func getImagesFromStorage(completion: @escaping (Bool)->()) {
+    public static func getImagesFromStorage(completion: @escaping ()->()) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("PhotoAlbum").child(uid)
         let handle = ref.observe(.childAdded) { (snap) in
-            if snap.childrenCount > 0 {
-                if let imgPost = snap.value as? [String: Any] {
-                    let url = imgPost["url"] as! String
-                    let timestamp = imgPost["timestamp"] as! TimeInterval
-                    let caption = imgPost["caption"] as? String
-                    
-                    let newPAP = PhotoAlbumPost()
-                    newPAP.url = url
-                    newPAP.timestamp = timestamp
-                    newPAP.caption = caption
-                    
-                    try! realm.write {
-                        realm.add(newPAP)
-                    }
-                    completion(true)
+            if let imgPost = snap.value as? [String: Any] {
+                let url = imgPost["url"] as! String
+                let timestamp = imgPost["timestamp"] as! TimeInterval
+                let caption = imgPost["caption"] as? String
+                
+                let newPAP = PhotoAlbumPost()
+                newPAP.url = url
+                newPAP.timestamp = timestamp
+                newPAP.caption = caption
+                newPAP.id = snap.key
+                
+                try! realm.write {
+                    realm.add(newPAP)
+                    print("Added PAP:", newPAP.id)
                 }
-            } else {
-                completion(false)
+                completion()
             }
         }
-        completion(false)
-        
         addedPhotoAlbumItem = handle
         
     }

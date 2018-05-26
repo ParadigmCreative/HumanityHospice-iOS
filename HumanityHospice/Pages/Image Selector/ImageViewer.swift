@@ -63,9 +63,9 @@ extension Post {
     }
 }
 
-extension PhotoAlbumPhotoObject {
+extension PhotoAlbumPost {
     func viewImage(vc: UIViewController) {
-        if let img = self.image {
+        if let img = self.image?.getImageFromData() {
             if let text = self.caption {
                 ImageViewer.initialize(image: img, text: text)
                 ImageViewer.open(vc: vc)

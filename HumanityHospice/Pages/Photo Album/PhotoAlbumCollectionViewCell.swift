@@ -7,10 +7,60 @@
 //
 
 import UIKit
+import RealmSwift
 
 class PhotoAlbumCollectionViewCell: UICollectionViewCell {
     
+    var realm = try! Realm()
     @IBOutlet weak var image: UIImageView!
+    var indicator: UIActivityIndicatorView?
     
+    var post: PhotoAlbumCollectionItem! {
+        didSet {
+            if post.image == nil {
+                setupUI()
+            } else {
+                DispatchQueue.main.async {
+                    if let img = self.post.image {
+                        self.image.image = img
+                        self.indicator?.stopAnimating()
+                        self.indicator?.removeFromSuperview()
+                    }
+                }
+            }
+        }
+    }
     
+    func setupUI() {
+        self.indicator?.startAnimating()
+        if let url = post.url {
+            if let url = URL(string: url) {
+                DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
+                    if error != nil {
+                        print(error!.localizedDescription)
+                    } else {
+                        // save image to realm in data form
+                        if let data = image?.prepareImageForSaving() {
+                            if let obj = self.realm.object(ofType: PhotoAlbumPost.self, forPrimaryKey: self.post.id) {
+                                try! self.realm.write {
+                                    obj.image = data
+                                    self.realm.add(obj, update: true)
+                                    print("Updated \(obj.id) 's img in realm")
+                                }
+                            }
+                        }
+                        
+                        self.post.image = image
+                        
+                        // set image to imageView
+                        DispatchQueue.main.async {
+                            self.image.image = image
+                            self.indicator?.stopAnimating()
+                            self.indicator?.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

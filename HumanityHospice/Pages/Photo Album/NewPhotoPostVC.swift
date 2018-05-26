@@ -34,6 +34,8 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegat
     override func viewDidAppear(_ animated: Bool) {
         if self.imagePreview.image == nil {
             ImageSelector.open(vc: self)
+        } else  {
+            messageTF.becomeFirstResponder()
         }
     }
     
@@ -41,7 +43,7 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegat
     func setup() {
         setupButtons()
         messageTF.inputAccessoryView = toolbar
-        imagePreview.layer.cornerRadius = 5
+        imagePreview.layer.cornerRadius = 10
         imagePreview.isHidden = true
         setupImagePreview()
         ImageSelector.delegate = self
@@ -52,6 +54,7 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegat
         cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.titleLabel?.textAlignment = .center
         cancelButton.layer.cornerRadius = 15
+        cancelButton.setTitle("Done", for: .normal)
         
         submitPostButton.layer.cornerRadius = 10
     }
