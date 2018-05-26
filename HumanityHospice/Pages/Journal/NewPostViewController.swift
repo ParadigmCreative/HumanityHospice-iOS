@@ -24,6 +24,13 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
     @IBOutlet weak var attachPhotoButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var imagePreview: UIImageView!
+    var image: UIImage? {
+        didSet {
+            self.imagePreview.image = self.image
+            self.clearPhotoButton.isHidden = false
+        }
+    }
+    @IBOutlet weak var clearPhotoButton: UIButton!
     
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +41,7 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
     // MARK: - Setup
     func setup() {
         setupButtons()
+        clearPhotoButton.isHidden = true
         messageTF.inputAccessoryView = toolbar
         imagePreview.isHidden = true
         messageTF.becomeFirstResponder()
@@ -66,6 +74,19 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
     
     @IBAction func exit(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func clearPhoto(_ sender: Any) {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.clearPhotoButton.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+            self.clearPhotoButton.isHidden = true
+        })
+        
+        DispatchQueue.main.async {
+            self.imagePreview.image = nil
+            self.image = nil
+        }
     }
     
     @IBAction func submitPost(_ sender: Any) {
@@ -120,8 +141,12 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
     }
     
     func userDidSelectImage(image: UIImage) {
-        self.imagePreview.image = image
+        self.image = image
         self.imagePreview.isHidden = false
+        UIView.animate(withDuration: 0.2, animations: {
+            self.clearPhotoButton.transform = CGAffineTransform.identity
+            self.clearPhotoButton.isHidden = false
+        })
     }
     
     @IBAction func cancel(_ sender: Any) {
