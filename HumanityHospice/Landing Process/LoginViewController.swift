@@ -36,9 +36,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func setupTextField() {
         emailTF.delegate = self
         passwordTF.delegate = self
-        
-        emailTF.setupTextField()
-        passwordTF.setupTextField()
     }
     
     func setupSignInButton() {

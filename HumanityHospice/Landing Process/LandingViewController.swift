@@ -41,29 +41,14 @@ class LandingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var createNewAccountButton: UIButton!
     @IBOutlet weak var copywriteLabel: UILabel!
     
     fileprivate func masterSetup() {
-        setupTitle()
         setupCreateNewAccountButton()
         setupSignInButton()
         setupCopywrite()
-    }
-    
-    func setupTitle() {
-        let systemFont = UIFont.systemFont(ofSize: 35.0, weight: UIFont.Weight.light)
-        let smallCapsDesc = systemFont.fontDescriptor.addingAttributes([
-            UIFontDescriptor.AttributeName.featureSettings: [
-                [UIFontDescriptor.FeatureKey.featureIdentifier: kLowerCaseType,
-                 UIFontDescriptor.FeatureKey.typeIdentifier: kUpperCaseSmallCapsSelector]]
-            ])
-        let font = UIFont(descriptor: smallCapsDesc, size: systemFont.pointSize)
-        
-        titleLabel.font = font
-        titleLabel.textColor = UIColor.gray
     }
     
     func setupSignInButton() {
@@ -105,11 +90,11 @@ class LandingViewController: UIViewController {
 extension UIButton {
     func setupMainButton() {
         self.layer.cornerRadius = 5
-        self.backgroundColor = #colorLiteral(red: 0.4605029225, green: 0.447249949, blue: 0.7566576004, alpha: 1)
+        self.backgroundColor = #colorLiteral(red: 0.4588235294, green: 0.4470588235, blue: 0.7568627451, alpha: 1)
         self.setTitleColor(UIColor.white, for: .normal)
     }
     
     func setupSecondaryButton() {
-        self.setTitleColor(#colorLiteral(red: 0.4605029225, green: 0.447249949, blue: 0.7566576004, alpha: 1), for: .normal)
+        self.setTitleColor(#colorLiteral(red: 0.4588235294, green: 0.4470588235, blue: 0.7568627451, alpha: 1), for: .normal)
     }
 }

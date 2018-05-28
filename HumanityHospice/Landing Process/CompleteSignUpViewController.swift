@@ -26,6 +26,7 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var reenterPasswordTF: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var agreeToTermsButton: UIButton!
     
     var inviteCode: String?
     var pidToFollow: String?
@@ -37,17 +38,30 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
     
     func setupButtons() {
         signUpButton.setupMainButton()
+        signUpButton.isEnabled = false
+        agreeToTermsButton.imageEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0, right: 0)
     }
+    
+    
     
     func setupTextfields() {
         emailTF.delegate = self
         passwordTF.delegate = self
         reenterPasswordTF.delegate = self
-        
-        emailTF.setupTextField()
-        passwordTF.setupTextField()
-        reenterPasswordTF.setupTextField()
     }
+    
+    @IBAction func agreeToTerms(_ sender: Any) {
+        if agreeToTermsButton.isSelected {
+            agreeToTermsButton.setImage(#imageLiteral(resourceName: "CheckBox"), for: .normal)
+            agreeToTermsButton.isSelected = false
+            signUpButton.isEnabled = false
+        } else {
+            agreeToTermsButton.setImage(#imageLiteral(resourceName: "CheckBox Filled"), for: .normal)
+            agreeToTermsButton.isSelected = true
+            signUpButton.isEnabled = true
+        }
+    }
+    
     
     func verifyTextFields(completion: (String, String)->()) {
         

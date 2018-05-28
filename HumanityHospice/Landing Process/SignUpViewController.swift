@@ -46,9 +46,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     func setupTextFields() {
         firstName.delegate = self
         lastName.delegate = self
-        
-        firstName.setupTextField()
-        lastName.setupTextField()
     }
     
     // MARK: - Class Functionality
