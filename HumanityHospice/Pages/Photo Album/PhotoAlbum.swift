@@ -160,6 +160,8 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         let key = posts[indexPath.row].id
         if let post = realm.object(ofType: PhotoAlbumPost.self, forPrimaryKey: key) {
             post.viewImage(vc: self)
+        } else if let post = realm.object(ofType: Post.self, forPrimaryKey: key) {
+            post.viewImage(vc: self)
         }
     }
     
