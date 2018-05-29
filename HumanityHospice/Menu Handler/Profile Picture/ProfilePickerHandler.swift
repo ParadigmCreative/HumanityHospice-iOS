@@ -60,4 +60,13 @@ extension UIImageView {
         self.layer.cornerRadius = self.frame.height/2
         self.clipsToBounds = true
     }
+    
+    func setupSecondaryProfilePicture() {
+        self.layer.borderWidth = 1
+        self.layer.masksToBounds = false
+        let color = #colorLiteral(red: 0.2784313725, green: 0.1803921569, blue: 0.5490196078, alpha: 1)
+        self.layer.borderColor = color.cgColor
+        self.layer.cornerRadius = self.frame.height/2
+        self.clipsToBounds = true
+    }
 }

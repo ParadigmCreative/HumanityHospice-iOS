@@ -89,6 +89,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             cell.postPhoto.layer.cornerRadius = 5
             if let img = ProfilePickerHandler.chosenPhoto {
                 cell.userImage.image = img
+                cell.userImage.setupSecondaryProfilePicture()
             } else {
                 cell.userImage.image = #imageLiteral(resourceName: "Logo")
             }
@@ -104,6 +105,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
             if let img = ProfilePickerHandler.chosenPhoto {
                 cell.userImage.image = img
+                cell.userImage.setupSecondaryProfilePicture()
             } else {
                 cell.userImage.image = #imageLiteral(resourceName: "Logo")
             }
@@ -113,7 +115,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        posts[indexPath.row].viewImage(vc: self)
+        
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

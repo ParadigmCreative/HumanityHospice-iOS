@@ -28,10 +28,12 @@ class PostWithImageTableViewCell: JournalTableViewCell {
         didSet {
             if post.postImage == nil {
                 setupUI()
+                setupImageProperties()
             } else {
                 DispatchQueue.main.async {
                     if let img = self.post.postImage?.getImageFromData() {
                         self.postPhoto.image = img
+                        self.setupImageProperties()
                         self.indicator.stopAnimating()
                         self.indicator.removeFromSuperview()
                     }
@@ -67,6 +69,22 @@ class PostWithImageTableViewCell: JournalTableViewCell {
             }
         }
     }
+
+    func setupImageProperties() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.viewImage))
+        self.postPhoto.isUserInteractionEnabled = true
+        self.postPhoto.addGestureRecognizer(tap)
+    }
+    
+    @objc func viewImage() {
+        if let vc = MenuHandler.staticMenu?.handlingController {
+            self.post.viewImage(vc: vc)
+        }
+    }
+
+
+
+
 }
 
 
