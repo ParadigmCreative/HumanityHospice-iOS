@@ -31,9 +31,14 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     
     // MARK: - TableView
     var items = ["My Journal", "Encouragement Board", "My Photo Album", "Create Family Account", "Invite People", "Sign Out", "About Humanity Hospice"]
+    var itemsIcons = [#imageLiteral(resourceName: "journal"), #imageLiteral(resourceName: "Bubbles - simple-line-icons"), #imageLiteral(resourceName: "Picture - simple-line-icons"), #imageLiteral(resourceName: "User - simple-line-icons"), #imageLiteral(resourceName: "Plus - simple-line-icons"), #imageLiteral(resourceName: "Login - simple-line-icons"), #imageLiteral(resourceName: "Info - simple-line-icons")]
+    
     var readerItems = ["Journal", "Encouragement Board", "Photo Album", "Sign Out", "About Humanity Hospice"]
+    var readerIcons = [#imageLiteral(resourceName: "journal"), #imageLiteral(resourceName: "Bubbles - simple-line-icons"), #imageLiteral(resourceName: "Picture - simple-line-icons"), #imageLiteral(resourceName: "Login - simple-line-icons"), #imageLiteral(resourceName: "Info - simple-line-icons")]
+    
     
     var menuItems: [String] = []
+    var menuIcons: [UIImage] = []
     
     @IBOutlet weak var listingTableView: UITableView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,10 +48,14 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = MenuTableViewCell(style: .default, reuseIdentifier: "cell")
         
-        // TODO: add icon for each cell
-        
         cell.textLabel?.text = menuItems[indexPath.row]
-        cell.textLabel?.font = UIFont().setFont()
+        cell.textLabel?.textColor = UIColor.white
+        cell.backgroundColor = UIColor.clear
+        cell.imageView?.contentMode = .scaleAspectFit
+        cell.selectionStyle = .none
+        cell.imageView?.image = menuIcons[indexPath.row]
+        
+        
         return cell
     }
     
@@ -101,6 +110,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         self.listingTableView.isScrollEnabled = false
         self.listingTableView.emptyDataSetSource = self
         self.listingTableView.emptyDataSetDelegate = self
+        
     }
     
     func setupHeader() {
@@ -108,21 +118,21 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
 
         guard let email = AppSettings.currentFBUser?.email else { return }
         emailLabel.text = email
-        emailLabel.font = UIFont().setFont()
         
         guard let first = AppSettings.currentAppUser?.firstName else { return }
         guard let last  = AppSettings.currentAppUser?.lastName else { return }
 
         nameLabel.text = "\(first) \(last)"
-        nameLabel.font = UIFont().setFont()
     }
     
     func setupMenuItems() {
         if let type = AppSettings.userType {
             if type == .Patient || type == .Family {
                 self.menuItems = items
+                self.menuIcons = itemsIcons
             } else {
                 self.menuItems = readerItems
+                self.menuIcons = readerIcons
             }
         }
     }

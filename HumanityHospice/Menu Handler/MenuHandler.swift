@@ -58,7 +58,7 @@ class MenuHandler {
         }
         
         staticMenu?.mainAreaView.layer.shadowColor = UIColor.black.cgColor
-        staticMenu?.mainAreaView.layer.shadowOffset = CGSize(width: 5, height: 2)
+//        staticMenu?.mainAreaView.layer.shadowOffset = CGSize(width: 5, height: 2)
         staticMenu?.mainAreaView.layer.shadowOpacity = 0.5
         staticMenu?.mainAreaView.layer.shadowRadius = 5.0
         staticMenu?.mainAreaView.layer.masksToBounds = false

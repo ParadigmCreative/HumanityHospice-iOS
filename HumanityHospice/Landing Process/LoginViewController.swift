@@ -44,6 +44,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func setupResetButton() {
         resetPasswordButton.setupSecondaryButton()
+        resetPasswordButton.setTitleColor(UIColor.white, for: .normal)
     }
     
     func verifyTextFields(completion: (String, String)->()) {

@@ -12,7 +12,12 @@ import ImagePicker
 class ProfilePickerHandler {
     static var pickerDelegate = ProfilePickerDelegate()
     static var picker: ImagePickerController?
-    static var chosenPhoto: UIImage?
+    static var profilePictureDelegate: ProfilePictureDelegate?
+    static var chosenPhoto: UIImage? {
+        didSet {
+            profilePictureDelegate?.userDidSelectPhoto(image: chosenPhoto!)
+        }
+    }
     
     static func setup() {
         var configuration = Configuration()
@@ -25,6 +30,7 @@ class ProfilePickerHandler {
         self.picker = ImagePickerController(configuration: configuration)
         picker?.delegate = self.pickerDelegate
         picker?.imageLimit = 1
+        
     }
     
     static func open(vc: UIViewController) {
@@ -34,6 +40,13 @@ class ProfilePickerHandler {
     
     static func close() {
         picker!.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension ProfilePickerHandler: ProfilePictureDelegate {
+    func userDidSelectPhoto(image: UIImage) {
+        ProfilePickerHandler.chosenPhoto = image
     }
     
     

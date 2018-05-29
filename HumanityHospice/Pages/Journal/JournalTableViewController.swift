@@ -9,7 +9,7 @@
 import UIKit
 import DZNEmptyDataSet
 
-class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
+class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, ProfilePictureDelegate {
 
     
     var menuDelegate: MenuHandlerDelegate?
@@ -21,7 +21,14 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         MenuHandler.initialize(vc: self)
         menuDelegate = MenuHandler.staticMenu
         setup()
+        ProfilePickerHandler.profilePictureDelegate = self
         
+    }
+    
+    func userDidSelectPhoto(image: UIImage) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,8 +86,12 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             
             cell.message.layer.cornerRadius = 5
             cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
-            cell.userImage.image = #imageLiteral(resourceName: "Logo")
             cell.postPhoto.layer.cornerRadius = 5
+            if let img = ProfilePickerHandler.chosenPhoto {
+                cell.userImage.image = img
+            } else {
+                cell.userImage.image = #imageLiteral(resourceName: "Logo")
+            }
             
             return cell
         } else {
@@ -91,7 +102,11 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             
             cell.message.layer.cornerRadius = 5
             cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
-            cell.userImage.image = #imageLiteral(resourceName: "Logo")
+            if let img = ProfilePickerHandler.chosenPhoto {
+                cell.userImage.image = img
+            } else {
+                cell.userImage.image = #imageLiteral(resourceName: "Logo")
+            }
             
             return cell
         }

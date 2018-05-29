@@ -16,7 +16,7 @@
             <objects>
                 <tableViewController id="eSP-XQ-a0m" customClass="JournalTableViewController" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="oYo-Es-mC7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -139,13 +139,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="My Journal" id="MZU-4Q-gOw">
                         <barButtonItem key="leftBarButtonItem" image="Menu" id="Rmt-4U-DhY">
-                            <color key="tintColor" red="0.46050292250000002" green="0.44724994899999998" blue="0.75665760039999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="toggleMenu:" destination="eSP-XQ-a0m" id="2DN-GD-elM"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="JCF-5n-Kb9">
-                            <color key="tintColor" red="0.41568627450000001" green="0.4039215686" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="newPost:" destination="eSP-XQ-a0m" id="fhP-QA-9UE"/>
                             </connections>
@@ -395,13 +395,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="toP-io-kg8">
                         <barButtonItem key="leftBarButtonItem" image="Menu" id="N5s-No-V7V">
-                            <color key="tintColor" red="0.46050292250000002" green="0.44724994899999998" blue="0.75665760039999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="toggleMenu:" destination="QUh-Pd-EM6" id="yH3-sT-Nt6"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="FgR-eY-EXG">
-                            <color key="tintColor" red="0.41568627450000001" green="0.4039215686" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="newPost:" destination="QUh-Pd-EM6" id="uZi-Av-kDX"/>
                             </connections>
@@ -422,7 +422,7 @@
             <objects>
                 <collectionViewController id="YAt-iN-y03" customClass="PhotoAlbum" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="qE4-W3-7oN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cvw-U5-lcT">
@@ -457,13 +457,13 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Photo Album" id="p6c-fc-FZ6">
                         <barButtonItem key="leftBarButtonItem" image="Menu" id="pdy-il-tB3">
-                            <color key="tintColor" red="0.41568627450000001" green="0.4039215686" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="showMenu:" destination="YAt-iN-y03" id="sHq-HK-t4G"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="compose" id="twW-d3-8xL">
-                            <color key="tintColor" red="0.41568627450000001" green="0.4039215686" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="addPhoto:" destination="YAt-iN-y03" id="JYz-aH-EGx"/>
                             </connections>
@@ -483,11 +483,11 @@
             <objects>
                 <viewController id="Tmb-yc-NZ9" customClass="CreateFamilyAccount" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CGt-E0-fqV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jIv-tZ-JdF">
-                                <rect key="frame" x="62" y="399" width="250" height="45"/>
+                                <rect key="frame" x="62" y="335" width="250" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="hI4-uZ-eW2"/>
                                     <constraint firstAttribute="height" constant="45" id="mrl-ME-Xsp"/>
@@ -498,14 +498,14 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="zni-vv-gJb">
-                                <rect key="frame" x="150" y="89" width="75" height="75"/>
+                                <rect key="frame" x="150" y="25" width="75" height="75"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="82k-58-L7F"/>
                                     <constraint firstAttribute="width" constant="75" id="v0V-Ul-6Ec"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Zz5-q3-wU7">
-                                <rect key="frame" x="62" y="273" width="250" height="17"/>
+                                <rect key="frame" x="62" y="209" width="250" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="dVO-6x-aOo"/>
                                 </constraints>
@@ -514,7 +514,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="WNL-nM-IjY">
-                                <rect key="frame" x="62" y="315" width="250" height="17"/>
+                                <rect key="frame" x="62" y="251" width="250" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="XgS-r0-Rr6"/>
                                 </constraints>
@@ -523,7 +523,7 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Re-enter Password" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="JGV-km-XVq">
-                                <rect key="frame" x="62" y="357" width="250" height="17"/>
+                                <rect key="frame" x="62" y="293" width="250" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="fhB-w0-m7e"/>
                                 </constraints>
@@ -532,7 +532,7 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Lxw-Ca-pGi">
-                                <rect key="frame" x="62" y="189" width="250" height="17"/>
+                                <rect key="frame" x="62" y="125" width="250" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="axm-Oc-sH1"/>
                                 </constraints>
@@ -541,7 +541,7 @@
                                 <textInputTraits key="textInputTraits" textContentType="given-name"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="iWG-Ru-uUm">
-                                <rect key="frame" x="62" y="231" width="250" height="17"/>
+                                <rect key="frame" x="62" y="167" width="250" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="9Qj-9O-CY4"/>
                                 </constraints>
@@ -572,7 +572,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="3bA-fT-BRk">
                         <barButtonItem key="leftBarButtonItem" image="Menu" id="vbd-G7-Lqw">
-                            <color key="tintColor" red="0.41568627450000001" green="0.4039215686" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="openMenu:" destination="Tmb-yc-NZ9" id="5ku-SJ-k0n"/>
                             </connections>
@@ -621,16 +621,20 @@
                 </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gvw-gJ-usr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4300" y="931"/>
+            <point key="canvasLocation" x="4300" y="881"/>
         </scene>
         <!--Item-->
         <scene sceneID="F2C-Kj-vL4">
             <objects>
                 <navigationController id="oUc-Qh-UcG" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="cJR-ch-1Od"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9Bu-XQ-J7q">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="9Bu-XQ-J7q">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.35294117650000001" green="0.23137254900000001" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="Tmb-yc-NZ9" kind="relationship" relationship="rootViewController" id="Fcr-Mz-0x8"/>
@@ -645,7 +649,7 @@
             <objects>
                 <viewController id="4bT-RU-Nor" customClass="InviteReaders" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7aw-pF-RIi">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0TF-OC-THK">
@@ -711,7 +715,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Invite People" id="7rB-Lr-fo8">
                         <barButtonItem key="leftBarButtonItem" image="Menu" id="PJi-Hp-Bos">
-                            <color key="tintColor" red="0.41568627450000001" green="0.4039215686" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="openMenu:" destination="4bT-RU-Nor" id="gmE-in-Sar"/>
                             </connections>
@@ -748,18 +752,18 @@
                     <viewLayoutGuide key="safeArea" id="R9X-ty-LXv"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="5070" y="932"/>
+            <point key="canvasLocation" x="5070" y="881"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="r8h-ae-GWw">
             <objects>
                 <viewController id="Lsa-Sp-kBm" customClass="AboutViewController" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IGd-gX-VO9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IL8-jh-C4B">
-                                <rect key="frame" x="0.0" y="64" width="375" height="510"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="510"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -779,7 +783,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="bWA-HO-T6p">
                         <barButtonItem key="leftBarButtonItem" image="Menu" id="inX-1C-BBU">
-                            <color key="tintColor" red="0.41568627450000001" green="0.4039215686" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="openMenu:" destination="Lsa-Sp-kBm" id="Ni1-Nh-Qm3"/>
                             </connections>
@@ -792,7 +796,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fao-cM-68W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5805.6000000000004" y="879.31034482758628"/>
+            <point key="canvasLocation" x="5806" y="881"/>
         </scene>
         <!--Landing View Controller-->
         <scene sceneID="1dM-6Y-H9S">
@@ -976,11 +980,11 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ex: ABCDE" textAlignment="center" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Hy4-9x-LBK">
-                            <rect key="frame" x="99" y="86" width="100" height="30"/>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ex: ABCDE" textAlignment="center" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Hy4-9x-LBK">
+                            <rect key="frame" x="89" y="86" width="120" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="aW0-Ka-t1H"/>
-                                <constraint firstAttribute="width" constant="100" id="u03-7e-08J"/>
+                                <constraint firstAttribute="width" constant="120" id="u03-7e-08J"/>
                             </constraints>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -998,7 +1002,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.41568627450980394" green="0.40392156862745099" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.50980392159999999" green="0.52156862749999999" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="vE0-VD-fnR" firstAttribute="centerX" secondItem="cls-4s-H6A" secondAttribute="centerX" id="4Wo-3r-soz"/>
                         <constraint firstItem="Hy4-9x-LBK" firstAttribute="top" secondItem="d6I-Hk-ifU" secondAttribute="bottom" constant="30" id="Bj7-30-Oqw"/>
@@ -1156,7 +1160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ztc-5z-Gyj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1888.8" y="-931.48425787106453"/>
+            <point key="canvasLocation" x="1889" y="-949"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Py1-fy-5fl">
@@ -1166,6 +1170,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BG" translatesAutoresizingMaskIntoConstraints="NO" id="uMY-XM-tqj">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Q2T-0X-9lI">
                                 <rect key="frame" x="63" y="279" width="250" height="30"/>
                                 <constraints>
@@ -1200,7 +1207,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="Can't Sign In? Reset you password"/>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Otf-9I-oyA">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo 2" translatesAutoresizingMaskIntoConstraints="NO" id="Otf-9I-oyA">
                                 <rect key="frame" x="137.5" y="104" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="0ql-k0-NSI"/>
@@ -1215,7 +1222,11 @@
                             <constraint firstItem="M07-er-RhG" firstAttribute="bottom" secondItem="UwO-Zv-Q72" secondAttribute="bottom" constant="20" id="Hxu-S1-f4y"/>
                             <constraint firstItem="wUm-GF-BJB" firstAttribute="centerX" secondItem="46M-df-Jj5" secondAttribute="centerX" id="J8g-53-JC8"/>
                             <constraint firstItem="Q2T-0X-9lI" firstAttribute="top" secondItem="Otf-9I-oyA" secondAttribute="bottom" constant="75" id="V5h-gS-8tZ"/>
+                            <constraint firstItem="uMY-XM-tqj" firstAttribute="trailing" secondItem="M07-er-RhG" secondAttribute="trailing" id="b3n-zy-ndn"/>
+                            <constraint firstItem="uMY-XM-tqj" firstAttribute="bottom" secondItem="M07-er-RhG" secondAttribute="bottom" id="cuB-ZX-ZOS"/>
+                            <constraint firstItem="uMY-XM-tqj" firstAttribute="top" secondItem="46M-df-Jj5" secondAttribute="top" id="iCw-1G-mP7"/>
                             <constraint firstItem="6pt-ND-L5O" firstAttribute="centerX" secondItem="46M-df-Jj5" secondAttribute="centerX" id="lWO-vf-oOq"/>
+                            <constraint firstItem="uMY-XM-tqj" firstAttribute="leading" secondItem="M07-er-RhG" secondAttribute="leading" id="mwf-ir-04u"/>
                             <constraint firstItem="6pt-ND-L5O" firstAttribute="top" secondItem="Q2T-0X-9lI" secondAttribute="bottom" constant="25" id="oVW-ef-sJ0"/>
                             <constraint firstItem="UwO-Zv-Q72" firstAttribute="top" secondItem="wUm-GF-BJB" secondAttribute="bottom" constant="125" id="rpV-gt-4fd"/>
                             <constraint firstItem="Otf-9I-oyA" firstAttribute="centerX" secondItem="46M-df-Jj5" secondAttribute="centerX" id="tLa-YN-nxL"/>
@@ -1232,7 +1243,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oie-bu-BE4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1073" y="-1848"/>
+            <point key="canvasLocation" x="1072.8" y="-1848.1259370314845"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ows-cn-A7N">
@@ -1263,9 +1274,14 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jvO-Nh-uIo" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="featured" id="56Z-se-zCY"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Bi5-AA-x4t">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Bi5-AA-x4t">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.3529411764705882" green="0.23137254901960785" blue="0.62352941176470589" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.35294117650000001" green="0.23137254900000001" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1284,6 +1300,11 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="slg-mk-76H">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.35294117650000001" green="0.23137254900000001" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="QUh-Pd-EM6" kind="relationship" relationship="rootViewController" id="Kc9-NT-2IP"/>
@@ -1318,9 +1339,13 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GSq-i6-uGw" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="Q6a-7x-mEZ"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1ka-7I-oa1">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="1ka-7I-oa1">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.35294117650000001" green="0.23137254900000001" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1336,9 +1361,13 @@
             <objects>
                 <navigationController id="G8T-ak-qBV" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="CLF-Q1-uO7"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="67B-NP-bfJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="67B-NP-bfJ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.35294117650000001" green="0.23137254900000001" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="4bT-RU-Nor" kind="relationship" relationship="rootViewController" id="sXd-Hy-HYA"/>
@@ -1353,9 +1382,13 @@
             <objects>
                 <navigationController id="syF-iu-ksJ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="eEX-qJ-XVJ"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ei3-qz-tsT">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="ei3-qz-tsT">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.35294117650000001" green="0.23137254900000001" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="Lsa-Sp-kBm" kind="relationship" relationship="rootViewController" id="2nN-e9-8Ke"/>

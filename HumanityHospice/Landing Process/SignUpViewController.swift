@@ -57,7 +57,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
         
         if let e = firstName.text {
             guard e.count > 0 else {
-                self.showAlert(title: "Oops!", message: "Please enter a valid email address.")
+                self.showAlert(title: "Oops!", message: "Please enter your first name.")
                 return
             }
             first = e
@@ -65,7 +65,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
         
         if let p = lastName.text {
             guard p.count > 0 else {
-                self.showAlert(title: "Oops!", message: "Please enter your password.")
+                self.showAlert(title: "Oops!", message: "Please enter your last name.")
                 return
             }
             last = p
@@ -168,6 +168,18 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
         }
     }
     
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if inviteCodePopUp.isHidden == false {
+            if let touch = touches.first {
+                if let view = touch.view {
+                    if view != inviteCodePopUp {
+                        closePopup()
+                    }
+                }
+            }
+        }
+    }
     
 
 }

@@ -9,7 +9,12 @@
 import Foundation
 import ImagePicker
 
+protocol ProfilePictureDelegate {
+    func userDidSelectPhoto(image: UIImage)
+}
+
 class ProfilePickerDelegate: ImagePickerDelegate {
+    
     // MARK: - ImagePickerDelegate
     func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         print("Wrapper")

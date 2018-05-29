@@ -22,6 +22,7 @@ class InviteCodePopUp: UIView, UITextFieldDelegate {
         setupView()
         setupTitle()
         setupButton()
+        codeTF.delegate = self
     }
     
     private func setupView() {
@@ -115,6 +116,18 @@ class InviteCodePopUp: UIView, UITextFieldDelegate {
         
         return true
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == codeTF {
+            guard let text = textField.text else { return true }
+            let newLength = text.count + string.count - range.length
+            return newLength <= 6 // Bool
+        } else {
+            return false
+        }
+    }
+    
+    
 }
 
 protocol InviteCodeDelegate {
