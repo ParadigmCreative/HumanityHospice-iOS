@@ -24,7 +24,7 @@ class PostWithImageTableViewCell: JournalTableViewCell {
     @IBOutlet weak var postPhoto: UIImageView!
     var indicator: UIActivityIndicatorView!
     
-    var post: Post! {
+    override var post: Post! {
         didSet {
             if post.postImage == nil {
                 setupUI()
@@ -55,8 +55,9 @@ class PostWithImageTableViewCell: JournalTableViewCell {
                                 self.post.postImage = data
                                 DatabaseHandler.realm.add(self.post, update: true)
                             }
-                            
                         }
+                        
+                        self.post.postImage = image?.prepareImageForSaving()
                         
                         // set image to imageView
                         DispatchQueue.main.async {

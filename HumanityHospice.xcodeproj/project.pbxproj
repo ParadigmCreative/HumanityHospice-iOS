@@ -17,6 +17,13 @@
 		7335B2B6209FAFA000AD5B1B /* ProfilePickerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B5209FAFA000AD5B1B /* ProfilePickerHandler.swift */; };
 		7335B2B9209FCB0100AD5B1B /* PostWithImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B8209FCB0100AD5B1B /* PostWithImageTableViewCell.swift */; };
 		7335B2BB209FD48F00AD5B1B /* ImageSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2BA209FD48F00AD5B1B /* ImageSelector.swift */; };
+		73383A3620BDFF91004CE58F /* JournalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73383A3520BDFF91004CE58F /* JournalTableViewController.swift */; };
+		73383A3820BE1815004CE58F /* ViewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73383A3720BE1815004CE58F /* ViewPostViewController.swift */; };
+		73383A3B20BE248E004CE58F /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73383A3A20BE248E004CE58F /* PostViewController.swift */; };
+		73383A3D20BE2499004CE58F /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73383A3C20BE2499004CE58F /* CommentsViewController.swift */; };
+		73383A3F20BE2544004CE58F /* ImagePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73383A3E20BE2544004CE58F /* ImagePostTableViewCell.swift */; };
+		73383A4120BE259A004CE58F /* TextPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73383A4020BE259A004CE58F /* TextPostTableViewCell.swift */; };
+		73383A4520BE2623004CE58F /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73383A4420BE2623004CE58F /* CommentTableViewCell.swift */; };
 		7338482E20A7F50000EC6D01 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7338482D20A7F50000EC6D01 /* Posts.swift */; };
 		7357DE652097CC6000AED945 /* EncourangementBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE642097CC6000AED945 /* EncourangementBoard.swift */; };
 		7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6620980B6000AED945 /* PhotoAlbum.swift */; };
@@ -45,7 +52,6 @@
 		A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C1220892CA00084BA9B /* MenuView.swift */; };
 		A5FC5C1520892FA60084BA9B /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5FC5C1420892FA60084BA9B /* Menu.xib */; };
 		A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */; };
-		A5FC5C1A2089367D0084BA9B /* JournalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C192089367D0084BA9B /* JournalTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +84,13 @@
 		7335B2B5209FAFA000AD5B1B /* ProfilePickerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePickerHandler.swift; sourceTree = "<group>"; };
 		7335B2B8209FCB0100AD5B1B /* PostWithImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostWithImageTableViewCell.swift; sourceTree = "<group>"; };
 		7335B2BA209FD48F00AD5B1B /* ImageSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelector.swift; sourceTree = "<group>"; };
+		73383A3520BDFF91004CE58F /* JournalTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalTableViewController.swift; sourceTree = "<group>"; };
+		73383A3720BE1815004CE58F /* ViewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPostViewController.swift; sourceTree = "<group>"; };
+		73383A3A20BE248E004CE58F /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		73383A3C20BE2499004CE58F /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
+		73383A3E20BE2544004CE58F /* ImagePostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePostTableViewCell.swift; sourceTree = "<group>"; };
+		73383A4020BE259A004CE58F /* TextPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPostTableViewCell.swift; sourceTree = "<group>"; };
+		73383A4420BE2623004CE58F /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		7338482D20A7F50000EC6D01 /* Posts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posts.swift; sourceTree = "<group>"; };
 		7357DE642097CC6000AED945 /* EncourangementBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncourangementBoard.swift; sourceTree = "<group>"; };
 		7357DE6620980B6000AED945 /* PhotoAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbum.swift; sourceTree = "<group>"; };
@@ -112,7 +125,6 @@
 		A5FC5C1220892CA00084BA9B /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		A5FC5C1420892FA60084BA9B /* Menu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
 		A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
-		A5FC5C192089367D0084BA9B /* JournalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTableViewController.swift; sourceTree = "<group>"; };
 		C9B167080ED8CF261C513433 /* Pods-HumanityHospice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospice.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospice/Pods-HumanityHospice.debug.xcconfig"; sourceTree = "<group>"; };
 		FC6511DBD92A5231432A71A1 /* Pods-HumanityHospiceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospiceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospiceTests/Pods-HumanityHospiceTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,10 +183,11 @@
 		7335B2B0209BC37800AD5B1B /* Journal */ = {
 			isa = PBXGroup;
 			children = (
-				A5FC5C192089367D0084BA9B /* JournalTableViewController.swift */,
+				73383A3520BDFF91004CE58F /* JournalTableViewController.swift */,
 				7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */,
 				7335B2B8209FCB0100AD5B1B /* PostWithImageTableViewCell.swift */,
 				7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */,
+				73383A3920BE2479004CE58F /* View Post */,
 			);
 			path = Journal;
 			sourceTree = "<group>";
@@ -195,6 +208,35 @@
 				737118B620A12C0500656F8E /* ImageViewer.swift */,
 			);
 			path = "Image Selector";
+			sourceTree = "<group>";
+		};
+		73383A3920BE2479004CE58F /* View Post */ = {
+			isa = PBXGroup;
+			children = (
+				73383A3720BE1815004CE58F /* ViewPostViewController.swift */,
+				73383A4320BE25BE004CE58F /* Container View VCs */,
+				73383A4220BE259F004CE58F /* Post Cells */,
+			);
+			path = "View Post";
+			sourceTree = "<group>";
+		};
+		73383A4220BE259F004CE58F /* Post Cells */ = {
+			isa = PBXGroup;
+			children = (
+				73383A4020BE259A004CE58F /* TextPostTableViewCell.swift */,
+				73383A3E20BE2544004CE58F /* ImagePostTableViewCell.swift */,
+				73383A4420BE2623004CE58F /* CommentTableViewCell.swift */,
+			);
+			path = "Post Cells";
+			sourceTree = "<group>";
+		};
+		73383A4320BE25BE004CE58F /* Container View VCs */ = {
+			isa = PBXGroup;
+			children = (
+				73383A3A20BE248E004CE58F /* PostViewController.swift */,
+				73383A3C20BE2499004CE58F /* CommentsViewController.swift */,
+			);
+			path = "Container View VCs";
 			sourceTree = "<group>";
 		};
 		735EA43320AD0A3500ED339F /* Photo Album */ = {
@@ -560,29 +602,35 @@
 				A5D3F970208D18540079B713 /* LoginViewController.swift in Sources */,
 				73ED2C3820A903CF005D7AF8 /* RealmHandler.swift in Sources */,
 				7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */,
+				73383A4120BE259A004CE58F /* TextPostTableViewCell.swift in Sources */,
 				7335B2B9209FCB0100AD5B1B /* PostWithImageTableViewCell.swift in Sources */,
 				A5D00665208938C30079CD49 /* MenuHandler.swift in Sources */,
 				7335B2BB209FD48F00AD5B1B /* ImageSelector.swift in Sources */,
 				7335B2AF209BC37100AD5B1B /* JournalTableViewCell.swift in Sources */,
 				7335B2B6209FAFA000AD5B1B /* ProfilePickerHandler.swift in Sources */,
 				A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */,
+				73383A3620BDFF91004CE58F /* JournalTableViewController.swift in Sources */,
 				7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */,
 				73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */,
 				7357DE6D20980BA700AED945 /* AboutViewController.swift in Sources */,
 				7338482E20A7F50000EC6D01 /* Posts.swift in Sources */,
 				A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */,
+				73383A3D20BE2499004CE58F /* CommentsViewController.swift in Sources */,
 				73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */,
+				73383A3B20BE248E004CE58F /* PostViewController.swift in Sources */,
 				7335B2B4209FA41400AD5B1B /* ProfilePickerDelegate.swift in Sources */,
 				A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */,
+				73383A3F20BE2544004CE58F /* ImagePostTableViewCell.swift in Sources */,
+				73383A3820BE1815004CE58F /* ViewPostViewController.swift in Sources */,
 				A5D3F976208D2E8C0079B713 /* CompleteSignUpViewController.swift in Sources */,
 				A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */,
 				735EA43520AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift in Sources */,
 				7335B2B2209BDFF700AD5B1B /* NewPostViewController.swift in Sources */,
 				7310489F20B895C500E52EA9 /* NewPhotoPostVC.swift in Sources */,
-				A5FC5C1A2089367D0084BA9B /* JournalTableViewController.swift in Sources */,
 				737118B720A12C0500656F8E /* ImageViewer.swift in Sources */,
 				A5D3F972208D23470079B713 /* Utilities.swift in Sources */,
 				A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */,
+				73383A4520BE2623004CE58F /* CommentTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

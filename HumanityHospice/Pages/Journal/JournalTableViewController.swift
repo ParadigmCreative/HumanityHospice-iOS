@@ -9,7 +9,7 @@
 import UIKit
 import DZNEmptyDataSet
 
-class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, ProfilePictureDelegate {
+class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, ProfilePictureDelegate, CommentsDelegate {
 
     
     var menuDelegate: MenuHandlerDelegate?
@@ -72,21 +72,50 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let post = posts[indexPath.row]
-
+        
         if post.hasImage {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "postWithImage", for: indexPath) as! PostWithImageTableViewCell
+            let imageCell = tableView.dequeueReusableCell(withIdentifier: "postWithImage", for: indexPath) as! PostWithImageTableViewCell
+            imageCell.layoutSubviews()
             
-            let indicator = Utilities.createActivityIndicator(view: cell)
-            cell.indicator = indicator
+            let indicator = Utilities.createActivityIndicator(view: imageCell)
+            imageCell.indicator = indicator
+            imageCell.post = post
+            imageCell.commentDelegate = self
+            
+            imageCell.nameLabel.text = post.poster
+            imageCell.message.text = post.message
+            imageCell.postPhoto.clipsToBounds = true
+            
+            imageCell.message.layer.cornerRadius = 5
+            imageCell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
+            imageCell.postPhoto.layer.cornerRadius = 5
+            if let img = ProfilePickerHandler.chosenPhoto {
+                imageCell.userImage.image = img
+                imageCell.userImage.setupSecondaryProfilePicture()
+            } else {
+                imageCell.userImage.image = #imageLiteral(resourceName: "Logo")
+            }
+            
+            let count = post.comments.count
+            if count > 0 {
+                imageCell.commentsButton.setTitle("Comments (\(count))   ", for: .normal)
+            } else {
+                imageCell.commentsButton.setTitle("Comments (0)   ", for: .normal)
+            }
+        
+            return imageCell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! JournalTableViewCell
+            cell.layoutSubviews()
+            
             cell.post = post
+            cell.commentDelegate = self
             
             cell.nameLabel.text = post.poster
             cell.message.text = post.message
-            cell.postPhoto.clipsToBounds = true
             
             cell.message.layer.cornerRadius = 5
             cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
-            cell.postPhoto.layer.cornerRadius = 5
             if let img = ProfilePickerHandler.chosenPhoto {
                 cell.userImage.image = img
                 cell.userImage.setupSecondaryProfilePicture()
@@ -94,20 +123,11 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
                 cell.userImage.image = #imageLiteral(resourceName: "Logo")
             }
             
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "post", for: indexPath) as! JournalTableViewCell
-            
-            cell.nameLabel.text = post.poster
-            cell.message.text = post.message
-            
-            cell.message.layer.cornerRadius = 5
-            cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
-            if let img = ProfilePickerHandler.chosenPhoto {
-                cell.userImage.image = img
-                cell.userImage.setupSecondaryProfilePicture()
+            let count = post.comments.count
+            if count > 0 {
+                cell.commentsButton.setTitle("Comments (\(count))   ", for: .normal)
             } else {
-                cell.userImage.image = #imageLiteral(resourceName: "Logo")
+                cell.commentsButton.setTitle("Comments (0)   ", for: .normal)
             }
             
             return cell
@@ -135,6 +155,10 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
                 }
             }
         }
+    }
+    
+    func userDidSelectPostForComments(post: Post) {
+        // load page with post
     }
     
     // MARK: - Get Data

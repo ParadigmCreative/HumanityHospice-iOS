@@ -15,9 +15,18 @@ class JournalTableViewCell: UITableViewCell {
         // Initialization code
     }
     
+    var post: Post!
+    
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var message: UITextView!
+    @IBOutlet weak var commentsButton: UIButton!
+    var commentDelegate: CommentsDelegate!
+    
+    @IBAction func showComments(_ sender: Any) {
+        print("Comments")
+        commentDelegate.userDidSelectPostForComments(post: self.post)
+    }
     
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -26,4 +35,8 @@ class JournalTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+}
+
+protocol CommentsDelegate {
+    func userDidSelectPostForComments(post: Post)
 }
