@@ -14,6 +14,7 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Encouragement Board"
         MenuHandler.staticMenu?.setHandingController(vc: self)
         setupEmptyDataSet()
         

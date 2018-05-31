@@ -873,6 +873,16 @@ class DatabaseHandler {
         }
     }
     
+    // MARK: Comments
+    public static func postCommentToDatabase(postID: String, data: [String: Any], completion: ()->()) {
+        guard let currentPatient = AppSettings.currentPatient else { return }
+        let postRef = Database.database().reference().child("Journals").child(currentPatient).child(postID)
+        postRef.child("comments").childByAutoId().setValue(data)
+        completion()
+    }
+    
+    
+    
     // MARK: - Encouragement Board
     public static var addedEBPostLister: DatabaseHandle?
     public static func listenForEBPostAdded(completion: @escaping ([EBPost])->()) {

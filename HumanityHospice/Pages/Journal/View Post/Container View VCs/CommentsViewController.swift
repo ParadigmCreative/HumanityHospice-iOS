@@ -7,24 +7,33 @@
 //
 
 import UIKit
+import DZNEmptyDataSet
 
-class CommentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CommentsViewDelegate {
+class CommentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CommentsViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     @IBOutlet weak var commentsTableView: UITableView!
     
-    var comments: [Post]!
+    var comments: [Post]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         commentsTableView.dataSource = self
         commentsTableView.delegate = self
+        
+        setupEmptyDataSet()
 
         // Do any additional setup after loading the view.
     }
     
     func didRecieveComments(comments: [Post]) {
         self.comments = comments
+        DispatchQueue.main.async {
+            self.commentsTableView.reloadData()
+        }
+    }
+    
+    func reloadTable() {
         DispatchQueue.main.async {
             self.commentsTableView.reloadData()
         }
@@ -40,7 +49,11 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return comments!.count
+        if let comments = self.comments {
+            return comments.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,6 +63,25 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
+    func setupEmptyDataSet() {
+        self.commentsTableView.emptyDataSetSource = self
+        self.commentsTableView.emptyDataSetDelegate = self
+        
+        self.commentsTableView.tableFooterView = UIView()
+        
+    }
+    
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let title = "Nothing to see here..."
+        let attStr = NSAttributedString(string: title)
+        return attStr
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let desc = "Be the first to comment!"
+        let attr = NSAttributedString(string: desc)
+        return attr
+    }
     
 
 }

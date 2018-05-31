@@ -9,109 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/Journal/View Post/Container View VCs/PostViewController.swift"
-            timestampString = "549438127.134015"
+            filePath = "HumanityHospice/Pages/Journal/View Post/ViewPostViewController.swift"
+            timestampString = "549494270.444971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/Journal/PostWithImageTableViewCell.swift"
-            timestampString = "549438127.1344301"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "setupUI()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__ObjC.UIImage&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in HumanityHospice.PostWithImageTableViewCell.setupUI() -&gt; ()"
-                  moduleName = "HumanityHospice"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/appcenter/Documents/Work/Paradigm%20Creative/Humanity%20Hospice/HumanityHospice-iOS/HumanityHospice/Pages/Journal/PostWithImageTableViewCell.swift"
-                  timestampString = "549437633.290001"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "61"
-                  endingLineNumber = "61"
-                  offsetFromSymbolStart = "1495">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in closure #1 (Swift.Optional&lt;__ObjC.UIImage&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in HumanityHospice.PostWithImageTableViewCell.setupUI() -&gt; ()"
-                  moduleName = "HumanityHospice"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/appcenter/Documents/Work/Paradigm%20Creative/Humanity%20Hospice/HumanityHospice-iOS/HumanityHospice/Pages/Journal/PostWithImageTableViewCell.swift"
-                  timestampString = "549437633.29217"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "62"
-                  endingLineNumber = "62"
-                  offsetFromSymbolStart = "29">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/Journal/JournalTableViewController.swift"
-            timestampString = "549438127.134698"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "userDidSelectPostForComments(post:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/Journal/JournalTableViewCell.swift"
-            timestampString = "549438127.13493"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "showComments(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/Journal/JournalTableViewController.swift"
-            timestampString = "549438127.135152"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
-            landmarkName = "prepare(for:sender:)"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "postComment()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,11 +26,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Pages/Journal/View Post/ViewPostViewController.swift"
-            timestampString = "549438127.135214"
+            timestampString = "549494270.4454319"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "postComment()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Database Handler/DatabaseHandler.swift"
+            timestampString = "549494270.4455301"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "878"
+            endingLineNumber = "878"
+            landmarkName = "postCommentToDatabase(postID:data:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Pages/EncouragementBoard/EncourangementBoard.swift"
+            timestampString = "549494270.445863"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>

@@ -21,6 +21,9 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
         postTableView.delegate = self
         postTableView.dataSource = self
         
+        let foot = UIView()
+        postTableView.tableFooterView = foot
+        
         // Do any additional setup after loading the view.
     }
 
