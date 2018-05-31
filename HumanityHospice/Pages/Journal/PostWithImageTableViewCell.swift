@@ -57,8 +57,6 @@ class PostWithImageTableViewCell: JournalTableViewCell {
                             }
                         }
                         
-                        self.post.postImage = image?.prepareImageForSaving()
-                        
                         // set image to imageView
                         DispatchQueue.main.async {
                             self.postPhoto.image = image

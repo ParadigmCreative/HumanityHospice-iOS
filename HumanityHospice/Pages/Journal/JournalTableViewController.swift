@@ -158,7 +158,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     }
     
     func userDidSelectPostForComments(post: Post) {
-        // load page with post
+        performSegue(withIdentifier: "viewPost", sender: post)
     }
     
     // MARK: - Get Data
@@ -227,6 +227,17 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         
         MenuHandler.openMenu(vc: self)
         
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "viewPost" {
+            if let vc = segue.destination as? ViewPostViewController {
+                if let post = sender as? Post {
+                    vc.post = post
+                }
+            }
+        }
     }
 
     

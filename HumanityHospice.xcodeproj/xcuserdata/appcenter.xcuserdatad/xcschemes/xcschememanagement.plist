@@ -7,7 +7,20 @@
 		<key>HumanityHospice.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>20</integer>
+			<integer>18</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>739BC8F220BFA83500EB6667</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A5BBD42E2086EC3700B80BD0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

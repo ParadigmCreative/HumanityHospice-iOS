@@ -8,15 +8,26 @@
 
 import UIKit
 
-class CommentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CommentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CommentsViewDelegate {
 
     @IBOutlet weak var commentsTableView: UITableView!
     
+    var comments: [Post]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        commentsTableView.dataSource = self
+        commentsTableView.delegate = self
 
         // Do any additional setup after loading the view.
+    }
+    
+    func didRecieveComments(comments: [Post]) {
+        self.comments = comments
+        DispatchQueue.main.async {
+            self.commentsTableView.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,28 +36,20 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        <#code#>
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return comments!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        let cell = tableView.dequeueReusableCell(withIdentifier: "commentPost", for: indexPath) as! CommentTableViewCell
+        
+        
+        return cell
     }
     
     
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

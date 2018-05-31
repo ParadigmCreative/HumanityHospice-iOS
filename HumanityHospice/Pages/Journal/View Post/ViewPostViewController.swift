@@ -13,7 +13,13 @@ class ViewPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        postDelegate?.didRecievePost(post: self.post)
+        if let comments = post.getListArray() {
+            commentsDelegate?.didRecieveComments(comments: comments)
+        } else {
+            commentsDelegate?.didRecieveComments(comments: [])
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,23 +27,48 @@ class ViewPostViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    var post: Post!
     
+    var postDelegate: PostViewDelegate?
+    var commentsDelegate: CommentsViewDelegate?
     
-    
-    
-    
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    var postView: PostViewController? {
+        didSet {
+            postDelegate = postView
+        }
     }
-    */
+    var commentsView: CommentsViewController? {
+        didSet {
+            commentsDelegate = commentsView
+        }
+    }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? PostViewController {
+            postView = vc
+        } else if let vc = segue.destination as? CommentsViewController {
+            commentsView = vc
+        }
+    }
+    
 }
+
+protocol PostViewDelegate {
+    func didRecievePost(post: Post)
+}
+
+protocol CommentsViewDelegate {
+    func didRecieveComments(comments: [Post])
+}
+
+extension Post {
+    func getListArray() -> [Post]? {
+        if self.comments.count > 0 {
+            let comments = Array(self.comments)
+            return comments
+        } else {
+            return nil
+        }
+    }
+}
+

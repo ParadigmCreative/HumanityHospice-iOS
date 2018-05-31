@@ -189,7 +189,7 @@
                     <connections>
                         <outlet property="newPostButton" destination="JCF-5n-Kb9" id="AY9-y4-eLU"/>
                         <segue destination="8EB-7d-nMV" kind="presentation" identifier="showNewPost" id="bzZ-xL-W5a"/>
-                        <segue destination="8r8-Ib-Jkf" kind="show" id="rJD-1k-xac"/>
+                        <segue destination="8r8-Ib-Jkf" kind="show" identifier="viewPost" id="rJD-1k-xac"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ys7-nw-uo4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -204,22 +204,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JM0-oF-ZXm">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="209"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JM0-oF-ZXm" userLabel="Post">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="203"/>
                                 <connections>
-                                    <segue destination="I8V-kr-ab2" kind="embed" id="GQ0-W0-6Hg"/>
+                                    <segue destination="I8V-kr-ab2" kind="embed" identifier="showPostTableView" id="GQ0-W0-6Hg"/>
                                 </connections>
                             </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kx0-sb-lFU">
-                                <rect key="frame" x="0.0" y="217" width="375" height="386"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kx0-sb-lFU" userLabel="Comments">
+                                <rect key="frame" x="0.0" y="203" width="375" height="400"/>
                                 <connections>
                                     <segue destination="0uO-ks-zzh" kind="embed" id="gw1-03-XZ6"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3IK-W1-Mmb" userLabel="MessagingView">
+                                <rect key="frame" x="0.0" y="553" width="375" height="50"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xGW-MA-8ZA">
+                                        <rect key="frame" x="8" y="10" width="97" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EhD-bl-XyU">
+                                        <rect key="frame" x="8" y="10" width="290" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxu-zL-l1l">
+                                        <rect key="frame" x="306" y="10" width="61" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Post"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.2784313725" green="0.18039215689999999" blue="0.54901960780000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="SP7-wH-183"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="3IK-W1-Mmb" secondAttribute="bottom" id="75f-IH-qMe"/>
+                            <constraint firstItem="JM0-oF-ZXm" firstAttribute="trailing" secondItem="Rn1-Ki-dpJ" secondAttribute="trailing" id="IWp-ow-3W0"/>
+                            <constraint firstItem="3IK-W1-Mmb" firstAttribute="leading" secondItem="GNR-3q-bap" secondAttribute="leading" id="JEa-2c-hbL"/>
+                            <constraint firstItem="JM0-oF-ZXm" firstAttribute="top" secondItem="Rn1-Ki-dpJ" secondAttribute="top" id="RMV-cL-eCa"/>
+                            <constraint firstItem="kx0-sb-lFU" firstAttribute="trailing" secondItem="Rn1-Ki-dpJ" secondAttribute="trailing" id="cKw-LG-V5I"/>
+                            <constraint firstAttribute="bottom" secondItem="kx0-sb-lFU" secondAttribute="bottom" id="efy-K5-xs8"/>
+                            <constraint firstItem="JM0-oF-ZXm" firstAttribute="leading" secondItem="Rn1-Ki-dpJ" secondAttribute="leading" id="etz-Sv-ldY"/>
+                            <constraint firstItem="kx0-sb-lFU" firstAttribute="top" secondItem="JM0-oF-ZXm" secondAttribute="bottom" id="pf1-ym-0Wi"/>
+                            <constraint firstItem="kx0-sb-lFU" firstAttribute="leading" secondItem="Rn1-Ki-dpJ" secondAttribute="leading" id="qVN-Mb-fJU"/>
+                            <constraint firstAttribute="trailing" secondItem="3IK-W1-Mmb" secondAttribute="trailing" id="qo6-aZ-svK"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Rn1-Ki-dpJ"/>
                     </view>
                 </viewController>
@@ -1337,7 +1375,7 @@
         <!--Navigation Controller-->
         <scene sceneID="1ht-8T-9P4">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jvO-Nh-uIo" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="jvO-Nh-uIo" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="featured" id="56Z-se-zCY"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Bi5-AA-x4t">
@@ -1351,6 +1389,9 @@
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wcQ-cz-o7H">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="eSP-XQ-a0m" kind="relationship" relationship="rootViewController" id="fhh-hp-rt0"/>
                     </connections>
@@ -1726,21 +1767,21 @@
             <objects>
                 <viewController id="I8V-kr-ab2" customClass="PostViewController" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PIM-4p-QzG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="209"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="203"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6de-cp-SPi">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="209"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="203"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="156" id="HIH-4x-x2H" customClass="TextPostTableViewCell" customModule="HumanityHospice" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="textPost" rowHeight="156" id="HIH-4x-x2H" customClass="TextPostTableViewCell" customModule="HumanityHospice" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="156"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HIH-4x-x2H" id="08C-Ml-dSk">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="155.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2Q-gv-jEV">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2Q-gv-jEV">
                                                     <rect key="frame" x="73" y="40" width="287" height="105"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -1792,7 +1833,7 @@
                                             <outlet property="profilePictureView" destination="cyX-Y3-DtX" id="Vr8-he-sAr"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="317" id="40h-vK-ViZ" customClass="ImagePostTableViewCell" customModule="HumanityHospice" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="imagePost" rowHeight="317" id="40h-vK-ViZ" customClass="ImagePostTableViewCell" customModule="HumanityHospice" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="184" width="375" height="317"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="40h-vK-ViZ" id="lHH-SQ-qTP">
@@ -1873,6 +1914,7 @@
                             <constraint firstAttribute="trailing" secondItem="6de-cp-SPi" secondAttribute="trailing" id="NWc-uO-dE0"/>
                             <constraint firstAttribute="bottom" secondItem="6de-cp-SPi" secondAttribute="bottom" id="i2b-oL-WxN"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="1gO-Pe-qzP"/>
                     </view>
                     <connections>
                         <outlet property="postTableView" destination="6de-cp-SPi" id="Sfz-vw-Auv"/>
@@ -1880,21 +1922,21 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DAW-pk-W2X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="446" y="1489"/>
+            <point key="canvasLocation" x="446" y="1448"/>
         </scene>
         <!--Comments View Controller-->
         <scene sceneID="8Ip-GO-uZO">
             <objects>
                 <viewController id="0uO-ks-zzh" customClass="CommentsViewController" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8i1-Ul-vT7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="386"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mmt-TU-lsn">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="386"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="173" id="AbU-ts-Txa">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="commentPost" rowHeight="173" id="AbU-ts-Txa">
                                         <rect key="frame" x="0.0" y="28" width="375" height="173"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AbU-ts-Txa" id="ihB-4T-5kv">
@@ -1949,6 +1991,7 @@
                                                 <constraint firstItem="kVI-ys-1lD" firstAttribute="bottom" secondItem="ihB-4T-5kv" secondAttribute="bottomMargin" id="wEX-M6-bKw"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.2784313725" green="0.18039215689999999" blue="0.54901960780000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -1960,6 +2003,7 @@
                             <constraint firstItem="mmt-TU-lsn" firstAttribute="top" secondItem="8i1-Ul-vT7" secondAttribute="top" id="Zlf-j9-wu6"/>
                             <constraint firstItem="mmt-TU-lsn" firstAttribute="leading" secondItem="8i1-Ul-vT7" secondAttribute="leading" id="w1z-dc-blQ"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="OzP-09-dHA"/>
                     </view>
                     <connections>
                         <outlet property="commentsTableView" destination="mmt-TU-lsn" id="0LR-Sj-xgf"/>
@@ -1967,7 +2011,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CgR-GQ-QOk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="446" y="1816"/>
+            <point key="canvasLocation" x="446" y="1805"/>
         </scene>
     </scenes>
     <resources>

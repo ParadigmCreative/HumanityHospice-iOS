@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class PostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostViewDelegate {
 
     @IBOutlet weak var postTableView: UITableView!
     
@@ -18,7 +18,9 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        postTableView.delegate = self
+        postTableView.dataSource = self
+        
         // Do any additional setup after loading the view.
     }
 
@@ -27,12 +29,19 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
     
+    func didRecievePost(post: Post) {
+        self.post = post
+        DispatchQueue.main.async {
+            self.postTableView.reloadData()
+        }
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return post.comments.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -47,34 +56,81 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
             cell.posterNameLabel.text = post.poster
             cell.messageTextView.text = post.message
 //            cell.profilePictureView.image = post.
+            cell.dateLabel.text = post.timestamp.toTimeStamp()
             
+            return cell
             
         } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "textPost", for: indexPath) as! TextPostTableViewCell
+            cell.messageTextView.text = post.message
+            cell.posterNameLabel.text = post.poster
+//            cell.profilePictureView
+            cell.dateLabel.text = post.timestamp.toTimeStamp()
+            
+            return cell
             
         }
-        
-        
-        
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+
+extension TimeInterval {
+    public func toTimeStamp() -> String {
+        let timeint = self
+        let day = TimeInterval(60 * 60 * 24.0)
+        let now = Date().timeIntervalSince1970
+        
+        
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        
+        let calendar = Calendar(identifier: .gregorian)
+        
+        let morning = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: Date())
+        let morningInt = morning!.timeIntervalSince1970
+        
+        let yesterdayTimeInt = now - day
+        let yesterdayDate = Date(timeIntervalSince1970: yesterdayTimeInt)
+        let yesterday = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: yesterdayDate)
+        let yesterdayInt = yesterday!.timeIntervalSince1970
+        
+        var timestamp = ""
+        
+        if timeint > morningInt {
+            formatter.dateStyle = .none
+            let date = Date(timeIntervalSince1970: timeint)
+            let str = formatter.string(from: date)
+            timestamp = "Today, \(str)"
+        } else if timeint < morningInt && timeint > yesterdayInt {
+            formatter.dateStyle = .none
+            let date = Date(timeIntervalSince1970: timeint)
+            let str = formatter.string(from: date)
+            timestamp = "Yesterday, \(str)"
+        } else if timeint < yesterdayInt {
+            let date = Date(timeIntervalSince1970: timeint)
+            let str = formatter.string(from: date)
+            formatter.dateFormat = "MMM dd"
+            let dateStr = formatter.string(from: date)
+            timestamp = "\(dateStr), \(str)"
+        }
+        
+        return timestamp
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
