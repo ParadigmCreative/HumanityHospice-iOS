@@ -349,11 +349,9 @@ class DatabaseHandler {
             let patient = user as! Patient
             userRef = ref.child("Patients").child(patient.id)
             let data: [String : Any] = ["MetaData": ["firstName": patient.firstName,
-                                                       "lastName": patient.lastName,
-                                                       "DOB": patient.DOB ?? 0.0],
+                                                       "lastName": patient.lastName],
                                        "Nurse": patient.nurse,
-                                       "InviteCode": patient.inviteCode,
-                                       "FamilyID": patient.familyID ?? ""]
+                                       "InviteCode": patient.inviteCode]
             dataToSend = data
             
             self.addInviteCode(code: patient.inviteCode!, uid: patient.id)
