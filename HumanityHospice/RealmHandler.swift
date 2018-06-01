@@ -103,4 +103,10 @@ class RealmHandler {
     }
     
     
+    public static func masterResetRealm() {
+        try! realm.write {
+            realm.deleteAll()
+        }
+    }
+    
 }

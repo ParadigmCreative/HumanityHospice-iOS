@@ -202,7 +202,7 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
         let data: [String: Any] = ["timestamp": Date().timeIntervalSince1970,
                                    "poster": posterName,
                                    "posterID": posterID,
-                                   "posterProfileURL": profilePictureURl,
+                                   "posterProfilePictureURL": profilePictureURl,
                                    "post": commentText]
         
         // post to db

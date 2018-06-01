@@ -25,6 +25,10 @@ class InviteReaders: UIViewController {
         MenuHandler.staticMenu?.setHandingController(vc: self)
         setup()
         
+        let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.3529411765, green: 0.231372549, blue: 0.6235294118, alpha: 1)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,6 +41,9 @@ class InviteReaders: UIViewController {
         accessCodeButton.layer.borderColor = UIColor.gray.cgColor
         accessCodeButton.layer.borderWidth = 1
         accessCodeButton.layer.cornerRadius = 5
+        
+        shareAccessCodeButton.layer.cornerRadius = 5
+        shareWebURLButton.layer.cornerRadius = 5
         
         URLButton.layer.borderColor = UIColor.gray.cgColor
         URLButton.layer.borderWidth = 1

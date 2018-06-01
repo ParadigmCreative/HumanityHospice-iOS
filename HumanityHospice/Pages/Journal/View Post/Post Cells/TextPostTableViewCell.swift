@@ -42,6 +42,7 @@ class TextPostTableViewCell: UITableViewCell {
                                 }
                                 DispatchQueue.main.async {
                                     self.profilePictureView.image = img
+                                    self.profilePictureView.setupSecondaryProfilePicture()
                                 }
                             }
                         }

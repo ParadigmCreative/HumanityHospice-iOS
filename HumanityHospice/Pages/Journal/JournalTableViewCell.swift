@@ -26,6 +26,7 @@ class JournalTableViewCell: UITableViewCell {
                             if let img = pic {
                                 DispatchQueue.main.async {
                                     self.userImage.image = img
+                                    self.userImage.setupSecondaryProfilePicture()
                                 }
                                 try! RealmHandler.realm.write {
                                     self.post.posterProfilePicture = img.prepareImageForSaving()

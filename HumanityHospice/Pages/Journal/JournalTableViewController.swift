@@ -40,6 +40,8 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         resetPosts()
         listenForAddition()
         listenForRemoval()
+        listenForChanges()
+        
         self.tabBarController?.tabBar.isHidden = true
         setupEmptyDataSet()
         if let type = AppSettings.userType {
@@ -185,6 +187,14 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         DatabaseHandler.listenForPostAdded {
             let posts = RealmHandler.getPostList()
             print("After:", posts.count)
+            self.posts = posts
+            self.tableView.reloadData()
+        }
+    }
+    
+    func listenForChanges() {
+        DatabaseHandler.listenForPostChange {
+            let posts = RealmHandler.getPostList()
             self.posts = posts
             self.tableView.reloadData()
         }

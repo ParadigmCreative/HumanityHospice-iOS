@@ -55,6 +55,7 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
         cell.nameLabel.text = post.posterName
         cell.messageTF.layer.cornerRadius = 5
         cell.messageTF.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
+        cell.timestampLabel.text = post.timestamp.toTimeStamp()
         
         return cell
     }

@@ -13,6 +13,7 @@ class EncouragementBoardTableViewCell: UITableViewCell {
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var messageTF: UITextView!
+    @IBOutlet weak var timestampLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -65,6 +65,7 @@ extension UIViewController {
         }
         RealmHandler.resetPhotoAlbum()
         RealmHandler.resetJournalPosts()
+        RealmHandler.resetComments()
     }
     
 }

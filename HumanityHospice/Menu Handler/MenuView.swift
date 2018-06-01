@@ -99,6 +99,8 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         return 60.0
     }
     
+    // MARK: - Setup
+    
     func setupTable() {
         setupMenuItems()
         
