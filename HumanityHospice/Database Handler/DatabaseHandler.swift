@@ -643,24 +643,30 @@ class DatabaseHandler {
                     let timestamp = post["timestamp"] as! TimeInterval
                     let poster = post["poster"] as! String
                     let message = post["post"] as! String
+                    let posterProfileURL = post["profilePictureURL"] as? String
                     let id = snap.key
+                    
                     
                     // get comments, if any
                     var comments: [Post] = []
-                    if let commentList = post["comments"] as? [DataSnapshot] {
+                    if let commentList = post["comments"] as? [String: Any] {
                         for commentData in commentList {
                             if let comment = commentData.value as? [String: AnyObject] {
                                 let timestamp = comment["timestamp"] as! TimeInterval
-                                let poster = comment["poster"] as! String
+                                let posterName = comment["poster"] as! String
                                 let message = comment["post"] as! String
+                                let posterProfileURL = comment["profilePictureURL"] as? String
                                 let id = commentData.key
                                 
                                 let newComment = Post()
                                 newComment.id = id
                                 newComment.timestamp = timestamp
                                 newComment.message = message
-                                newComment.poster = poster
+                                newComment.poster = posterName
                                 newComment.isComment = true
+                                if let url = posterProfileURL {
+                                    newComment.posterProfileURL = url
+                                }
                                 
                                 comments.append(newComment)
                             }
@@ -677,6 +683,10 @@ class DatabaseHandler {
                     newPost.id = id
                     newPost.message = message
                     newPost.poster = poster
+                    
+                    if let url = posterProfileURL {
+                        newPost.posterProfileURL = url
+                    }
                     
                     // add comments, if any
                     if comments.count > 0 {
@@ -881,7 +891,48 @@ class DatabaseHandler {
         completion()
     }
     
+    public static var commentListerHandle: DatabaseHandle?
+    public static func listenForCommentsAdded(post: Post, completion: @escaping ()->()) {
+        guard let currentPatient = AppSettings.currentPatient else { return }
+        let path = Database.database().reference().child("Journals").child(currentPatient).child(post.id).child("comments")
+        try! RealmHandler.realm.write {
+            post.comments.removeAll()
+        }
+        let handle = path.observe(.childAdded) { (snap) in
+            let comment = snap.value as! [String: Any]
+            
+            let posterName = comment["poster"] as! String
+            let message = comment["post"] as! String
+            let postProfilePicture = comment["postImageURL"] as? String
+            let timestamp = comment["timestamp"] as! TimeInterval
+            
+            let newPost = Post()
+            newPost.isComment = true
+            newPost.posterProfileURL = postProfilePicture
+            newPost.poster = posterName
+            newPost.message = message
+            newPost.timestamp = timestamp
+            newPost.id = snap.key
+            
+            try! realm.write {
+                realm.add(newPost, update: true)
+                post.comments.append(newPost)
+                realm.add(post, update: true)
+            }
+            completion()
+        }
+        self.commentListerHandle = handle
+    }
     
+    public static func listenForCommentsRemoved() {
+        
+    }
+    
+    public static func stopListeningForComments() {
+        guard let handle = self.commentListerHandle else { return }
+        Database.database().reference().removeObserver(withHandle: handle)
+        print("Removed Comment Listener Handle:", handle)
+    }
     
     // MARK: - Encouragement Board
     public static var addedEBPostLister: DatabaseHandle?

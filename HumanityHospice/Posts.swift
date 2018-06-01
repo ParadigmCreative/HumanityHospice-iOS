@@ -20,6 +20,8 @@ class Post: Object {
     @objc dynamic var hasImage: Bool = false
     @objc dynamic var postImage: Data? = nil
     @objc dynamic var imageURL: String? = nil
+    @objc dynamic var posterProfileURL: String? = nil
+    @objc dynamic var posterProfilePicture: Data? = nil
     
     
 // Specify properties to ignore (Realm won't persist these)

@@ -204,26 +204,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JM0-oF-ZXm" userLabel="Post">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="448"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JM0-oF-ZXm" userLabel="Post">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="195"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <connections>
                                     <segue destination="I8V-kr-ab2" kind="embed" identifier="showPostTableView" id="GQ0-W0-6Hg"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="240" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kx0-sb-lFU" userLabel="Comments">
-                                <rect key="frame" x="0.0" y="203" width="375" height="400"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="0.0" y="195" width="375" height="408"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                 <connections>
                                     <segue destination="0uO-ks-zzh" kind="embed" id="gw1-03-XZ6"/>
                                 </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="JM0-oF-ZXm" firstAttribute="top" secondItem="Rn1-Ki-dpJ" secondAttribute="top" id="9vE-0B-WKE"/>
-                            <constraint firstItem="JM0-oF-ZXm" firstAttribute="trailing" secondItem="Rn1-Ki-dpJ" secondAttribute="trailing" id="CbW-st-A4L"/>
-                            <constraint firstItem="JM0-oF-ZXm" firstAttribute="leading" secondItem="Rn1-Ki-dpJ" secondAttribute="leading" id="TYy-2T-yKw"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Rn1-Ki-dpJ"/>
                     </view>
                     <connections>
@@ -1737,11 +1733,11 @@
             <objects>
                 <viewController id="I8V-kr-ab2" customClass="PostViewController" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PIM-4p-QzG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="448"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="195"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6de-cp-SPi">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="448"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6de-cp-SPi">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="195"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="textPost" rowHeight="156" id="HIH-4x-x2H" customClass="TextPostTableViewCell" customModule="HumanityHospice" customModuleProvider="target">
@@ -1904,14 +1900,14 @@
             <objects>
                 <viewController id="0uO-ks-zzh" customClass="CommentsViewController" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8i1-Ul-vT7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="408"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mmt-TU-lsn">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="400"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="408"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="commentPost" rowHeight="173" id="AbU-ts-Txa">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="commentPost" rowHeight="173" id="AbU-ts-Txa" customClass="CommentTableViewCell" customModule="HumanityHospice" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="173"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AbU-ts-Txa" id="ihB-4T-5kv">
@@ -1966,7 +1962,12 @@
                                                 <constraint firstItem="kVI-ys-1lD" firstAttribute="bottom" secondItem="ihB-4T-5kv" secondAttribute="bottomMargin" id="wEX-M6-bKw"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.2784313725" green="0.18039215689999999" blue="0.54901960780000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="messageTF" destination="kVI-ys-1lD" id="XU9-20-8yZ"/>
+                                            <outlet property="posterName" destination="rDm-Yb-Xjc" id="EMa-Ya-J8U"/>
+                                            <outlet property="profilePictureView" destination="C6a-gw-jVe" id="DHJ-D7-pix"/>
+                                            <outlet property="timestampLabel" destination="8Ul-fv-MBI" id="O1l-1G-cm7"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

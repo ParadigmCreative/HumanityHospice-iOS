@@ -26,6 +26,14 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
         setupContainerViews()
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        listenForComments()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        stopListening()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -46,6 +54,21 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
         didSet {
             commentsDelegate = commentsView
         }
+    }
+    
+    // MARK: - Comments Update
+    
+    var isInitialLoad: Bool = true
+    
+    func listenForComments() {
+        DatabaseHandler.listenForCommentsAdded(post: self.post, completion: {
+            let comments = Array(self.post.comments)
+            self.commentsDelegate?.didRecieveComments(comments: comments)
+        })
+    }
+    
+    func stopListening() {
+        DatabaseHandler.stopListeningForComments()
     }
     
     // MARK: - Views
@@ -101,6 +124,9 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
     
     private func setupInputView() {
         
+        let topBorder = UIView()
+        topBorder.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+        
         self.messageInputContainerView.addSubview(sendButton)
         sendButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(-8)
@@ -113,6 +139,12 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
             make.left.equalTo(8)
             make.centerY.equalToSuperview()
             make.right.equalTo(sendButton.snp.left)
+        }
+        
+        self.messageInputContainerView.addSubview(topBorder)
+        topBorder.snp.makeConstraints { (make) in
+            make.left.right.top.equalToSuperview()
+            make.height.equalTo(0.5)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardBecomeActive(notification:)), name: .UIKeyboardWillShow, object: nil)
@@ -158,15 +190,27 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        guard let posterID = AppSettings.currentAppUser?.id else { return }
+        guard let posterName = AppSettings.currentAppUser?.fullName() else { return }
+        var profilePictureURl: String?
+        if let profileURL = AppSettings.currentFBUser?.photoURL {
+            profilePictureURl = profileURL.absoluteString
+        }
+        
+        
         //if not, then create post object
         let data: [String: Any] = ["timestamp": Date().timeIntervalSince1970,
-                                   "poster": "\(AppSettings.currentFBUser!.uid)",
+                                   "poster": posterName,
+                                   "posterID": posterID,
+                                   "posterProfileURL": profilePictureURl,
                                    "post": commentText]
         
         // post to db
         let postID = self.post.id
         DatabaseHandler.postCommentToDatabase(postID: postID, data: data, completion: {
-            
+            self.view.endEditing(true)
+            commentsDelegate?.reloadTable()
+            self.messageTF.text = ""
         })
         
         // refresh commments tableview
@@ -203,6 +247,7 @@ protocol PostViewDelegate {
 protocol CommentsViewDelegate {
     func didRecieveComments(comments: [Post])
     func reloadTable()
+    func newCommentAdded()
 }
 
 extension Post {

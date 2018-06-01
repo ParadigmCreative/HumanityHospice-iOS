@@ -52,8 +52,11 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if post.hasImage {
             let cell = tableView.dequeueReusableCell(withIdentifier: "imagePost", for: indexPath) as! ImagePostTableViewCell
             
+            cell.post = self.post
+            
             if let img = post.postImage?.getImageFromData() {
                 cell.postImageView.image = img
+                cell.postImageView.layer.cornerRadius = 5
             }
             
             cell.posterNameLabel.text = post.poster
@@ -65,6 +68,9 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "textPost", for: indexPath) as! TextPostTableViewCell
+            
+            cell.post = self.post
+            
             cell.messageTextView.text = post.message
             cell.posterNameLabel.text = post.poster
 //            cell.profilePictureView

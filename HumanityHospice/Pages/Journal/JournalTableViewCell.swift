@@ -15,7 +15,29 @@ class JournalTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    var post: Post!
+    var post: Post! {
+        didSet {
+            if let picURL = post.posterProfileURL {
+                if let url = URL(string: picURL) {
+                    DatabaseHandler.getImageFromStorage(url: url) { (pic, error) in
+                        if error != nil {
+                            print("Can't get profile picture from storage")
+                        } else {
+                            if let img = pic {
+                                DispatchQueue.main.async {
+                                    self.userImage.image = img
+                                }
+                                try! RealmHandler.realm.write {
+                                    self.post.posterProfilePicture = img.prepareImageForSaving()
+                                    RealmHandler.realm.add(self.post, update: true)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!

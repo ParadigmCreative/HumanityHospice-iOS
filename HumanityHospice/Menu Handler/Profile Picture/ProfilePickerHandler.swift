@@ -15,7 +15,9 @@ class ProfilePickerHandler {
     static var profilePictureDelegate: ProfilePictureDelegate?
     static var chosenPhoto: UIImage? {
         didSet {
-            profilePictureDelegate?.userDidSelectPhoto(image: chosenPhoto!)
+            if chosenPhoto != nil {
+                profilePictureDelegate?.userDidSelectPhoto(image: chosenPhoto!)
+            }
         }
     }
     

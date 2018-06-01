@@ -38,6 +38,10 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
             self.commentsTableView.reloadData()
         }
     }
+    
+    func newCommentAdded() {
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -59,6 +63,12 @@ class CommentsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "commentPost", for: indexPath) as! CommentTableViewCell
         
+        if let comment = self.comments?[indexPath.row] {
+            cell.post = comment
+            cell.messageTF.text = comment.message
+            cell.timestampLabel.text = comment.timestamp.toTimeStamp()
+            cell.posterName.text = comment.poster
+        }
         
         return cell
     }

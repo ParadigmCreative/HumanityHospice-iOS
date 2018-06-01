@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 class RealmHandler {
-    private static var realm = try! Realm()
+    static var realm = try! Realm()
     
     // MARK: - Journal
     
@@ -22,13 +22,18 @@ class RealmHandler {
             }
             let posts = realm.objects(Post.self)
             print("Verifying Cleanout - Number of Posts:", posts.count)
+            resetComments()
         }
     }
     
     public static func getPostList() -> [Post] {
         let posts = Array(realm.objects(Post.self))
         
-        let sorted = posts.sorted { (p1, p2) -> Bool in
+        let filtered = posts.filter { (post) -> Bool in
+            return post.isComment == false
+        }
+        
+        let sorted = filtered.sorted { (p1, p2) -> Bool in
             return p1.timestamp > p2.timestamp
         }
         
@@ -48,6 +53,17 @@ class RealmHandler {
             realm.delete(post)
             completion(true)
         }
+    }
+    
+    public static func resetComments() {
+        let comments = realm.objects(Post.self).filter { (post) -> Bool in
+            return post.isComment == true
+        }
+        
+        try! realm.write {
+            realm.delete(comments)
+        }
+        
     }
     
     // MARK: - Encouragement Board

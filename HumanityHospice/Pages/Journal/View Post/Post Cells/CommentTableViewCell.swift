@@ -10,6 +10,38 @@ import UIKit
 
 class CommentTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var profilePictureView: UIImageView!
+    @IBOutlet weak var posterName: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
+    @IBOutlet weak var messageTF: UITextView!
+    
+    var post: Post! {
+        didSet {
+            if let urlString = post.posterProfileURL {
+                if let url = URL(string: urlString) {
+                    DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
+                        if error != nil {
+                            print("Couldn't get Profile Image:", error!.localizedDescription)
+                            self.profilePictureView.image = #imageLiteral(resourceName: "Logo")
+                        } else {
+                            if let img = image {
+                                try! RealmHandler.realm.write {
+                                    self.post.posterProfilePicture = img.prepareImageForSaving()
+                                    RealmHandler.realm.add(self.post, update: true)
+                                }
+                                DispatchQueue.main.async {
+                                    self.profilePictureView.image = img
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                self.profilePictureView.image = #imageLiteral(resourceName: "Logo")
+            }
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
