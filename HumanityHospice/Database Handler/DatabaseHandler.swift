@@ -170,6 +170,11 @@ class DatabaseHandler {
                                 if error != nil {
                                     completion(false, error!.localizedDescription)
                                 } else {
+                                    
+                                    if let url = url {
+                                        DatabaseHandler.setProfilePictureURL(url: url.absoluteString)
+                                    }
+                                    
                                     let req = Auth.auth().currentUser?.createProfileChangeRequest()
                                     req?.photoURL = url
                                     req?.commitChanges(completion: { (error) in
@@ -193,6 +198,26 @@ class DatabaseHandler {
                 completion(false, "Couldn't cast data to image")
             }
         }
+    }
+
+    static func setProfilePictureURL(url: String) {
+        
+        guard let uid = AppSettings.currentFBUser?.uid else { return }
+        
+        switch AppSettings.userType! {
+        case .Patient:
+            let ref = Database.database().reference().child("Patients").child(uid).child("profilePictureURL")
+            ref.setValue(url)
+        case .Reader:
+            let ref = Database.database().reference().child("Readers").child(uid).child("profilePictureURL")
+            ref.setValue(url)
+        case .Family:
+            let ref = Database.database().reference().child("Family").child(uid).child("profilePictureURL")
+            ref.setValue(url)
+        default:
+            print("")
+        }
+        Database.database().reference().child(<#T##pathString: String##String#>)
     }
     
     static func signUp(email: String, password: String, completion: @escaping (User?, Error?)->()) {

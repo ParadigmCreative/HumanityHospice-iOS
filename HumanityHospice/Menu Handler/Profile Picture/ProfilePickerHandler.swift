@@ -50,8 +50,6 @@ extension ProfilePickerHandler: ProfilePictureDelegate {
     func userDidSelectPhoto(image: UIImage) {
         ProfilePickerHandler.chosenPhoto = image
     }
-    
-    
 }
 
 extension UIImageView {
