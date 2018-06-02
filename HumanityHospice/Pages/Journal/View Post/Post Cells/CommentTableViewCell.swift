@@ -31,6 +31,7 @@ class CommentTableViewCell: UITableViewCell {
                                 }
                                 DispatchQueue.main.async {
                                     self.profilePictureView.image = img
+                                    self.profilePictureView.setupSecondaryProfilePicture()
                                 }
                             }
                         }
@@ -38,6 +39,7 @@ class CommentTableViewCell: UITableViewCell {
                 }
             } else {
                 self.profilePictureView.image = #imageLiteral(resourceName: "Logo")
+                self.profilePictureView.setupSecondaryProfilePicture()
             }
         }
     }

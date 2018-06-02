@@ -8,22 +8,15 @@
 
 import UIKit
 import SnapKit
+import DZNEmptyDataSet
 
-class ViewPostViewController: UIViewController, UITextFieldDelegate {
+class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        postDelegate?.didRecievePost(post: self.post)
-        if let comments = post.getListArray() {
-            commentsDelegate?.didRecieveComments(comments: comments)
-        } else {
-            commentsDelegate?.didRecieveComments(comments: [])
-        }
-        
-        
         setupMessageView()
-        setupContainerViews()
+        setupEmptyDataSet()
         
     }
     
@@ -42,19 +35,6 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
     
     var post: Post!
     
-    var postDelegate: PostViewDelegate?
-    var commentsDelegate: CommentsViewDelegate?
-    
-    var postView: PostViewController? {
-        didSet {
-            postDelegate = postView
-        }
-    }
-    var commentsView: CommentsViewController? {
-        didSet {
-            commentsDelegate = commentsView
-        }
-    }
     
     // MARK: - Comments Update
     
@@ -63,7 +43,10 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
     func listenForComments() {
         DatabaseHandler.listenForCommentsAdded(post: self.post, completion: {
             let comments = Array(self.post.comments)
-            self.commentsDelegate?.didRecieveComments(comments: comments)
+            if comments == self.post.getListArray() {
+                print("Successfully updated comments")
+            }
+            self.tableView.reloadData()
         })
     }
     
@@ -71,23 +54,64 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
         DatabaseHandler.stopListeningForComments()
     }
     
-    // MARK: - Views
-    
-    @IBOutlet weak var postContainerView: UIView!
-    @IBOutlet weak var comentsContainerView: UIView!
-    
-    private func setupContainerViews() {
-        let total = self.view.frame.height
-        let postHeight = self.postContainerView.frame.height
-        let commentHeight = total - postHeight
-        
-        comentsContainerView.snp.makeConstraints { (make) in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(postContainerView.snp.bottom)
-        }
-        
+    // MARK: - TableView
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
     
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else {
+            guard let comments = post.getListArray() else { return 0 }
+            return comments.count
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.section == 0 {
+            if post.hasImage {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "textPostCell", for: indexPath) as! ImagePostTableViewCell
+                
+                cell.post = self.post
+                
+                if let img = post.postImage?.getImageFromData() {
+                    cell.postImageView.image = img
+                    cell.postImageView.layer.cornerRadius = 5
+                    cell.postImageView.clipsToBounds = true
+                }
+                
+                cell.posterNameLabel.text = post.poster
+                cell.messageTextView.text = post.message
+                cell.dateLabel.text = post.timestamp.toTimeStamp()
+                
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "imagePostCell", for: indexPath) as! TextPostTableViewCell
+                
+                cell.post = self.post
+                
+                cell.messageTextView.text = post.message
+                cell.posterNameLabel.text = post.poster
+                cell.dateLabel.text = post.timestamp.toTimeStamp()
+                
+                return cell
+            }
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! CommentTableViewCell
+            
+            if let comments = self.post.getListArray() {
+                let comment = comments[indexPath.row]
+                cell.post = comment
+                cell.messageTF.text = comment.message
+                cell.timestampLabel.text = comment.timestamp.toTimeStamp()
+                cell.posterName.text = comment.poster
+            }
+            
+            return cell
+        }
+    }
     
     
     // MARK: - Composing new comment
@@ -209,11 +233,9 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
         let postID = self.post.id
         DatabaseHandler.postCommentToDatabase(postID: postID, data: data, completion: {
             self.view.endEditing(true)
-            commentsDelegate?.reloadTable()
+            self.tableView.reloadData()
             self.messageTF.text = ""
         })
-        
-        // refresh commments tableview
     }
     
     private func setupGestureRecognizer() {
@@ -226,28 +248,29 @@ class ViewPostViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    // MARK: - Navigation
+    // MARK: - Empty Data Set
+    func setupEmptyDataSet() {
+        self.tableView.emptyDataSetSource = self
+        self.tableView.emptyDataSetDelegate = self
+        
+        self.tableView.tableFooterView = UIView()
+        
+    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? PostViewController {
-            postView = vc
-        } else if let vc = segue.destination as? CommentsViewController {
-            commentsView = vc
-        }
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let title = "Nothing to see here..."
+        let attStr = NSAttributedString(string: title)
+        return attStr
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        let desc = "Be the first to comment!"
+        let attr = NSAttributedString(string: desc)
+        return attr
     }
     
     
     
-}
-
-protocol PostViewDelegate {
-    func didRecievePost(post: Post)
-}
-
-protocol CommentsViewDelegate {
-    func didRecieveComments(comments: [Post])
-    func reloadTable()
-    func newCommentAdded()
 }
 
 extension Post {

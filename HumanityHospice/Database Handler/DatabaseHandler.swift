@@ -1058,17 +1058,17 @@ class DatabaseHandler {
             let postProfilePicture = comment["postImageURL"] as? String
             let timestamp = comment["timestamp"] as! TimeInterval
             
-            let newPost = Post()
-            newPost.isComment = true
-            newPost.posterProfileURL = postProfilePicture
-            newPost.poster = posterName
-            newPost.message = message
-            newPost.timestamp = timestamp
-            newPost.id = snap.key
+            let newComment = Post()
+            newComment.isComment = true
+            newComment.posterProfileURL = postProfilePicture
+            newComment.poster = posterName
+            newComment.message = message
+            newComment.timestamp = timestamp
+            newComment.id = snap.key
             
             try! realm.write {
-                realm.add(newPost, update: true)
-                post.comments.append(newPost)
+                realm.add(newComment, update: true)
+                post.comments.append(newComment)
                 realm.add(post, update: true)
             }
             completion()
