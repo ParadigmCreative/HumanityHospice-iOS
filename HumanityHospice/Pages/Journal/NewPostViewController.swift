@@ -102,7 +102,16 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
                         self.attachPhotoButton.isEnabled = false
                         
                         if self.imagePreview.image == nil {
-                            let name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
+                            var name: String = ""
+                            if AppSettings.userType == .Family {
+                                if let user = AppSettings.currentAppUser as? DatabaseHandler.Family {
+                                    if let patient = user.patientObj {
+                                        name = "\(patient.firstName) \(patient.lastName)"
+                                    }
+                                }
+                            } else {
+                                name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
+                            }
                             DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!,
                                                            name: name,
                                                            message: message!,

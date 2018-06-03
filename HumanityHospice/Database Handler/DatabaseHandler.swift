@@ -112,13 +112,51 @@ class DatabaseHandler {
                     let meta = data["MetaData"] as! [String: Any]
                     let first = meta["firstName"] as! String
                     let last = meta["lastName"] as! String
-                    let user = Reader(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, readingFrom: readingFrom, patients: nil, profilePic: nil)
+                    let patientsList = data["Patients"] as! [String: Any]
+                    var patients: [String] = []
+                    for patient in patientsList {
+                        let newPatient = patient.key
+                        patients.append(newPatient)
+                    }
+                    let user = Reader(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, readingFrom: readingFrom, patients: patients, profilePic: nil)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.readingFrom
                     completion(true)
+                case .Family:
+                    let patient = data["PatientID"] as! String
+                    let meta = data["MetaData"] as! [String: Any]
+                    let first = meta["firstName"] as! String
+                    let last = meta["lastName"] as! String
+                    
+                    var user = Family(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, patient: patient, profilePic: nil, patientObj: nil)
+                    
+                    AppSettings.currentAppUser = user
+                    AppSettings.currentPatient = patient
+                    getPatientDetailsForFamilyMember(pid: patient, completion: { (patient) in
+                        user.patientObj = patient
+                    })
+                    
                 default:
                     break
                 }
+            }
+        }
+    }
+    
+    static func getPatientDetailsForFamilyMember(pid: String, completion: @escaping (Patient)->()) {
+        let ref = Database.database().reference().child("Patients").child(pid)
+        ref.observeSingleEvent(of: .value) { (snap) in
+            if let data = snap.value as? [String: Any] {
+                let inviteCode = data["InviteCode"] as! String
+                let meta = data["MetaData"] as! [String: Any]
+                let first = meta["firstName"] as! String
+                let last = meta["lastName"] as! String
+                
+                let user = Patient(id: pid,
+                                   firstName: first, lastName: last,
+                                   nurse: nil,
+                                   inviteCode: inviteCode, profilePic: nil)
+                completion(user)
             }
         }
     }
@@ -384,7 +422,7 @@ class DatabaseHandler {
             
             let data: [String: Any] = ["MetaData": ["firstName": familyMember.firstName,
                                                     "lastName": familyMember.lastName],
-                                       "Patient": familyMember.patient]
+                                       "PatientID": familyMember.patient]
             dataToSend = data
         case .Reader:
             let reader = user as! Reader
@@ -459,7 +497,7 @@ class DatabaseHandler {
         case .Reader:
             let appuser = Reader(id: user.uid,
                                  firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last,
-                                 readingFrom: "", patients: nil, profilePic: nil)
+                                 readingFrom: "", patients: [], profilePic: nil)
             return appuser
         default:
             print("Error")
@@ -1268,6 +1306,7 @@ class DatabaseHandler {
         var lastName: String
         let patient: String
         var profilePic: UIImage? = nil
+        var patientObj: Patient?
     }
     
     struct Reader: AppUser {
@@ -1275,7 +1314,7 @@ class DatabaseHandler {
         var firstName: String
         var lastName: String
         var readingFrom: String
-        var patients: [Patient]?
+        var patients: [String]
         var profilePic: UIImage? = nil
     }
     
