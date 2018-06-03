@@ -1043,8 +1043,16 @@ class DatabaseHandler {
         completion()
     }
     
-    public static var commentListerHandle: DatabaseHandle?
-    public static func listenForCommentsAdded(post: Post, completion: @escaping ()->()) {
+    public static func removeCommentFromDatabase(post: Post, comment: Post, completion: ()->()) {
+        guard let currentPatient = AppSettings.currentPatient else { return }
+        let journals = Database.database().reference().child("Journals")
+        let ref = journals.child(currentPatient).child(post.id).child("comments").child(comment.id)
+        ref.setValue(nil)
+        completion()
+    }
+    
+    public static var commentAddedListerHandle: DatabaseHandle?
+    public static func listenForCommentsAdded(postToListenAt post: Post, completion: @escaping ()->()) {
         guard let currentPatient = AppSettings.currentPatient else { return }
         let path = Database.database().reference().child("Journals").child(currentPatient).child(post.id).child("comments")
         try! RealmHandler.realm.write {
@@ -1073,17 +1081,38 @@ class DatabaseHandler {
                 completion()
             }
         }
-        self.commentListerHandle = handle
+        self.commentAddedListerHandle = handle
     }
     
-    public static func listenForCommentsRemoved() {
-        
+    static var commentRemovedListenerHandle: DatabaseHandle?
+    public static func listenForCommentsRemoved(postToListenAt post: Post, completion: @escaping ()->()) {
+        guard let currentPatient = AppSettings.currentPatient else { return }
+        let path = Database.database().reference().child("Journals").child(currentPatient).child(post.id).child("comments")
+        try! RealmHandler.realm.write {
+            post.comments.removeAll()
+        }
+        let handle = path.observe(.childRemoved) { (snap) in
+            if (snap.value as? [String: AnyObject]) != nil {
+                let id = snap.key
+                
+                if let delete = RealmHandler.getPost(id: id) {
+                    RealmHandler.delete(post: delete, completion: { (done) in
+                        if done {
+                            completion()
+                        }
+                    })
+                }
+            }
+        }
+        self.commentRemovedListenerHandle = handle
     }
     
     public static func stopListeningForComments() {
-        guard let handle = self.commentListerHandle else { return }
-        Database.database().reference().removeObserver(withHandle: handle)
-        print("Removed Comment Listener Handle:", handle)
+        guard let added = self.commentAddedListerHandle else { return }
+        guard let removed = self.commentRemovedListenerHandle else { return }
+        Database.database().reference().removeObserver(withHandle: added)
+        Database.database().reference().removeObserver(withHandle: removed)
+        print("Removed Comment Listener Handles:", added, removed)
     }
     
     // MARK: - Encouragement Board

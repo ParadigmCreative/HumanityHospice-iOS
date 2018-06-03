@@ -218,6 +218,10 @@
 		A57CC3F120881C3000C9D776 /* Database Handler */ = {
 			isa = PBXGroup;
 			children = (
+				A5D3F971208D23470079B713 /* Utilities.swift */,
+				73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */,
+				7338482D20A7F50000EC6D01 /* Posts.swift */,
+				73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */,
 				A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */,
 				A5D3F977208D31870079B713 /* AppSettings.swift */,
 			);
@@ -247,10 +251,6 @@
 			children = (
 				A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */,
 				A5BBD4362086EC3700B80BD0 /* Main.storyboard */,
-				A5D3F971208D23470079B713 /* Utilities.swift */,
-				73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */,
-				7338482D20A7F50000EC6D01 /* Posts.swift */,
-				73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */,
 				A5D3F96E208D0D1C0079B713 /* Landing Process */,
 				A57CC3F120881C3000C9D776 /* Database Handler */,
 				A5FC5C1620892FAB0084BA9B /* Menu Handler */,

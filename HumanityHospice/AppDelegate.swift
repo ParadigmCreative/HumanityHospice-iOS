@@ -72,6 +72,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Database.database().reference().removeObserver(withHandle: handle4)
             print("Removed Photo Album Added Listener")
         }
+        
+        if let handle5 = DatabaseHandler.changedListenerHandle {
+            Database.database().reference().removeObserver(withHandle: handle5)
+            print("Removed Post Comments Changed Listener")
+        }
+        
     }
 
 

@@ -22,6 +22,7 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     
     override func viewWillAppear(_ animated: Bool) {
         listenForComments()
+        listenForCommentsRemoved()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -43,10 +44,18 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     var isInitialLoad: Bool = true
     
     func listenForComments() {
-        DatabaseHandler.listenForCommentsAdded(post: self.post, completion: {
+        DatabaseHandler.listenForCommentsAdded(postToListenAt: self.post, completion: {
             self.comments = self.post.getListArray()
             self.tableView.reloadData()
         })
+    }
+    
+    func listenForCommentsRemoved() {
+        DatabaseHandler.listenForCommentsRemoved(postToListenAt: self.post) {
+            let comments = self.post.getListArray()
+            self.comments = comments
+            self.tableView.reloadData()
+        }
     }
     
     func stopListening() {
@@ -116,7 +125,33 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         }
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if let comment = comments?[indexPath.row] {
+            if let currentUser = AppSettings.currentFBUser?.displayName {
+                if comment.poster == currentUser {
+                    if indexPath.section == 1 {
+                        return true
+                    } else {
+                        return false
+                    }
+                } else {
+                    return false
+                }
+            }
+        }
+        return false
+    }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if let comment = comments?[indexPath.row] {
+            if editingStyle == .delete {
+                // Delete from firebase
+                DatabaseHandler.removeCommentFromDatabase(post: self.post, comment: comment) {
+                    print("Removed comment from Firebase")
+                }
+            }
+        }
+    }
     
     
     // MARK: - Composing new comment

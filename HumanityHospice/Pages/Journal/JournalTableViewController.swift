@@ -156,7 +156,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if AppSettings.userType == DatabaseHandler.UserType.Patient {
+        if AppSettings.userType == DatabaseHandler.UserType.Patient || AppSettings.userType == DatabaseHandler.UserType.Family {
             return true
         } else {
             return false
