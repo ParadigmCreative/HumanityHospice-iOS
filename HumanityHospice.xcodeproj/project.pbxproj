@@ -32,6 +32,7 @@
 		73C22EDD20C37D5C00E35E80 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */; };
 		73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */; };
 		73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */; };
+		73E938AA20C4901E00CC3648 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */; };
 		73ED2C3820A903CF005D7AF8 /* RealmHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */; };
 		73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */; };
 		A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */; };
@@ -82,6 +83,7 @@
 		73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncouragementBoardTableViewCell.swift; sourceTree = "<group>"; };
 		73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEBPostViewController.swift; sourceTree = "<group>"; };
+		73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
 		73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHandler.swift; sourceTree = "<group>"; };
 		73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodePopUp.swift; sourceTree = "<group>"; };
 		83953C65908D26D1EEE693D8 /* Pods-HumanityHospiceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospiceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospiceTests/Pods-HumanityHospiceTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */,
 				A5BBD4362086EC3700B80BD0 /* Main.storyboard */,
 				A5D3F971208D23470079B713 /* Utilities.swift */,
+				73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */,
 				7338482D20A7F50000EC6D01 /* Posts.swift */,
 				73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */,
 				A5D3F96E208D0D1C0079B713 /* Landing Process */,
@@ -450,6 +453,7 @@
 			files = (
 				7357DE652097CC6000AED945 /* EncourangementBoard.swift in Sources */,
 				7357DE6B20980B9700AED945 /* InviteReaders.swift in Sources */,
+				73E938AA20C4901E00CC3648 /* NotificationNameExtension.swift in Sources */,
 				A5D3F978208D31870079B713 /* AppSettings.swift in Sources */,
 				A5D3F974208D26BA0079B713 /* SignUpViewController.swift in Sources */,
 				73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */,

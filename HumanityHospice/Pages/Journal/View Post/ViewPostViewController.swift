@@ -17,7 +17,7 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
 
         setupMessageView()
         setupEmptyDataSet()
-        
+        readjustTableViewForKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,6 +26,8 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     
     override func viewWillDisappear(_ animated: Bool) {
         stopListening()
+        teardownMessageView()
+        stopListeningForKeyboard()
     }
 
     override func didReceiveMemoryWarning() {
@@ -115,6 +117,8 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     }
     
     
+    
+    
     // MARK: - Composing new comment
     let messageInputContainerView: UIView = {
         let view = UIView()
@@ -150,6 +154,10 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         }
     }
     
+    private func teardownMessageView() {
+        self.messageInputContainerView.removeFromSuperview()
+    }
+    
     private func setupInputView() {
         
         let topBorder = UIView()
@@ -176,13 +184,12 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardBecomeActive(notification:)), name: .UIKeyboardWillShow, object: nil)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardBecomeActive(notification:)), name: .UIKeyboardWillHide, object: nil)
         
         setupGestureRecognizer()
     }
     
-
     // MARK: - TextField
     @objc func handleKeyboardBecomeActive(notification: Notification) {
         if let userInfo = notification.userInfo {
@@ -196,17 +203,60 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
                         self.messageInputContainerView.snp.remakeConstraints { (make) in
                             make.left.right.bottom.equalToSuperview()
                             make.height.equalTo(48)
-                            self.setupInputView()
+                            self.adjustForKeyboard(notification: notification)
                         }
                     } else {
                         self.messageInputContainerView.snp.remakeConstraints { (make) in
                             make.left.right.equalToSuperview()
                             make.height.equalTo(48)
                             make.bottom.equalToSuperview().offset(-keyboardFrame.height)
+                            self.adjustForKeyboard(notification: notification)
                         }
                     }
                 })
             }
+        }
+    }
+    
+    func stopListeningForKeyboard() {
+        if let commentObs = self.commentObserver {
+            NotificationCenter.default.removeObserver(commentObs)
+        }
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    var keyboardInfo: [AnyHashable: Any]?
+    func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        keyboardInfo = userInfo
+        
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == Notification.Name.UIKeyboardWillHide {
+            tableView.contentInset = UIEdgeInsets.zero
+        } else {
+            let height = keyboardViewEndFrame.height + self.messageInputContainerView.frame.height
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+            
+            if let count = comments?.count {
+                tableView.scrollToRow(at: IndexPath(row: count - 1, section: 1), at: .bottom, animated: true)
+            }
+        }
+        
+        tableView.scrollIndicatorInsets = tableView.contentInset
+    }
+    
+    func commentWasPosted() {
+        if let info = keyboardInfo {
+            NotificationCenter.default.post(name: .commentWasPosted, object: nil, userInfo: info)
+        }
+    }
+    
+    var commentObserver: NSObjectProtocol?
+    func readjustTableViewForKeyboard() {
+        commentObserver = NotificationCenter.default.addObserver(forName: .commentWasPosted, object: nil, queue: .main) { (notification) in
+            self.adjustForKeyboard(notification: notification)
         }
     }
     
@@ -237,9 +287,12 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         let postID = self.post.id
         DatabaseHandler.postCommentToDatabase(postID: postID, data: data, completion: {
             self.tableView.reloadData()
-            self.messageTF.text = ""
+            DispatchQueue.main.async {
+                self.commentWasPosted()
+                self.messageTF.text = ""
+            }
         })
-        self.view.endEditing(true)
+        
     }
     
     private func setupGestureRecognizer() {
