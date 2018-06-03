@@ -307,11 +307,12 @@ class DatabaseHandler {
                             } else {
                                 print("Successfully changed profile information")
                                 if let patient = AppSettings.currentPatient {
+                                    guard let patientObj = AppSettings.currentAppUser as? DatabaseHandler.Patient else { return }
                                     let appuser = Family(id: user.uid,
                                                          firstName: first,
                                                          lastName: last,
                                                          patient: patient,
-                                                         profilePic: nil)
+                                                         profilePic: nil, patientObj: patientObj)
                                     
                                     DatabaseHandler.createUserReference(type: .Family,
                                                                         user: appuser,
@@ -351,11 +352,13 @@ class DatabaseHandler {
                                 } else {
                                     print("Successfully changed profile information")
                                     if let patient = AppSettings.currentPatient {
+                                        guard let patientObj = AppSettings.currentAppUser as? DatabaseHandler.Patient else { return }
                                         let appuser = Family(id: user.uid,
                                                              firstName: first,
                                                              lastName: last,
                                                              patient: patient,
-                                                             profilePic: nil)
+                                                             profilePic: nil,
+                                                             patientObj: patientObj)
                                         
                                         DatabaseHandler.createUserReference(type: .Family,
                                                                             user: appuser,
