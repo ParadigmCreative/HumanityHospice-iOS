@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0BC827D0329B3113D20F14AE /* Pods_HumanityHospice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03038EFFF88515CF212F99CE /* Pods_HumanityHospice.framework */; };
-		6A0AA524B40E2F8E68227F2F /* Pods_HumanityHospiceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A3A9CE6D5B505135CD48FAB /* Pods_HumanityHospiceTests.framework */; };
 		7310489F20B895C500E52EA9 /* NewPhotoPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7310489E20B895C500E52EA9 /* NewPhotoPostVC.swift */; };
 		7335B2AF209BC37100AD5B1B /* JournalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */; };
 		7335B2B2209BDFF700AD5B1B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */; };
@@ -30,7 +29,7 @@
 		735EA43520AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */; };
 		735EA43720AD250300ED339F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 735EA43620AD250200ED339F /* GoogleService-Info.plist */; };
 		737118B720A12C0500656F8E /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737118B620A12C0500656F8E /* ImageViewer.swift */; };
-		739BC8F620BFA83500EB6667 /* HumanityHospiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739BC8F520BFA83500EB6667 /* HumanityHospiceTests.swift */; };
+		73C22EDD20C37D5C00E35E80 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */; };
 		73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */; };
 		73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */; };
 		73ED2C3820A903CF005D7AF8 /* RealmHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */; };
@@ -50,18 +49,7 @@
 		A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C1220892CA00084BA9B /* MenuView.swift */; };
 		A5FC5C1520892FA60084BA9B /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5FC5C1420892FA60084BA9B /* Menu.xib */; };
 		A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */; };
-		BFEE3705776617790543C6C2 /* Pods_HumanityHospice_HumanityHospiceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B404F41FC034655F5EA7951 /* Pods_HumanityHospice_HumanityHospiceTests.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		739BC8F820BFA83500EB6667 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A5BBD4272086EC3700B80BD0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A5BBD42E2086EC3700B80BD0;
-			remoteInfo = HumanityHospice;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		03038EFFF88515CF212F99CE /* Pods_HumanityHospice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HumanityHospice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,9 +79,7 @@
 		735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		735EA43620AD250200ED339F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		737118B620A12C0500656F8E /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
-		739BC8F320BFA83500EB6667 /* HumanityHospiceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HumanityHospiceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		739BC8F520BFA83500EB6667 /* HumanityHospiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanityHospiceTests.swift; sourceTree = "<group>"; };
-		739BC8F720BFA83500EB6667 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncouragementBoardTableViewCell.swift; sourceTree = "<group>"; };
 		73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEBPostViewController.swift; sourceTree = "<group>"; };
 		73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHandler.swift; sourceTree = "<group>"; };
@@ -122,15 +108,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		739BC8F020BFA83500EB6667 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6A0AA524B40E2F8E68227F2F /* Pods_HumanityHospiceTests.framework in Frameworks */,
-				BFEE3705776617790543C6C2 /* Pods_HumanityHospice_HumanityHospiceTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A5BBD42C2086EC3700B80BD0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -174,6 +151,7 @@
 				7335B2B8209FCB0100AD5B1B /* PostWithImageTableViewCell.swift */,
 				7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */,
 				73383A3920BE2479004CE58F /* View Post */,
+				73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */,
 			);
 			path = Journal;
 			sourceTree = "<group>";
@@ -225,15 +203,6 @@
 			path = "Photo Album";
 			sourceTree = "<group>";
 		};
-		739BC8F420BFA83500EB6667 /* HumanityHospiceTests */ = {
-			isa = PBXGroup;
-			children = (
-				739BC8F520BFA83500EB6667 /* HumanityHospiceTests.swift */,
-				739BC8F720BFA83500EB6667 /* Info.plist */,
-			);
-			path = HumanityHospiceTests;
-			sourceTree = "<group>";
-		};
 		73C9B1E320A394A100056994 /* EncouragementBoard */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,7 +226,6 @@
 			isa = PBXGroup;
 			children = (
 				A5BBD4312086EC3700B80BD0 /* HumanityHospice */,
-				739BC8F420BFA83500EB6667 /* HumanityHospiceTests */,
 				A5BBD4302086EC3700B80BD0 /* Products */,
 				5A1EB783719ED9CCD60B55F6 /* Pods */,
 				32B3044A1FD103E66EB0AD5A /* Frameworks */,
@@ -268,7 +236,6 @@
 			isa = PBXGroup;
 			children = (
 				A5BBD42F2086EC3700B80BD0 /* HumanityHospice.app */,
-				739BC8F320BFA83500EB6667 /* HumanityHospiceTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -334,25 +301,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		739BC8F220BFA83500EB6667 /* HumanityHospiceTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 739BC8FA20BFA83500EB6667 /* Build configuration list for PBXNativeTarget "HumanityHospiceTests" */;
-			buildPhases = (
-				A6757BFE7F736E9627D22066 /* [CP] Check Pods Manifest.lock */,
-				739BC8EF20BFA83500EB6667 /* Sources */,
-				739BC8F020BFA83500EB6667 /* Frameworks */,
-				739BC8F120BFA83500EB6667 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				739BC8F920BFA83500EB6667 /* PBXTargetDependency */,
-			);
-			name = HumanityHospiceTests;
-			productName = HumanityHospiceTests;
-			productReference = 739BC8F320BFA83500EB6667 /* HumanityHospiceTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		A5BBD42E2086EC3700B80BD0 /* HumanityHospice */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5BBD4572086EC3700B80BD0 /* Build configuration list for PBXNativeTarget "HumanityHospice" */;
@@ -383,11 +331,6 @@
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Oklahoma State University";
 				TargetAttributes = {
-					739BC8F220BFA83500EB6667 = {
-						CreatedOnToolsVersion = 9.3.1;
-						ProvisioningStyle = Automatic;
-						TestTargetID = A5BBD42E2086EC3700B80BD0;
-					};
 					A5BBD42E2086EC3700B80BD0 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -408,19 +351,11 @@
 			projectRoot = "";
 			targets = (
 				A5BBD42E2086EC3700B80BD0 /* HumanityHospice */,
-				739BC8F220BFA83500EB6667 /* HumanityHospiceTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		739BC8F120BFA83500EB6667 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A5BBD42D2086EC3700B80BD0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -468,24 +403,6 @@
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
-		A6757BFE7F736E9627D22066 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-HumanityHospiceTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		BC0637D71B04D463891E5736 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -527,14 +444,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		739BC8EF20BFA83500EB6667 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				739BC8F620BFA83500EB6667 /* HumanityHospiceTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A5BBD42B2086EC3700B80BD0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -562,6 +471,7 @@
 				A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */,
 				73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */,
 				7335B2B4209FA41400AD5B1B /* ProfilePickerDelegate.swift in Sources */,
+				73C22EDD20C37D5C00E35E80 /* LoadingViewController.swift in Sources */,
 				A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */,
 				73383A3F20BE2544004CE58F /* ImagePostTableViewCell.swift in Sources */,
 				73383A3820BE1815004CE58F /* ViewPostViewController.swift in Sources */,
@@ -578,14 +488,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		739BC8F920BFA83500EB6667 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A5BBD42E2086EC3700B80BD0 /* HumanityHospice */;
-			targetProxy = 739BC8F820BFA83500EB6667 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A5BBD4362086EC3700B80BD0 /* Main.storyboard */ = {
@@ -607,48 +509,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		739BC8FB20BFA83500EB6667 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F245B1A412F6AABE75C3EDD /* Pods-HumanityHospiceTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W23QWSXCYJ;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = HumanityHospiceTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospiceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				SYSTEM_HEADER_SEARCH_PATHS = "${PODS_ROOT}/Firebase/Core/Sources $(SRCROOT)/Pods/**";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HumanityHospice.app/HumanityHospice";
-			};
-			name = Debug;
-		};
-		739BC8FC20BFA83500EB6667 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 83953C65908D26D1EEE693D8 /* Pods-HumanityHospiceTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W23QWSXCYJ;
-				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = HumanityHospiceTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospiceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				SYSTEM_HEADER_SEARCH_PATHS = "${PODS_ROOT}/Firebase/Core/Sources $(SRCROOT)/Pods/**";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HumanityHospice.app/HumanityHospice";
-			};
-			name = Release;
-		};
 		A5BBD4552086EC3700B80BD0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -805,15 +665,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		739BC8FA20BFA83500EB6667 /* Build configuration list for PBXNativeTarget "HumanityHospiceTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				739BC8FB20BFA83500EB6667 /* Debug */,
-				739BC8FC20BFA83500EB6667 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		A5BBD42A2086EC3700B80BD0 /* Build configuration list for PBXProject "HumanityHospice" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

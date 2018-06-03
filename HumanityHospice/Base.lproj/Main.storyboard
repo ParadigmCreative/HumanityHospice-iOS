@@ -196,16 +196,16 @@
             </objects>
             <point key="canvasLocation" x="1792.8" y="881.10944527736137"/>
         </scene>
-        <!--Table View Controller-->
+        <!--View Post View Controller-->
         <scene sceneID="3G7-7R-DN0">
             <objects>
-                <tableViewController id="KhY-Yh-4Xs" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XPz-Bp-kmV">
+                <tableViewController id="KhY-Yh-4Xs" customClass="ViewPostViewController" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XPz-Bp-kmV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="textPostCell" rowHeight="155" id="6yw-vb-OwL">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="textPostCell" rowHeight="155" id="6yw-vb-OwL" customClass="TextPostTableViewCell" customModule="HumanityHospice" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="155"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6yw-vb-OwL" id="mis-ay-X1M">
@@ -261,8 +261,14 @@
                                         <constraint firstItem="c2J-sB-vNP" firstAttribute="top" secondItem="mis-ay-X1M" secondAttribute="topMargin" id="vnk-0M-Kx2"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateLabel" destination="Xqy-Gp-Qhc" id="4Jf-kd-28T"/>
+                                    <outlet property="messageTextView" destination="BJe-ox-bmg" id="ASz-NC-PfK"/>
+                                    <outlet property="posterNameLabel" destination="5Ym-X9-hK5" id="9aR-OA-l46"/>
+                                    <outlet property="profilePictureView" destination="c2J-sB-vNP" id="kg6-p8-0TW"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="imagePostCell" rowHeight="315" id="GMw-Tg-2W9">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="imagePostCell" rowHeight="315" id="GMw-Tg-2W9" customClass="ImagePostTableViewCell" customModule="HumanityHospice" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="183" width="375" height="315"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GMw-Tg-2W9" id="Ro6-Fv-Ibp">
@@ -327,8 +333,15 @@
                                         <constraint firstItem="UXR-Lu-MPG" firstAttribute="leading" secondItem="BES-fa-Thf" secondAttribute="trailing" constant="8" id="w03-qc-TGX"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateLabel" destination="jhV-Gf-BHx" id="bnX-fM-MBg"/>
+                                    <outlet property="messageTextView" destination="5Un-zM-jjC" id="tgh-9d-jtC"/>
+                                    <outlet property="postImageView" destination="RMm-EO-QCA" id="w0f-WD-wvU"/>
+                                    <outlet property="posterNameLabel" destination="UXR-Lu-MPG" id="mWH-T9-WCb"/>
+                                    <outlet property="profilePictureView" destination="BES-fa-Thf" id="WVp-3b-nOj"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentCell" rowHeight="163" id="eUh-G4-g7b">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="commentCell" rowHeight="163" id="eUh-G4-g7b" customClass="CommentTableViewCell" customModule="HumanityHospice" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="498" width="375" height="163"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eUh-G4-g7b" id="h2A-jB-ejA">
@@ -384,6 +397,12 @@
                                         <constraint firstItem="vON-Fh-oIU" firstAttribute="leading" secondItem="XZ3-oX-pTV" secondAttribute="trailing" constant="8" id="zHy-CP-1o0"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="messageTF" destination="81N-zg-9S7" id="3l5-PE-5QG"/>
+                                    <outlet property="posterName" destination="XZ3-oX-pTV" id="tes-1t-WjM"/>
+                                    <outlet property="profilePictureView" destination="GXC-IQ-6AM" id="awZ-GI-j31"/>
+                                    <outlet property="timestampLabel" destination="vON-Fh-oIU" id="oe1-xV-FWI"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

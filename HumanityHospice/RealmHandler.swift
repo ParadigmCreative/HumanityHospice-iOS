@@ -66,6 +66,20 @@ class RealmHandler {
         
     }
     
+    public static func getComments() -> [Post] {
+        let posts = Array(realm.objects(Post.self))
+        
+        let filtered = posts.filter { (post) -> Bool in
+            return post.isComment == true
+        }
+        
+        let sorted = filtered.sorted { (p1, p2) -> Bool in
+            return p1.timestamp < p2.timestamp
+        }
+        
+        return sorted
+    }
+    
     // MARK: - Encouragement Board
     
     public static func getEBPostList() -> [EBPost] {

@@ -34,7 +34,7 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     }
     
     var post: Post!
-    
+    var comments: [Post]?
     
     // MARK: - Comments Update
     
@@ -42,10 +42,7 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     
     func listenForComments() {
         DatabaseHandler.listenForCommentsAdded(post: self.post, completion: {
-            let comments = Array(self.post.comments)
-            if comments == self.post.getListArray() {
-                print("Successfully updated comments")
-            }
+            self.comments = self.post.getListArray()
             self.tableView.reloadData()
         })
     }
@@ -71,8 +68,9 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
+            
             if post.hasImage {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "textPostCell", for: indexPath) as! ImagePostTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "imagePostCell", for: indexPath) as! ImagePostTableViewCell
                 
                 cell.post = self.post
                 
@@ -86,9 +84,11 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
                 cell.messageTextView.text = post.message
                 cell.dateLabel.text = post.timestamp.toTimeStamp()
                 
+                
+                
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "imagePostCell", for: indexPath) as! TextPostTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "textPostCell", for: indexPath) as! TextPostTableViewCell
                 
                 cell.post = self.post
                 
@@ -101,8 +101,9 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! CommentTableViewCell
             
-            if let comments = self.post.getListArray() {
+            if let comments = self.comments {
                 let comment = comments[indexPath.row]
+                
                 cell.post = comment
                 cell.messageTF.text = comment.message
                 cell.timestampLabel.text = comment.timestamp.toTimeStamp()
@@ -127,18 +128,21 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         return textField
     }()
     
-    let sendButton: UIButton = {
+    lazy var sendButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Send", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.5098039216, green: 0.5215686275, blue: 0.8392156863, alpha: 1)
         button.layer.cornerRadius = 5
+        button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(postComment), for: .touchUpInside)
         return button
     }()
     
+    var nav: UINavigationController?
     private func setupMessageView() {
-        self.view.addSubview(messageInputContainerView)
+        self.navigationController!.view.addSubview(messageInputContainerView)
+        nav = self.navigationController
         messageInputContainerView.snp.makeConstraints { (make) in
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(48)
@@ -206,7 +210,7 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         }
     }
     
-    @objc private func postComment() {
+    @objc func postComment() {
         //check that the field is not empty
         guard let commentText = messageTF.text else { return }
         guard commentText.count > 0 else {
@@ -232,10 +236,10 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         // post to db
         let postID = self.post.id
         DatabaseHandler.postCommentToDatabase(postID: postID, data: data, completion: {
-            self.view.endEditing(true)
             self.tableView.reloadData()
             self.messageTF.text = ""
         })
+        self.view.endEditing(true)
     }
     
     private func setupGestureRecognizer() {
@@ -277,7 +281,10 @@ extension Post {
     func getListArray() -> [Post]? {
         if self.comments.count > 0 {
             let comments = Array(self.comments)
-            return comments
+            let sorted = comments.sorted { (p1, p2) -> Bool in
+                return p1.timestamp < p2.timestamp
+            }
+            return sorted
         } else {
             return nil
         }

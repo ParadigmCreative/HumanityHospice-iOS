@@ -34,7 +34,7 @@
                                 <outlet property="delegate" destination="-1" id="fgC-6N-K5n"/>
                             </connections>
                         </tableView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile Default" translatesAutoresizingMaskIntoConstraints="NO" id="Axx-4M-fhh">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile Default" translatesAutoresizingMaskIntoConstraints="NO" id="Axx-4M-fhh">
                             <rect key="frame" x="16" y="50" width="75" height="75"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="75" id="Y6F-l4-Ea4"/>

@@ -1070,8 +1070,8 @@ class DatabaseHandler {
                 realm.add(newComment, update: true)
                 post.comments.append(newComment)
                 realm.add(post, update: true)
+                completion()
             }
-            completion()
         }
         self.commentListerHandle = handle
     }

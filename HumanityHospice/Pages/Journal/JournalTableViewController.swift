@@ -13,10 +13,12 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
 
     
     var menuDelegate: MenuHandlerDelegate?
+    var loadingDelegate: LoadingViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupLoadingView()
         
         MenuHandler.initialize(vc: self)
         menuDelegate = MenuHandler.staticMenu
@@ -33,6 +35,18 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         
+    }
+    
+    func setupLoadingView() {
+        let LV = LoadingViewController()
+        LV.modalPresentationStyle = .overCurrentContext
+        loadingDelegate = LV
+        self.present(LV, animated: true, completion: nil)
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (timer) in
+            print("Done Loading")
+            timer.invalidate()
+            self.loadingDelegate?.complete()
+        }
     }
     
     // MARK: - General Setup
@@ -70,14 +84,20 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         // #warning Incomplete implementation, return the number of rows
         return posts.count
     }
+    
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let post = posts[indexPath.row]
         
         if post.hasImage {
+            
             let imageCell = tableView.dequeueReusableCell(withIdentifier: "postWithImage", for: indexPath) as! PostWithImageTableViewCell
+            
+            
             imageCell.layoutSubviews()
+            imageCell.indicator = Utilities.createActivityIndicator(view: imageCell)
+            imageCell.indicator.stopAnimating()
             
             let indicator = Utilities.createActivityIndicator(view: imageCell)
             imageCell.indicator = indicator
@@ -91,16 +111,10 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             imageCell.message.layer.cornerRadius = 5
             imageCell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)
             imageCell.postPhoto.layer.cornerRadius = 5
-            if let img = ProfilePickerHandler.chosenPhoto {
-                imageCell.userImage.image = img
-                imageCell.userImage.setupSecondaryProfilePicture()
-            } else {
-                imageCell.userImage.image = #imageLiteral(resourceName: "Logo")
-            }
             
-            let count = post.comments.count
-            if count > 0 {
-                imageCell.commentsButton.setTitle("Comments (\(count))   ", for: .normal)
+            let commentCount = post.comments.count
+            if commentCount > 0 {
+                imageCell.commentsButton.setTitle("Comments (\(commentCount))   ", for: .normal)
             } else {
                 imageCell.commentsButton.setTitle("Comments (0)   ", for: .normal)
             }
@@ -125,15 +139,16 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
                 cell.userImage.image = #imageLiteral(resourceName: "Logo")
             }
             
-            let count = post.comments.count
-            if count > 0 {
-                cell.commentsButton.setTitle("Comments (\(count))   ", for: .normal)
+            let commentCount = post.comments.count
+            if commentCount > 0 {
+                cell.commentsButton.setTitle("Comments (\(commentCount))   ", for: .normal)
             } else {
                 cell.commentsButton.setTitle("Comments (0)   ", for: .normal)
             }
             
             return cell
         }
+
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

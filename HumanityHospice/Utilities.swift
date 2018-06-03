@@ -93,6 +93,7 @@ extension TimeInterval {
 
         let formatter = DateFormatter()
         formatter.timeStyle = .short
+        formatter.locale = Locale.current
 
         let calendar = Calendar(identifier: .gregorian)
 
