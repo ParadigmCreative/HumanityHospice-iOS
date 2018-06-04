@@ -161,6 +161,25 @@ class DatabaseHandler {
         }
     }
     
+    static func getPatientDetailsForReader(pid: String) {
+        let ref = Database.database().reference().child("Patients").child(pid)
+        ref.observeSingleEvent(of: .value) { (snap) in
+            if let data = snap.value as? [String: Any] {
+                let inviteCode = data["InviteCode"] as! String
+                let meta = data["MetaData"] as! [String: Any]
+                let first = meta["firstName"] as! String
+                let last = meta["lastName"] as! String
+                let url = data["profilePictureURL"] as? String
+                
+                let user = Patient(id: pid,
+                                   firstName: first, lastName: last,
+                                   nurse: nil,
+                                   inviteCode: inviteCode, profilePic: nil)
+                NotificationCenter.default.post(name: .newPatientWasRecievedFromDB, object: nil, userInfo: ["user": user])
+            }
+        }
+    }
+    
     static func getProfilePicture(completion: @escaping (Bool)->()) {
         if let user = AppSettings.currentFBUser {
             if let url = user.photoURL {
@@ -1172,12 +1191,14 @@ class DatabaseHandler {
                     let poster = post["posterID"] as! String
                     let timestamp = post["timestamp"] as! TimeInterval
                     let message = post["post"] as! String
+                    let posterProfilePictureUrl = post["profilePictureURL"] as? String
                     
                     let newPost = EBPost()
                     newPost.timestamp = timestamp
                     newPost.message = message
                     newPost.posterID = poster
                     newPost.posterName = name
+                    newPost.posterProfileURL = posterProfilePictureUrl
                     newPost.id = snap.key
                     
                     posts.append(newPost)
@@ -1195,10 +1216,12 @@ class DatabaseHandler {
     }
     
     public static func postEBToDatabase(posterID: String, posterName: String, message: String, completion: ()->()) {
+        let profilePictureURL = AppSettings.currentFBUser?.photoURL?.absoluteString
         let data: [String: Any] = ["posterID": posterID,
                                    "poster": posterName,
                                    "post": message,
-                                   "timestamp": Date().timeIntervalSince1970]
+                                   "timestamp": Date().timeIntervalSince1970,
+                                   "profilePictureURL": profilePictureURL]
         let ref = Database.database().reference().child("EncouragementBoard").child(AppSettings.currentPatient!).childByAutoId()
         ref.setValue(data)
         completion()

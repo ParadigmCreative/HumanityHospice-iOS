@@ -29,6 +29,7 @@
 		735EA43520AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */; };
 		735EA43720AD250300ED339F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 735EA43620AD250200ED339F /* GoogleService-Info.plist */; };
 		737118B720A12C0500656F8E /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737118B620A12C0500656F8E /* ImageViewer.swift */; };
+		73BD07A120C5DF170051D94D /* SwitchPatientTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */; };
 		73C22EDD20C37D5C00E35E80 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */; };
 		73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */; };
 		73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */; };
@@ -80,6 +81,7 @@
 		735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		735EA43620AD250200ED339F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		737118B620A12C0500656F8E /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
+		73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchPatientTableViewController.swift; sourceTree = "<group>"; };
 		73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncouragementBoardTableViewCell.swift; sourceTree = "<group>"; };
 		73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEBPostViewController.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				A5FC5C1220892CA00084BA9B /* MenuView.swift */,
 				A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */,
 				A5D00664208938C30079CD49 /* MenuHandler.swift */,
+				73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */,
 			);
 			path = "Menu Handler";
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				A5D3F974208D26BA0079B713 /* SignUpViewController.swift in Sources */,
 				73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */,
 				A5D3F970208D18540079B713 /* LoginViewController.swift in Sources */,
+				73BD07A120C5DF170051D94D /* SwitchPatientTableViewController.swift in Sources */,
 				73ED2C3820A903CF005D7AF8 /* RealmHandler.swift in Sources */,
 				7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */,
 				73383A4120BE259A004CE58F /* TextPostTableViewCell.swift in Sources */,

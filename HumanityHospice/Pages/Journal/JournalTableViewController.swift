@@ -18,12 +18,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupLoadingView()
-        
-        MenuHandler.initialize(vc: self)
-        menuDelegate = MenuHandler.staticMenu
-        setup()
-        ProfilePickerHandler.profilePictureDelegate = self
+        master()
         
     }
     
@@ -35,6 +30,15 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         
+    }
+    
+    func master() {
+        setupLoadingView()
+        
+        MenuHandler.initialize(vc: self)
+        menuDelegate = MenuHandler.staticMenu
+        setup()
+        ProfilePickerHandler.profilePictureDelegate = self
     }
     
     func setupLoadingView() {

@@ -42,6 +42,8 @@ class EBPost: Object {
     @objc dynamic var message: String = ""
     @objc dynamic var posterName: String = ""
     @objc dynamic var posterID: String = ""
+    @objc dynamic var posterProfileURL: String? = nil
+    @objc dynamic var posterProfilePicture: Data? = nil
     
     // Specify properties to ignore (Realm won't persist these)
     

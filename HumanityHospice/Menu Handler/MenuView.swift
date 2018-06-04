@@ -135,7 +135,24 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
             } else {
                 self.menuItems = readerItems
                 self.menuIcons = readerIcons
+                if checkForMultiplePatients() {
+                    menuItems.append("Switch Patients")
+                    menuIcons.append(#imageLiteral(resourceName: "Switch Users"))
+                }
             }
+        }
+    }
+    
+    func checkForMultiplePatients() -> Bool {
+        if let reader = AppSettings.currentAppUser as? DatabaseHandler.Reader {
+            let patients = reader.patients
+            if patients.count > 1 {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
         }
     }
     
