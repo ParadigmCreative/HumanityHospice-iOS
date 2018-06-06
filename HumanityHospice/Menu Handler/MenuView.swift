@@ -91,6 +91,17 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
             // About
             MenuHandler.tabbar!.selectedIndex = 5
             MenuHandler.closeMenu()
+        } else if selected == "Switch Patients" {
+            // Switch Patients
+            MenuHandler.closeMenu()
+            let sb = UIStoryboard.init(name: "Main", bundle: nil)
+            if let vc = sb.instantiateViewController(withIdentifier: "ChangePatientVC") as? SwitchPatientTableViewController {
+                let nav = UINavigationController(rootViewController: vc)
+                let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+                nav.navigationBar.titleTextAttributes = textAttributes
+                nav.navigationBar.barTintColor = #colorLiteral(red: 0.3529411765, green: 0.231372549, blue: 0.6235294118, alpha: 1)
+                handlingController?.present(nav, animated: true, completion: nil)
+            }
         }
         
     }
@@ -146,7 +157,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     func checkForMultiplePatients() -> Bool {
         if let reader = AppSettings.currentAppUser as? DatabaseHandler.Reader {
             let patients = reader.patients
-            if patients.count > 1 {
+            if patients.count > 0 {
                 return true
             } else {
                 return false

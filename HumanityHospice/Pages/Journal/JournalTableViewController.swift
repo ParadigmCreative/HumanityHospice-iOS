@@ -19,7 +19,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         super.viewDidLoad()
 
         master()
-        
+        listenForNewUserSelection()
     }
     
     func userDidSelectPhoto(image: UIImage) {
@@ -30,6 +30,14 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         
+    }
+    
+    func listenForNewUserSelection() {
+        NotificationCenter.default.addObserver(forName: .userSelectedNewPatient, object: nil, queue: .main) { (notification) in
+            self.posts = []
+            self.tableView.reloadData()
+            self.master()
+        }
     }
     
     func master() {
@@ -65,7 +73,9 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         if let type = AppSettings.userType {
             switch type {
             case .Reader, .Staff:
-                self.newPostButton.isEnabled = false
+                if let button = self.newPostButton {
+                    button.isEnabled = false
+                }
                 self.navigationItem.rightBarButtonItem = nil
             default:
                 print(type)
@@ -75,6 +85,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     
     func resetPosts() {
         RealmHandler.resetJournalPosts()
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -244,7 +255,10 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let desc = "Click the 'compose' button at the top to write your first Journal entry!"
+        var desc = ""
+        if AppSettings.userType == .Patient {
+            desc = "Click the 'compose' button at the top to write your first Journal entry!"
+        }
         let attr = NSAttributedString(string: desc)
         return attr
     }

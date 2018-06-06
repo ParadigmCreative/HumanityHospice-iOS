@@ -48,36 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         
         print("Will Terminate")
-        closeConnections()
+        DatabaseHandler.closeConnections()
 
-    }
-    
-    func closeConnections() {
-        if let handle = DatabaseHandler.addedListenerHandle {
-            Database.database().reference().removeObserver(withHandle: handle)
-            print("Removed Journal Added Listener")
-        }
-        
-        if let handle2 = DatabaseHandler.removedListenerHandle {
-            Database.database().reference().removeObserver(withHandle: handle2)
-            print("Removed Journal Removed Listener")
-        }
-        
-        if let handle3 = DatabaseHandler.addedEBPostLister {
-            Database.database().reference().removeObserver(withHandle: handle3)
-            print("Removed Ecouragement Board Added Listener")
-        }
-        
-        if let handle4 = DatabaseHandler.addedPhotoAlbumItem {
-            Database.database().reference().removeObserver(withHandle: handle4)
-            print("Removed Photo Album Added Listener")
-        }
-        
-        if let handle5 = DatabaseHandler.changedListenerHandle {
-            Database.database().reference().removeObserver(withHandle: handle5)
-            print("Removed Post Comments Changed Listener")
-        }
-        
     }
 
 

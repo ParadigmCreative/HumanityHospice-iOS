@@ -13,6 +13,34 @@ import RealmSwift
 
 class DatabaseHandler {
     
+    public static func closeConnections() {
+        if let handle = DatabaseHandler.addedListenerHandle {
+            Database.database().reference().removeObserver(withHandle: handle)
+            print("Removed Journal Added Listener")
+        }
+        
+        if let handle2 = DatabaseHandler.removedListenerHandle {
+            Database.database().reference().removeObserver(withHandle: handle2)
+            print("Removed Journal Removed Listener")
+        }
+        
+        if let handle3 = DatabaseHandler.addedEBPostLister {
+            Database.database().reference().removeObserver(withHandle: handle3)
+            print("Removed Ecouragement Board Added Listener")
+        }
+        
+        if let handle4 = DatabaseHandler.addedPhotoAlbumItem {
+            Database.database().reference().removeObserver(withHandle: handle4)
+            print("Removed Photo Album Added Listener")
+        }
+        
+        if let handle5 = DatabaseHandler.changedListenerHandle {
+            Database.database().reference().removeObserver(withHandle: handle5)
+            print("Removed Post Comments Changed Listener")
+        }
+        
+    }
+    
     static let realm = try! Realm()
     
     // AUTH
@@ -106,6 +134,7 @@ class DatabaseHandler {
                                        inviteCode: inviteCode, profilePic: nil)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.id
+                    AppSettings.currentPatientName = "\(first) \(last)"
                     completion(true)
                 case .Reader:
                     let readingFrom = data["ReadingFrom"] as! String
@@ -121,6 +150,11 @@ class DatabaseHandler {
                     let user = Reader(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, readingFrom: readingFrom, patients: patients, profilePic: nil)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.readingFrom
+                    
+                    getPatientDetailsForFamilyMember(pid: readingFrom, completion: { (patient) in
+                        AppSettings.currentPatientName = patient.fullName()
+                    })
+                    
                     completion(true)
                 case .Family:
                     let patient = data["PatientID"] as! String
@@ -132,8 +166,10 @@ class DatabaseHandler {
                     
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = patient
+                    AppSettings.currentPatientName = "\(first) \(last)"
                     getPatientDetailsForFamilyMember(pid: patient, completion: { (patient) in
                         user.patientObj = patient
+                        AppSettings.currentPatientName = patient.fullName()
                     })
                     
                 default:
@@ -544,7 +580,14 @@ class DatabaseHandler {
         Database.database().reference().child("InviteCodes").child(code).child("patient").setValue(uid)
     }
     
-    static func checkDBForInviteCode(code: String, completion: @escaping (Bool, String?)->()) {
+    
+    /// Checks the Database for the supplied Invite Code
+    /// - parameter code: The invite code to check for
+    /// - parameter completion: the block to run after querying the DB
+    /// - parameter isValid: Indicates whether or not the Invote Code is valid
+    /// - parameter patientID: Patient ID that the inviteCode belongs to
+    
+    static func checkDBForInviteCode(code: String, completion: @escaping (_ isValid: Bool, _ patientID: String?)->()) {
         let ref = Database.database().reference()
         ref.child("InviteCodes").child(code).observeSingleEvent(of: .value) { (snap) in
             if snap.hasChildren() {
