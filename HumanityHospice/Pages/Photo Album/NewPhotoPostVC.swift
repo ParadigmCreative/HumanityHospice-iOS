@@ -8,8 +8,9 @@
 
 import UIKit
 import SnapKit
+import ImagePicker
 
-class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegate {
+class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,21 +32,44 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegat
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        openImagePicker()
+    }
+    
+    func openImagePicker() {
         if self.imagePreview.image == nil {
-            ImageSelector.open(vc: self)
+            ImageSelector.open(with: self, delegate: self)
         } else  {
             messageTF.becomeFirstResponder()
         }
+    }
+    
+    func showPermissionsAlert(title: String, message: String) {
+        let alertController = UIAlertController (title: title, message: message, preferredStyle: .alert)
+        
+        let settings = UIAlertAction(title: "Settings", style: .default) { (alert) in
+            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                return
+            }
+            
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                    print("Settings opened: \(success)") // Prints true
+                })
+            }
+        }
+        alertController.addAction(settings)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - Setup
     func setup() {
         setupButtons()
         messageTF.inputAccessoryView = toolbar
-        imagePreview.layer.cornerRadius = 10
-        imagePreview.isHidden = true
         setupImagePreview()
-        ImageSelector.delegate = self
     }
     
     func setupButtons() {
@@ -67,11 +91,11 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegat
         
     }
     
-        
-    
     func setupImagePreview() {
         let tapGest = UITapGestureRecognizer(target: self, action: #selector(viewImage))
         imagePreview.isUserInteractionEnabled = true
+        imagePreview.layer.cornerRadius = 10
+        imagePreview.isHidden = true
         imagePreview.addGestureRecognizer(tapGest)
     }
     
@@ -119,9 +143,25 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImageSelectorDelegat
         }
     }
     
-    func userDidSelectImage(image: UIImage) {
-        self.imagePreview.image = image
+//    func userDidSelectImage(image: UIImage) {
+//        self.imagePreview.image = image
+//        self.imagePreview.isHidden = false
+//    }
+    
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        self.imagePreview.image = images.first
         self.imagePreview.isHidden = false
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+
+        imagePicker.expandGalleryView()
+        
     }
     
     @IBAction func cancel(_ sender: Any) {

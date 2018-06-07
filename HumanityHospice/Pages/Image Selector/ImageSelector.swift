@@ -10,14 +10,15 @@ import Foundation
 import ImagePicker
 
 class ImageSelector {
-    private static var picker = ImagePickerController()
-    private static var pickerDelegate = PickerDelegate()
+    static var picker = ImagePickerController()
+    static var pickerDelegate = PickerDelegate()
     static var delegate: ImageSelectorDelegate?
     
     static var selectedImage: UIImage?
     
     static func open(vc: UIViewController) {
         setup()
+        picker.delegate = pickerDelegate
         vc.present(picker, animated: true, completion: nil)
     }
     
@@ -27,17 +28,20 @@ class ImageSelector {
     }
     
     private static func setup() {
-        
         var configuration = Configuration()
         configuration.doneButtonTitle = "Finish"
         configuration.noImagesTitle = "Sorry! There are no images here!"
-        configuration.recordLocation = false
         configuration.allowPinchToZoom = true
         configuration.allowMultiplePhotoSelection = false
         
         self.picker = ImagePickerController(configuration: configuration)
-        picker.delegate = pickerDelegate
         picker.imageLimit = 1
+    }
+    
+    static func open(with vc: UIViewController, delegate: ImagePickerDelegate) {
+        setup()
+        picker.delegate = delegate
+        vc.present(picker, animated: true, completion: nil)
     }
     
 }
