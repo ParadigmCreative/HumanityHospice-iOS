@@ -8,9 +8,11 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class Utilities {
     private static var indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+    
     public static func showActivityIndicator(view: UIView) {
         self.indicator.color = #colorLiteral(red: 0.4605029225, green: 0.447249949, blue: 0.7566576004, alpha: 1)
         self.indicator.center = view.center

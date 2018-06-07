@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="per-ut-bHQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="per-ut-bHQ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -706,7 +706,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Bv-Mv-fQt">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Bv-Mv-fQt">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -1997,10 +1997,13 @@
                         <viewLayoutGuide key="safeArea" id="tlG-rT-HEq"/>
                     </view>
                     <connections>
+                        <outlet property="activityView" destination="bHe-2z-1O4" id="HfG-rY-92J"/>
+                        <outlet property="bg" destination="e8O-zk-3FW" id="0tf-Dc-A2p"/>
                         <outlet property="cancelButton" destination="yCG-O9-TDY" id="VEF-IS-ceJ"/>
                         <outlet property="exitButton" destination="oCg-dY-FLN" id="Tof-eV-rM1"/>
                         <outlet property="imagePreview" destination="NgP-WR-e3d" id="lqr-ow-vqh"/>
                         <outlet property="messageTF" destination="ZEh-h1-qqf" id="h6j-4Y-4ng"/>
+                        <outlet property="progressBar" destination="BjL-9n-aPE" id="5jo-mR-tIH"/>
                         <outlet property="submitPostButton" destination="vGg-UH-VHK" id="1PQ-j6-C3L"/>
                         <outlet property="toolbar" destination="HZk-ze-bxb" id="u9E-H3-maB"/>
                     </connections>
@@ -2032,8 +2035,43 @@
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="GZn-2X-hZD"/>
                 </view>
+                <view contentMode="scaleToFill" id="e8O-zk-3FW">
+                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bHe-2z-1O4">
+                            <rect key="frame" x="56.5" y="56.5" width="37" height="37"/>
+                        </activityIndicatorView>
+                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.01" translatesAutoresizingMaskIntoConstraints="NO" id="BjL-9n-aPE">
+                            <rect key="frame" x="30" y="113" width="90" height="2"/>
+                        </progressView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.32533094620000003" alpha="0.640625" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="bHe-2z-1O4" firstAttribute="centerX" secondItem="e8O-zk-3FW" secondAttribute="centerX" id="9zK-1r-yh7"/>
+                        <constraint firstItem="BjL-9n-aPE" firstAttribute="top" secondItem="bHe-2z-1O4" secondAttribute="bottom" constant="20" id="Fqe-LQ-8cB"/>
+                        <constraint firstItem="BjL-9n-aPE" firstAttribute="leading" secondItem="e8O-zk-3FW" secondAttribute="leading" constant="30" id="NOz-Nt-A9I"/>
+                        <constraint firstItem="bHe-2z-1O4" firstAttribute="centerY" secondItem="e8O-zk-3FW" secondAttribute="centerY" id="ZRi-XV-qRT"/>
+                        <constraint firstAttribute="trailing" secondItem="BjL-9n-aPE" secondAttribute="trailing" constant="30" id="ccZ-66-ncE"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="4QL-h2-nsY"/>
+                </view>
             </objects>
-            <point key="canvasLocation" x="3417" y="1650"/>
+            <point key="canvasLocation" x="3417" y="1749"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="3mH-3Y-OmS">
+            <objects>
+                <viewController id="7VB-ue-lsh" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uFq-ni-56U">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="P1G-oK-JC5"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dhB-5d-Uaz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>

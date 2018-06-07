@@ -1272,13 +1272,14 @@ class DatabaseHandler {
     
     
     // MARK: - Photo Album
+    static var uploadTask: StorageUploadTask?
     public static func postImageToStorage(image: UIImage, caption: String?, completion: @escaping (Error?)->()) {
         let uid = Auth.auth().currentUser?.uid
         let date = Int(Date().timeIntervalSince1970.rounded())
         let name = "photoalbum-\(date).png"
         let ref = Storage.storage().reference().child("PhotoAlbum").child(uid!).child(name)
         guard let data = image.prepareImageForSaving() else { return }
-        ref.putData(data, metadata: nil) { (metadata, error) in
+        let upload = ref.putData(data, metadata: nil) { (metadata, error) in
             if error != nil {
                 completion(error)
             } else {
@@ -1299,6 +1300,14 @@ class DatabaseHandler {
                     }
                 })
             }
+        }
+        self.uploadTask = upload
+    }
+    
+    static func manageUpload(monitoring: @escaping (StorageTaskSnapshot)->()) {
+        guard let task = self.uploadTask else { return }
+        task.observe(.progress) { (snap) in
+            monitoring(snap)
         }
     }
     

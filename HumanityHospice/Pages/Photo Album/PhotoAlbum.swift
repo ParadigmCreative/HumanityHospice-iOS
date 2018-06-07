@@ -139,10 +139,10 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoAlbumCollectionViewCell
     
-        let post = posts[indexPath.row]
-        
         let indicator = Utilities.createActivityIndicator(view: cell)
         cell.indicator = indicator
+        
+        let post = posts[indexPath.row]
         cell.post = post
         
         // Configure the cell

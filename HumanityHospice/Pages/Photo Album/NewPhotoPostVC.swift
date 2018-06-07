@@ -96,6 +96,7 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
         imagePreview.isUserInteractionEnabled = true
         imagePreview.layer.cornerRadius = 10
         imagePreview.isHidden = true
+        imagePreview.clipsToBounds = true
         imagePreview.addGestureRecognizer(tapGest)
     }
     
@@ -117,7 +118,6 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
             self.showAlert(title: "Oops!", message: "Please select an image to add to your photo album.")
         } else {
             self.showVerificationAlert(completion: { (confirmed) in
-                Utilities.showActivityIndicator(view: self.view)
                 if confirmed {
                     self.cancelButton.isEnabled = false
                     self.submitPostButton.isEnabled = false
@@ -125,14 +125,25 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
                     
                     if let img = self.imagePreview.image {
                         self.checkTextView { (hasText, message) in
+                            self.showProgress()
+                            UIApplication.shared.beginIgnoringInteractionEvents()
+                            
                             DatabaseHandler.postImageToStorage(image: img, caption: message, completion: { (error) in
-                                Utilities.closeActivityIndicator()
+                                self.hideProgess()
+                                UIApplication.shared.endIgnoringInteractionEvents()
                                 if error != nil {
                                     print(error!.localizedDescription)
                                 } else {
                                     print("Posted image to storage")
                                     self.dismiss(animated: true, completion: nil)
                                 }
+                            })
+                            
+                            DatabaseHandler.manageUpload(monitoring: { (task) in
+                                let complete = Float(task.progress!.completedUnitCount)
+                                let total = Float(task.progress!.totalUnitCount)
+                                let percent = (complete / total)
+                                self.progressBar.setProgress(percent, animated: true)
                             })
                         }
                     }
@@ -143,10 +154,6 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
         }
     }
     
-//    func userDidSelectImage(image: UIImage) {
-//        self.imagePreview.image = image
-//        self.imagePreview.isHidden = false
-//    }
     
     func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
         self.imagePreview.image = images.first
@@ -200,6 +207,35 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
         setupToolbar()
     }
     
+    // MARK: - UploadTask
+    
+    @IBOutlet var bg: UIView!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
+    @IBOutlet weak var progressBar: UIProgressView!
+    
+    func showProgress() {
+        self.view.addSubview(self.bg)
+        bg.center = self.view.center
+        bg.layer.cornerRadius = 5
+        
+        progressBar.setProgress(0.01, animated: true)
+        
+        activityView.startAnimating()
+        
+        bg.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        UIView.animate(withDuration: 0.3) {
+            self.bg.transform = CGAffineTransform.identity
+        }
+    }
+    
+    func hideProgess() {
+        activityView.stopAnimating()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.bg.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        }) { (done) in
+            self.bg.removeFromSuperview()
+        }
+    }
     
     
 }
