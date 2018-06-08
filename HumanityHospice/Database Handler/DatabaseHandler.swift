@@ -12,7 +12,12 @@ import UIKit
 import RealmSwift
 
 class DatabaseHandler {
+    // MARK: - Constants
+    static let realm = try! Realm()
     
+    // MARK: - Administration
+    
+    /// Closes all connections to Firebase Database by removing each observer that exists.
     public static func closeConnections() {
         if let handle = DatabaseHandler.addedListenerHandle {
             Database.database().reference().removeObserver(withHandle: handle)
@@ -41,16 +46,19 @@ class DatabaseHandler {
         
     }
     
-    static let realm = try! Realm()
+    // ****************************************************************************************
     
-    // AUTH
+    // MARK: - Auth
+    
     /// Signs in a user using Firebase/Auth
     ///
     /// - Parameters:
     ///   - email: Email address User used to sign up
     ///   - password: Password user used to sign up
-    ///   - completion: completion hands back optional error, and optional user
-    static func signIn(email: String, password: String, completion: @escaping (User?, Error?)->()) {
+    ///   - completion: Completion to run after call to Firebase
+    ///   - user: The user handed back from sign in; optional
+    ///   - error: Error with signin; optional
+    static func signIn(email: String, password: String, completion: @escaping (_ user: User?, _ error: Error?)->()) {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
                 completion(nil, error)
@@ -63,10 +71,194 @@ class DatabaseHandler {
         
     }
     
+    /// Creates a new Firebase Account with an email and password.
+    ///
+    /// - Parameters:
+    ///   - email: The Email of the user signing up. Firebase does validation of Emails.
+    ///   - password: The Password of the user signing up. Firebase requires a minimum of 6 chars.
+    ///   - completion: The block to run after recieving a response from Firebase Auth
+    ///   - user: Firebase User object handed back if creation is successful. Optional.
+    ///   - error: Error with creating user. Optional.
+    static func signUp(email: String, password: String, completion: @escaping (_ user: User?, _ error: Error?)->()) {
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if error != nil {
+                completion(nil, error)
+            } else {
+                if result != nil {
+                    if let user = result?.user {
+                        completion(user, nil)
+                    }
+                } else {
+                    completion(nil, error)
+                }
+            }
+        }
+    }
+    
+    /// Attempts to sign out the current user using the default Auth.
+    static func signOut() {
+        do {
+            try Auth.auth().signOut()
+            while Auth.auth().currentUser != nil {
+                print("Waiting to signout")
+            }
+            AppSettings.clearAppSettings()
+        } catch  {
+            print(error.localizedDescription)
+        }
+    }
+    
+    /// Auth object used to create Family Accounts.
+    public static var secondaryAuth: Auth?
+    
+    /// Sets up the Secondary Auth object before use.
+    public static func setupSecondaryAuth() {
+        if let secondaryApp = FirebaseApp.app(name: "CreatingUsersApp") {
+            let secondaryAppAuth = Auth.auth(app: secondaryApp)
+            secondaryAuth = secondaryAppAuth
+        } else {
+            FirebaseApp.configure(name: "CreatingUsersApp", options: FirebaseApp.app()!.options)
+            if let secondaryApp = FirebaseApp.app(name: "CreatingUsersApp") {
+                let secondaryAppAuth = Auth.auth(app: secondaryApp)
+                secondaryAuth = secondaryAppAuth
+            }
+        }
+    }
+    
+    /// Creates a new family account in Firebase Auth using the secondary auth object.
+    ///
+    /// - Parameters:
+    ///   - first: The first name of the new user
+    ///   - last: The last name of the new user
+    ///   - email: The email of the new user
+    ///   - pass: The password of the new user
+    ///   - completion: The block of code to run after a recieving a response from Firebase Auth
+    ///   - error: An error creating a new user. Optional.
+    public static func createFamilAccount(first: String, last: String, email: String, pass: String, completion: @escaping (_ error: Error?)->()) {
+        if let secondaryAuth = secondaryAuth {
+            secondaryAuth.createUser(withEmail: email, password: pass) { (result, error) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                    completion(error!)
+                } else {
+                    if let user = result?.user {
+                        print("User Created! \(user.uid) Updating Info")
+                        let req = user.createProfileChangeRequest()
+                        req.displayName = "\(first) \(last)"
+                        req.commitChanges(completion: { (error) in
+                            if error != nil {
+                                print("Couldn't perform profile changes")
+                                completion(error!)
+                            } else {
+                                print("Successfully changed profile information")
+                                if let patient = AppSettings.currentPatient {
+                                    guard let patientObj = AppSettings.currentAppUser as? DatabaseHandler.Patient else { return }
+                                    let appuser = Family(id: user.uid,
+                                                         firstName: first,
+                                                         lastName: last,
+                                                         patient: patient,
+                                                         profilePic: nil, patientObj: patientObj)
+                                    
+                                    DatabaseHandler.createUserReference(type: .Family,
+                                                                        user: appuser,
+                                                                        completion: { (error, done) in
+                                                                            if error != nil {
+                                                                                print("Error! :", error!.localizedDescription)
+                                                                                completion(error!)
+                                                                            } else {
+                                                                                print("Created Family Account Reference")
+                                                                                completion(nil)
+                                                                            }
+                                    })
+                                }
+                            }
+                        })
+                    } else {
+                        print("Did nopt get user back")
+                    }
+                }
+            }
+        } else {
+            setupSecondaryAuth()
+            if let secondaryAuth = secondaryAuth {
+                secondaryAuth.createUser(withEmail: email, password: pass) { (result, error) in
+                    if error != nil {
+                        print(error!.localizedDescription)
+                        completion(error!)
+                    } else {
+                        if let user = result?.user {
+                            print("User Created! \(user.uid) Updating Info")
+                            let req = user.createProfileChangeRequest()
+                            req.displayName = "\(first) \(last)"
+                            req.commitChanges(completion: { (error) in
+                                if error != nil {
+                                    print("Couldn't perform profile changes")
+                                    completion(error!)
+                                } else {
+                                    print("Successfully changed profile information")
+                                    if let patient = AppSettings.currentPatient {
+                                        guard let patientObj = AppSettings.currentAppUser as? DatabaseHandler.Patient else { return }
+                                        let appuser = Family(id: user.uid,
+                                                             firstName: first,
+                                                             lastName: last,
+                                                             patient: patient,
+                                                             profilePic: nil,
+                                                             patientObj: patientObj)
+                                        
+                                        DatabaseHandler.createUserReference(type: .Family,
+                                                                            user: appuser,
+                                                                            completion: { (error, done) in
+                                                                                if error != nil {
+                                                                                    print("Error! :", error!.localizedDescription)
+                                                                                    completion(error!)
+                                                                                } else {
+                                                                                    print("Created Family Account Reference")
+                                                                                    completion(nil)
+                                                                                }
+                                        })
+                                    }
+                                }
+                            })
+                        } else {
+                            print("Did nopt get user back")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Creates an App User with a Firebase User object
+    ///
+    /// - Parameter user: The Firebase user to use to create an App User
+    /// - Returns: An app user object.
+    static func createAppUser(user: User) -> AppUser? {
+        switch AppSettings.userType! {
+        case .Patient:
+            let code = self.generateUserInviteCode()
+            let appuser = Patient(id: user.uid,
+                                  firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last, nurse: nil, inviteCode: code, profilePic: nil)
+            return appuser
+        case .Reader:
+            let appuser = Reader(id: user.uid,
+                                 firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last,
+                                 readingFrom: "", patients: [], profilePic: nil)
+            return appuser
+        default:
+            print("Error")
+            return nil
+        }
+    }
+
+    // ****************************************************************************************
+    
+    // MARK: - Database: Data Push/Pull
+    
     /// Iterates through an array of possible Database headers, finds the header that has a child with the supplied user uid, sets the AppSettings.userType, and calls for a data pull at the specified location
     ///
     /// - Parameters:
     ///   - user: The current Firebase user
+    ///   - completion: The block to run after fetching data
     static func fetchData(for user: User, completion: @escaping ()->()) {
         let ref = Database.database().reference()
         let paths = ["Patients", "Staff", "Readers", "Family"]
@@ -109,7 +301,8 @@ class DatabaseHandler {
     /// - Parameters:
     ///   - ref: The reference to check
     ///   - completion: Hands back true
-    private static func checkLocation(ref: DatabaseReference, completion: @escaping (Bool)->()) {
+    ///   - hasChildren: Indicates whether or not the reference is valid
+    private static func checkLocation(ref: DatabaseReference, completion: @escaping (_ hasChildren: Bool)->()) {
         ref.observeSingleEvent(of: .value) { (snap) in
             if snap.childrenCount > 0 {
                 completion(true)
@@ -291,166 +484,6 @@ class DatabaseHandler {
         }
     }
 
-    static func setProfilePictureURL(url: String) {
-        
-        guard let uid = AppSettings.currentFBUser?.uid else { return }
-        
-        switch AppSettings.userType! {
-        case .Patient:
-            let ref = Database.database().reference().child("Patients").child(uid).child("profilePictureURL")
-            ref.setValue(url)
-        case .Reader:
-            let ref = Database.database().reference().child("Readers").child(uid).child("profilePictureURL")
-            ref.setValue(url)
-        case .Family:
-            let ref = Database.database().reference().child("Family").child(uid).child("profilePictureURL")
-            ref.setValue(url)
-        default:
-            print("")
-        }
-    }
-    
-    static func signUp(email: String, password: String, completion: @escaping (User?, Error?)->()) {
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            if error != nil {
-                completion(nil, error)
-            } else {
-                if result != nil {
-                    if let user = result?.user {
-                        completion(user, nil)
-                    }
-                } else {
-                    completion(nil, error)
-                }
-            }
-        }
-        
-    }
-    
-    public static var secondaryAuth: Auth?
-    public static func setupSecondaryAuth() {
-        if let secondaryApp = FirebaseApp.app(name: "CreatingUsersApp") {
-            let secondaryAppAuth = Auth.auth(app: secondaryApp)
-            secondaryAuth = secondaryAppAuth
-        } else {
-            FirebaseApp.configure(name: "CreatingUsersApp", options: FirebaseApp.app()!.options)
-            if let secondaryApp = FirebaseApp.app(name: "CreatingUsersApp") {
-                let secondaryAppAuth = Auth.auth(app: secondaryApp)
-                secondaryAuth = secondaryAppAuth
-            }
-        }
-    }
-    public static func createFamilAccount(first: String,
-                                          last: String,
-                                          email: String,
-                                          pass: String, completion: @escaping (Error?)->()) {
-        
-        if let secondaryAuth = secondaryAuth {
-            secondaryAuth.createUser(withEmail: email, password: pass) { (result, error) in
-                if error != nil {
-                    print(error!.localizedDescription)
-                    completion(error!)
-                } else {
-                    if let user = result?.user {
-                        print("User Created! \(user.uid) Updating Info")
-                        let req = user.createProfileChangeRequest()
-                        req.displayName = "\(first) \(last)"
-                        req.commitChanges(completion: { (error) in
-                            if error != nil {
-                                print("Couldn't perform profile changes")
-                                completion(error!)
-                            } else {
-                                print("Successfully changed profile information")
-                                if let patient = AppSettings.currentPatient {
-                                    guard let patientObj = AppSettings.currentAppUser as? DatabaseHandler.Patient else { return }
-                                    let appuser = Family(id: user.uid,
-                                                         firstName: first,
-                                                         lastName: last,
-                                                         patient: patient,
-                                                         profilePic: nil, patientObj: patientObj)
-                                    
-                                    DatabaseHandler.createUserReference(type: .Family,
-                                                                        user: appuser,
-                                                                        completion: { (error, done) in
-                                                                            if error != nil {
-                                                                                print("Error! :", error!.localizedDescription)
-                                                                                completion(error!)
-                                                                            } else {
-                                                                                print("Created Family Account Reference")
-                                                                                completion(nil)
-                                                                            }
-                                    })
-                                }
-                            }
-                        })
-                    } else {
-                        print("Did nopt get user back")
-                    }
-                }
-            }
-        } else {
-            setupSecondaryAuth()
-            if let secondaryAuth = secondaryAuth {
-                secondaryAuth.createUser(withEmail: email, password: pass) { (result, error) in
-                    if error != nil {
-                        print(error!.localizedDescription)
-                        completion(error!)
-                    } else {
-                        if let user = result?.user {
-                            print("User Created! \(user.uid) Updating Info")
-                            let req = user.createProfileChangeRequest()
-                            req.displayName = "\(first) \(last)"
-                            req.commitChanges(completion: { (error) in
-                                if error != nil {
-                                    print("Couldn't perform profile changes")
-                                    completion(error!)
-                                } else {
-                                    print("Successfully changed profile information")
-                                    if let patient = AppSettings.currentPatient {
-                                        guard let patientObj = AppSettings.currentAppUser as? DatabaseHandler.Patient else { return }
-                                        let appuser = Family(id: user.uid,
-                                                             firstName: first,
-                                                             lastName: last,
-                                                             patient: patient,
-                                                             profilePic: nil,
-                                                             patientObj: patientObj)
-                                        
-                                        DatabaseHandler.createUserReference(type: .Family,
-                                                                            user: appuser,
-                                                                            completion: { (error, done) in
-                                                                                if error != nil {
-                                                                                    print("Error! :", error!.localizedDescription)
-                                                                                    completion(error!)
-                                                                                } else {
-                                                                                    print("Created Family Account Reference")
-                                                                                    completion(nil)
-                                                                                }
-                                        })
-                                    }
-                                }
-                            })
-                        } else {
-                            print("Did nopt get user back")
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    static func signOut() {
-        do {
-            try Auth.auth().signOut()
-            while Auth.auth().currentUser != nil {
-                print("Waiting to signout")
-            }
-            AppSettings.clearAppSettings()
-        } catch  {
-            print(error.localizedDescription)
-        }
-    }
-    
-    // DATABASE
     /// Creates the database reference to the newly created user
     ///
     /// - Parameters:
@@ -545,42 +578,6 @@ class DatabaseHandler {
         Database.database().reference().child("Readers").child(followerID).child("ReadingFrom").setValue(patientID)
     }
     
-    static func createAppUser(user: User) -> AppUser? {
-        switch AppSettings.userType! {
-        case .Patient:
-            let code = self.generateUserInviteCode()
-            let appuser = Patient(id: user.uid,
-                                  firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last, nurse: nil, inviteCode: code, profilePic: nil)
-            return appuser
-        case .Reader:
-            let appuser = Reader(id: user.uid,
-                                 firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last,
-                                 readingFrom: "", patients: [], profilePic: nil)
-            return appuser
-        default:
-            print("Error")
-            return nil
-        }
-    }
-    
-    private static func generateUserInviteCode() -> String {
-        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        let array = Array(alphabet)
-        var code = ""
-        for _ in 0..<6 {
-            let random = arc4random_uniform(26)
-            let letter = array[Int(random)]
-            code.append(letter)
-        }
-        
-        return code
-    }
-    
-    static func addInviteCode(code: String, uid: String) {
-        Database.database().reference().child("InviteCodes").child(code).child("patient").setValue(uid)
-    }
-    
-    
     /// Checks the Database for the supplied Invite Code
     /// - parameter code: The invite code to check for
     /// - parameter completion: the block to run after querying the DB
@@ -599,6 +596,42 @@ class DatabaseHandler {
                 completion(false, nil)
             }
         }
+    }
+    
+    static func setProfilePictureURL(url: String) {
+        
+        guard let uid = AppSettings.currentFBUser?.uid else { return }
+        
+        switch AppSettings.userType! {
+        case .Patient:
+            let ref = Database.database().reference().child("Patients").child(uid).child("profilePictureURL")
+            ref.setValue(url)
+        case .Reader:
+            let ref = Database.database().reference().child("Readers").child(uid).child("profilePictureURL")
+            ref.setValue(url)
+        case .Family:
+            let ref = Database.database().reference().child("Family").child(uid).child("profilePictureURL")
+            ref.setValue(url)
+        default:
+            print("")
+        }
+    }
+    
+    private static func generateUserInviteCode() -> String {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let array = Array(alphabet)
+        var code = ""
+        for _ in 0..<6 {
+            let random = arc4random_uniform(26)
+            let letter = array[Int(random)]
+            code.append(letter)
+        }
+        
+        return code
+    }
+    
+    static func addInviteCode(code: String, uid: String) {
+        Database.database().reference().child("InviteCodes").child(code).child("patient").setValue(uid)
     }
     
     // MARK: - Journal Posts
