@@ -90,6 +90,8 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
             self.imagePreview.image = nil
             self.image = nil
         }
+        
+        messageTF.becomeFirstResponder()
     }
     
     @IBAction func submitPost(_ sender: Any) {
