@@ -18,6 +18,8 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
         
     }
     
+    // MARK: - Properties
+    
     @IBOutlet weak var messageTF: UITextView!
     @IBOutlet weak var submitPostButton: UIButton!
     @IBOutlet var toolbar: UIView!
@@ -32,19 +34,20 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
     }
     @IBOutlet weak var clearPhotoButton: UIButton!
     
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: - Setup
     func setup() {
         setupButtons()
         clearPhotoButton.isHidden = true
         messageTF.inputAccessoryView = toolbar
-        imagePreview.isHidden = true
+        setupImagePreview()
         messageTF.becomeFirstResponder()
+    }
+    
+    func setupImagePreview() {
+        imagePreview.isHidden = true
+        imagePreview.clipsToBounds = true
+        imagePreview.layer.cornerRadius = 5
     }
     
     func setupButtons() {
@@ -149,18 +152,26 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
         ImageSelector.open(vc: self)
     }
     
-    func userDidSelectImage(image: UIImage) {
-        self.image = image
-        self.imagePreview.isHidden = false
-        UIView.animate(withDuration: 0.2, animations: {
-            self.clearPhotoButton.transform = CGAffineTransform.identity
-            self.clearPhotoButton.isHidden = false
-        })
-    }
-    
     @IBAction func cancel(_ sender: Any) {
         self.messageTF.resignFirstResponder()
     }
+    
+    // MARK: - Delegate Responders
+    
+    func userDidSelectImage(image: UIImage) {
+        self.image = image
+        self.imagePreview.isHidden = false
+        //        UIView.animate(withDuration: 0.2, animations: {
+        //            self.clearPhotoButton.transform = CGAffineTransform.identity
+        //            self.clearPhotoButton.isHidden = false
+        //        })
+        
+        self.clearPhotoButton.transform = CGAffineTransform.identity
+        self.clearPhotoButton.isHidden = false
+        self.view.bringSubview(toFront: clearPhotoButton)
+    }
+    
+    // MARK: - Utilities
     
     func checkTextView(completion: (Bool, String?)->()) {
         if let text = messageTF.text {
