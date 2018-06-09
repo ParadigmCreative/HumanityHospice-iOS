@@ -17,6 +17,7 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var pass1: UITextField!
     @IBOutlet weak var pass2: UITextField!
     @IBOutlet weak var signupButton: UIButton!
+    @IBOutlet weak var agreeToTermsButton: UIButton!
     @IBOutlet var successView: UIView!
     
     
@@ -38,7 +39,7 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
         email.delegate = self
         pass1.delegate = self
         pass2.delegate = self
-        
+        signupButton.isEnabled = false
     }
 
     func createFamilyAccount(first: String, last: String, email: String, password: String) {
@@ -99,6 +100,17 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func agreeToTerms(_ sender: Any) {
+        if agreeToTermsButton.isSelected {
+            agreeToTermsButton.setImage(#imageLiteral(resourceName: "CheckBox"), for: .normal)
+            agreeToTermsButton.isSelected = false
+            signupButton.isEnabled = false
+        } else {
+            agreeToTermsButton.setImage(#imageLiteral(resourceName: "CheckBox Filled"), for: .normal)
+            agreeToTermsButton.isSelected = true
+            signupButton.isEnabled = true
+        }
+    }
     
     @IBAction func createFamilyAccount(_ sender: Any) {
         checkTextView { (first, last, email, pass) in
