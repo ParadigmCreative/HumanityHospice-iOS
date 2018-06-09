@@ -157,7 +157,7 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     // MARK: - Composing new comment
     let messageInputContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = #colorLiteral(red: 0.4588235294, green: 0.4470588235, blue: 0.7568627451, alpha: 1)
         return view
     }()
     
@@ -170,8 +170,8 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     lazy var sendButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Send", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0.5098039216, green: 0.5215686275, blue: 0.8392156863, alpha: 1)
+        button.setTitleColor(#colorLiteral(red: 0.5098039216, green: 0.5215686275, blue: 0.8392156863, alpha: 1), for: .normal)
+        button.backgroundColor = UIColor.white
         button.layer.cornerRadius = 5
         button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(postComment), for: .touchUpInside)
@@ -183,7 +183,13 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         self.navigationController!.view.addSubview(messageInputContainerView)
         nav = self.navigationController
         messageInputContainerView.snp.makeConstraints { (make) in
-            make.left.right.bottom.equalToSuperview()
+            print(UIDevice.modelName)
+            if UIDevice.modelName.isiPhoneX() {
+                make.left.right.equalToSuperview()
+                make.bottom.equalToSuperview().offset(-22)
+            } else {
+                make.left.right.bottom.equalToSuperview()
+            }
             make.height.equalTo(48)
             self.setupInputView()
         }
@@ -200,14 +206,14 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         
         self.messageInputContainerView.addSubview(sendButton)
         sendButton.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(-8)
+            make.right.equalToSuperview().offset(-16)
             make.centerY.equalToSuperview()
             make.width.equalTo(60)
         }
         
         self.messageInputContainerView.addSubview(messageTF)
         messageTF.snp.makeConstraints { (make) in
-            make.left.equalTo(8)
+            make.left.equalTo(16)
             make.centerY.equalToSuperview()
             make.right.equalTo(sendButton.snp.left)
         }
@@ -236,7 +242,8 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
                 UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                     if isKeyboardIsShowing {
                         self.messageInputContainerView.snp.remakeConstraints { (make) in
-                            make.left.right.bottom.equalToSuperview()
+                            make.left.right.equalToSuperview()
+                            make.bottom.equalToSuperview().offset(-22)
                             make.height.equalTo(48)
                             self.adjustForKeyboard(notification: notification)
                         }
