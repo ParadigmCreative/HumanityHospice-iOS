@@ -60,6 +60,12 @@ class InviteReaders: UIViewController {
                     self.accessCodeButton.setTitle(code, for: .normal)
                 }
             }
+        } else if let family = AppSettings.currentAppUser as? DatabaseHandler.Family {
+            if let code = family.patientObj?.inviteCode {
+                DispatchQueue.main.async {
+                    self.accessCodeButton.setTitle(code, for: .normal)
+                }
+            }
         }
     }
     
@@ -97,7 +103,9 @@ class InviteReaders: UIViewController {
     }
     
     @IBAction func shareCode(_ sender: Any) {
-        
+        let code = self.accessCodeButton.titleLabel!.text!
+        let activityVC = UIActivityViewController(activityItems: [code], applicationActivities: nil)
+        self.present(activityVC, animated: true, completion: nil)
     }
     
     @IBAction func copyURL(_ sender: Any) {
@@ -108,7 +116,9 @@ class InviteReaders: UIViewController {
     }
     
     @IBAction func shareURL(_ sender: Any) {
-    
+        let code = self.URLButton.titleLabel!.text!
+        let activityVC = UIActivityViewController(activityItems: [code], applicationActivities: nil)
+        self.present(activityVC, animated: true, completion: nil)
     }
     
     /*

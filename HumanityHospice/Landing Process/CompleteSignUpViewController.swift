@@ -103,8 +103,10 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func signUp(_ sender: Any) {
         self.showIndicator()
         verifyTextFields { (email, pass) in
+            
             // Sign up user
             DatabaseHandler.signUp(email: email, password: pass, completion: { (user, error) in
+            
                 if error != nil {
                     // show alert if error isn't nil
                     self.showAlert(title: "Hmm...", message: error!.localizedDescription)
@@ -117,6 +119,7 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                         // make profile changes to user
                         let changes = user?.createProfileChangeRequest()
                         changes?.displayName = "\(AppSettings.signUpName!.first) \(AppSettings.signUpName!.last)"
+                        
                         changes?.commitChanges(completion: { (error) in
                             if error != nil {
                                 
@@ -124,7 +127,7 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                                 self.showAlert(title: "Hmm...", message: error!.localizedDescription)
                                 self.closeIndicator()
                             } else {
-                                print("New User:", user!.uid, user!.email, user!.displayName)
+                                print("New User:", user!.uid, user!.email!, user!.displayName!)
                                 
                                 // create app user instance
                                 let appuser = DatabaseHandler.createAppUser(user: user!)
@@ -135,7 +138,7 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                                         self.showAlert(title: "Hmm...", message: error!.localizedDescription)
                                         self.closeIndicator()
                                     } else {
-                                        print("Created new user:", appuser!.firstName, " ", appuser!.lastName)
+                                        print("Created new user:", appuser!.firstName, appuser!.lastName)
                                         
                                         // SET CURRENT PATIENT
                                         if AppSettings.userType == DatabaseHandler.UserType.Reader {
@@ -149,14 +152,20 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                                             }
                                         } else if AppSettings.userType == DatabaseHandler.UserType.Patient {
                                             AppSettings.currentPatient = AppSettings.currentFBUser!.uid
+                                            
+                                            // make first post
+                                            DatabaseHandler.postToDatabase(poster: user!.uid, name: user!.displayName!, message: "\(user!.displayName!) has joined Humanity Hospice", imageURL: nil, completion: {
+                                                
+                                            })
                                         }
-                                        
                                         // if creation is successful, set
                                         AppSettings.currentAppUser = appuser
                                         
                                         // Present the Journal View
                                         self.closeIndicator()
                                         self.moveToJournal()
+                                        
+                                        
                                     }
                                 })
                             }

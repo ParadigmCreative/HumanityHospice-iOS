@@ -120,7 +120,12 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             imageCell.commentDelegate = self
             
             imageCell.nameLabel.text = post.poster
-            imageCell.message.text = post.message
+            if post.message == "" {
+                imageCell.message.isHidden = true
+            } else {
+                imageCell.message.text = post.message
+            }
+            
             imageCell.postPhoto.clipsToBounds = true
             
             imageCell.message.layer.cornerRadius = 5
@@ -183,7 +188,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             let post = self.posts[indexPath.row]
             DatabaseHandler.removeFromDatabase(post: post) { (done) in
                 if done {
-                    print("Deleted From Firebase")
+                    
                 }
             }
         }

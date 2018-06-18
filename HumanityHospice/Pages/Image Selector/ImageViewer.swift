@@ -24,7 +24,6 @@ class ImageViewer {
         
     }
     
-    
     public static func reset() {
         viewer = SlideLeafViewController()
         isViewing = false

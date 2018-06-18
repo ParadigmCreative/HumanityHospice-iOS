@@ -23,8 +23,6 @@ class PhotoAlbumCollectionViewCell: UICollectionViewCell {
                 DispatchQueue.main.async {
                     if let img = self.post.image {
                         self.image.image = img
-                        self.indicator?.stopAnimating()
-                        self.indicator?.removeFromSuperview()
                     }
                 }
             }
@@ -32,7 +30,6 @@ class PhotoAlbumCollectionViewCell: UICollectionViewCell {
     }
     
     func setupUI() {
-        self.indicator?.startAnimating()
         if let url = post.url {
             if let url = URL(string: url) {
                 DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
@@ -50,13 +47,10 @@ class PhotoAlbumCollectionViewCell: UICollectionViewCell {
                             }
                         }
                         
-                        self.post.image = image
-                        
                         // set image to imageView
                         DispatchQueue.main.async {
                             self.image.image = image
-                            self.indicator?.stopAnimating()
-                            self.indicator?.removeFromSuperview()
+                            self.image.layer.cornerRadius = 5
                         }
                     }
                 }

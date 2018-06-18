@@ -258,7 +258,6 @@
 			isa = PBXGroup;
 			children = (
 				A5BBD4312086EC3700B80BD0 /* HumanityHospice */,
-				A5BBD4302086EC3700B80BD0 /* Products */,
 				5A1EB783719ED9CCD60B55F6 /* Pods */,
 				32B3044A1FD103E66EB0AD5A /* Frameworks */,
 			);
@@ -270,6 +269,7 @@
 				A5BBD42F2086EC3700B80BD0 /* HumanityHospice.app */,
 			);
 			name = Products;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		A5BBD4312086EC3700B80BD0 /* HumanityHospice */ = {
@@ -320,6 +320,7 @@
 		A5FC5C1B208936830084BA9B /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				A5BBD4302086EC3700B80BD0 /* Products */,
 				7335B2BC209FD4F400AD5B1B /* Image Selector */,
 				7335B2B0209BC37800AD5B1B /* Journal */,
 				73C9B1E320A394A100056994 /* EncouragementBoard */,

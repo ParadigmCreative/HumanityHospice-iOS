@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7C489DF5884162BE88343AB5A26813EF"
+               BlueprintIdentifier = "1FBEC1BF336743C2EADEB918AFE5BE17"
                BlueprintName = "Pods-HumanityHospice"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "Pods-HumanityHospice.framework">

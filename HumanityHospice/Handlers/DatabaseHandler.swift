@@ -350,19 +350,18 @@ class DatabaseHandler {
                     
                     completion(true)
                 case .Family:
-                    let patient = data["PatientID"] as! String
+                    let patientid = data["PatientID"] as! String
                     let meta = data["MetaData"] as! [String: Any]
                     let first = meta["firstName"] as! String
                     let last = meta["lastName"] as! String
                     
-                    var user = Family(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, patient: patient, profilePic: nil, patientObj: nil)
-                    
-                    AppSettings.currentAppUser = user
-                    AppSettings.currentPatient = patient
-                    AppSettings.currentPatientName = "\(first) \(last)"
-                    getPatientDetailsForFamilyMember(pid: patient, completion: { (patient) in
+                    getPatientDetailsForFamilyMember(pid: patientid, completion: { (patient) in
+                        var user = Family(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, patient: patientid, profilePic: nil, patientObj: nil)
                         user.patientObj = patient
+                        AppSettings.currentAppUser = user
+                        AppSettings.currentPatient = patientid
                         AppSettings.currentPatientName = patient.fullName()
+                        completion(true)
                     })
                     
                 default:
@@ -596,6 +595,7 @@ class DatabaseHandler {
                 completion(false, nil)
             }
         }
+        
     }
     
     static func setProfilePictureURL(url: String) {
@@ -788,7 +788,7 @@ class DatabaseHandler {
             }
         case .Family:
             if let user = AppSettings.currentAppUser as? Family {
-                let uref = ref.child(user.id)
+                let uref = ref.child(user.patient)
                 userRef = uref
             }
         default:
@@ -797,98 +797,100 @@ class DatabaseHandler {
         
         if userRef != nil {
             let handle = userRef!.observe(.childAdded) { (snap) in
-                var posts: [Post] = []
-                if let post = snap.value as? [String: AnyObject] {
-                    let timestamp = post["timestamp"] as! TimeInterval
-                    let poster = post["poster"] as! String
-                    let message = post["post"] as! String
-                    let posterProfileURL = post["profilePictureURL"] as? String
-                    let id = snap.key
-                    
-                    
-                    // get comments, if any
-                    var comments: [Post] = []
-                    if let commentList = post["comments"] as? [String: Any] {
-                        for commentData in commentList {
-                            if let comment = commentData.value as? [String: AnyObject] {
-                                let timestamp = comment["timestamp"] as! TimeInterval
-                                let posterName = comment["poster"] as! String
-                                let message = comment["post"] as! String
-                                let posterProfileURL = comment["posterProfilePictureURL"] as? String
-                                let id = commentData.key
-                                
-                                let newComment = Post()
-                                newComment.id = id
-                                newComment.timestamp = timestamp
-                                newComment.message = message
-                                newComment.poster = posterName
-                                newComment.isComment = true
-                                if let url = posterProfileURL {
-                                    newComment.posterProfileURL = url
+                DispatchQueue.global(qos: .utility).async {
+                    var posts: [Post] = []
+                    if let post = snap.value as? [String: AnyObject] {
+                        let timestamp = post["timestamp"] as! TimeInterval
+                        let poster = post["poster"] as! String
+                        let message = post["post"] as! String
+                        let posterProfileURL = post["profilePictureURL"] as? String
+                        let id = snap.key
+                        
+                        
+                        // get comments, if any
+                        var comments: [Post] = []
+                        if let commentList = post["comments"] as? [String: Any] {
+                            for commentData in commentList {
+                                if let comment = commentData.value as? [String: AnyObject] {
+                                    let timestamp = comment["timestamp"] as! TimeInterval
+                                    let posterName = comment["poster"] as! String
+                                    let message = comment["post"] as! String
+                                    let posterProfileURL = comment["posterProfilePictureURL"] as? String
+                                    let id = commentData.key
+                                    
+                                    let newComment = Post()
+                                    newComment.id = id
+                                    newComment.timestamp = timestamp
+                                    newComment.message = message
+                                    newComment.poster = posterName
+                                    newComment.isComment = true
+                                    if let url = posterProfileURL {
+                                        newComment.posterProfileURL = url
+                                    }
+                                    
+                                    comments.append(newComment)
                                 }
-                                
-                                comments.append(newComment)
                             }
+
+                            RealmHandler.write({ (realm) in
+                                try! realm.write {
+                                    realm.add(comments)
+                                }
+                            })
                         }
                         
+                        // create new object
+                        let newPost = Post()
+                        newPost.timestamp = timestamp
+                        newPost.id = id
+                        newPost.message = message
+                        newPost.poster = poster
+                        
+                        if let url = posterProfileURL {
+                            newPost.posterProfileURL = url
+                        }
+                        
+                        // add comments, if any
+                        if comments.count > 0 {
+                            newPost.comments.append(objectsIn: comments)
+                        }
+                        
+                        // add image, if any
+                        if let imageURL = post["postImageURL"] as? String {
+                            newPost.hasImage = true
+                            newPost.imageURL = imageURL
+                            posts.append(newPost)
+                        } else {
+                            newPost.hasImage = false
+                            newPost.imageURL = nil
+                            posts.append(newPost)
+                        }
+                    }
+                    
+                    for post in posts {
+                        if post.comments.count > 1 {
+                            
+                            let sorted = post.comments.sorted(by: { (p1, p2) -> Bool in
+                                return p1.timestamp > p2.timestamp
+                            })
+                            
+                            post.comments.removeAll()
+                            post.comments.append(objectsIn: sorted)
+                            
+                        }
+                    }
+                    
+                    let sortedPosts: [Post] = posts.sorted(by: { (p1, p2) -> Bool in
+                        return p1.timestamp > p2.timestamp
+                    })
+                    
+                    RealmHandler.write({ (realm) in
                         try! realm.write {
-                            realm.add(comments)
+                            realm.add(sortedPosts, update: true)
                         }
-                    }
-                    
-                    // create new object
-                    let newPost = Post()
-                    newPost.timestamp = timestamp
-                    newPost.id = id
-                    newPost.message = message
-                    newPost.poster = poster
-                    
-                    if let url = posterProfileURL {
-                        newPost.posterProfileURL = url
-                    }
-                    
-                    // add comments, if any
-                    if comments.count > 0 {
-                        newPost.comments.append(objectsIn: comments)
-                    }
-                    
-                    // add image, if any
-                    if let imageURL = post["postImageURL"] as? String {
-                        newPost.hasImage = true
-                        newPost.imageURL = imageURL
-                        posts.append(newPost)
-                    } else {
-                        newPost.hasImage = false
-                        newPost.imageURL = nil
-                        posts.append(newPost)
-                    }
+                        completion()
+                    })
                 }
-                    
-                for post in posts {
-                    if post.comments.count > 1 {
-                        
-                        let sorted = post.comments.sorted(by: { (p1, p2) -> Bool in
-                            return p1.timestamp > p2.timestamp
-                        })
-                        
-                        post.comments.removeAll()
-                        post.comments.append(objectsIn: sorted)
-                        
-                    }
-                }
-                
-                let sortedPosts: [Post] = posts.sorted(by: { (p1, p2) -> Bool in
-                    return p1.timestamp > p2.timestamp
-                })
-                
-                
-                // Make sure post is written
-                let postCheck = RealmHandler.getPostList()
-                print("Before:", postCheck.count)
-                try! realm.write {
-                    realm.add(sortedPosts, update: true)
-                }
-                completion()
             }
             
             addedListenerHandle = handle
@@ -917,7 +919,7 @@ class DatabaseHandler {
             }
         case .Family:
             if let user = AppSettings.currentAppUser as? Family {
-                let uref = ref.child(user.id)
+                let uref = ref.child(user.patientObj!.id)
                 userRef = uref
             }
         default:
@@ -965,7 +967,7 @@ class DatabaseHandler {
             }
         case .Family:
             if let user = AppSettings.currentAppUser as? Family {
-                let uref = ref.child(user.id)
+                let uref = ref.child(user.patientObj!.id)
                 userRef = uref
             }
         default:
@@ -1361,7 +1363,7 @@ class DatabaseHandler {
                 newPAP.id = snap.key
                 
                 try! realm.write {
-                    realm.add(newPAP)
+                    realm.add(newPAP, update: true)
                     print("Added PAP:", newPAP.id)
                 }
                 completion()

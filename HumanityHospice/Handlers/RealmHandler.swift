@@ -12,6 +12,15 @@ import RealmSwift
 class RealmHandler {
     static var realm = try! Realm()
     
+    // MARK: - General
+    static func write(_ completion: @escaping (Realm)->()) {
+        DispatchQueue.main.async {
+            completion(self.realm)
+        }
+    }
+    
+    
+    
     // MARK: - Journal
     
     public static func resetJournalPosts() {
@@ -116,10 +125,12 @@ class RealmHandler {
         return sorted
     }
     
-    
+    // MARK: - Master
     public static func masterResetRealm() {
-        try! realm.write {
-            realm.deleteAll()
+        DispatchQueue.main.async {
+            try! realm.write {
+                realm.deleteAll()
+            }
         }
     }
     

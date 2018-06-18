@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0EB76F92EC32735FD7048F83358B3476"
+               BlueprintIdentifier = "3C01A22BCCFDE3DD74E355AAC58687F7"
                BlueprintName = "Serrata"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "Serrata.framework">

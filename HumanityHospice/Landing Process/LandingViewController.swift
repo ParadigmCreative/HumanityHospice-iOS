@@ -74,7 +74,6 @@ class LandingViewController: UIViewController {
     }
     
     
-
     /*
     // MARK: - Navigation
 

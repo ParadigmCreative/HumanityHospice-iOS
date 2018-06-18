@@ -28,13 +28,6 @@ class ImageSelector {
     }
     
     private static func setup() {
-        var configuration = Configuration()
-        configuration.doneButtonTitle = "Finish"
-        configuration.noImagesTitle = "Sorry! There are no images here!"
-        configuration.allowPinchToZoom = true
-        configuration.allowMultiplePhotoSelection = false
-        
-        self.picker = ImagePickerController(configuration: configuration)
         picker.imageLimit = 1
     }
     

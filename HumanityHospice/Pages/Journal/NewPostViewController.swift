@@ -8,8 +8,9 @@
 
 import UIKit
 import SnapKit
+import ImagePicker
 
-class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelectorDelegate {
+class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,7 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
         imagePreview.isHidden = true
         imagePreview.clipsToBounds = true
         imagePreview.layer.cornerRadius = 5
+        setupImagePreviewGesture()
     }
     
     func setupButtons() {
@@ -70,8 +72,20 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
             make.left.bottom.right.equalToSuperview()
             make.height.equalTo(35)
         }
-        
     }
+    
+    func setupImagePreviewGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(viewImage))
+        imagePreview.isUserInteractionEnabled = true
+        imagePreview.addGestureRecognizer(tap)
+    }
+    
+    @objc func viewImage() {
+        guard let img = self.imagePreview.image else { return }
+        ImageViewer.initialize(image: img, text: "")
+        ImageViewer.open(vc: self)
+    }
+    
     
     // MARK: - Actions
     
@@ -97,61 +111,63 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
     @IBAction func submitPost(_ sender: Any) {
         print("POST!")
         
-        checkTextView { (verified, message) in
-            if verified {
-                self.showVerificationAlert(completion: { (confirmed) in
-                    Utilities.showActivityIndicator(view: self.view)
-                    if confirmed {
-                        self.cancelButton.isEnabled = false
-                        self.submitPostButton.isEnabled = false
-                        self.attachPhotoButton.isEnabled = false
-                        
-                        if self.imagePreview.image == nil {
-                            var name: String = ""
-                            if AppSettings.userType == .Family {
-                                if let user = AppSettings.currentAppUser as? DatabaseHandler.Family {
-                                    if let patient = user.patientObj {
-                                        name = "\(patient.firstName) \(patient.lastName)"
-                                    }
-                                }
-                            } else {
-                                name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
-                            }
-                            DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!,
-                                                           name: name,
-                                                           message: message!,
-                                                           imageURL: nil,
-                                                           completion: {
-                                                            Utilities.closeActivityIndicator()
-                                                            self.dismiss(animated: true, completion: nil)
-                            })
-                        } else {
-                            let name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
-                            if let img = self.imagePreview.image {
-                                DatabaseHandler.postImageToDatabase(image: img, completion: { (url, error) in
-                                    if error != nil {
-                                        print(error!.localizedDescription)
-                                    } else {
-                                        DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!, name: name, message: message!, imageURL: url!, completion: {
+    Utilities.showActivityIndicator(view: self.view)
+        self.cancelButton.isEnabled = false
+        self.submitPostButton.isEnabled = false
+        self.attachPhotoButton.isEnabled = false
+        var message: String = messageTF.text ?? ""
+        
+        if self.imagePreview.image == nil {
+            var name: String = ""
+            
+            if AppSettings.userType == .Family {
+                if let user = AppSettings.currentAppUser as? DatabaseHandler.Family {
+                    if let patient = user.patientObj {
+                        name = "\(patient.firstName) \(patient.lastName)"
+                    }
+                }
+            } else {
+                name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
+            }
+            DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!,
+                                           name: name,
+                                           message: message,
+                                           imageURL: nil,
+                                           completion: {
                                             Utilities.closeActivityIndicator()
                                             self.dismiss(animated: true, completion: nil)
-                                        })
-                                    }
-                                })
-                            }
-                            
-                        }
+            })
+        } else {
+            let name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
+            if let img = self.imagePreview.image {
+                DatabaseHandler.postImageToDatabase(image: img, completion: { (url, error) in
+                    if error != nil {
+                        print(error!.localizedDescription)
+                    } else {
+                        DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!,
+                                                       name: name,
+                                                       message: message,
+                                                       imageURL: url!, completion: {
+                            Utilities.closeActivityIndicator()
+                            self.dismiss(animated: true, completion: nil)
+                        })
                     }
                 })
-            } else {
-                showAlert(title: "Hmm...", message: "Please make sure you've ")
             }
+            
         }
+
     }
     
     @IBAction func attachPhoto(_ sender: Any) {
-        ImageSelector.delegate = self
-        ImageSelector.open(vc: self)
+//        ImageSelector.open(with: self, delegate: self)
+        var config = Configuration()
+        config.noImagesTitle = "Loading images..."
+        config.requestPermissionTitle = "Attention!"
+        let picker = ImagePickerController(configuration: config)
+        picker.imageLimit = 1
+        picker.delegate = self
+        self.present(picker, animated: true, completion: nil)
     }
     
     @IBAction func cancel(_ sender: Any) {
@@ -160,17 +176,22 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImageSelector
     
     // MARK: - Delegate Responders
     
-    func userDidSelectImage(image: UIImage) {
-        self.image = image
+    func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        self.image = images.first!
         self.imagePreview.isHidden = false
-        //        UIView.animate(withDuration: 0.2, animations: {
-        //            self.clearPhotoButton.transform = CGAffineTransform.identity
-        //            self.clearPhotoButton.isHidden = false
-        //        })
-        
         self.clearPhotoButton.transform = CGAffineTransform.identity
         self.clearPhotoButton.isHidden = false
-        self.view.bringSubview(toFront: clearPhotoButton)
+        imagePicker.dismiss(animated: true) {
+            self.view.bringSubview(toFront: self.clearPhotoButton)
+        }
+    }
+    
+    func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
+        imagePicker.expandGalleryView()
+    }
+    
+    func cancelButtonDidPress(_ imagePicker: ImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Utilities

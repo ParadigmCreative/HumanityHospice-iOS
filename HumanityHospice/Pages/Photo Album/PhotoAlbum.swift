@@ -19,8 +19,6 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         MenuHandler.staticMenu?.setHandingController(vc: self)
         setupEmptyDataSet()
         
-        getImages()
-        
         if let type = AppSettings.userType {
             switch type {
             case .Reader, .Staff:
@@ -34,7 +32,7 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        getImages()
     }
 
     override func didReceiveMemoryWarning() {
@@ -138,16 +136,12 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoAlbumCollectionViewCell
-    
-        let indicator = Utilities.createActivityIndicator(view: cell)
-        cell.indicator = indicator
         
         let post = posts[indexPath.row]
         cell.post = post
         
-        // Configure the cell
-        cell.image.image = post.image
         cell.image.layer.cornerRadius = 5
+        cell.image.clipsToBounds = true
     
         return cell
     }
@@ -176,13 +170,16 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
     
     
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let title = "No posts yet!"
+        let title = "No photos yet!"
         let attStr = NSAttributedString(string: title)
         return attStr
     }
     
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
-        let desc = "Share your invite code to allow people to post in your Encouragement Board!"
+        var desc = "Click the '+' button in the top right to add a new photo."
+        if AppSettings.userType != .Patient || AppSettings.userType != .Family {
+            desc = ""
+        }
         let attr = NSAttributedString(string: desc)
         return attr
     }

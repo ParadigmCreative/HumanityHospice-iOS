@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class SwitchPatientTableViewController: UITableViewController {
+class SwitchPatientTableViewController: UITableViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +18,7 @@ class SwitchPatientTableViewController: UITableViewController {
         getPatientDataForListing()
         setupNavigaitonController()
         setupTableView()
-        
+        inviteCodeTF.delegate = self
         
     }
 
@@ -39,8 +39,13 @@ class SwitchPatientTableViewController: UITableViewController {
     
     @objc func addPatient() {
         self.view.addSubview(addPatientPopUp)
-        addPatientPopUp.center = self.view.center
+        let center = CGPoint(x: self.view.center.x, y: self.view.center.y - 100)
+        addPatientPopUp.center = center
         addPatientPopUp.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        addPatientPopUp.layer.cornerRadius = 5
+        
+        submitCodeButton.layer.cornerRadius = 5
+        
         UIView.animate(withDuration: 0.3) {
             self.addPatientPopUp.transform = CGAffineTransform.identity
         }
@@ -52,6 +57,14 @@ class SwitchPatientTableViewController: UITableViewController {
     @IBOutlet weak var submitCodeButton: UIButton!
     @IBAction func submitCode(_ sender: UIButton) {
         startDataCheck()
+    }
+    
+    func closePopupView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.addPatientPopUp.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        }) { (done) in
+            self.addPatientPopUp.removeFromSuperview()
+        }
     }
     
     
@@ -143,10 +156,15 @@ class SwitchPatientTableViewController: UITableViewController {
                             if var currentUser = AppSettings.currentAppUser as? DatabaseHandler.Reader {
                                 let name = patient.fullName()
                                 currentUser.patients.append(name)
+                                AppSettings.currentAppUser = currentUser
                                 self.patients.append(patient)
                                 self.tableView.reloadData()
+                                self.closePopupView()
                             }
                         })
+                        
+                        DatabaseHandler.addUserToFollow(pid: uid, userID: AppSettings.currentFBUser!.uid)
+                        
                     }
                 } else {
                     // Show invalid alert
@@ -191,6 +209,18 @@ class SwitchPatientTableViewController: UITableViewController {
             MenuHandler.closeMenu()
             NotificationCenter.default.post(name: .userSelectedNewPatient, object: nil)
         })
+    }
+    
+    
+    
+    // MARK: - TextField
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == inviteCodeTF {
+            textField.resignFirstResponder()
+        }
+        
+        return true
     }
 
 }
