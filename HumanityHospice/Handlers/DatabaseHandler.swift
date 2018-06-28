@@ -661,19 +661,11 @@ class DatabaseHandler {
         
         guard let uid = AppSettings.currentFBUser?.uid else { return }
         
-        switch AppSettings.userType! {
-        case .Patient:
-            let ref = Database.database().reference().child("Patients").child(uid).child("profilePictureURL")
-            ref.setValue(url)
-        case .Reader:
-            let ref = Database.database().reference().child("Readers").child(uid).child("profilePictureURL")
-            ref.setValue(url)
-        case .Family:
-            let ref = Database.database().reference().child("Family").child(uid).child("profilePictureURL")
-            ref.setValue(url)
-        default:
-            print("")
-        }
+        let ref = Database.database().reference()
+        let profilePics = ref.child(co.profilePictures.ProfilePictures)
+        let userRef = profilePics.child(uid)
+        userRef.setValue(url)
+        
     }
     
     private static func generateUserInviteCode() -> String {
