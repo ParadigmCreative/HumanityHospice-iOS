@@ -91,6 +91,52 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func resetPassword(_ sender: UIButton) {
+        
+        // present view with textfield
+        // if user alreadty entered email, grab text from tf and add to popup tf
+        // two buttons, reset and cancel
+        // show success message after 'reset'
+        // close view
+    
+        let alert = UIAlertController(title: "Reset Password", message: "", preferredStyle: .alert)
+        alert.addTextField { (tf) in
+            tf.placeholder = "Email Address"
+        }
+        
+        let reset = UIAlertAction(title: "Reset", style: .default) { (action) in
+            var email: String = ""
+            let tf = alert.textFields!.first!
+            
+            if self.emailTF.text!.isEmpty {
+                if tf.text!.isEmpty {
+                    // show alert
+                } else {
+                    email = tf.text!
+                }
+            } else {
+                email = self.emailTF.text!
+            }
+            
+            DatabaseHandler.reserPassword(email: email, completion: { (error) in
+                if error != nil {
+                    self.showAlert(title: "Oops!", message: "Please enter a valid email")
+                } else {
+                    alert.dismiss(animated: true, completion: nil)
+                    print("Email Sent")
+                }
+            })
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(cancel)
+        alert.addAction(reset)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTF {
             passwordTF.becomeFirstResponder()

@@ -28,7 +28,11 @@ class ImageSelector {
     }
     
     private static func setup() {
-        picker.imageLimit = 1
+        var config = Configuration()
+        config.allowMultiplePhotoSelection = false
+        config.allowPinchToZoom = true
+        self.picker = ImagePickerController(configuration: config)
+        self.picker.imageLimit = 1
     }
     
     static func open(with vc: UIViewController, delegate: ImagePickerDelegate) {

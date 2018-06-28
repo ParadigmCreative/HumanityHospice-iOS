@@ -149,6 +149,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             
             cell.nameLabel.text = post.poster
             cell.message.text = post.message
+            cell.timestamp.text = post.timestamp.toTimeStamp()
             
             cell.message.layer.cornerRadius = 5
             cell.message.textContainerInset = UIEdgeInsetsMake(8, 12, 8, 12)

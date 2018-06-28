@@ -18,6 +18,21 @@ class JournalTableViewCell: UITableViewCell {
     
     var post: Post! {
         didSet {
+            
+            // check user type
+//            var userIDToGetProfilePicURLFrom: String = ""
+//            
+//            switch AppSettings.userType! {
+//            case .Patient:
+//                userIDToGetProfilePicURLFrom = AppSettings.currentPatient!
+//            case .Family:
+//                userIDToGetProfilePicURLFrom = AppSettings.currentPatient
+//            case .Reader:
+//                
+//            case .Staff:
+//                
+//            }
+            
             if let img = post.posterProfilePicture?.getImageFromData() {
                 DispatchQueue.main.async {
                     self.userImage.image = img
@@ -52,6 +67,7 @@ class JournalTableViewCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var timestamp: UILabel!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var message: UITextView!

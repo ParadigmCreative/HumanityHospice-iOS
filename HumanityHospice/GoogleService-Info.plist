@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>669612038928-9789l6sv9r8ifb40t765d14qombtr22s.apps.googleusercontent.com</string>
+	<string>669612038928-8g6tmrctjmm6kpfbt789p8v4l52l6bhl.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.669612038928-9789l6sv9r8ifb40t765d14qombtr22s</string>
+	<string>com.googleusercontent.apps.669612038928-8g6tmrctjmm6kpfbt789p8v4l52l6bhl</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDTLGEdv1ICbnZfwNSrOjytT-9xuE5IdXg</string>
 	<key>GCM_SENDER_ID</key>
@@ -23,17 +23,17 @@
 	<key>STORAGE_BUCKET</key>
 	<string>humanityhospice-9ce45.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:669612038928:ios:d8925adfaae14338</string>
+	<string>1:669612038928:ios:aa403bb6de837aed</string>
 	<key>DATABASE_URL</key>
 	<string>https://humanityhospice-9ce45.firebaseio.com</string>
 </dict>

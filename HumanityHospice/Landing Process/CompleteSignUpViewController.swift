@@ -106,7 +106,6 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
             
             // Sign up user
             DatabaseHandler.signUp(email: email, password: pass, completion: { (user, error) in
-            
                 if error != nil {
                     // show alert if error isn't nil
                     self.showAlert(title: "Hmm...", message: error!.localizedDescription)
@@ -122,7 +121,6 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                         
                         changes?.commitChanges(completion: { (error) in
                             if error != nil {
-                                
                                 // show alert if there was an error
                                 self.showAlert(title: "Hmm...", message: error!.localizedDescription)
                                 self.closeIndicator()
@@ -147,6 +145,7 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                                                 AppSettings.currentPatient = id
                                                 if var user = appuser as? DatabaseHandler.Reader {
                                                     user.readingFrom = id
+                                                    AppSettings.currentAppUser = user
                                                 }
                                                 print("Set currentPatient to:", id)
                                             }
@@ -154,7 +153,9 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                                             AppSettings.currentPatient = AppSettings.currentFBUser!.uid
                                             
                                             // make first post
-                                            DatabaseHandler.postToDatabase(poster: user!.uid, name: user!.displayName!, message: "\(user!.displayName!) has joined Humanity Hospice", imageURL: nil, completion: {
+                                            DatabaseHandler.postToDatabase(poster: user!.uid,
+                                                                           name: user!.displayName!,
+                                                                           message: "\(user!.displayName!) has joined Humanity Hospice", imageURL: nil, completion: {
                                                 
                                             })
                                         }

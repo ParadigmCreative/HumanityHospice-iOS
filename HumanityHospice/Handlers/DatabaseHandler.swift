@@ -237,7 +237,11 @@ class DatabaseHandler {
         case .Patient:
             let code = self.generateUserInviteCode()
             let appuser = Patient(id: user.uid,
-                                  firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last, nurse: nil, inviteCode: code, profilePic: nil)
+                                  firstName: AppSettings.signUpName!.first,
+                                  lastName: AppSettings.signUpName!.last,
+                                  nurse: nil,
+                                  inviteCode: code,
+                                  profilePic: nil)
             return appuser
         case .Reader:
             let appuser = Reader(id: user.uid,
@@ -249,6 +253,17 @@ class DatabaseHandler {
             return nil
         }
     }
+    
+    static func reserPassword(email: String, completion: @escaping (Error?)->()) {
+        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
+            if error != nil {
+                completion(error)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
 
     // ****************************************************************************************
     
@@ -317,30 +332,36 @@ class DatabaseHandler {
             if let data = snapshot.value as? [String:Any] {
                 switch AppSettings.userType! {
                 case .Patient:
-                    let inviteCode = data["InviteCode"] as! String
-                    let meta = data["MetaData"] as! [String: Any]
-                    let first = meta["firstName"] as! String
-                    let last = meta["lastName"] as! String
+                    let c = co.patient
+                    let inviteCode = data[c.InviteCode] as! String
+                    let first = data[c.FirstName] as! String
+                    let last = data[c.LastName] as! String
+                    let full = data[c.FullName] as! String
                     
                     let user = Patient(id: AppSettings.currentFBUser!.uid,
                                        firstName: first, lastName: last, nurse: nil,
                                        inviteCode: inviteCode, profilePic: nil)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.id
-                    AppSettings.currentPatientName = "\(first) \(last)"
+                    AppSettings.currentPatientName = full
                     completion(true)
                 case .Reader:
-                    let readingFrom = data["ReadingFrom"] as! String
-                    let meta = data["MetaData"] as! [String: Any]
-                    let first = meta["firstName"] as! String
-                    let last = meta["lastName"] as! String
-                    let patientsList = data["Patients"] as! [String: Any]
+                    let c = co.reader
+                    let readingFrom = data[c.ReadingFrom] as! String
+                    let first = data[c.FirstName] as! String
+                    let last = data[c.LastName] as! String
+                    let patientsList = data[c.PatientList] as! [String: Any]
                     var patients: [String] = []
                     for patient in patientsList {
                         let newPatient = patient.key
                         patients.append(newPatient)
                     }
-                    let user = Reader(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, readingFrom: readingFrom, patients: patients, profilePic: nil)
+                    let user = Reader(id: AppSettings.currentFBUser!.uid,
+                                      firstName: first,
+                                      lastName: last,
+                                      readingFrom: readingFrom,
+                                      patients: patients,
+                                      profilePic: nil)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.readingFrom
                     
@@ -350,13 +371,18 @@ class DatabaseHandler {
                     
                     completion(true)
                 case .Family:
-                    let patientid = data["PatientID"] as! String
-                    let meta = data["MetaData"] as! [String: Any]
-                    let first = meta["firstName"] as! String
-                    let last = meta["lastName"] as! String
+                    let c = co.family
+                    let patientid = data[c.PatientUID] as! String
+                    let first = data[c.FirstName] as! String
+                    let last = data[c.LastName] as! String
                     
                     getPatientDetailsForFamilyMember(pid: patientid, completion: { (patient) in
-                        var user = Family(id: AppSettings.currentFBUser!.uid, firstName: first, lastName: last, patient: patientid, profilePic: nil, patientObj: nil)
+                        var user = Family(id: AppSettings.currentFBUser!.uid,
+                                          firstName: first,
+                                          lastName: last,
+                                          patient: patientid,
+                                          profilePic: nil,
+                                          patientObj: nil)
                         user.patientObj = patient
                         AppSettings.currentAppUser = user
                         AppSettings.currentPatient = patientid
@@ -375,10 +401,11 @@ class DatabaseHandler {
         let ref = Database.database().reference().child("Patients").child(pid)
         ref.observeSingleEvent(of: .value) { (snap) in
             if let data = snap.value as? [String: Any] {
-                let inviteCode = data["InviteCode"] as! String
-                let meta = data["MetaData"] as! [String: Any]
-                let first = meta["firstName"] as! String
-                let last = meta["lastName"] as! String
+                
+                let c = co.patient
+                let inviteCode = data[c.InviteCode] as! String
+                let first = data[c.FirstName] as! String
+                let last = data[c.LastName] as! String
                 
                 let user = Patient(id: pid,
                                    firstName: first, lastName: last,
@@ -390,14 +417,14 @@ class DatabaseHandler {
     }
     
     static func getPatientDetailsForReader(pid: String) {
-        let ref = Database.database().reference().child("Patients").child(pid)
+        let ref = Database.database().reference().child(co.patient.Patients).child(pid)
         ref.observeSingleEvent(of: .value) { (snap) in
             if let data = snap.value as? [String: Any] {
-                let inviteCode = data["InviteCode"] as! String
-                let meta = data["MetaData"] as! [String: Any]
-                let first = meta["firstName"] as! String
-                let last = meta["lastName"] as! String
-                let url = data["profilePictureURL"] as? String
+                
+                let c = co.patient
+                let inviteCode = data[c.InviteCode] as! String
+                let first = data[c.FirstName] as! String
+                let last = data[c.LastName] as! String
                 
                 let user = Patient(id: pid,
                                    firstName: first, lastName: last,
@@ -432,6 +459,31 @@ class DatabaseHandler {
             }
         } else {
             completion(false)
+        }
+    }
+
+    static func getProfilePicture(for uid: String, completion: @escaping (UIImage?)->()) {
+        let ref = Database.database().reference()
+        let profilePictures = ref.child(co.profilePictures.ProfilePictures)
+        profilePictures.child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            let urlString = snapshot.value as! String
+            let url = URL(string: urlString)!
+            let ref = Storage.storage().reference(forURL: url.absoluteString)
+            ref.getData(maxSize: 20 * 1024 * 1024) { (data, error) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                    completion(nil)
+                } else {
+                    if let data = data {
+                        if let img = UIImage(data: data) {
+                            ProfilePickerHandler.chosenPhoto = img
+                            completion(img)
+                        } else {
+                            completion(nil)
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -498,10 +550,11 @@ class DatabaseHandler {
         case .Patient:
             let patient = user as! Patient
             userRef = ref.child("Patients").child(patient.id)
-            let data: [String : Any] = ["MetaData": ["firstName": patient.firstName,
-                                                       "lastName": patient.lastName],
-                                       "Nurse": patient.nurse,
-                                       "InviteCode": patient.inviteCode]
+
+            let data: [String: Any] = ["FirstName": patient.firstName,
+                                       "LastName": patient.lastName,
+                                       "FullName": "\(patient.firstName) \(patient.lastName)",
+                                       "InviteCode": patient.inviteCode!]
             dataToSend = data
             
             self.addInviteCode(code: patient.inviteCode!, uid: patient.id)
@@ -510,17 +563,23 @@ class DatabaseHandler {
             let familyMember = user as! Family
             userRef = ref.child("Family").child(familyMember.id)
             
-            let data: [String: Any] = ["MetaData": ["firstName": familyMember.firstName,
-                                                    "lastName": familyMember.lastName],
-                                       "PatientID": familyMember.patient]
+            let data: [String: Any] = ["FirstName": familyMember.firstName,
+                                       "LastName": familyMember.lastName,
+                                       "FullName": "\(familyMember.firstName) \(familyMember.lastName)",
+                                       "PatientUID": familyMember.patientObj!.id]
             dataToSend = data
         case .Reader:
             let reader = user as! Reader
             userRef = ref.child("Readers").child(reader.id)
             
-            let data: [String: Any] = ["MetaData": ["firstName": reader.firstName,
-                                                    "lastName": reader.lastName],
-                                       "ReadingFrom": AppSettings.currentPatient ?? ""]
+            let data: [String: Any] = ["FirstName": reader.firstName,
+                                       "LastName": reader.lastName,
+                                       "FullName": "\(reader.firstName) \(reader.lastName)",
+                                       "ReadingFrom": AppSettings.currentPatient!,
+                                       "PatientList": [
+                                            "\(AppSettings.currentPatient!)": true
+                                        ]
+                                      ]
             
             dataToSend = data
             
@@ -585,11 +644,11 @@ class DatabaseHandler {
     
     static func checkDBForInviteCode(code: String, completion: @escaping (_ isValid: Bool, _ patientID: String?)->()) {
         let ref = Database.database().reference()
-        ref.child("InviteCodes").child(code).observeSingleEvent(of: .value) { (snap) in
+        ref.child(co.inviteCodes.InviteCodes).child(code).observeSingleEvent(of: .value) { (snap) in
             if snap.hasChildren() {
                 if let data = snap.value as? [String: Any] {
-                    let patient = data["patient"] as! String
-                    completion(true, patient)
+                    let patientUID = data[co.inviteCodes.Patient] as! String
+                    completion(true, patientUID)
                 }
             } else {
                 completion(false, nil)
@@ -1077,7 +1136,7 @@ class DatabaseHandler {
             let ref = Database.database().reference().child("Journals").child(poster).childByAutoId()
             let data: [String: Any] = ["poster": name,
                                        "post": message,
-                                       "timestamp": Date().timeIntervalSince1970,
+                                       "timestamp": Int(Date().timeIntervalSince1970.rounded()),
                                        "postImageURL": imageURL!,
                                        "profilePictureURL": profilePictureURL]
             ref.setValue(data)
@@ -1086,7 +1145,7 @@ class DatabaseHandler {
             let ref = Database.database().reference().child("Journals").child(poster).childByAutoId()
             let data: [String: Any] = ["poster": name,
                                        "post": message,
-                                       "timestamp": Date().timeIntervalSince1970,
+                                       "timestamp": Int(Date().timeIntervalSince1970.rounded()),
                                        "profilePictureURL": profilePictureURL]
             ref.setValue(data)
             completion()
@@ -1298,7 +1357,7 @@ class DatabaseHandler {
         let data: [String: Any] = ["posterID": posterID,
                                    "poster": posterName,
                                    "post": message,
-                                   "timestamp": Date().timeIntervalSince1970,
+                                   "timestamp": Int(Date().timeIntervalSince1970.rounded()),
                                    "profilePictureURL": profilePictureURL]
         let ref = Database.database().reference().child("EncouragementBoard").child(AppSettings.currentPatient!).childByAutoId()
         ref.setValue(data)
@@ -1326,7 +1385,7 @@ class DatabaseHandler {
                     } else {
                         if let url = url?.absoluteString {
                             let dbdata: [String: Any] = ["url": url,
-                                                         "timestamp": Date().timeIntervalSince1970,
+                                                         "timestamp": Int(Date().timeIntervalSince1970.rounded()),
                                                          "caption": caption]
                             dbRef.setValue(dbdata)
                             
@@ -1347,26 +1406,33 @@ class DatabaseHandler {
     }
     
     public static var addedPhotoAlbumItem: DatabaseHandle?
-    public static func getImagesFromStorage(completion: @escaping ()->()) {
+    public static func getImageDataFromDatabase(completion: @escaping ()->()) {
         guard let uid = AppSettings.currentPatient else { return }
         let ref = Database.database().reference().child("PhotoAlbum").child(uid)
         let handle = ref.observe(.childAdded) { (snap) in
-            if let imgPost = snap.value as? [String: Any] {
-                let url = imgPost["url"] as! String
-                let timestamp = imgPost["timestamp"] as! TimeInterval
-                let caption = imgPost["caption"] as? String
+            DispatchQueue.global(qos: .utility).async {
+                var posts: [PhotoAlbumPost] = []
                 
-                let newPAP = PhotoAlbumPost()
-                newPAP.url = url
-                newPAP.timestamp = timestamp
-                newPAP.caption = caption
-                newPAP.id = snap.key
-                
-                try! realm.write {
-                    realm.add(newPAP, update: true)
-                    print("Added PAP:", newPAP.id)
+                if let imgPost = snap.value as? [String: Any] {
+                    let url = imgPost["postImageURL"] as! String
+                    let timestamp = imgPost["timestamp"] as! TimeInterval
+                    let caption = imgPost["caption"] as? String
+                    
+                    let newPAP = PhotoAlbumPost()
+                    newPAP.url = url
+                    newPAP.timestamp = timestamp
+                    newPAP.caption = caption
+                    newPAP.id = snap.key
+                    
+                    posts.append(newPAP)
                 }
-                completion()
+                
+                RealmHandler.write({ (realm) in
+                    try! realm.write {
+                        realm.add(posts, update: true)
+                        completion()
+                    }
+                })
             }
         }
         addedPhotoAlbumItem = handle

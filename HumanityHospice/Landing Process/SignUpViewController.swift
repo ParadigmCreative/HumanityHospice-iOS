@@ -154,16 +154,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     func completed() {
         Utilities.closeActivityIndicator()
         closePopup()
-        self.performSegue(withIdentifier: "showSignUp", sender: self)
+        self.performSegue(withIdentifier: "showSignUp", sender: self.followingPID)
     }
     
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? CompleteSignUpViewController {
-            if let vwc = sender as? SignUpViewController {
-                if let pid = vwc.followingPID {
-                    vc.pidToFollow = pid
-                }
+            if let pid = sender as? String {
+                vc.pidToFollow = pid
             }
         }
     }

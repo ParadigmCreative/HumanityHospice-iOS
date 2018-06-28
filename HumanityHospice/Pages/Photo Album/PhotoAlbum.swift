@@ -29,9 +29,6 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
             }
         }
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         getImages()
     }
 
@@ -42,48 +39,9 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
     
     var posts: [PhotoAlbumCollectionItem] = []
     
-    func prepareImagesForCollection(posts: [Post], PAPs: [PhotoAlbumPost]) -> [PhotoAlbumCollectionItem] {
-        
-        var imageposts: [PhotoAlbumCollectionItem] = []
-        
-        for post in posts {
-            if let img = post.postImage!.getImageFromData() {
-                var newPost = PhotoAlbumCollectionItem()
-                newPost.caption = post.message
-                newPost.image = img
-                newPost.timestamp = post.timestamp
-                newPost.id = post.id
-                
-                imageposts.append(newPost)
-            }
-        }
-        
-        for post in PAPs {
-            var newPost = PhotoAlbumCollectionItem()
-            
-            if let img = post.image?.getImageFromData() {
-                newPost.image = img
-            }
-            newPost.caption = post.caption
-            newPost.timestamp = post.timestamp
-            newPost.url = post.url
-            newPost.id = post.id
-            
-            imageposts.append(newPost)
-        }
-        
-        let sorted = imageposts.sorted { (p1, p2) -> Bool in
-            return p1.timestamp > p2.timestamp
-        }
-        
-        return sorted
-        
-    }
-    
     func getImages() {
         RealmHandler.resetPhotoAlbum()
-        DatabaseHandler.getImagesFromStorage {
-            
+        DatabaseHandler.getImageDataFromDatabase {
             var journalPosts: [Post] = []
             var photoAlbumPosts: [PhotoAlbumPost] = []
             
@@ -99,13 +57,52 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
                 journalPosts.append(contentsOf: imagePosts)
             }
             
-            let newposts = self.prepareImagesForCollection(posts: journalPosts, PAPs: photoAlbumPosts)
+            let newposts = self.prepareImagesForCollection(journalPosts: journalPosts, PAPs: photoAlbumPosts)
             DispatchQueue.main.async {
                 self.posts = newposts
                 self.collectionView!.reloadData()
             }
         }
     }
+    
+    func prepareImagesForCollection(journalPosts: [Post], PAPs: [PhotoAlbumPost]) -> [PhotoAlbumCollectionItem] {
+        
+        var collectionPosts: [PhotoAlbumCollectionItem] = []
+        
+        for post in journalPosts {
+            if let img = post.postImage!.getImageFromData() {
+                var newPost = PhotoAlbumCollectionItem()
+                newPost.caption = post.message
+                newPost.image = img
+                newPost.timestamp = post.timestamp
+                newPost.id = post.id
+                
+                collectionPosts.append(newPost)
+            }
+        }
+        
+        for post in PAPs {
+            var newPost = PhotoAlbumCollectionItem()
+            
+            if let img = post.image?.getImageFromData() {
+                newPost.image = img
+            }
+            newPost.caption = post.caption
+            newPost.timestamp = post.timestamp
+            newPost.url = post.url
+            newPost.id = post.id
+            
+            collectionPosts.append(newPost)
+        }
+        
+        let sorted = collectionPosts.sorted { (p1, p2) -> Bool in
+            return p1.timestamp > p2.timestamp
+        }
+        
+        return sorted
+        
+    }
+    
     
     @IBAction func showMenu(_ sender: Any) {
         MenuHandler.openMenu(vc: self)

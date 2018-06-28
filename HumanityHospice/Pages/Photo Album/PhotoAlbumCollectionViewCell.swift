@@ -36,25 +36,35 @@ class PhotoAlbumCollectionViewCell: UICollectionViewCell {
                     if error != nil {
                         print(error!.localizedDescription)
                     } else {
-                        // save image to realm in data form
-                        if let data = image?.prepareImageForSaving() {
-                            if let obj = self.realm.object(ofType: PhotoAlbumPost.self, forPrimaryKey: self.post.id) {
-                                try! self.realm.write {
-                                    obj.image = data
-                                    self.realm.add(obj, update: true)
-                                    print("Updated \(obj.id) 's img in realm")
-                                }
-                            }
-                        }
-                        
-                        // set image to imageView
+                        // set image to imageView IMMEDIATELY
                         DispatchQueue.main.async {
                             self.image.image = image
                             self.image.layer.cornerRadius = 5
                         }
+                        
+                        // Do the admin work on the background
+                        DispatchQueue.global(qos: .utility).async {
+                            // save image to realm in data form
+                            if let data = image?.prepareImageForSaving() {
+                                RealmHandler.write({ (realm) in
+                                    if let obj = realm.object(ofType: PhotoAlbumPost.self,
+                                                              forPrimaryKey: self.post.id) {
+                                        try! realm.write {
+                                            obj.image = data
+                                            self.realm.add(obj, update: true)
+                                            print("Updated \(obj.id) 's img in realm")
+                                        }
+                                    }
+                                })
+                            }
+                        }
                     }
                 }
+            } else {
+                print("Couldn't get image URL")
             }
+        } else {
+            print("Couldn't get image URL")
         }
     }
 }
