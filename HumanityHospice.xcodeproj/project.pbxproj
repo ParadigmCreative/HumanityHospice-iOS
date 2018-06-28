@@ -33,6 +33,7 @@
 		73BE5C5320E2BF3A001A34F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73BE5C5220E2BF3A001A34F0 /* GoogleService-Info.plist */; };
 		73C22EDD20C37D5C00E35E80 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */; };
 		73C56FDE20E596F20078522E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C56FDD20E596F20078522E /* Constants.swift */; };
+		73C56FE220E5AB890078522E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73C56FE120E5AB890078522E /* GoogleService-Info.plist */; };
 		73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */; };
 		73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */; };
 		73E938AA20C4901E00CC3648 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */; };
@@ -87,6 +88,7 @@
 		73BE5C5220E2BF3A001A34F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "HumanityHospice/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		73C56FDD20E596F20078522E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		73C56FE120E5AB890078522E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncouragementBoardTableViewCell.swift; sourceTree = "<group>"; };
 		73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEBPostViewController.swift; sourceTree = "<group>"; };
 		73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				A5BBD4392086EC3700B80BD0 /* Assets.xcassets */,
 				A5BBD43B2086EC3700B80BD0 /* LaunchScreen.storyboard */,
 				A5BBD43E2086EC3700B80BD0 /* Info.plist */,
+				73C56FE120E5AB890078522E /* GoogleService-Info.plist */,
 			);
 			path = HumanityHospice;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				73BE5C5320E2BF3A001A34F0 /* GoogleService-Info.plist in Resources */,
 				A5BBD43A2086EC3700B80BD0 /* Assets.xcassets in Resources */,
 				A5BBD4382086EC3700B80BD0 /* Main.storyboard in Resources */,
+				73C56FE220E5AB890078522E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
