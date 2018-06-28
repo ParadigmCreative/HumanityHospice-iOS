@@ -435,30 +435,29 @@ class DatabaseHandler {
         }
     }
     
-    static func getProfilePicture(completion: @escaping (Bool)->()) {
+    static func getProfilePicture(completion: @escaping (UIImage?)->()) {
         if let user = AppSettings.currentFBUser {
             if let url = user.photoURL {
                 let ref = Storage.storage().reference(forURL: url.absoluteString)
                 ref.getData(maxSize: 20 * 1024 * 1024) { (data, error) in
                     if error != nil {
                         print(error!.localizedDescription)
-                        completion(false)
+                        completion(nil)
                     } else {
                         if let data = data {
                             if let img = UIImage(data: data) {
-                                ProfilePickerHandler.chosenPhoto = img
-                                completion(true)
+                                completion(img)
                             } else {
-                                completion(false)
+                                completion(nil)
                             }
                         }
                     }
                 }
             } else {
-                completion(false)
+                completion(nil)
             }
         } else {
-            completion(false)
+            completion(nil)
         }
     }
 
@@ -507,7 +506,8 @@ class DatabaseHandler {
                                 } else {
                                     
                                     if let url = url {
-                                        DatabaseHandler.setProfilePictureURL(url: url.absoluteString)
+                                        DatabaseHandler.setProfilePictureURL(url: url.absoluteString,
+                                                                             uid: AppSettings.currentFBUser!.uid)
                                     }
                                     
                                     let req = Auth.auth().currentUser?.createProfileChangeRequest()
@@ -657,9 +657,10 @@ class DatabaseHandler {
         
     }
     
-    static func setProfilePictureURL(url: String) {
-        
-        guard let uid = AppSettings.currentFBUser?.uid else { return }
+    /// Sets the Profile Picture URL for a given user
+    ///
+    /// - Parameter url: The URL to the Data 'Profile Pictures' Reference
+    static func setProfilePictureURL(url: String, uid: String) {
         
         let ref = Database.database().reference()
         let profilePics = ref.child(co.profilePictures.ProfilePictures)
@@ -682,7 +683,7 @@ class DatabaseHandler {
     }
     
     static func addInviteCode(code: String, uid: String) {
-        Database.database().reference().child("InviteCodes").child(code).child("patient").setValue(uid)
+        Database.database().reference().child(co.inviteCodes.InviteCodes).child(code).child(co.inviteCodes.Patient).setValue(uid)
     }
     
     // MARK: - Journal Posts
