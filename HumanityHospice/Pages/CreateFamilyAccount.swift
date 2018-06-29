@@ -145,7 +145,8 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
     
     private func showConfirmation() {
         self.view.addSubview(successView)
-        successView.center = self.view.center
+        let center = CGPoint(x: self.view.center.x, y: self.view.center.y - 100)
+        successView.center = center
         successView.layer.cornerRadius = 5
         successView.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
         UIView.animate(withDuration: 0.15, animations: {

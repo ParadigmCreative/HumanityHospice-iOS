@@ -37,7 +37,9 @@ class LoadingViewController: UIViewController, LoadingViewDelegate {
     
     func complete() {
         UIApplication.shared.endIgnoringInteractionEvents()
-        indicator.stopAnimating()
+        if indicator != nil {
+            indicator.stopAnimating()
+        }
         self.dismiss(animated: true, completion: nil)
     }
 

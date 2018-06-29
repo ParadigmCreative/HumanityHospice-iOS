@@ -37,24 +37,26 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     }
     
     var post: Post!
-    var comments: [Post]?
+    var comments: [Post] = []
     
     // MARK: - Comments Update
     
     var isInitialLoad: Bool = true
     
     func listenForComments() {
-        DatabaseHandler.listenForCommentsAdded(postToListenAt: self.post, completion: {
-            self.comments = self.post.getListArray()
+        DatabaseHandler.listenForCommentsAdded(postToListenAt: self.post) { (comment) in
+            self.comments.append(comment)
             self.tableView.reloadData()
-        })
+        }
     }
     
     func listenForCommentsRemoved() {
-        DatabaseHandler.listenForCommentsRemoved(postToListenAt: self.post) {
-            let comments = self.post.getListArray()
-            self.comments = comments
-            self.tableView.reloadData()
+        DatabaseHandler.listenForCommentsRemoved(postToListenAt: self.post) { (id) in
+            if let comment = self.comments.index(where: { (comment) -> Bool in
+                return comment.id == id
+            }) {
+                self.comments.remove(at: comment)
+            }
         }
     }
     
@@ -71,7 +73,6 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         if section == 0 {
             return 1
         } else {
-            guard let comments = post.getListArray() else { return 0 }
             return comments.count
         }
     }
@@ -79,6 +80,9 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
+            
+            tableView.separatorStyle = .singleLine
+            tableView.separatorColor = UIColor.darkGray
             
             if post.hasImage {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "imagePostCell", for: indexPath) as! ImagePostTableViewCell
@@ -91,10 +95,9 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
                     cell.postImageView.clipsToBounds = true
                 }
                 
-                cell.posterNameLabel.text = post.poster
+                cell.posterNameLabel.text = post.posterName
                 cell.messageTextView.text = post.message
                 cell.dateLabel.text = post.timestamp.toTimeStamp()
-                
                 
                 
                 return cell
@@ -104,51 +107,53 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
                 cell.post = self.post
                 
                 cell.messageTextView.text = post.message
-                cell.posterNameLabel.text = post.poster
+                cell.posterNameLabel.text = post.posterName
                 cell.dateLabel.text = post.timestamp.toTimeStamp()
                 
                 return cell
             }
         } else {
+            
+            tableView.separatorStyle = .none
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! CommentTableViewCell
             
-            if let comments = self.comments {
-                let comment = comments[indexPath.row]
-                
-                cell.post = comment
-                cell.messageTF.text = comment.message
-                cell.timestampLabel.text = comment.timestamp.toTimeStamp()
-                cell.posterName.text = comment.poster
-            }
+            let comment = comments[indexPath.row]
+            
+            cell.post = comment
+            cell.messageTF.text = comment.message
+            cell.timestampLabel.text = comment.timestamp.toTimeStamp()
+            cell.posterName.text = comment.posterName
             
             return cell
         }
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if let comment = comments?[indexPath.row] {
-            if let currentUser = AppSettings.currentFBUser?.displayName {
-                if comment.poster == currentUser {
-                    if indexPath.section == 1 {
-                        return true
-                    } else {
-                        return false
-                    }
+        guard comments.count > 0 else { return false }
+        let comment = comments[indexPath.row]
+        
+        if let currentUser = AppSettings.currentFBUser?.displayName {
+            if comment.posterName == currentUser {
+                if indexPath.section == 1 {
+                    return true
                 } else {
                     return false
                 }
+            } else {
+                return false
             }
+        } else {
+            return false
         }
-        return false
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if let comment = comments?[indexPath.row] {
-            if editingStyle == .delete {
-                // Delete from firebase
-                DatabaseHandler.removeCommentFromDatabase(post: self.post, comment: comment) {
-                    print("Removed comment from Firebase")
-                }
+        let comment = comments[indexPath.row]
+        if editingStyle == .delete {
+            // Delete from firebase
+            DatabaseHandler.removeCommentFromDatabase(post: self.post, comment: comment) {
+                print("Removed comment from Firebase")
             }
         }
     }
@@ -281,9 +286,8 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
             let height = keyboardViewEndFrame.height + self.messageInputContainerView.frame.height
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
             
-            if let count = comments?.count {
-                tableView.scrollToRow(at: IndexPath(row: count - 1, section: 1), at: .bottom, animated: true)
-            }
+            let count = comments.count
+//            tableView.scrollToRow(at: IndexPath(row: count - 1, section: 1), at: .bottom, animated: true)
         }
         
         tableView.scrollIndicatorInsets = tableView.contentInset
@@ -312,24 +316,18 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         
         guard let posterID = AppSettings.currentAppUser?.id else { return }
         guard let posterName = AppSettings.currentAppUser?.fullName() else { return }
-        var profilePictureURl: String?
-        if let profileURL = AppSettings.currentFBUser?.photoURL {
-            profilePictureURl = profileURL.absoluteString
-        }
-        
         
         //if not, then create post object
-        let data: [String: Any] = ["timestamp": Date().timeIntervalSince1970,
-                                   "poster": posterName,
-                                   "posterID": posterID,
-                                   "posterProfilePictureURL": profilePictureURl,
-                                   "post": commentText]
+        let data: [String: Any] = [co.journal.comment.Timestamp: Date().timeIntervalSince1970,
+                                   co.journal.comment.PosterName: posterName,
+                                   co.journal.comment.PosterUID: posterID,
+                                   co.journal.comment.Comment: commentText]
         
         // post to db
         let postID = self.post.id
         DatabaseHandler.postCommentToDatabase(postID: postID, data: data, completion: {
-            self.tableView.reloadData()
             DispatchQueue.main.async {
+                self.tableView.reloadData()
                 self.commentWasPosted()
                 self.messageTF.text = ""
             }

@@ -19,51 +19,41 @@ class JournalTableViewCell: UITableViewCell {
     var post: Post! {
         didSet {
             
-            // check user type
-//            var userIDToGetProfilePicURLFrom: String = ""
-//            
-//            switch AppSettings.userType! {
-//            case .Patient:
-//                userIDToGetProfilePicURLFrom = AppSettings.currentPatient!
-//            case .Family:
-//                userIDToGetProfilePicURLFrom = AppSettings.currentPatient
-//            case .Reader:
-//                
-//            case .Staff:
-//                
-//            }
-            
-            if let img = post.posterProfilePicture?.getImageFromData() {
+            if let img = self.post.postImage?.getImageFromData() {
                 DispatchQueue.main.async {
                     self.userImage.image = img
                     self.userImage.setupSecondaryProfilePicture()
                     self.userImage.contentMode = .scaleAspectFill
                 }
             } else {
-                if let picURL = post.posterProfileURL {
-                    if let url = URL(string: picURL) {
-                        DatabaseHandler.getImageFromStorage(url: url) { (pic, error) in
-                            if error != nil {
-                                print("Can't get profile picture from storage")
-                                self.userImage.image = #imageLiteral(resourceName: "Logo")
-                            } else {
-                                if let img = pic {
+                DatabaseHandler.checkForProfilePicture(for: self.post.posterUID) { (urlString) in
+                    if let url = urlString {
+                        if let path = URL(string: url) {
+                            DatabaseHandler.getProfilePicture(URL: path, completion: { (image) in
+                                if let img = image {
                                     DispatchQueue.main.async {
                                         self.userImage.image = img
                                         self.userImage.setupSecondaryProfilePicture()
+                                        self.userImage.contentMode = .scaleAspectFill
                                     }
-                                    try! RealmHandler.realm.write {
-                                        self.post.posterProfilePicture = img.prepareImageForSaving()
-                                        RealmHandler.realm.add(self.post, update: true)
-                                    }
+                                    
+                                    RealmHandler.write({ (realm) in
+                                        try! realm.write {
+                                            self.post.posterProfilePicture = img.prepareImageForSaving()
+                                            realm.add(self.post, update: true)
+                                        }
+                                    })
                                 }
-                            }
+                            })
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.userImage.image = #imageLiteral(resourceName: "Logo")
                         }
                     }
-                } else {
-                    self.userImage.image = #imageLiteral(resourceName: "Logo")
                 }
             }
+        
         }
     }
     

@@ -153,11 +153,11 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                                             AppSettings.currentPatient = AppSettings.currentFBUser!.uid
                                             
                                             // make first post
-                                            DatabaseHandler.postToDatabase(poster: user!.uid,
-                                                                           name: user!.displayName!,
-                                                                           message: "\(user!.displayName!) has joined Humanity Hospice", imageURL: nil, completion: {
-                                                
-                                            })
+                                            DatabaseHandler.postToDatabase(posterUID: user!.uid,
+                                                                           posterName: user!.displayName!,
+                                                                           message: "\(user!.displayName!) has joined Humanity Hospice",
+                                                                           imageURL: nil,
+                                                                           completion: {})
                                         }
                                         // if creation is successful, set
                                         AppSettings.currentAppUser = appuser

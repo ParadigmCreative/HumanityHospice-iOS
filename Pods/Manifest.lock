@@ -1,33 +1,33 @@
 PODS:
   - DZNEmptyDataSet (1.8.1)
-  - Firebase/Auth (5.0.1):
+  - Firebase/Auth (5.4.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (= 5.0.0)
-  - Firebase/Core (5.0.1):
+    - FirebaseAuth (= 5.0.2)
+  - Firebase/Core (5.4.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.0.0)
-  - Firebase/CoreOnly (5.0.1):
-    - FirebaseCore (= 5.0.1)
-  - Firebase/Database (5.0.1):
+    - FirebaseAnalytics (= 5.0.1)
+  - Firebase/CoreOnly (5.4.0):
+    - FirebaseCore (= 5.0.5)
+  - Firebase/Database (5.4.0):
     - Firebase/CoreOnly
-    - FirebaseDatabase (= 5.0.0)
-  - Firebase/Storage (5.0.1):
+    - FirebaseDatabase (= 5.0.2)
+  - Firebase/Storage (5.4.0):
     - Firebase/CoreOnly
     - FirebaseStorage (= 3.0.0)
-  - FirebaseAnalytics (5.0.0):
+  - FirebaseAnalytics (5.0.1):
     - FirebaseCore (~> 5.0)
     - FirebaseInstanceID (~> 3.0)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
-  - FirebaseAuth (5.0.0):
+  - FirebaseAuth (5.0.2):
     - FirebaseCore (~> 5.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (5.0.1):
+  - FirebaseCore (5.0.5):
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseDatabase (5.0.0):
+  - FirebaseDatabase (5.0.2):
     - FirebaseCore (~> 5.0)
     - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (3.0.0):
+  - FirebaseInstanceID (3.1.1):
     - FirebaseCore (~> 5.0)
   - FirebaseStorage (3.0.0):
     - FirebaseCore (~> 5.0)
@@ -44,11 +44,11 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - Realm (3.5.0):
-    - Realm/Headers (= 3.5.0)
-  - Realm/Headers (3.5.0)
-  - RealmSwift (3.5.0):
-    - Realm (= 3.5.0)
+  - Realm (3.7.4):
+    - Realm/Headers (= 3.7.4)
+  - Realm/Headers (3.7.4)
+  - RealmSwift (3.7.4):
+    - Realm (= 3.7.4)
   - Serrata (1.0.10):
     - Kingfisher
   - SnapKit (4.0.0)
@@ -87,12 +87,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
-  Firebase: d6861c2059d8c32d1e6dd8932e22ada346d90a3a
-  FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
-  FirebaseAuth: acbeef02fe7c3a26624e309849f3fe30c84115af
-  FirebaseCore: cafc814b2d84fc8733f09e653041cc2165332ad7
-  FirebaseDatabase: 697eb53e5b4fe7cd4fa8756c1f82a9fca011345f
-  FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
+  Firebase: d66f4f29c23f22d96808d9abc174d81d8eee968f
+  FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
+  FirebaseAuth: 096e457cdd4274412a66c4a35874787e411f5a03
+  FirebaseCore: 42b3267233bd21a5abd54117ccc38ca3dd0f8e83
+  FirebaseDatabase: 27be5ac5bc75e0b17537b2bbfada8258addcc8cd
+  FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
@@ -100,11 +100,11 @@ SPEC CHECKSUMS:
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Realm: 0378021c424e4e2bd6a0e63b27881e929d9b9ad1
-  RealmSwift: 3322562622fda2ad596985ead4d8d8be30cf838c
+  Realm: a469bb59e33f9926102ccaea4349822c53b9117e
+  RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
   Serrata: cfaf2a46ddfa89b202685983246e9c1da68b595b
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
 PODFILE CHECKSUM: 802069c9bea3e3ae3cd036305d3972eb5d3205f8
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3

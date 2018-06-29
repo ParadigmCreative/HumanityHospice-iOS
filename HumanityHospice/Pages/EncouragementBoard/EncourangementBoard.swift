@@ -102,7 +102,7 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
             
             if let uid = AppSettings.currentFBUser?.uid {
                 let filtered = posts.filter { (post) -> Bool in
-                    return post.posterID == uid
+                    return post.posterUID == uid
                 }
                 
                 let sorted = sortPosts(posts: filtered)

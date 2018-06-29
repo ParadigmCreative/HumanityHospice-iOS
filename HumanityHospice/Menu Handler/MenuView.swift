@@ -171,9 +171,15 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         if let img = ProfilePickerHandler.chosenPhoto {
             setupProfilePicture(img: img)
         } else {
-            DatabaseHandler.getProfilePicture { (image) in
-                if let img = image {
-                    self.setupProfilePicture(img: img)
+            DatabaseHandler.checkForProfilePicture(for: AppSettings.currentAppUser!.id) { (urlString) in
+                if let urlString = urlString {
+                    if let url = URL(string: urlString) {
+                        DatabaseHandler.getProfilePicture(URL: url, completion: { (image) in
+                            if let img = image {
+                                self.setupProfilePicture(img: img)
+                            }
+                        })
+                    }
                 }
             }
         }

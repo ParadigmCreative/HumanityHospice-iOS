@@ -129,14 +129,13 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
             } else {
                 name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
             }
-            DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!,
-                                           name: name,
+            DatabaseHandler.postToDatabase(posterUID: AppSettings.currentPatient!,
+                                           posterName: name,
                                            message: message,
                                            imageURL: nil,
                                            completion: {
                                             Utilities.closeActivityIndicator()
-                                            self.dismiss(animated: true, completion: nil)
-            })
+                                            self.dismiss(animated: true, completion: nil)})
         } else {
             let name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
             if let img = self.imagePreview.image {
@@ -144,8 +143,8 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
                     if error != nil {
                         print(error!.localizedDescription)
                     } else {
-                        DatabaseHandler.postToDatabase(poster: AppSettings.currentPatient!,
-                                                       name: name,
+                        DatabaseHandler.postToDatabase(posterUID: AppSettings.currentPatient!,
+                                                       posterName: name,
                                                        message: message,
                                                        imageURL: url!, completion: {
                             Utilities.closeActivityIndicator()

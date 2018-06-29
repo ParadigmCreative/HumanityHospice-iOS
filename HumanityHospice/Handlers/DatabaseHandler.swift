@@ -435,6 +435,20 @@ class DatabaseHandler {
         }
     }
     
+    // MARK: Profile Picture
+    static func checkForProfilePicture(for UID: String, completion: @escaping (_ url: String?)->()) {
+        let ref = Database.database().reference()
+        let path = ref.child(co.profilePictures.ProfilePictures).child(UID)
+        path.observeSingleEvent(of: .value) { (snap) in
+            if let urlString = snap.value as? String {
+                completion(urlString)
+            } else {
+                completion(nil)
+            }
+        }
+        
+    }
+    
     static func getProfilePicture(completion: @escaping (UIImage?)->()) {
         if let user = AppSettings.currentFBUser {
             if let url = user.photoURL {
@@ -458,6 +472,24 @@ class DatabaseHandler {
             }
         } else {
             completion(nil)
+        }
+    }
+    
+    static func getProfilePicture(URL: URL, completion: @escaping (UIImage?)->()) {
+        let ref = Storage.storage().reference(forURL: URL.absoluteString)
+        ref.getData(maxSize: 20 * 1024 * 1024) { (data, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                completion(nil)
+            } else {
+                if let data = data {
+                    if let img = UIImage(data: data) {
+                        completion(img)
+                    } else {
+                        completion(nil)
+                    }
+                }
+            }
         }
     }
 
@@ -535,6 +567,20 @@ class DatabaseHandler {
         }
     }
 
+    /// Sets the Profile Picture URL for a given user
+    ///
+    /// - Parameter url: The URL to the Data 'Profile Pictures' Reference
+    static func setProfilePictureURL(url: String, uid: String) {
+        
+        let ref = Database.database().reference()
+        let profilePics = ref.child(co.profilePictures.ProfilePictures)
+        let userRef = profilePics.child(uid)
+        userRef.setValue(url)
+        
+    }
+    
+    // MARK: User Creation
+    
     /// Creates the database reference to the newly created user
     ///
     /// - Parameters:
@@ -549,12 +595,12 @@ class DatabaseHandler {
         switch type {
         case .Patient:
             let patient = user as! Patient
-            userRef = ref.child("Patients").child(patient.id)
+            userRef = ref.child(co.patient.Patients).child(patient.id)
 
-            let data: [String: Any] = ["FirstName": patient.firstName,
-                                       "LastName": patient.lastName,
-                                       "FullName": "\(patient.firstName) \(patient.lastName)",
-                                       "InviteCode": patient.inviteCode!]
+            let data: [String: Any] = [co.patient.FirstName: patient.firstName,
+                                       co.patient.LastName: patient.lastName,
+                                       co.patient.FullName: "\(patient.firstName) \(patient.lastName)",
+                                       co.patient.InviteCode: patient.inviteCode!]
             dataToSend = data
             
             self.addInviteCode(code: patient.inviteCode!, uid: patient.id)
@@ -563,20 +609,20 @@ class DatabaseHandler {
             let familyMember = user as! Family
             userRef = ref.child("Family").child(familyMember.id)
             
-            let data: [String: Any] = ["FirstName": familyMember.firstName,
-                                       "LastName": familyMember.lastName,
-                                       "FullName": "\(familyMember.firstName) \(familyMember.lastName)",
-                                       "PatientUID": familyMember.patientObj!.id]
+            let data: [String: Any] = [co.family.FirstName: familyMember.firstName,
+                                       co.family.LastName: familyMember.lastName,
+                                       co.family.FullName: "\(familyMember.firstName) \(familyMember.lastName)",
+                                       co.family.PatientUID: familyMember.patientObj!.id]
             dataToSend = data
         case .Reader:
             let reader = user as! Reader
             userRef = ref.child("Readers").child(reader.id)
             
-            let data: [String: Any] = ["FirstName": reader.firstName,
-                                       "LastName": reader.lastName,
-                                       "FullName": "\(reader.firstName) \(reader.lastName)",
-                                       "ReadingFrom": AppSettings.currentPatient!,
-                                       "PatientList": [
+            let data: [String: Any] = [co.reader.FirstName: reader.firstName,
+                                       co.reader.LastName: reader.lastName,
+                                       co.reader.FullName: "\(reader.firstName) \(reader.lastName)",
+                                       co.reader.ReadingFrom: AppSettings.currentPatient!,
+                                       co.reader.PatientList: [
                                             "\(AppSettings.currentPatient!)": true
                                         ]
                                       ]
@@ -657,18 +703,6 @@ class DatabaseHandler {
         
     }
     
-    /// Sets the Profile Picture URL for a given user
-    ///
-    /// - Parameter url: The URL to the Data 'Profile Pictures' Reference
-    static func setProfilePictureURL(url: String, uid: String) {
-        
-        let ref = Database.database().reference()
-        let profilePics = ref.child(co.profilePictures.ProfilePictures)
-        let userRef = profilePics.child(uid)
-        userRef.setValue(url)
-        
-    }
-    
     private static func generateUserInviteCode() -> String {
         let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         let array = Array(alphabet)
@@ -689,7 +723,7 @@ class DatabaseHandler {
     // MARK: - Journal Posts
     public static var postWatcherDelegate: PostWatcher?
     public static func getPostsFromDB(completion: @escaping ([Post]?)->()) {
-        let ref = Database.database().reference().child("Journals")
+        let ref = Database.database().reference().child(co.journal.Journals)
         var userRef: DatabaseReference?
         
         switch AppSettings.userType! {
@@ -727,30 +761,30 @@ class DatabaseHandler {
                         var posts: [Post] = []
                         for data in postList {
                             if let post = data.value as? [String: AnyObject] {
-                                let timestamp = post["timestamp"] as! TimeInterval
-                                let poster = post["poster"] as! String
-                                let message = post["post"] as! String
-                                let profilePictureURL = post["profilePictureURL"] as? String
+                                let timestamp = post[co.journal.Timestamp] as! TimeInterval
+                                let posterName = post[co.journal.PatientName] as! String
+                                let posterUID = post[co.journal.comment.PosterUID] as! String
+                                let message = post[co.journal.Post] as! String
                                 let id = data.key
                                 
                                 // get comments, if any
                                 var comments: [Post] = []
-                                if let commentList = post["comments"] as? [DataSnapshot] {
+                                if let commentList = post[co.journal.Comments] as? [DataSnapshot] {
                                     for commentData in commentList {
                                         if let comment = commentData.value as? [String: AnyObject] {
-                                            let timestamp = comment["timestamp"] as! TimeInterval
-                                            let poster = comment["poster"] as! String
-                                            let message = comment["post"] as! String
-                                            let profilePictureURL = comment["posterProfileURL"] as? String
+                                            let timestamp = comment[co.journal.comment.Timestamp] as! TimeInterval
+                                            let posterName = comment[co.journal.comment.PosterName] as! String
+                                            let message = comment[co.journal.comment.Comment] as! String
+                                            let posterUID = comment[co.journal.comment.PosterUID] as! String
                                             let id = commentData.key
                                             
                                             let newComment = Post()
                                             newComment.id = id
                                             newComment.timestamp = timestamp
                                             newComment.message = message
-                                            newComment.poster = poster
+                                            newComment.posterName = posterName
                                             newComment.isComment = true
-                                            newComment.posterProfileURL = profilePictureURL
+                                            newComment.posterUID = posterUID
                                             
                                             comments.append(newComment)
                                         }
@@ -766,8 +800,9 @@ class DatabaseHandler {
                                 newPost.timestamp = timestamp
                                 newPost.id = id
                                 newPost.message = message
-                                newPost.poster = poster
-                                newPost.posterProfileURL = profilePictureURL
+                                newPost.posterName = posterName
+                                newPost.posterUID = posterUID
+                                
                                 
                                 // add comments, if any
                                 if comments.count > 0 {
@@ -775,7 +810,7 @@ class DatabaseHandler {
                                 }
                                 
                                 // add image, if any
-                                if let imageURL = post["postImageURL"] as? String {
+                                if let imageURL = post[co.journal.ImageURL] as? String {
                                     newPost.hasImage = true
                                     newPost.imageURL = imageURL
                                     posts.append(newPost)
@@ -852,33 +887,31 @@ class DatabaseHandler {
                 DispatchQueue.global(qos: .utility).async {
                     var posts: [Post] = []
                     if let post = snap.value as? [String: AnyObject] {
-                        let timestamp = post["timestamp"] as! TimeInterval
-                        let poster = post["poster"] as! String
-                        let message = post["post"] as! String
-                        let posterProfileURL = post["profilePictureURL"] as? String
+                        let timestamp = post[co.journal.Timestamp] as! TimeInterval
+                        let posterName = post[co.journal.PatientName] as! String
+                        let posterUID = post[co.journal.PosterUID] as! String
+                        let message = post[co.journal.Post] as! String
                         let id = snap.key
                         
                         
                         // get comments, if any
                         var comments: [Post] = []
-                        if let commentList = post["comments"] as? [String: Any] {
+                        if let commentList = post[co.journal.Comments] as? [String: Any] {
                             for commentData in commentList {
                                 if let comment = commentData.value as? [String: AnyObject] {
-                                    let timestamp = comment["timestamp"] as! TimeInterval
-                                    let posterName = comment["poster"] as! String
-                                    let message = comment["post"] as! String
-                                    let posterProfileURL = comment["posterProfilePictureURL"] as? String
+                                    let timestamp = comment[co.journal.Timestamp] as! TimeInterval
+                                    let posterName = comment[co.journal.comment.PosterName] as! String
+                                    let posterUID = comment[co.journal.comment.PosterUID] as! String
+                                    let message = comment[co.journal.comment.Comment] as! String
                                     let id = commentData.key
                                     
                                     let newComment = Post()
                                     newComment.id = id
                                     newComment.timestamp = timestamp
                                     newComment.message = message
-                                    newComment.poster = posterName
+                                    newComment.posterName = posterName
                                     newComment.isComment = true
-                                    if let url = posterProfileURL {
-                                        newComment.posterProfileURL = url
-                                    }
+                                    newComment.posterUID = posterUID
                                     
                                     comments.append(newComment)
                                 }
@@ -896,11 +929,8 @@ class DatabaseHandler {
                         newPost.timestamp = timestamp
                         newPost.id = id
                         newPost.message = message
-                        newPost.poster = poster
-                        
-                        if let url = posterProfileURL {
-                            newPost.posterProfileURL = url
-                        }
+                        newPost.posterName = posterName
+                        newPost.posterUID = posterUID
                         
                         // add comments, if any
                         if comments.count > 0 {
@@ -908,7 +938,7 @@ class DatabaseHandler {
                         }
                         
                         // add image, if any
-                        if let imageURL = post["postImageURL"] as? String {
+                        if let imageURL = post[co.journal.ImageURL] as? String {
                             newPost.hasImage = true
                             newPost.imageURL = imageURL
                             posts.append(newPost)
@@ -1028,118 +1058,120 @@ class DatabaseHandler {
         
         if userRef != nil {
             let handle = userRef!.observe(.childChanged) { (snap) in
-                var posts: [Post] = []
-                if let post = snap.value as? [String: AnyObject] {
-                    let timestamp = post["timestamp"] as! TimeInterval
-                    let poster = post["poster"] as! String
-                    let message = post["post"] as! String
-                    let posterProfileURL = post["profilePictureURL"] as? String
-                    let id = snap.key
-                    
-                    
-                    // get comments, if any
-                    var comments: [Post] = []
-                    if let commentList = post["comments"] as? [String: Any] {
-                        for commentData in commentList {
-                            if let comment = commentData.value as? [String: AnyObject] {
-                                let timestamp = comment["timestamp"] as! TimeInterval
-                                let posterName = comment["poster"] as! String
-                                let message = comment["post"] as! String
-                                let posterProfileURL = comment["posterProfilePictureURL"] as? String
-                                let id = commentData.key
-                                
-                                let newComment = Post()
-                                newComment.id = id
-                                newComment.timestamp = timestamp
-                                newComment.message = message
-                                newComment.poster = posterName
-                                newComment.isComment = true
-                                if let url = posterProfileURL {
-                                    newComment.posterProfileURL = url
+                DispatchQueue.global(qos: .utility).async {
+                    var posts: [Post] = []
+                    if let post = snap.value as? [String: AnyObject] {
+                        let timestamp = post[co.journal.Timestamp] as! TimeInterval
+                        let posterName = post[co.journal.PatientName] as! String
+                        let posterUID = post[co.journal.PosterUID] as! String
+                        let message = post[co.journal.Post] as! String
+                        let id = snap.key
+                        
+                        
+                        // get comments, if any
+                        var comments: [Post] = []
+                        if let commentList = post[co.journal.Comments] as? [String: Any] {
+                            for commentData in commentList {
+                                if let comment = commentData.value as? [String: AnyObject] {
+                                    let timestamp = comment[co.journal.Timestamp] as! TimeInterval
+                                    let posterName = comment[co.journal.comment.PosterName] as! String
+                                    let posterUID = comment[co.journal.comment.PosterUID] as! String
+                                    let message = comment[co.journal.comment.Comment] as! String
+                                    let id = commentData.key
+                                    
+                                    let newComment = Post()
+                                    newComment.id = id
+                                    newComment.timestamp = timestamp
+                                    newComment.message = message
+                                    newComment.posterName = posterName
+                                    newComment.isComment = true
+                                    newComment.posterUID = posterUID
+                                    
+                                    comments.append(newComment)
                                 }
-                                
-                                comments.append(newComment)
                             }
+                            
+                            RealmHandler.write({ (realm) in
+                                try! realm.write {
+                                    realm.add(comments, update: true)
+                                }
+                            })
                         }
                         
+                        // create new object
+                        let newPost = Post()
+                        newPost.timestamp = timestamp
+                        newPost.id = id
+                        newPost.message = message
+                        newPost.posterName = posterName
+                        newPost.posterUID = posterUID
+                        
+                        // add comments, if any
+                        if comments.count > 0 {
+                            newPost.comments.append(objectsIn: comments)
+                        }
+                        
+                        // add image, if any
+                        if let imageURL = post[co.journal.ImageURL] as? String {
+                            newPost.hasImage = true
+                            newPost.imageURL = imageURL
+                            posts.append(newPost)
+                        } else {
+                            newPost.hasImage = false
+                            newPost.imageURL = nil
+                            posts.append(newPost)
+                        }
+                    }
+                    
+                    for post in posts {
+                        if post.comments.count > 1 {
+                            
+                            let sorted = post.comments.sorted(by: { (p1, p2) -> Bool in
+                                return p1.timestamp > p2.timestamp
+                            })
+                            
+                            post.comments.removeAll()
+                            post.comments.append(objectsIn: sorted)
+                            
+                        }
+                    }
+                    
+                    let sortedPosts: [Post] = posts.sorted(by: { (p1, p2) -> Bool in
+                        return p1.timestamp > p2.timestamp
+                    })
+                    
+                    RealmHandler.write({ (realm) in
                         try! realm.write {
-                            realm.add(comments, update: true)
+                            realm.add(sortedPosts, update: true)
                         }
-                    }
-                    
-                    // create new object
-                    let newPost = Post()
-                    newPost.timestamp = timestamp
-                    newPost.id = id
-                    newPost.message = message
-                    newPost.poster = poster
-                    
-                    if let url = posterProfileURL {
-                        newPost.posterProfileURL = url
-                    }
-                    
-                    // add comments, if any
-                    if comments.count > 0 {
-                        newPost.comments.append(objectsIn: comments)
-                    }
-                    
-                    // add image, if any
-                    if let imageURL = post["postImageURL"] as? String {
-                        newPost.hasImage = true
-                        newPost.imageURL = imageURL
-                        posts.append(newPost)
-                    } else {
-                        newPost.hasImage = false
-                        newPost.imageURL = nil
-                        posts.append(newPost)
-                    }
+                        completion()
+                    })
                 }
-                
-                for post in posts {
-                    if post.comments.count > 1 {
-                        
-                        let sorted = post.comments.sorted(by: { (p1, p2) -> Bool in
-                            return p1.timestamp > p2.timestamp
-                        })
-                        
-                        post.comments.removeAll()
-                        post.comments.append(objectsIn: sorted)
-                        
-                    }
-                }
-                
-                let sortedPosts: [Post] = posts.sorted(by: { (p1, p2) -> Bool in
-                    return p1.timestamp > p2.timestamp
-                })
-                
-                try! realm.write {
-                    realm.add(sortedPosts, update: true)
-                }
-                completion()
             }
             
             changedListenerHandle = handle
         }
     }
     
-    public static func postToDatabase(poster: String, name: String, message: String, imageURL: String?, completion: ()->()) {
+    public static func postToDatabase(posterUID: String, posterName: String, message: String, imageURL: String?, completion: ()->()) {
         
         let profilePictureURL = AppSettings.currentFBUser?.photoURL?.absoluteString
+
         if imageURL != nil {
-            let ref = Database.database().reference().child("Journals").child(poster).childByAutoId()
-            let data: [String: Any] = ["poster": name,
-                                       "post": message,
-                                       "timestamp": Int(Date().timeIntervalSince1970.rounded()),
-                                       "postImageURL": imageURL!,
-                                       "profilePictureURL": profilePictureURL]
+            let ref = Database.database().reference().child("Journals").child(posterUID).childByAutoId()
+            let data: [String: Any] = [co.journal.PosterUID: posterUID,
+                                       co.journal.PatientName: posterName,
+                                       co.journal.Post: message,
+                                       co.journal.Timestamp: Int(Date().timeIntervalSince1970.rounded()),
+                                       co.journal.ImageURL: imageURL!]
             ref.setValue(data)
             completion()
         } else {
-            let ref = Database.database().reference().child("Journals").child(poster).childByAutoId()
-            let data: [String: Any] = ["poster": name,
-                                       "post": message,
-                                       "timestamp": Int(Date().timeIntervalSince1970.rounded()),
-                                       "profilePictureURL": profilePictureURL]
+            let ref = Database.database().reference().child("Journals").child(posterUID).childByAutoId()
+            let data: [String: Any] = [co.journal.PosterUID: posterUID,
+                                       co.journal.PatientName: posterName,
+                                       co.journal.Post: message,
+                                       co.journal.Timestamp: Int(Date().timeIntervalSince1970.rounded())]
             ref.setValue(data)
             completion()
         }
@@ -1228,70 +1260,66 @@ class DatabaseHandler {
     // MARK: Comments
     public static func postCommentToDatabase(postID: String, data: [String: Any], completion: ()->()) {
         guard let currentPatient = AppSettings.currentPatient else { return }
-        let postRef = Database.database().reference().child("Journals").child(currentPatient).child(postID)
-        postRef.child("comments").childByAutoId().setValue(data)
+        let postRef = Database.database().reference().child(co.journal.Journals).child(currentPatient).child(postID)
+        postRef.child(co.journal.Comments).childByAutoId().setValue(data)
         completion()
     }
     
     public static func removeCommentFromDatabase(post: Post, comment: Post, completion: ()->()) {
         guard let currentPatient = AppSettings.currentPatient else { return }
-        let journals = Database.database().reference().child("Journals")
-        let ref = journals.child(currentPatient).child(post.id).child("comments").child(comment.id)
+        let journals = Database.database().reference().child(co.journal.Journals)
+        let ref = journals.child(currentPatient).child(post.id).child(co.journal.Comments).child(comment.id)
         ref.setValue(nil)
         completion()
     }
     
     public static var commentAddedListerHandle: DatabaseHandle?
-    public static func listenForCommentsAdded(postToListenAt post: Post, completion: @escaping ()->()) {
+    public static func listenForCommentsAdded(postToListenAt post: Post, completion: @escaping (Post)->()) {
         guard let currentPatient = AppSettings.currentPatient else { return }
-        let path = Database.database().reference().child("Journals").child(currentPatient).child(post.id).child("comments")
-        try! RealmHandler.realm.write {
-            post.comments.removeAll()
-        }
+        let ref = Database.database().reference()
+        let path = ref.child(co.journal.Journals).child(currentPatient).child(post.id).child(co.journal.Comments)
+        
         let handle = path.observe(.childAdded) { (snap) in
             let comment = snap.value as! [String: Any]
             
-            let posterName = comment["poster"] as! String
-            let message = comment["post"] as! String
-            let postProfilePicture = comment["postImageURL"] as? String
-            let timestamp = comment["timestamp"] as! TimeInterval
+            let posterName = comment[co.journal.comment.PosterName] as! String
+            let posterUID = comment[co.journal.comment.PosterUID] as! String
+            let message = comment[co.journal.comment.Comment] as! String
+            let timestamp = comment[co.journal.comment.Timestamp] as! TimeInterval
+            let key = snap.key as! String
             
             let newComment = Post()
             newComment.isComment = true
-            newComment.posterProfileURL = postProfilePicture
-            newComment.poster = posterName
+            newComment.posterUID = posterUID
+            newComment.posterName = posterName
             newComment.message = message
             newComment.timestamp = timestamp
-            newComment.id = snap.key
+            newComment.id = key
             
-            try! realm.write {
-                realm.add(newComment, update: true)
-                post.comments.append(newComment)
-                realm.add(post, update: true)
-                completion()
-            }
+            completion(newComment)
+            
+//            try! realm.write {
+//                realm.add(newComment, update: true)
+//                post.comments.append(newComment)
+//                realm.add(post, update: true)
+//                completion()
+//            }
+            
         }
         self.commentAddedListerHandle = handle
     }
     
     static var commentRemovedListenerHandle: DatabaseHandle?
-    public static func listenForCommentsRemoved(postToListenAt post: Post, completion: @escaping ()->()) {
+    public static func listenForCommentsRemoved(postToListenAt post: Post, completion: @escaping (String)->()) {
         guard let currentPatient = AppSettings.currentPatient else { return }
-        let path = Database.database().reference().child("Journals").child(currentPatient).child(post.id).child("comments")
-        try! RealmHandler.realm.write {
-            post.comments.removeAll()
-        }
+        let ref = Database.database().reference()
+        let path = ref.child(co.journal.Journals).child(currentPatient).child(post.id).child(co.journal.Comments)
+        
         let handle = path.observe(.childRemoved) { (snap) in
             if (snap.value as? [String: AnyObject]) != nil {
                 let id = snap.key
                 
-                if let delete = RealmHandler.getPost(id: id) {
-                    RealmHandler.delete(post: delete, completion: { (done) in
-                        if done {
-                            completion()
-                        }
-                    })
-                }
+                completion(id)
             }
         }
         self.commentRemovedListenerHandle = handle
@@ -1308,7 +1336,7 @@ class DatabaseHandler {
     // MARK: - Encouragement Board
     public static var addedEBPostLister: DatabaseHandle?
     public static func listenForEBPostAdded(completion: @escaping ([EBPost])->()) {
-        let ref = Database.database().reference().child("EncouragementBoard")
+        let ref = Database.database().reference().child(co.encouragementBoard.EncouragementBoards)
         guard let patient = AppSettings.currentPatient else { return }
         let userRef = ref.child(patient)
         
@@ -1317,18 +1345,18 @@ class DatabaseHandler {
                 var posts: [EBPost] = []
                     
                 if let post = snap.value as? [String: AnyObject] {
-                    let name = post["poster"] as! String
-                    let poster = post["posterID"] as! String
-                    let timestamp = post["timestamp"] as! TimeInterval
-                    let message = post["post"] as! String
-                    let posterProfilePictureUrl = post["profilePictureURL"] as? String
+                    let name = post[co.encouragementBoard.PosterUID] as! String
+                    let posterName = post[co.encouragementBoard.PatientName] as! String
+                    let timestamp = post[co.encouragementBoard.Timestamp] as! TimeInterval
+                    let message = post[co.encouragementBoard.Message] as! String
+                    let posterUID = post[co.encouragementBoard.PosterUID] as! String
                     
                     let newPost = EBPost()
                     newPost.timestamp = timestamp
                     newPost.message = message
-                    newPost.posterID = poster
+                    newPost.posterUID = posterName
                     newPost.posterName = name
-                    newPost.posterProfileURL = posterProfilePictureUrl
+                    newPost.posterUID = posterUID
                     newPost.id = snap.key
                     
                     posts.append(newPost)
@@ -1346,13 +1374,12 @@ class DatabaseHandler {
     }
     
     public static func postEBToDatabase(posterID: String, posterName: String, message: String, completion: ()->()) {
-        let profilePictureURL = AppSettings.currentFBUser?.photoURL?.absoluteString
-        let data: [String: Any] = ["posterID": posterID,
-                                   "poster": posterName,
-                                   "post": message,
-                                   "timestamp": Int(Date().timeIntervalSince1970.rounded()),
-                                   "profilePictureURL": profilePictureURL]
-        let ref = Database.database().reference().child("EncouragementBoard").child(AppSettings.currentPatient!).childByAutoId()
+        let data: [String: Any] = [co.encouragementBoard.PosterUID: posterID,
+                                   co.encouragementBoard.PatientName: posterName,
+                                   co.encouragementBoard.Message: message,
+                                   co.encouragementBoard.Timestamp: Int(Date().timeIntervalSince1970.rounded())]
+        let path = Database.database().reference()
+        let ref = path.child(co.encouragementBoard.EncouragementBoards).child(AppSettings.currentPatient!).childByAutoId()
         ref.setValue(data)
         completion()
     }
@@ -1377,11 +1404,9 @@ class DatabaseHandler {
                         completion(error)
                     } else {
                         if let url = url?.absoluteString {
-                            let dbdata: [String: Any] = ["url": url,
-                                                         "timestamp": Int(Date().timeIntervalSince1970.rounded()),
-                                                         "caption": caption]
+                            let dbdata: [String: Any] = [co.photoAlbum.URL: url,
+                                                         co.photoAlbum.Timestamp: Int(Date().timeIntervalSince1970.rounded())]
                             dbRef.setValue(dbdata)
-                            
                             completion(nil)
                         }
                     }
@@ -1407,14 +1432,12 @@ class DatabaseHandler {
                 var posts: [PhotoAlbumPost] = []
                 
                 if let imgPost = snap.value as? [String: Any] {
-                    let url = imgPost["postImageURL"] as! String
-                    let timestamp = imgPost["timestamp"] as! TimeInterval
-                    let caption = imgPost["caption"] as? String
+                    let url = imgPost[co.photoAlbum.URL] as! String
+                    let timestamp = imgPost[co.photoAlbum.Timestamp] as! TimeInterval
                     
                     let newPAP = PhotoAlbumPost()
                     newPAP.url = url
                     newPAP.timestamp = timestamp
-                    newPAP.caption = caption
                     newPAP.id = snap.key
                     
                     posts.append(newPAP)

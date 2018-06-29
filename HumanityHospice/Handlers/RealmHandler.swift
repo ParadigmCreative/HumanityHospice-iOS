@@ -24,14 +24,16 @@ class RealmHandler {
     // MARK: - Journal
     
     public static func resetJournalPosts() {
-        let currentPosts = self.realm.objects(Post.self)
-        if currentPosts.count > 0 {
-            try! self.realm.write {
-                self.realm.delete(currentPosts)
+        DispatchQueue.main.async {
+            let currentPosts = self.realm.objects(Post.self)
+            if currentPosts.count > 0 {
+                try! self.realm.write {
+                    self.realm.delete(currentPosts)
+                }
+                let posts = realm.objects(Post.self)
+                print("Verifying Cleanout - Number of Posts:", posts.count)
+                resetComments()
             }
-            let posts = realm.objects(Post.self)
-            print("Verifying Cleanout - Number of Posts:", posts.count)
-            resetComments()
         }
     }
     

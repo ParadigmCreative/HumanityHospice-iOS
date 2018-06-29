@@ -118,8 +118,9 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             imageCell.indicator = indicator
             imageCell.post = post
             imageCell.commentDelegate = self
+            imageCell.timestamp.text = post.timestamp.toTimeStamp()
             
-            imageCell.nameLabel.text = post.poster
+            imageCell.nameLabel.text = post.posterName
             if post.message == "" {
                 imageCell.message.isHidden = true
             } else {
@@ -147,7 +148,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             cell.post = post
             cell.commentDelegate = self
             
-            cell.nameLabel.text = post.poster
+            cell.nameLabel.text = post.posterName
             cell.message.text = post.message
             cell.timestamp.text = post.timestamp.toTimeStamp()
             
