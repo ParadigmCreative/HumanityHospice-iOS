@@ -29,35 +29,40 @@ class ImagePostTableViewCell: UITableViewCell {
     
     var post: Post! {
         didSet {
-            if let img = post.posterProfilePicture?.getImageFromData() {
+            if let img = self.post.postImage?.getImageFromData() {
                 DispatchQueue.main.async {
                     self.profilePictureView.image = img
                     self.profilePictureView.setupSecondaryProfilePicture()
-                    
+                    self.profilePictureView.contentMode = .scaleAspectFill
                 }
             } else {
-                if let urlString = post.posterProfileURL {
-                    if let url = URL(string: urlString) {
-                        DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
-                            if error != nil {
-                                print("Couldn't get Profile Image:", error!.localizedDescription)
-                                self.profilePictureView.image = #imageLiteral(resourceName: "Logo")
-                            } else {
+                DatabaseHandler.checkForProfilePicture(for: self.post.posterUID) { (urlString) in
+                    if let url = urlString {
+                        if let path = URL(string: url) {
+                            DatabaseHandler.getProfilePicture(URL: path, completion: { (image) in
                                 if let img = image {
-                                    try! RealmHandler.realm.write {
-                                        self.post.posterProfilePicture = img.prepareImageForSaving()
-                                        RealmHandler.realm.add(self.post, update: true)
-                                    }
                                     DispatchQueue.main.async {
                                         self.profilePictureView.image = img
                                         self.profilePictureView.setupSecondaryProfilePicture()
+                                        self.profilePictureView.contentMode = .scaleAspectFill
                                     }
+                                    
+                                    RealmHandler.write({ (realm) in
+                                        try! realm.write {
+                                            print("1 - Starting Update")
+                                            self.post.posterProfilePicture = img.prepareImageForSaving()
+                                            realm.add(self.post, update: true)
+                                            print("2 - DONE UPDATING IMAGE")
+                                        }
+                                    })
                                 }
-                            }
+                            })
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.profilePictureView.image = #imageLiteral(resourceName: "Logo")
                         }
                     }
-                } else {
-                    self.profilePictureView.image = #imageLiteral(resourceName: "Logo")
                 }
             }
         }

@@ -7,7 +7,10 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseCore
+import FirebaseDatabase
+import FirebaseAuth
+import FirebaseStorage
 import UIKit
 import RealmSwift
 
@@ -518,6 +521,7 @@ class DatabaseHandler {
         }
     }
     
+    /// Sets the profile picture of the currently logged-in user
     static func setProfilePicture(completion: @escaping (Bool, String?)->()) {
         let ref = Storage.storage().reference()
         let profRef = ref.child("ProfilePictures").child(AppSettings.currentFBUser!.uid)
@@ -526,7 +530,7 @@ class DatabaseHandler {
         
         if let img = ProfilePickerHandler.chosenPhoto {
             if let data = UIImagePNGRepresentation(img) {
-                profilePicRef.putData(data, metadata: nil) { (metadata, error) in
+                let upload = profilePicRef.putData(data, metadata: nil) { (metadata, error) in
                     if error != nil {
                         Utilities.closeActivityIndicator()
                         completion(false, error!.localizedDescription)
@@ -561,11 +565,22 @@ class DatabaseHandler {
                         }
                     }
                 }
+                profilePictureUploadTask = upload
             } else {
                 completion(false, "Couldn't cast data to image")
             }
         }
     }
+    
+    static func manageProfilePictureUploadTask(monitoring: @escaping (StorageTaskSnapshot)->()) {
+        guard let task = self.profilePictureUploadTask else { return }
+        task.observe(.progress) { (snap) in
+            monitoring(snap)
+        }
+    }
+    
+    static var profilePictureUploadTask: StorageUploadTask?
+    
 
     /// Sets the Profile Picture URL for a given user
     ///
@@ -1386,7 +1401,7 @@ class DatabaseHandler {
     
     
     // MARK: - Photo Album
-    static var uploadTask: StorageUploadTask?
+    static var photoAlbumUploadTask: StorageUploadTask?
     public static func postImageToStorage(image: UIImage, caption: String?, completion: @escaping (Error?)->()) {
         let uid = Auth.auth().currentUser?.uid
         let date = Int(Date().timeIntervalSince1970.rounded())
@@ -1413,11 +1428,11 @@ class DatabaseHandler {
                 })
             }
         }
-        self.uploadTask = upload
+        self.photoAlbumUploadTask = upload
     }
     
     static func manageUpload(monitoring: @escaping (StorageTaskSnapshot)->()) {
-        guard let task = self.uploadTask else { return }
+        guard let task = self.photoAlbumUploadTask else { return }
         task.observe(.progress) { (snap) in
             monitoring(snap)
         }

@@ -29,6 +29,8 @@
 		735EA43520AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */; };
 		736E199120CC377000CB6DF4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E199020CC377000CB6DF4 /* Extensions.swift */; };
 		737118B720A12C0500656F8E /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737118B620A12C0500656F8E /* ImageViewer.swift */; };
+		73B4013C20EACAF3005EE40E /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B4013A20EACAF3005EE40E /* UploadViewController.swift */; };
+		73B4013D20EACAF3005EE40E /* UploadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73B4013B20EACAF3005EE40E /* UploadViewController.xib */; };
 		73BD07A120C5DF170051D94D /* SwitchPatientTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */; };
 		73BE5C5320E2BF3A001A34F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73BE5C5220E2BF3A001A34F0 /* GoogleService-Info.plist */; };
 		73C22EDD20C37D5C00E35E80 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */; };
@@ -84,6 +86,8 @@
 		735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		736E199020CC377000CB6DF4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		737118B620A12C0500656F8E /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
+		73B4013A20EACAF3005EE40E /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		73B4013B20EACAF3005EE40E /* UploadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadViewController.xib; sourceTree = "<group>"; };
 		73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchPatientTableViewController.swift; sourceTree = "<group>"; };
 		73BE5C5220E2BF3A001A34F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "HumanityHospice/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				A5D3F971208D23470079B713 /* Utilities.swift */,
+				73B4013A20EACAF3005EE40E /* UploadViewController.swift */,
+				73B4013B20EACAF3005EE40E /* UploadViewController.xib */,
 			);
 			path = Gloabals;
 			sourceTree = "<group>";
@@ -400,6 +406,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73B4013D20EACAF3005EE40E /* UploadViewController.xib in Resources */,
 				A5BBD43D2086EC3700B80BD0 /* LaunchScreen.storyboard in Resources */,
 				A5FC5C1520892FA60084BA9B /* Menu.xib in Resources */,
 				73BE5C5320E2BF3A001A34F0 /* GoogleService-Info.plist in Resources */,
@@ -507,6 +514,7 @@
 				73C56FDE20E596F20078522E /* Constants.swift in Sources */,
 				7335B2B6209FAFA000AD5B1B /* ProfilePickerHandler.swift in Sources */,
 				A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */,
+				73B4013C20EACAF3005EE40E /* UploadViewController.swift in Sources */,
 				73383A3620BDFF91004CE58F /* JournalTableViewController.swift in Sources */,
 				7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */,
 				73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */,

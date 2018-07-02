@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UploadViewController" customModule="HumanityHospice" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="LaD-fv-PUd" id="Skc-2H-XDO"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController id="yoB-de-vxv" customClass="UploadViewController" customModule="HumanityHospice" customModuleProvider="target">
+            <view key="view" contentMode="scaleToFill" id="LaD-fv-PUd">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="J8t-gy-pwb">
+                        <rect key="frame" x="56" y="46" width="37" height="37"/>
+                    </activityIndicatorView>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.0099999997764825821" translatesAutoresizingMaskIntoConstraints="NO" id="5og-tT-eJc">
+                        <rect key="frame" x="30" y="103" width="90" height="2"/>
+                    </progressView>
+                </subviews>
+                <color key="backgroundColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="5og-tT-eJc" firstAttribute="leading" secondItem="LaD-fv-PUd" secondAttribute="leading" constant="30" id="Jen-By-1b8"/>
+                    <constraint firstItem="J8t-gy-pwb" firstAttribute="centerX" secondItem="LaD-fv-PUd" secondAttribute="centerX" id="MsZ-QP-7eX"/>
+                    <constraint firstItem="5og-tT-eJc" firstAttribute="top" secondItem="J8t-gy-pwb" secondAttribute="bottom" constant="20" id="p29-Eu-8Qo"/>
+                    <constraint firstAttribute="trailing" secondItem="5og-tT-eJc" secondAttribute="trailing" constant="30" id="tX3-rV-5Wo"/>
+                    <constraint firstItem="J8t-gy-pwb" firstAttribute="centerY" secondItem="LaD-fv-PUd" secondAttribute="centerY" constant="-10.5" id="wFy-gR-CFO"/>
+                </constraints>
+                <viewLayoutGuide key="safeArea" id="TId-Gy-Gu8"/>
+            </view>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <size key="freeformSize" width="150" height="150"/>
+            <connections>
+                <outlet property="activityIndicator" destination="J8t-gy-pwb" id="dHX-f3-B42"/>
+                <outlet property="progressView" destination="5og-tT-eJc" id="LUg-C6-orc"/>
+            </connections>
+            <point key="canvasLocation" x="265" y="-132"/>
+        </viewController>
+    </objects>
+</document>

@@ -169,6 +169,7 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
                     let total = Float(task.progress!.totalUnitCount)
                     let percent = (complete / total)
                     self.progressBar.setProgress(percent, animated: true)
+                    
                 })
             }
          
