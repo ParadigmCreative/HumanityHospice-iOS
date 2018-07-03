@@ -18,7 +18,7 @@ class JournalTableViewCell: UITableViewCell {
     
     var post: Post! {
         didSet {
-            
+            // profile image
             if let img = self.post.postImage?.getImageFromData() {
                 DispatchQueue.main.async {
                     self.userImage.image = img

@@ -1217,12 +1217,13 @@ class DatabaseHandler {
         }
     }
     
+    static var journalUploadTask: StorageUploadTask?
     public static func postImageToDatabase(image: UIImage, completion: @escaping (String?, Error?)->()) {
         if let data = UIImagePNGRepresentation(image) {
             let uid = AppSettings.currentFBUser!.uid
             let date = Int(Date().timeIntervalSince1970.rounded())
             let ref = Storage.storage().reference().child("Journals").child(uid).child("PostImages").child("post-\(date)")
-            ref.putData(data, metadata: nil) { (meta, error) in
+            let task = ref.putData(data, metadata: nil) { (meta, error) in
                 if error != nil {
                     completion(nil, error)
                 } else {
@@ -1237,6 +1238,14 @@ class DatabaseHandler {
                     })
                 }
             }
+            journalUploadTask = task
+        }
+    }
+    
+    static func manageJournalImageUpload(monitoring: @escaping (StorageTaskSnapshot)->()) {
+        guard let task = self.journalUploadTask else { return }
+        task.observe(.progress) { (snap) in
+            monitoring(snap)
         }
     }
     

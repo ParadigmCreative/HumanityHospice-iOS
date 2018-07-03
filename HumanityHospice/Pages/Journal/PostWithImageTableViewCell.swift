@@ -11,10 +11,11 @@ import UIKit
 class PostWithImageTableViewCell: UITableViewCell {
 
     @IBOutlet weak var timestamp: UILabel!
-    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var profilePictureImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var message: UITextView!
     @IBOutlet weak var commentsButton: UIButton!
+    @IBOutlet weak var postPhoto: UIImageView!
     var commentDelegate: CommentsDelegate!
     
     override func awakeFromNib() {
@@ -28,17 +29,41 @@ class PostWithImageTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    @IBOutlet weak var postPhoto: UIImageView!
     var indicator: UIActivityIndicatorView!
     
     var post: Post! {
         didSet {
-
+            
+            // Post Image
             if let img = self.post.postImage?.getImageFromData() {
                 DispatchQueue.main.async {
-                    self.userImage.image = img
-                    self.userImage.setupSecondaryProfilePicture()
-                    self.userImage.contentMode = .scaleAspectFill
+                    self.postPhoto.image = img
+                    self.postPhoto.contentMode = .scaleAspectFill
+                }
+            } else {
+                if let urlString = self.post.imageURL {
+                    if let url = URL(string: urlString) {
+                        DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
+                            if error != nil {
+                               print(error!.localizedDescription)
+                            } else {
+                                if let img = image {
+                                    DispatchQueue.main.async {
+                                        self.postPhoto.image = img
+                                        self.postPhoto.contentMode = .scaleAspectFill
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if let img = self.post.posterProfilePicture?.getImageFromData() {
+                DispatchQueue.main.async {
+                    self.profilePictureImageView.image = img
+                    self.profilePictureImageView.setupSecondaryProfilePicture()
+                    self.profilePictureImageView.contentMode = .scaleAspectFill
                 }
             } else {
                 DatabaseHandler.checkForProfilePicture(for: self.post.posterUID) { (urlString) in
@@ -47,9 +72,9 @@ class PostWithImageTableViewCell: UITableViewCell {
                             DatabaseHandler.getProfilePicture(URL: path, completion: { (image) in
                                 if let img = image {
                                     DispatchQueue.main.async {
-                                        self.userImage.image = img
-                                        self.userImage.setupSecondaryProfilePicture()
-                                        self.userImage.contentMode = .scaleAspectFill
+                                        self.profilePictureImageView.image = img
+                                        self.profilePictureImageView.setupSecondaryProfilePicture()
+                                        self.profilePictureImageView.contentMode = .scaleAspectFill
                                     }
                                     
                                     RealmHandler.write({ (realm) in
@@ -63,7 +88,7 @@ class PostWithImageTableViewCell: UITableViewCell {
                         }
                     } else {
                         DispatchQueue.main.async {
-                            self.userImage.image = #imageLiteral(resourceName: "Logo")
+                            self.profilePictureImageView.image = #imageLiteral(resourceName: "Logo")
                         }
                     }
                 }

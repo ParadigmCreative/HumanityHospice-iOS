@@ -25,6 +25,10 @@ class ProfilePickerDelegate: ImagePickerDelegate {
         self.progressView?.layer.cornerRadius = 5
         self.progressView?.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
         
+        let blur = UIBlurEffect(style: .dark)
+        let blurView = UIVisualEffectView(effect: blur)
+        blurView.frame = progressView!.bounds
+        
         self.progressView?.addSubview(activityIndicator)
         activityIndicator.center = progressView!.center
         self.progressView?.addSubview(loadingIndicator)

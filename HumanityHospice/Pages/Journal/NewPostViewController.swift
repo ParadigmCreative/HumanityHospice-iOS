@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import ImagePicker
+import LDModalStatus
 
 class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDelegate {
 
@@ -111,7 +112,8 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
     @IBAction func submitPost(_ sender: Any) {
         print("POST!")
         
-    Utilities.showActivityIndicator(view: self.view)
+//        Utilities.showActivityIndicator(view: self.view)
+        
         self.cancelButton.isEnabled = false
         self.submitPostButton.isEnabled = false
         self.attachPhotoButton.isEnabled = false
@@ -139,7 +141,11 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
         } else {
             let name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
             if let img = self.imagePreview.image {
+                
+                showProgress()
+                
                 DatabaseHandler.postImageToDatabase(image: img, completion: { (url, error) in
+                    self.hideProgess()
                     if error != nil {
                         print(error!.localizedDescription)
                     } else {
@@ -152,6 +158,12 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
                         })
                     }
                 })
+                
+                DatabaseHandler.manageJournalImageUpload { (snap) in
+                    let percent = Float(snap.progress!.fractionCompleted)
+                    self.progressBar.setProgress(percent, animated: true)
+                }
+                
             }
             
         }
@@ -225,6 +237,36 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
     // MARK: - Text View
     func textViewDidBeginEditing(_ textView: UITextView) {
         setupToolbar()
+    }
+    
+    // MARK: - UploadTask
+    
+    @IBOutlet var bg: UIView!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
+    @IBOutlet weak var progressBar: UIProgressView!
+    
+    func showProgress() {
+        self.view.addSubview(self.bg)
+        bg.center = self.view.center
+        bg.layer.cornerRadius = 5
+        
+        progressBar.setProgress(0.01, animated: true)
+        
+        activityView.startAnimating()
+        
+        bg.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        UIView.animate(withDuration: 0.3) {
+            self.bg.transform = CGAffineTransform.identity
+        }
+    }
+    
+    func hideProgess() {
+        activityView.stopAnimating()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.bg.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        }) { (done) in
+            self.bg.removeFromSuperview()
+        }
     }
     
     

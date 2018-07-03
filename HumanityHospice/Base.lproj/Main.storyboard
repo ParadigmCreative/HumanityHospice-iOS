@@ -186,8 +186,8 @@
                                     <outlet property="message" destination="nYq-LA-DBH" id="grO-Ow-DO5"/>
                                     <outlet property="nameLabel" destination="wVL-eb-diY" id="reg-Ne-rBt"/>
                                     <outlet property="postPhoto" destination="YNX-I8-lxH" id="Cnu-ZU-ujc"/>
+                                    <outlet property="profilePictureImageView" destination="dZK-Y1-b2w" id="tOd-Vp-GW2"/>
                                     <outlet property="timestamp" destination="eyC-Qc-5dX" id="YGf-qY-1mu"/>
-                                    <outlet property="userImage" destination="dZK-Y1-b2w" id="cQ7-Nj-A1V"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -563,11 +563,14 @@
                         <viewLayoutGuide key="safeArea" id="w8W-w2-ejF"/>
                     </view>
                     <connections>
+                        <outlet property="activityView" destination="AOL-CG-jHv" id="Feb-D0-Hf5"/>
                         <outlet property="attachPhotoButton" destination="I9w-gc-a0H" id="gKY-CM-Lis"/>
+                        <outlet property="bg" destination="b9F-BL-Cqo" id="8fh-ic-eOK"/>
                         <outlet property="cancelButton" destination="qlm-qZ-v0a" id="AUK-gu-IYy"/>
                         <outlet property="clearPhotoButton" destination="doL-ss-5NO" id="idz-UK-x8W"/>
                         <outlet property="imagePreview" destination="cdG-uu-SaF" id="gWb-vb-U5t"/>
                         <outlet property="messageTF" destination="sLd-Rp-7SS" id="58s-xL-jsB"/>
+                        <outlet property="progressBar" destination="9Lc-Vd-wEH" id="GO1-cu-CWe"/>
                         <outlet property="submitPostButton" destination="zlD-eg-K5G" id="eB9-BJ-8Vh"/>
                         <outlet property="toolbar" destination="JcA-Nw-oz7" id="abf-GS-2D8"/>
                     </connections>
@@ -615,8 +618,30 @@
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="Okv-xZ-bY8"/>
                 </view>
+                <view contentMode="scaleToFill" id="b9F-BL-Cqo">
+                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="AOL-CG-jHv">
+                            <rect key="frame" x="56.5" y="56.5" width="37" height="37"/>
+                        </activityIndicatorView>
+                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.01" translatesAutoresizingMaskIntoConstraints="NO" id="9Lc-Vd-wEH">
+                            <rect key="frame" x="30" y="113" width="90" height="2"/>
+                            <color key="progressTintColor" red="0.50980392159999999" green="0.52156862749999999" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </progressView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.32533094620000003" alpha="0.640625" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="9Lc-Vd-wEH" firstAttribute="leading" secondItem="b9F-BL-Cqo" secondAttribute="leading" constant="30" id="66v-FA-pZj"/>
+                        <constraint firstAttribute="trailing" secondItem="9Lc-Vd-wEH" secondAttribute="trailing" constant="30" id="KSU-RS-ovO"/>
+                        <constraint firstItem="9Lc-Vd-wEH" firstAttribute="top" secondItem="AOL-CG-jHv" secondAttribute="bottom" constant="20" id="SV8-wv-upn"/>
+                        <constraint firstItem="AOL-CG-jHv" firstAttribute="centerX" secondItem="b9F-BL-Cqo" secondAttribute="centerX" id="o1Y-Dv-uED"/>
+                        <constraint firstItem="AOL-CG-jHv" firstAttribute="centerY" secondItem="b9F-BL-Cqo" secondAttribute="centerY" id="y70-Si-bac"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="3VT-NJ-QvA"/>
+                </view>
             </objects>
-            <point key="canvasLocation" x="1792.8" y="1650.224887556222"/>
+            <point key="canvasLocation" x="1793" y="1716"/>
         </scene>
         <!--Encourangement Board-->
         <scene sceneID="W0r-8f-3hf">
