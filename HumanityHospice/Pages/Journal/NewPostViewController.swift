@@ -9,7 +9,6 @@
 import UIKit
 import SnapKit
 import ImagePicker
-import LDModalStatus
 
 class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDelegate {
 

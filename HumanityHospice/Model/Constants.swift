@@ -13,7 +13,7 @@ class co {
     public static let inviteCodes = InviteCodes()
     public static let profilePictures = ProfilePictures()
     public static let patient = Patient()
-    public static let reader = Reader()
+    public static let reader = Readers()
     public static let family = Family()
 }
 
@@ -40,6 +40,7 @@ struct EncouragementBoard {
     let Message = "Message"
     let PosterUID = "PosterUID"
     let PatientName = "PatientName"
+    let PosterName = "PosterName"
     let Timestamp = "Timestamp"
 }
 
@@ -60,7 +61,7 @@ struct Patient {
     let InviteCode = "InviteCode"
 }
 
-struct Reader {
+struct Readers {
     let Readers = "Readers"
     let FirstName = "FirstName"
     let LastName = "LastName"

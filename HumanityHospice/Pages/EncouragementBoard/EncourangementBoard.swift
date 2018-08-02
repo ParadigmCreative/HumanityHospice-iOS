@@ -51,6 +51,8 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
         
         let post = ebposts[indexPath.row]
         
+        cell.post = post
+        
         cell.messageTF.text = post.message
         cell.nameLabel.text = post.posterName
         cell.messageTF.layer.cornerRadius = 5

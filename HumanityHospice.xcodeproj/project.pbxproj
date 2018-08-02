@@ -21,8 +21,6 @@
 		73383A4120BE259A004CE58F /* TextPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73383A4020BE259A004CE58F /* TextPostTableViewCell.swift */; };
 		73383A4520BE2623004CE58F /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73383A4420BE2623004CE58F /* CommentTableViewCell.swift */; };
 		7338482E20A7F50000EC6D01 /* Posts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7338482D20A7F50000EC6D01 /* Posts.swift */; };
-		734BEC0C20EAEA48006A04C0 /* LDModalStatus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B4015C20EAE957005EE40E /* LDModalStatus.framework */; };
-		734BEC0D20EAEA48006A04C0 /* LDModalStatus.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 73B4015C20EAE957005EE40E /* LDModalStatus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7357DE652097CC6000AED945 /* EncourangementBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE642097CC6000AED945 /* EncourangementBoard.swift */; };
 		7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6620980B6000AED945 /* PhotoAlbum.swift */; };
 		7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7357DE6820980B7E00AED945 /* CreateFamilyAccount.swift */; };
@@ -60,23 +58,6 @@
 		A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		734BEC0E20EAEA48006A04C0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73B4015720EAE956005EE40E /* LDModalStatus.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 73B4014720EADFCA005EE40E;
-			remoteInfo = LDModalStatus;
-		};
-		73B4015B20EAE957005EE40E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73B4015720EAE956005EE40E /* LDModalStatus.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 73B4014820EADFCA005EE40E;
-			remoteInfo = LDModalStatus;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		734BEC1020EAEA48006A04C0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -84,7 +65,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				734BEC0D20EAEA48006A04C0 /* LDModalStatus.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,12 +101,11 @@
 		737118B620A12C0500656F8E /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		73B4013A20EACAF3005EE40E /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		73B4013B20EACAF3005EE40E /* UploadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadViewController.xib; sourceTree = "<group>"; };
-		73B4015720EAE956005EE40E /* LDModalStatus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LDModalStatus.xcodeproj; path = "../../../LD Development/LDModalStatus/LDModalStatus.xcodeproj"; sourceTree = "<group>"; };
 		73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchPatientTableViewController.swift; sourceTree = "<group>"; };
 		73BE5C5220E2BF3A001A34F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "HumanityHospice/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		73C56FDD20E596F20078522E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		73C56FE120E5AB890078522E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		73C56FE120E5AB890078522E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncouragementBoardTableViewCell.swift; sourceTree = "<group>"; };
 		73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEBPostViewController.swift; sourceTree = "<group>"; };
 		73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
@@ -160,7 +139,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				734BEC0C20EAEA48006A04C0 /* LDModalStatus.framework in Frameworks */,
 				0BC827D0329B3113D20F14AE /* Pods_HumanityHospice.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,14 +258,6 @@
 			path = "Photo Album";
 			sourceTree = "<group>";
 		};
-		73B4015820EAE956005EE40E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				73B4015C20EAE957005EE40E /* LDModalStatus.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		73C9B1E320A394A100056994 /* EncouragementBoard */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,7 +281,6 @@
 		A5BBD4262086EC3700B80BD0 = {
 			isa = PBXGroup;
 			children = (
-				73B4015720EAE956005EE40E /* LDModalStatus.xcodeproj */,
 				A5BBD4312086EC3700B80BD0 /* HumanityHospice */,
 				5A1EB783719ED9CCD60B55F6 /* Pods */,
 				32B3044A1FD103E66EB0AD5A /* Frameworks */,
@@ -406,7 +375,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				734BEC0F20EAEA48006A04C0 /* PBXTargetDependency */,
 			);
 			name = HumanityHospice;
 			productName = HumanityHospice;
@@ -440,28 +408,12 @@
 			mainGroup = A5BBD4262086EC3700B80BD0;
 			productRefGroup = A5BBD4302086EC3700B80BD0 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 73B4015820EAE956005EE40E /* Products */;
-					ProjectRef = 73B4015720EAE956005EE40E /* LDModalStatus.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				A5BBD42E2086EC3700B80BD0 /* HumanityHospice */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		73B4015C20EAE957005EE40E /* LDModalStatus.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = LDModalStatus.framework;
-			remoteRef = 73B4015B20EAE957005EE40E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A5BBD42D2086EC3700B80BD0 /* Resources */ = {
@@ -603,14 +555,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		734BEC0F20EAEA48006A04C0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = LDModalStatus;
-			targetProxy = 734BEC0E20EAEA48006A04C0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A5BBD4362086EC3700B80BD0 /* Main.storyboard */ = {

@@ -15,6 +15,19 @@ class EncouragementBoardTableViewCell: UITableViewCell {
     @IBOutlet weak var messageTF: UITextView!
     @IBOutlet weak var timestampLabel: UILabel!
     
+    var post: EBPost! {
+        didSet {
+            DatabaseHandler.getProfilePicture(for: post.posterUID) { (img) in
+                if let image = img {
+                    self.profilePicture.image = image
+                    self.profilePicture.setupSecondaryProfilePicture()
+                    self.profilePicture.contentMode = .scaleAspectFill
+                }
+            }
+        }
+    }
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
