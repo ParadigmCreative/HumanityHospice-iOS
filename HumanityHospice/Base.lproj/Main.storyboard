@@ -1640,10 +1640,10 @@
             </objects>
             <point key="canvasLocation" x="1072.8" y="-1848.1259370314845"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Switch Patients-->
         <scene sceneID="Jsx-q2-mfw">
             <objects>
-                <tableViewController storyboardIdentifier="ChangePatientVC" id="J0G-YM-RRF" customClass="SwitchPatientTableViewController" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ChangePatientVC" title="Switch Patients" id="J0G-YM-RRF" customClass="SwitchPatientTableViewController" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="awX-Ri-fU4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1728,6 +1728,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y8N-3v-Swx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-738.39999999999998" y="1105.9970014992505"/>
+        </scene>
+        <!--Manage Followers Table View Controller-->
+        <scene sceneID="B2l-hK-0v0">
+            <objects>
+                <tableViewController storyboardIdentifier="ManageFollowersVC" id="Dcc-su-aE3" customClass="ManageFollowersTableViewController" customModule="HumanityHospice" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="OrW-bg-Re6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="cell" textLabel="291-HS-Qsn" style="IBUITableViewCellStyleDefault" id="J2F-AA-6N6">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="J2F-AA-6N6" id="9Fu-6m-gB5">
+                                    <rect key="frame" x="0.0" y="0.0" width="307" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="291-HS-Qsn">
+                                            <rect key="frame" x="16" y="0.0" width="291" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Dcc-su-aE3" id="KBC-eH-KVJ"/>
+                            <outlet property="delegate" destination="Dcc-su-aE3" id="PeE-vh-Bb7"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kcP-4L-Jm9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-26" y="1106"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ows-cn-A7N">

@@ -438,6 +438,55 @@ class DatabaseHandler {
         }
     }
     
+    static func getReaderProfile(rid: String, completion: @escaping (_ FullName: String, _ uid: String)->()) {
+        let readerRef = Database.database().reference().child(co.reader.Readers).child(rid)
+        readerRef.observeSingleEvent(of: .value) { (snap) in
+            if let readerData = snap.value as? [String: Any] {
+                let full = readerData[co.reader.FullName] as! String
+                completion(full, rid)
+            }
+        }
+    }
+    
+    static func blockReader(pid: String, rid: String) {
+        let patientRef = Database.database().reference().child(co.patient.Patients).child(pid)
+        let readerRef = Database.database().reference().child(co.reader.Readers).child(rid)
+        
+        patientRef.child(co.reader.Readers).child(rid).setValue(false)
+        readerRef.child(co.reader.PatientList).child(pid).setValue(false)
+        
+        let journal = Database.database().reference().child(co.journal.Journals).child(pid)
+        journal.observeSingleEvent(of: .value) { (snap) in
+            if let entries = snap.children.allObjects as? [DataSnapshot] {
+                for entry in entries {
+                    let commentsRef = entry.ref
+                    commentsRef.child(co.journal.Comments).observeSingleEvent(of: .value, with: { (snap) in
+                        if let comments = snap.children.allObjects as? [DataSnapshot] {
+                            for comment in comments {
+                                if let data = comment.value as? [String: Any] {
+                                    let uid = data[co.journal.comment.PosterUID] as! String
+                                    if uid == rid {
+                                        DatabaseHandler.removeComment(pid: pid, postID: entry.key, commentID: comment.key)
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+        }
+        
+        removeEncouragementPosts(pid: pid, rid: rid)
+    }
+    
+    static func unblockReader(pid: String, rid: String) {
+        let patientRef = Database.database().reference().child(co.patient.Patients).child(pid)
+        let readerRef = Database.database().reference().child(co.reader.Readers).child(rid)
+        
+        patientRef.child(co.reader.Readers).child(rid).setValue(true)
+        readerRef.child(co.reader.PatientList).child(pid).setValue(true)
+    }
+    
     // MARK: Profile Picture
     static func checkForProfilePicture(for UID: String, completion: @escaping (_ url: String?)->()) {
         let ref = Database.database().reference()
@@ -690,7 +739,7 @@ class DatabaseHandler {
     }
     
     static func addUserToFollow(pid: String, userID: String) {
-        Database.database().reference().child(co.reader.Readers).child(userID).child("PatientsList").child(pid).setValue(true)
+        Database.database().reference().child(co.reader.Readers).child(userID).child("PatientList").child(pid).setValue(true)
     }
     
     static func setCurrentPatientToReadFrom(patientID: String, followerID: String) {
@@ -1297,6 +1346,12 @@ class DatabaseHandler {
         completion()
     }
     
+    public static func removeComment(pid: String, postID: String, commentID: String) {
+        let userJournalRef = Database.database().reference().child(co.journal.Journals).child(pid)
+        let postRef = userJournalRef.child(postID).child(co.journal.Comments)
+        postRef.child(commentID).setValue(nil)
+    }
+    
     public static var commentAddedListerHandle: DatabaseHandle?
     public static func listenForCommentsAdded(postToListenAt post: Post, completion: @escaping (Post)->()) {
         guard let currentPatient = AppSettings.currentPatient else { return }
@@ -1406,6 +1461,17 @@ class DatabaseHandler {
         completion()
     }
     
+    public static func removeEncouragementPosts(pid: String, rid: String) {
+        let boards = Database.database().reference().child(co.encouragementBoard.EncouragementBoards)
+        let usersBoard = boards.child(pid)
+        let postsToDelete = usersBoard.queryOrdered(byChild: co.encouragementBoard.PosterUID).queryEqual(toValue: rid)
+        postsToDelete.observeSingleEvent(of: .value) { (snap) in
+            for child in snap.children.allObjects as! [DataSnapshot] {
+                let key = child.key
+                usersBoard.child(key).setValue(nil)
+            }
+        }
+    }
     
     // MARK: - Photo Album
     static var photoAlbumUploadTask: StorageUploadTask?
@@ -1474,6 +1540,20 @@ class DatabaseHandler {
             }
         }
         addedPhotoAlbumItem = handle
+        
+    }
+    
+    // MARK: - Reader Management
+    public static func getFollowers(completion: @escaping ([String: Bool])->()) {
+        guard let uid = AppSettings.currentPatient else { return }
+        let patientRef = Database.database().reference().child(co.patient.Patients).child(uid)
+        let readersRef = patientRef.child("Readers")
+        readersRef.observeSingleEvent(of: .value) { (snap) in
+            if let readers = snap.value as? [String: Bool] {
+                completion(readers)
+            }
+        }
+        
         
     }
     

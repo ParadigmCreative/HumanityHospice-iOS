@@ -38,6 +38,7 @@
 		73C56FE220E5AB890078522E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73C56FE120E5AB890078522E /* GoogleService-Info.plist */; };
 		73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */; };
 		73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */; };
+		73E792DC2116445F00A2AF2E /* ManageFollowersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E792DB2116445F00A2AF2E /* ManageFollowersTableViewController.swift */; };
 		73E938AA20C4901E00CC3648 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */; };
 		73ED2C3820A903CF005D7AF8 /* RealmHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */; };
 		73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */; };
@@ -108,6 +109,7 @@
 		73C56FE120E5AB890078522E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncouragementBoardTableViewCell.swift; sourceTree = "<group>"; };
 		73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEBPostViewController.swift; sourceTree = "<group>"; };
+		73E792DB2116445F00A2AF2E /* ManageFollowersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFollowersTableViewController.swift; sourceTree = "<group>"; };
 		73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
 		73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHandler.swift; sourceTree = "<group>"; };
 		73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodePopUp.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				A5FC5C17208934E80084BA9B /* MenuTableViewCell.swift */,
 				A5D00664208938C30079CD49 /* MenuHandler.swift */,
 				73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */,
+				73E792DB2116445F00A2AF2E /* ManageFollowersTableViewController.swift */,
 			);
 			path = "Menu Handler";
 			sourceTree = "<group>";
@@ -548,6 +551,7 @@
 				7310489F20B895C500E52EA9 /* NewPhotoPostVC.swift in Sources */,
 				736E199120CC377000CB6DF4 /* Extensions.swift in Sources */,
 				737118B720A12C0500656F8E /* ImageViewer.swift in Sources */,
+				73E792DC2116445F00A2AF2E /* ManageFollowersTableViewController.swift in Sources */,
 				A5D3F972208D23470079B713 /* Utilities.swift in Sources */,
 				A5FC5C18208934E80084BA9B /* MenuTableViewCell.swift in Sources */,
 				73383A4520BE2623004CE58F /* CommentTableViewCell.swift in Sources */,

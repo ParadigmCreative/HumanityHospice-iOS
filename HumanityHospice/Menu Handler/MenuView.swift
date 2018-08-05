@@ -102,6 +102,16 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
                 nav.navigationBar.barTintColor = #colorLiteral(red: 0.3529411765, green: 0.231372549, blue: 0.6235294118, alpha: 1)
                 handlingController?.present(nav, animated: true, completion: nil)
             }
+        } else if selected == "Manage Followers" {
+            MenuHandler.closeMenu()
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            if let vc = sb.instantiateViewController(withIdentifier: "ManageFollowersVC") as? ManageFollowersTableViewController {
+                let nav = UINavigationController(rootViewController: vc)
+                let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+                nav.navigationBar.titleTextAttributes = textAttributes
+                nav.navigationBar.barTintColor = #colorLiteral(red: 0.3529411765, green: 0.231372549, blue: 0.6235294118, alpha: 1)
+                handlingController?.present(nav, animated: true, completion: nil)
+            }
         }
         
     }
@@ -143,6 +153,8 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
             if type == .Patient || type == .Family {
                 self.menuItems = items
                 self.menuIcons = itemsIcons
+                menuItems.append("Manage Followers")
+                menuIcons.append(#imageLiteral(resourceName: "Switch Users"))
             } else {
                 self.menuItems = readerItems
                 self.menuIcons = readerIcons
