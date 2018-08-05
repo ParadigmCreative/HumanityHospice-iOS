@@ -67,6 +67,8 @@ class InviteReaders: UIViewController {
                 }
             }
         }
+        
+        self.URLButton.setTitle("No Link Available", for: .normal)
     }
     
     private func showConfirmation() {
@@ -109,9 +111,11 @@ class InviteReaders: UIViewController {
     }
     
     @IBAction func copyURL(_ sender: Any) {
-        UIPasteboard.general.string = self.URLButton.titleLabel!.text!
-        if UIPasteboard.general.string == self.URLButton.titleLabel!.text! {
-            showConfirmation()
+        if URLButton.titleLabel?.text != "No Link Available" {
+            UIPasteboard.general.string = self.URLButton.titleLabel!.text!
+            if UIPasteboard.general.string == self.URLButton.titleLabel!.text! {
+                showConfirmation()
+            }
         }
     }
     
