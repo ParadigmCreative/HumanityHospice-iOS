@@ -66,6 +66,9 @@ class LandingViewController: UIViewController {
         copywriteLabel.textColor = UIColor.lightGray
     }
     
+    @IBAction func gotoLogin(_ sender: Any) {
+        performSegue(withIdentifier: "toSignUp", sender: self)
+    }
     
     
     private func checkForLoggedinUser(completion: (User?)->()) {

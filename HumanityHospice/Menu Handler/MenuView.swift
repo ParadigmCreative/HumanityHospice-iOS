@@ -30,11 +30,11 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     var imagePicker = ImagePickerController()
     
     // MARK: - TableView
-    var items = ["My Journal", "Encouragement Board", "My Photo Album", "Create Family Account", "Invite People", "Sign Out", "About Humanity Hospice"]
-    var itemsIcons = [#imageLiteral(resourceName: "journal"), #imageLiteral(resourceName: "Bubbles - simple-line-icons"), #imageLiteral(resourceName: "Picture - simple-line-icons"), #imageLiteral(resourceName: "User - simple-line-icons"), #imageLiteral(resourceName: "Plus - simple-line-icons"), #imageLiteral(resourceName: "Login - simple-line-icons"), #imageLiteral(resourceName: "Info - simple-line-icons")]
+    var items = ["My Journal", "Encouragement Board", "My Photo Album", "Create Family Account", "Invite People", "About Humanity Hospice", "Sign Out"]
+    var itemsIcons = [#imageLiteral(resourceName: "journal"), #imageLiteral(resourceName: "Bubbles - simple-line-icons"), #imageLiteral(resourceName: "Picture - simple-line-icons"), #imageLiteral(resourceName: "User - simple-line-icons"), #imageLiteral(resourceName: "Plus - simple-line-icons"), #imageLiteral(resourceName: "Info - simple-line-icons"), #imageLiteral(resourceName: "Login - simple-line-icons")]
     
-    var readerItems = ["Journal", "Encouragement Board", "Photo Album", "Sign Out", "About Humanity Hospice"]
-    var readerIcons = [#imageLiteral(resourceName: "journal"), #imageLiteral(resourceName: "Bubbles - simple-line-icons"), #imageLiteral(resourceName: "Picture - simple-line-icons"), #imageLiteral(resourceName: "Login - simple-line-icons"), #imageLiteral(resourceName: "Info - simple-line-icons")]
+    var readerItems = ["Journal", "Encouragement Board", "Photo Album", "About Humanity Hospice", "Sign Out"]
+    var readerIcons = [#imageLiteral(resourceName: "journal"), #imageLiteral(resourceName: "Bubbles - simple-line-icons"), #imageLiteral(resourceName: "Picture - simple-line-icons"), #imageLiteral(resourceName: "Info - simple-line-icons"), #imageLiteral(resourceName: "Login - simple-line-icons")]
     
     
     var menuItems: [String] = []
@@ -54,7 +54,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         cell.imageView?.contentMode = .scaleAspectFit
         cell.selectionStyle = .none
         cell.imageView?.image = menuIcons[indexPath.row]
-        
+        cell.textLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 14)
         
         return cell
     }
@@ -82,11 +82,16 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
             // Invite
             MenuHandler.tabbar?.selectedIndex = 4
             MenuHandler.closeMenu()
-        } else if selected == "Sign Out" {
-            // Sign Out
-            Utilities.showActivityIndicator(view: self)
-            AppSettings.clearAppSettings()
-            handlingController?.beginSignOutProcess()
+        } else if selected == "Manage Followers" {
+            MenuHandler.closeMenu()
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            if let vc = sb.instantiateViewController(withIdentifier: "ManageFollowersVC") as? ManageFollowersTableViewController {
+                let nav = UINavigationController(rootViewController: vc)
+                let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+                nav.navigationBar.titleTextAttributes = textAttributes
+                nav.navigationBar.barTintColor = #colorLiteral(red: 0.3529411765, green: 0.231372549, blue: 0.6235294118, alpha: 1)
+                handlingController?.present(nav, animated: true, completion: nil)
+            }
         } else if selected == "About Humanity Hospice" {
             // About
             MenuHandler.tabbar!.selectedIndex = 5
@@ -102,16 +107,11 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
                 nav.navigationBar.barTintColor = #colorLiteral(red: 0.3529411765, green: 0.231372549, blue: 0.6235294118, alpha: 1)
                 handlingController?.present(nav, animated: true, completion: nil)
             }
-        } else if selected == "Manage Followers" {
-            MenuHandler.closeMenu()
-            let sb = UIStoryboard(name: "Main", bundle: nil)
-            if let vc = sb.instantiateViewController(withIdentifier: "ManageFollowersVC") as? ManageFollowersTableViewController {
-                let nav = UINavigationController(rootViewController: vc)
-                let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-                nav.navigationBar.titleTextAttributes = textAttributes
-                nav.navigationBar.barTintColor = #colorLiteral(red: 0.3529411765, green: 0.231372549, blue: 0.6235294118, alpha: 1)
-                handlingController?.present(nav, animated: true, completion: nil)
-            }
+        } else if selected == "Sign Out" {
+            // Sign Out
+            Utilities.showActivityIndicator(view: self)
+            AppSettings.clearAppSettings()
+            handlingController?.beginSignOutProcess()
         }
         
     }

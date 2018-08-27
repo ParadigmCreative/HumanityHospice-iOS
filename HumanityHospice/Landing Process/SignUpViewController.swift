@@ -35,7 +35,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     
     func masterSetup() {
         setupButtons()
-        setupTextFields()
+//        setupTextFields()
     }
     
     func setupButtons() {
@@ -75,22 +75,25 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     }
     
     @IBAction func patientSignUp(_ sender: Any) {
-        verifyTextFields { (first, last) in
-            let name = (first, last)
-            AppSettings.signUpName = name
+//        verifyTextFields { (first, last) in
+//            let name = (first, last)
+//            AppSettings.signUpName = name
             AppSettings.userType = DatabaseHandler.UserType.Patient
-            performSegue(withIdentifier: "showSignUp", sender: self)
-        }
+//
+//        }
+        performSegue(withIdentifier: "showSignUp", sender: "Patient")
     }
     
     @IBAction func friendSignUp(_ sender: Any) {
-        verifyTextFields { (first, last) in
-            showPopUp()
-            let name = (first, last)
-            AppSettings.signUpName = name
+//        verifyTextFields { (first, last) in
+//            showPopUp()
+//            let name = (first, last)
+//            AppSettings.signUpName = name
             AppSettings.userType = DatabaseHandler.UserType.Reader
-            
-        }
+//
+//        }
+        
+        performSegue(withIdentifier: "showSignUp", sender: "Friend")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -157,11 +160,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
         self.performSegue(withIdentifier: "showSignUp", sender: self.followingPID)
     }
     
+    // MARK: Navigation
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? CompleteSignUpViewController {
-            if let pid = sender as? String {
-                vc.pidToFollow = pid
+        if segue.identifier == "showSignUp" {
+            if let vc = segue.destination as? CompleteSignUpViewController {
+                if let type = sender as? String {
+                    vc.signupType = type
+                }
             }
         }
     }

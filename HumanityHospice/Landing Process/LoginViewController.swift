@@ -36,6 +36,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func setupTextField() {
         emailTF.delegate = self
         passwordTF.delegate = self
+
+        emailTF.setLeftPaddingPoints(20)
+        passwordTF.setLeftPaddingPoints(20)
     }
     
     func setupSignInButton() {
@@ -70,6 +73,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         completion(email!, pass!)
     }
+    
+    
     
     @IBAction func signIn(_ sender: Any) {
         verifyTextFields { (email, pass) in
@@ -153,5 +158,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 extension UITextField {
     func setupTextField() {
         self.borderStyle = .none
+    }
+    
+    func setLeftPaddingPoints(_ amount:CGFloat){
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.leftView = paddingView
+        self.leftViewMode = .always
+    }
+    func setRightPaddingPoints(_ amount:CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.rightView = paddingView
+        self.rightViewMode = .always
     }
 }

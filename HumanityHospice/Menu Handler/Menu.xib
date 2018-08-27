@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -27,7 +27,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="279" height="667"/>
                         </imageView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wqc-vY-iFy">
-                            <rect key="frame" x="0.0" y="149" width="275" height="518"/>
+                            <rect key="frame" x="0.0" y="149" width="275" height="441"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="N9o-x3-3BZ"/>
@@ -52,42 +52,52 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Luke Davis" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Dn4-lf-1Wu">
-                            <rect key="frame" x="99" y="67" width="168" height="20.5"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <rect key="frame" x="99" y="50" width="168" height="20.5"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="sHl-wf-YSI">
-                            <rect key="frame" x="99" y="104" width="168" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="sHl-wf-YSI">
+                            <rect key="frame" x="99" y="78.5" width="168" height="17"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mxv-9j-8La">
+                            <rect key="frame" x="16" y="594" width="243" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="g39-6c-i61"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                            <state key="normal" title="Contact Care Nurse" backgroundImage="Contact Nurse"/>
+                        </button>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="sHl-wf-YSI" firstAttribute="top" secondItem="Dn4-lf-1Wu" secondAttribute="bottom" constant="16" id="15F-0L-aRM"/>
                         <constraint firstAttribute="trailing" secondItem="wqc-vY-iFy" secondAttribute="trailing" id="3NN-aq-0bK"/>
                         <constraint firstItem="Axx-4M-fhh" firstAttribute="top" secondItem="Xtc-Yw-XY2" secondAttribute="top" constant="50" id="3gj-Z6-rF0"/>
                         <constraint firstItem="6bx-av-ErN" firstAttribute="top" secondItem="Xtc-Yw-XY2" secondAttribute="top" id="5an-Lx-CRV"/>
+                        <constraint firstItem="Dn4-lf-1Wu" firstAttribute="top" secondItem="Axx-4M-fhh" secondAttribute="top" id="6Bu-X3-4Wy"/>
                         <constraint firstAttribute="trailing" secondItem="6bx-av-ErN" secondAttribute="trailing" constant="-4" id="6yC-Vv-XTd"/>
-                        <constraint firstItem="Dn4-lf-1Wu" firstAttribute="leading" secondItem="Axx-4M-fhh" secondAttribute="trailing" constant="8" id="77q-oU-kAD"/>
                         <constraint firstItem="wqc-vY-iFy" firstAttribute="leading" secondItem="Xtc-Yw-XY2" secondAttribute="leading" id="BUl-a3-u8L"/>
+                        <constraint firstItem="Dn4-lf-1Wu" firstAttribute="leading" secondItem="Axx-4M-fhh" secondAttribute="trailing" constant="8" id="HAM-Fr-wRX"/>
                         <constraint firstItem="wqc-vY-iFy" firstAttribute="leading" secondItem="Xtc-Yw-XY2" secondAttribute="leading" id="Jiw-Aj-VOH"/>
-                        <constraint firstAttribute="bottom" secondItem="wqc-vY-iFy" secondAttribute="bottom" id="MTv-mC-f8p"/>
                         <constraint firstAttribute="width" constant="275" placeholder="YES" id="RAJ-3Y-9eW"/>
+                        <constraint firstItem="sHl-wf-YSI" firstAttribute="top" secondItem="Dn4-lf-1Wu" secondAttribute="bottom" constant="8" id="UU4-0h-L3V"/>
+                        <constraint firstItem="sHl-wf-YSI" firstAttribute="leading" secondItem="Axx-4M-fhh" secondAttribute="trailing" constant="8" id="UsY-iq-3vI"/>
+                        <constraint firstItem="Mxv-9j-8La" firstAttribute="top" secondItem="wqc-vY-iFy" secondAttribute="bottom" constant="4" id="XDx-vm-qDo"/>
                         <constraint firstItem="Iba-nS-4FV" firstAttribute="top" secondItem="Axx-4M-fhh" secondAttribute="top" id="Xwo-UO-eBJ"/>
                         <constraint firstItem="Iba-nS-4FV" firstAttribute="width" secondItem="Axx-4M-fhh" secondAttribute="width" id="YBu-OB-5Bc"/>
-                        <constraint firstAttribute="trailing" secondItem="sHl-wf-YSI" secondAttribute="trailing" constant="8" id="YWm-fF-sax"/>
-                        <constraint firstAttribute="bottom" secondItem="wqc-vY-iFy" secondAttribute="bottom" id="bLo-o8-bjw"/>
+                        <constraint firstAttribute="trailing" secondItem="Dn4-lf-1Wu" secondAttribute="trailing" constant="8" id="bHJ-3r-fsh"/>
                         <constraint firstItem="Iba-nS-4FV" firstAttribute="leading" secondItem="Axx-4M-fhh" secondAttribute="leading" id="e0G-NX-dUD"/>
-                        <constraint firstItem="sHl-wf-YSI" firstAttribute="bottom" secondItem="Iba-nS-4FV" secondAttribute="bottom" id="gLY-8y-CWH"/>
+                        <constraint firstAttribute="trailing" secondItem="Mxv-9j-8La" secondAttribute="trailing" constant="16" id="fdh-gz-Me8"/>
+                        <constraint firstAttribute="bottom" secondItem="Mxv-9j-8La" secondAttribute="bottom" constant="25" id="fxc-qm-Ji7"/>
                         <constraint firstItem="Axx-4M-fhh" firstAttribute="leading" secondItem="Xtc-Yw-XY2" secondAttribute="leading" constant="16" id="gOi-OF-ae7"/>
-                        <constraint firstItem="wqc-vY-iFy" firstAttribute="top" secondItem="sHl-wf-YSI" secondAttribute="bottom" constant="24" id="llG-hb-tDI"/>
+                        <constraint firstItem="wqc-vY-iFy" firstAttribute="top" secondItem="Axx-4M-fhh" secondAttribute="bottom" constant="24" id="jdS-fM-kwd"/>
                         <constraint firstAttribute="trailing" secondItem="wqc-vY-iFy" secondAttribute="trailing" id="mEJ-wd-x3s"/>
-                        <constraint firstAttribute="trailing" secondItem="Dn4-lf-1Wu" secondAttribute="trailing" constant="8" id="r5B-0L-UId"/>
+                        <constraint firstItem="Mxv-9j-8La" firstAttribute="leading" secondItem="Xtc-Yw-XY2" secondAttribute="leading" constant="16" id="n5l-Fs-3fN"/>
                         <constraint firstAttribute="bottom" secondItem="6bx-av-ErN" secondAttribute="bottom" id="s27-fJ-jC6"/>
                         <constraint firstItem="Iba-nS-4FV" firstAttribute="height" secondItem="Axx-4M-fhh" secondAttribute="height" id="tJj-Ak-TGM"/>
-                        <constraint firstItem="sHl-wf-YSI" firstAttribute="leading" secondItem="Axx-4M-fhh" secondAttribute="trailing" constant="8" id="uMa-fG-zRA"/>
+                        <constraint firstAttribute="trailing" secondItem="sHl-wf-YSI" secondAttribute="trailing" constant="8" id="xDr-NO-Wcm"/>
                         <constraint firstItem="6bx-av-ErN" firstAttribute="leading" secondItem="Xtc-Yw-XY2" secondAttribute="leading" id="yE1-yz-Hgk"/>
                     </constraints>
                 </view>
@@ -118,6 +128,7 @@
     </objects>
     <resources>
         <image name="BG" width="375" height="667"/>
+        <image name="Contact Nurse" width="281" height="56"/>
         <image name="Profile Default" width="77" height="76"/>
     </resources>
 </document>

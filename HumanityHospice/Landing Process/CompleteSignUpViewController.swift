@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
 
@@ -22,18 +23,40 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Outlets
+    @IBOutlet weak var lastNameTF: UITextField!
+    @IBOutlet weak var firstNameTF: UITextField!
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var reenterPasswordTF: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var agreeToTermsButton: UIButton!
+    @IBOutlet weak var patientCode: UITextField!
+    @IBOutlet weak var agreementView: UIView!
     
     var inviteCode: String?
     var pidToFollow: String?
+    var signupType: String = ""
     
+    // MARK: - Setup
     func masterSetup() {
         setupButtons()
         setupTextfields()
+        if signupType == "Patient" {
+            patientCode.isEnabled = false
+            patientCode.isHidden = true
+            agreementView.snp.makeConstraints { (make) in
+                make.top.equalTo(reenterPasswordTF.snp.bottom).offset(16)
+                make.left.right.equalToSuperview().inset(25)
+                make.height.equalTo(140)
+            }
+        } else {
+            agreementView.snp.makeConstraints { (make) in
+                make.top.equalTo(patientCode.snp.bottom).offset(16)
+                make.left.right.equalToSuperview().inset(25)
+                make.height.equalTo(140)
+            }
+        }
     }
     
     func setupButtons() {
@@ -45,11 +68,15 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
     
     
     func setupTextfields() {
+        firstNameTF.delegate = self
+        lastNameTF.delegate = self
         emailTF.delegate = self
         passwordTF.delegate = self
         reenterPasswordTF.delegate = self
+        patientCode.delegate = self
     }
     
+    // MARK: - Actions
     @IBAction func agreeToTerms(_ sender: Any) {
         if agreeToTermsButton.isSelected {
             agreeToTermsButton.setImage(#imageLiteral(resourceName: "CheckBox"), for: .normal)
@@ -61,48 +88,11 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
             signUpButton.isEnabled = true
         }
     }
-    
-    
-    func verifyTextFields(completion: (String, String)->()) {
-        
-        var email: String?
-        var password: String?
-        var pass2: String?
-        
-        if let e = emailTF.text {
-            guard e.count > 0 else {
-                self.showAlert(title: "Oops!", message: "Please enter a valid email address.")
-                return
-            }
-            email = e
-        }
-        
-        if let p = passwordTF.text {
-            guard p.count > 0 else {
-                self.showAlert(title: "Oops!", message: "Please enter your password.")
-                return
-            }
-            password = p
-        }
-        
-        if let p = reenterPasswordTF.text {
-            guard p.count > 0 else {
-                self.showAlert(title: "Oops!", message: "Please re-enter your password.")
-                return
-            }
-            pass2 = p
-        }
-        
-        if password == pass2 {
-            completion(email!, password!)
-        } else {
-            self.showAlert(title: "Oops!", message: "Passwords do not match.")
-        }
-    }
+
     
     @IBAction func signUp(_ sender: Any) {
         self.showIndicator()
-        verifyTextFields { (email, pass) in
+        verifyTextFields { (first, last, email, pass) in
             
             // Sign up user
             DatabaseHandler.signUp(email: email, password: pass, completion: { (user, error) in
@@ -114,10 +104,10 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                     if user != nil {
                         // set current user to user handed back from call
                         AppSettings.currentFBUser = user
-                        
+                        AppSettings.signUpName = (first, last)
                         // make profile changes to user
                         let changes = user?.createProfileChangeRequest()
-                        changes?.displayName = "\(AppSettings.signUpName!.first) \(AppSettings.signUpName!.last)"
+                        changes?.displayName = "\(first) \(last)"
                         
                         changes?.commitChanges(completion: { (error) in
                             if error != nil {
@@ -187,13 +177,62 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // MARK: - Textfield
+    func verifyTextFields(completion: (_ first: String, _ last: String, _ email: String, _ password: String)->()) {
+        
+        if let f = firstNameTF.text, let l = lastNameTF.text, let e = emailTF.text, let p1 = passwordTF.text, let p2 = reenterPasswordTF.text {
+            
+            guard f.isEmpty == false else {
+                self.showAlert(title: "Oops!", message: "Please enter your first name")
+                return
+            }
+            
+            guard l.isEmpty == false else {
+                self.showAlert(title: "Oops!", message: "Please enter your last name")
+                return
+            }
+            
+            guard e.isEmpty == false else {
+                self.showAlert(title: "Oops!", message: "Please enter a valid email address.")
+                return
+            }
+            
+            guard p1.isEmpty == false else {
+                self.showAlert(title: "Oops!", message: "Please enter your password.")
+                return
+            }
+            
+            guard p2.isEmpty == false else {
+                self.showAlert(title: "Oops!", message: "Please re-enter your password.")
+                return
+            }
+            
+            if p1 == p2 {
+                completion(f, l, e, p1)
+            } else {
+                self.showAlert(title: "Oops!", message: "Passwords do not match.")
+            }
+            
+        }
+        
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailTF {
+        if textField == firstNameTF {
+            lastNameTF.becomeFirstResponder()
+        } else if textField == lastNameTF {
+            emailTF.becomeFirstResponder()
+        } else if textField == emailTF {
             passwordTF.becomeFirstResponder()
         } else if textField == passwordTF {
             reenterPasswordTF.becomeFirstResponder()
         } else if textField == reenterPasswordTF {
+            if patientCode.isHidden {
+                textField.resignFirstResponder()
+            } else {
+                patientCode.becomeFirstResponder()
+            }
+        } else if textField == patientCode {
             textField.resignFirstResponder()
         }
         
