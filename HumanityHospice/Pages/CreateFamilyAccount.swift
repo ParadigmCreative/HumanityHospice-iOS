@@ -34,12 +34,17 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
     
     func setup() {
         signupButton.setupMainButton()
+        signupButton.backgroundColor = .clear
         firstName.delegate = self
         lastName.delegate = self
         email.delegate = self
         pass1.delegate = self
         pass2.delegate = self
         signupButton.isEnabled = false
+        
+        agreeToTermsButton.layer.cornerRadius = 5
+        agreeToTermsButton.layer.borderWidth = 2
+        agreeToTermsButton.layer.borderColor = UIColor.white.cgColor
     }
 
     func createFamilyAccount(first: String, last: String, email: String, password: String) {
