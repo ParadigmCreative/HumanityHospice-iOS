@@ -56,14 +56,14 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
         attachPhotoButton.backgroundColor = #colorLiteral(red: 0.4156862745, green: 0.4039215686, blue: 0.7254901961, alpha: 1)
         attachPhotoButton.setTitleColor(UIColor.white, for: .normal)
         attachPhotoButton.titleLabel?.textAlignment = .center
-        attachPhotoButton.layer.cornerRadius = 15
+        attachPhotoButton.layer.cornerRadius = attachPhotoButton.frame.height / 2
         
         cancelButton.backgroundColor = #colorLiteral(red: 1, green: 0.1058823529, blue: 0.003921568627, alpha: 1)
         cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.titleLabel?.textAlignment = .center
-        cancelButton.layer.cornerRadius = 15
+        cancelButton.layer.cornerRadius = cancelButton.frame.height / 2
         
-        submitPostButton.layer.cornerRadius = 10
+        submitPostButton.layer.cornerRadius = submitPostButton.frame.height / 2
     }
     
     func setupToolbar() {

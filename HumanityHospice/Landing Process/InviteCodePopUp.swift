@@ -48,6 +48,10 @@ class InviteCodePopUp: UIView, UITextFieldDelegate {
     }
     
     private func setupButton() {
+        
+        
+        
+        
         submitButton.setTitleColor(UIColor.white, for: .normal)
         submitButton.layer.borderColor = UIColor.white.cgColor
         submitButton.layer.borderWidth = 1

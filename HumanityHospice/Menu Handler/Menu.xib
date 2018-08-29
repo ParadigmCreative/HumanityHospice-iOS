@@ -69,7 +69,7 @@
                                 <constraint firstAttribute="height" constant="48" id="g39-6c-i61"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                            <state key="normal" title="Contact Care Nurse" backgroundImage="Contact Nurse"/>
+                            <state key="normal" backgroundImage="Contact Nurse"/>
                         </button>
                     </subviews>
                     <constraints>

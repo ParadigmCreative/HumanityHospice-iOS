@@ -32,7 +32,6 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var agreeToTermsButton: UIButton!
     @IBOutlet weak var patientCode: UITextField!
-    @IBOutlet weak var agreementView: UIView!
     
     var inviteCode: String?
     var pidToFollow: String?
@@ -45,24 +44,22 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
         if signupType == "Patient" {
             patientCode.isEnabled = false
             patientCode.isHidden = true
-            agreementView.snp.makeConstraints { (make) in
-                make.top.equalTo(reenterPasswordTF.snp.bottom).offset(16)
-                make.left.right.equalToSuperview().inset(25)
-                make.height.equalTo(140)
-            }
+            self.title = "I am a Patient"
         } else {
-            agreementView.snp.makeConstraints { (make) in
-                make.top.equalTo(patientCode.snp.bottom).offset(16)
-                make.left.right.equalToSuperview().inset(25)
-                make.height.equalTo(140)
-            }
+            self.title = "I am a Friend of a Patient"
         }
+        
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
+        self.navigationController?.navigationBar.tintColor = .white
     }
     
     func setupButtons() {
         signUpButton.setupMainButton()
         signUpButton.isEnabled = false
         agreeToTermsButton.imageEdgeInsets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0, right: 0)
+        agreeToTermsButton.layer.cornerRadius = 5
+        agreeToTermsButton.layer.borderColor = UIColor.white.cgColor
+        agreeToTermsButton.layer.borderWidth = 2
     }
     
     

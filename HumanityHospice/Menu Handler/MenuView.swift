@@ -109,6 +109,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
             }
         } else if selected == "Sign Out" {
             // Sign Out
+            MenuHandler.closeMenu()
             Utilities.showActivityIndicator(view: self)
             AppSettings.clearAppSettings()
             handlingController?.beginSignOutProcess()

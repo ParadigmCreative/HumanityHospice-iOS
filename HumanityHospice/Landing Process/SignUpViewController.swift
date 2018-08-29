@@ -35,12 +35,26 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     
     func masterSetup() {
         setupButtons()
-//        setupTextFields()
+        
+        if let nav = self.navigationController {
+            nav.navigationBar.tintColor = .white
+            nav.navigationBar.barTintColor = UIColor.clear
+            nav.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+            nav.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            nav.navigationBar.shadowImage = UIImage()
+            nav.navigationBar.isTranslucent = true
+        }
+        
     }
     
     func setupButtons() {
-        patientButton.setupMainButton()
-        friendButton.setupMainButton()
+        
+        patientButton.layer.cornerRadius = 5
+        patientButton.setTitleColor(.white, for: .normal)
+        
+        friendButton.layer.cornerRadius = 5
+        friendButton.setTitleColor(.white, for: .normal)
+        
     }
     
     func setupTextFields() {
