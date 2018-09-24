@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDelegate {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - View
     override func viewDidLoad() {
@@ -121,58 +121,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
     }
     
     
-    // MARK: - Invite Code
-    private func showPopUp() {
-        inviteCodePopUp.inviteCodeDelegate = self
-        inviteCodePopUp.initialize()
-        self.view.addSubview(inviteCodePopUp)
-        inviteCodePopUp.center = self.view.center
-        inviteCodePopUp.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.inviteCodePopUp.transform = CGAffineTransform.identity
-        })
-    }
     
-    private func closePopup() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.inviteCodePopUp.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
-        }) { (done) in
-            self.inviteCodePopUp.removeFromSuperview()
-        }
-    }
-    
-    func invalidCode() {
-        closePopup()
-    }
-    
-    private var staticCode: String?
-    private var followingPID: String?
-    func validCode(code: String) {
-        Utilities.showActivityIndicator(view: self.view)
-        // Query DB
-        DatabaseHandler.checkDBForInviteCode(code: code) { (success, pid) in
-            if success {
-                if let pid = pid {
-//                    self.staticCode = code
-                    self.followingPID = pid
-                    AppSettings.currentPatient = pid
-                    // show success
-                    self.inviteCodePopUp.showSuccess()
-                }
-            } else {
-                // show failure
-                self.showAlert(title: "Hmm...", message: "That invite code doesn't exist.")
-                Utilities.closeActivityIndicator()
-            }
-        }
-    }
-    
-    func completed() {
-        Utilities.closeActivityIndicator()
-        closePopup()
-        self.performSegue(withIdentifier: "showSignUp", sender: self.followingPID)
-    }
     
     // MARK: Navigation
    
@@ -185,19 +134,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, InviteCodeDel
             }
         }
     }
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if inviteCodePopUp.isHidden == false {
-            if let touch = touches.first {
-                if let view = touch.view {
-                    if view != inviteCodePopUp {
-                        closePopup()
-                    }
-                }
-            }
-        }
-    }
+
     
 
 }

@@ -131,7 +131,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         
         self.listingTableView.separatorStyle = .none
         self.listingTableView.tableFooterView = UIView()
-        self.listingTableView.isScrollEnabled = false
+        self.listingTableView.isScrollEnabled = true
         self.listingTableView.emptyDataSetSource = self
         self.listingTableView.emptyDataSetDelegate = self
         

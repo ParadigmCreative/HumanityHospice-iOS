@@ -6,24 +6,25 @@ target 'HumanityHospice' do
   use_frameworks!
   inhibit_all_warnings!
   # Pods for HumanityHospice
-pod 'Firebase/Core'
-pod 'Firebase/Database'
-pod 'Firebase/Auth'
-pod 'Firebase/Storage'
-pod 'RealmSwift'
-pod 'DZNEmptyDataSet'
-pod 'SnapKit', '~> 4.0'
-pod 'ImagePicker'
-# pod 'Lightbox'
-# pod 'Hue'
-# pod 'Imaginary'
-pod 'Serrata'
+    pod 'Firebase/Core'
+    pod 'Firebase/Database'
+    pod 'Firebase/Auth'
+    pod 'Firebase/Storage'
+    pod 'RealmSwift'
+    pod 'DZNEmptyDataSet'
+    pod 'SnapKit', '~> 4.0'
+    pod 'ImagePicker'
+    # pod 'Lightbox'
+    # pod 'Hue'
+    # pod 'Imaginary'
+    pod 'Serrata'
 
-post_install do |installer|
-    installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            config.build_settings['SWIFT_VERSION'] = '4.1'
+
+    post_install do |installer|
+        installer.pods_project.targets.each do |target|
+            target.build_configurations.each do |config|
+                config.build_settings['SWIFT_VERSION'] = '4.1'
+            end
         end
     end
-end
 end

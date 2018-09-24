@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
 
@@ -194,80 +195,15 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func signUp(_ sender: Any) {
         self.showIndicator()
         verifyTextFields { (first, last, email, pass) in
-            
-            // Sign up user
-            DatabaseHandler.signUp(email: email, password: pass, completion: { (user, error) in
-                if error != nil {
-                    // show alert if error isn't nil
-                    self.showAlert(title: "Hmm...", message: error!.localizedDescription)
-                    self.closeIndicator()
-                } else {
-                    if user != nil {
-                        // set current user to user handed back from call
-                        AppSettings.currentFBUser = user
-                        AppSettings.signUpName = (first, last)
-                        // make profile changes to user
-                        let changes = user?.createProfileChangeRequest()
-                        changes?.displayName = "\(first) \(last)"
-                        
-                        changes?.commitChanges(completion: { (error) in
-                            if error != nil {
-                                // show alert if there was an error
-                                self.showAlert(title: "Hmm...", message: error!.localizedDescription)
-                                self.closeIndicator()
-                            } else {
-                                print("New User:", user!.uid, user!.email!, user!.displayName!)
-                                
-                                // create app user instance
-                                let appuser = DatabaseHandler.createAppUser(user: user!)
-                                
-                                // create DB reference with user data
-                                DatabaseHandler.createUserReference(type: AppSettings.userType!, user: appuser!, completion: { (error, done) in
-                                    if error != nil {
-                                        self.showAlert(title: "Hmm...", message: error!.localizedDescription)
-                                        self.closeIndicator()
-                                    } else {
-                                        print("Created new user:", appuser!.firstName, appuser!.lastName)
-                                        
-                                        // SET CURRENT PATIENT
-                                        if AppSettings.userType == DatabaseHandler.UserType.Reader {
-                                            if let id = self.pidToFollow {
-                                                DatabaseHandler.addUserToFollow(pid: id, userID: appuser!.id)
-                                                AppSettings.currentPatient = id
-                                                if var user = appuser as? DatabaseHandler.Reader {
-                                                    user.readingFrom = id
-                                                    AppSettings.currentAppUser = user
-                                                }
-                                                print("Set currentPatient to:", id)
-                                            }
-                                        } else if AppSettings.userType == DatabaseHandler.UserType.Patient {
-                                            AppSettings.currentPatient = AppSettings.currentFBUser!.uid
-                                            
-                                            // make first post
-                                            DatabaseHandler.postToDatabase(posterUID: user!.uid,
-                                                                           posterName: user!.displayName!,
-                                                                           message: "\(user!.displayName!) has joined Humanity Hospice",
-                                                                           imageURL: nil,
-                                                                           completion: {})
-                                        }
-                                        // if creation is successful, set
-                                        AppSettings.currentAppUser = appuser
-                                        
-                                        // Present the Journal View
-                                        self.closeIndicator()
-                                        self.moveToJournal()
-                                        
-                                        
-                                    }
-                                })
-                            }
-                        })
-                    } else {
-                        self.closeIndicator()
-                        self.showAlert(title: "Hmm...", message: "Something happend. Please try again later")
-                    }
-                }
-            })
+
+            if !patientCode.isHidden {
+                guard let invite = patientCode.text else { return }
+                validateInvite(code: invite, completion: { (pid) in
+                    self.createUser(first: first, last: last, email: email, password: pass)
+                })
+            } else {
+                self.createUser(first: first, last: last, email: email, password: pass)
+            }
         }
     }
     
@@ -318,6 +254,24 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    func validateInvite(code: String, completion: @escaping (String)->()) {
+        Utilities.showActivityIndicator(view: self.view)
+        // Query DB
+        DatabaseHandler.checkDBForInviteCode(code: code) { (success, pid) in
+            if success {
+                if let pid = pid {
+                    AppSettings.currentPatient = pid
+                    self.pidToFollow = pid
+                    completion(pid)
+                }
+            } else {
+                // show failure
+                self.showAlert(title: "Hmm...", message: "That invite code doesn't exist.")
+                Utilities.closeActivityIndicator()
+            }
+        }
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == firstNameTF {
             lastNameTF.becomeFirstResponder()
@@ -350,4 +304,97 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
     }
     */
 
+}
+
+
+extension CompleteSignUpViewController {
+    func createUser(first: String, last: String, email: String, password: String) {
+        // Sign up user
+        DatabaseHandler.signUp(email: email, password: password, completion: { (user, error) in
+            if error != nil {
+                // show alert if error isn't nil
+                self.showAlert(title: "Hmm...", message: error!.localizedDescription)
+                self.closeIndicator()
+            } else {
+                if user != nil {
+                    // set current user to user handed back from call
+                    AppSettings.currentFBUser = user
+                    AppSettings.signUpName = (first, last)
+                    
+                    // make profile changes to user
+                    self.submitChanges(user: user, first: first, last: last)
+                    
+                } else {
+                    self.closeIndicator()
+                    self.showAlert(title: "Hmm...", message: "Something happend. Please try again later")
+                }
+            }
+        })
+        
+    }
+    
+    func submitChanges(user: User?, first: String, last: String) {
+        let changes = user?.createProfileChangeRequest()
+        changes?.displayName = "\(first) \(last)"
+        changes?.commitChanges(completion: { (error) in
+            if error != nil {
+                // show alert if there was an error
+                self.showAlert(title: "Hmm...", message: error!.localizedDescription)
+                self.closeIndicator()
+            } else {
+                print("New User:", user!.uid, user!.email!, user!.displayName!)
+                
+                // create app user instance
+                let appuser = DatabaseHandler.createAppUser(user: user!)
+                
+                self.createDatabaseReferenceFor(appuser: appuser, user: user)
+            
+            }
+        })
+    }
+    
+    func createDatabaseReferenceFor(appuser: AppUser?, user: User?) {
+        // create DB reference with user data
+        DatabaseHandler.createUserReference(type: AppSettings.userType!, user: appuser!, completion: { (error, done) in
+            if error != nil {
+                self.showAlert(title: "Hmm...", message: error!.localizedDescription)
+                self.closeIndicator()
+            } else {
+                print("Created new user:", appuser!.firstName, appuser!.lastName)
+                
+                // SET CURRENT PATIENT
+                if AppSettings.userType == DatabaseHandler.UserType.Reader {
+                    if let id = self.pidToFollow {
+                        DatabaseHandler.addUserToFollow(pid: id, userID: appuser!.id)
+                        AppSettings.currentPatient = id
+                        if var user = appuser as? DatabaseHandler.Reader {
+                            user.readingFrom = id
+                            AppSettings.currentAppUser = user
+                        }
+                        print("Set currentPatient to:", id)
+                    }
+                } else if AppSettings.userType == DatabaseHandler.UserType.Patient {
+                    AppSettings.currentPatient = AppSettings.currentFBUser!.uid
+                    
+                    // make first post
+                    DatabaseHandler.postToDatabase(posterUID: user!.uid,
+                                                   posterName: user!.displayName!,
+                                                   message: "\(user!.displayName!) has joined Humanity Hospice",
+                                                   imageURL: nil,
+                                                   completion: {})
+                }
+                
+                
+                // if creation is successful, set
+                AppSettings.currentAppUser = appuser
+                
+                // Present the Journal View
+                self.closeIndicator()
+                self.moveToJournal()
+                
+            }
+        })
+        
+    }
+    
 }
