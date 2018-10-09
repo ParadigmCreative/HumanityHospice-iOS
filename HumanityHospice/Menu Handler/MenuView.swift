@@ -30,8 +30,8 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     var imagePicker = ImagePickerController()
     
     // MARK: - TableView
-    var items = ["My Journal", "Encouragement Board", "My Photo Album", "Create Family Account", "Invite People", "About Humanity Hospice", "Sign Out"]
-    var itemsIcons = [#imageLiteral(resourceName: "journal"), #imageLiteral(resourceName: "Bubbles - simple-line-icons"), #imageLiteral(resourceName: "Picture - simple-line-icons"), #imageLiteral(resourceName: "User - simple-line-icons"), #imageLiteral(resourceName: "Plus - simple-line-icons"), #imageLiteral(resourceName: "Info - simple-line-icons"), #imageLiteral(resourceName: "Login - simple-line-icons")]
+    var items = ["My Journal", "Encouragement Board", "My Photo Album", "Create Family Account", "Invite People", "Manage Followers", "About Humanity Hospice", "Sign Out"]
+    var itemsIcons = [#imageLiteral(resourceName: "journal"), #imageLiteral(resourceName: "Bubbles - simple-line-icons"), #imageLiteral(resourceName: "Picture - simple-line-icons"), #imageLiteral(resourceName: "User - simple-line-icons"), #imageLiteral(resourceName: "Plus - simple-line-icons"), #imageLiteral(resourceName: "Switch Users"), #imageLiteral(resourceName: "Info - simple-line-icons"), #imageLiteral(resourceName: "Login - simple-line-icons")]
     
     var readerItems = ["Journal", "Encouragement Board", "Photo Album", "About Humanity Hospice", "Sign Out"]
     var readerIcons = [#imageLiteral(resourceName: "journal"), #imageLiteral(resourceName: "Bubbles - simple-line-icons"), #imageLiteral(resourceName: "Picture - simple-line-icons"), #imageLiteral(resourceName: "Info - simple-line-icons"), #imageLiteral(resourceName: "Login - simple-line-icons")]
@@ -118,7 +118,10 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
+        let total = tableView.frame.height
+        let numberOfItems = self.menuItems.count
+        let height = total / CGFloat(numberOfItems)
+        return height
     }
     
     // MARK: - Setup
@@ -128,7 +131,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         
         self.listingTableView.delegate = self
         self.listingTableView.dataSource = self
-        
+        self.listingTableView.showsVerticalScrollIndicator = true
         self.listingTableView.separatorStyle = .none
         self.listingTableView.tableFooterView = UIView()
         self.listingTableView.isScrollEnabled = true
@@ -154,14 +157,12 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
             if type == .Patient || type == .Family {
                 self.menuItems = items
                 self.menuIcons = itemsIcons
-                menuItems.append("Manage Followers")
-                menuIcons.append(#imageLiteral(resourceName: "Switch Users"))
             } else {
                 self.menuItems = readerItems
                 self.menuIcons = readerIcons
                 if checkForMultiplePatients() {
-                    menuItems.append("Switch Patients")
-                    menuIcons.append(#imageLiteral(resourceName: "Switch Users"))
+                    menuItems.insert("Switch Patients", at: 4)
+                    menuIcons.insert(#imageLiteral(resourceName: "Switch Users"), at: 4)
                 }
             }
         }
