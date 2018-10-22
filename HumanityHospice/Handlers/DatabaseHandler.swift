@@ -243,6 +243,7 @@ class DatabaseHandler {
                                   firstName: AppSettings.signUpName!.first,
                                   lastName: AppSettings.signUpName!.last,
                                   nurse: nil,
+                                  nurseID: nil,
                                   inviteCode: code,
                                   profilePic: nil)
             return appuser
@@ -340,9 +341,10 @@ class DatabaseHandler {
                     let first = data[c.FirstName] as! String
                     let last = data[c.LastName] as! String
                     let full = data[c.FullName] as! String
+                    let nurseID = data["PrimaryNurseID"] as? String
                     
                     let user = Patient(id: AppSettings.currentFBUser!.uid,
-                                       firstName: first, lastName: last, nurse: nil,
+                                       firstName: first, lastName: last, nurse: nil, nurseID: nurseID,
                                        inviteCode: inviteCode, profilePic: nil)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.id
@@ -412,7 +414,7 @@ class DatabaseHandler {
                 
                 let user = Patient(id: pid,
                                    firstName: first, lastName: last,
-                                   nurse: nil,
+                                   nurse: nil, nurseID: nil,
                                    inviteCode: inviteCode, profilePic: nil)
                 completion(user)
             }
@@ -431,7 +433,7 @@ class DatabaseHandler {
                 
                 let user = Patient(id: pid,
                                    firstName: first, lastName: last,
-                                   nurse: nil,
+                                   nurse: nil, nurseID: nil,
                                    inviteCode: inviteCode, profilePic: nil)
                 NotificationCenter.default.post(name: .newPatientWasRecievedFromDB, object: nil, userInfo: ["user": user])
             }
@@ -444,6 +446,17 @@ class DatabaseHandler {
             if let readerData = snap.value as? [String: Any] {
                 let full = readerData[co.reader.FullName] as! String
                 completion(full, rid)
+            }
+        }
+    }
+    
+    static func getNurseDetails(nurseID: String, completion: @escaping (_ facetimeID: String)->()) {
+        var ref = Database.database().reference().child("Nurses")
+        ref.child(nurseID).observeSingleEvent(of: .value) { (snap) in
+            if let nurseData = snap.value as? [String: Any] {
+                if let facetime = nurseData["FacetimeID"] as? String {
+                    completion(facetime)
+                }
             }
         }
     }
@@ -1593,6 +1606,7 @@ class DatabaseHandler {
         var firstName: String
         var lastName: String
         var nurse: Staff?
+        var nurseID: String?
         let inviteCode: String?
         var profilePic: UIImage? = nil
     }

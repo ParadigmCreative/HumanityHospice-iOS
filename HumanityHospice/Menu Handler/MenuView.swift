@@ -28,6 +28,26 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     @IBOutlet weak var exitAreaView: UIView!
     @IBOutlet weak var editProfileImageButton: UIButton!
     var imagePicker = ImagePickerController()
+    @IBAction func callNurse(_ sender: UIButton) {
+        
+        if let user = AppSettings.currentAppUser as? DatabaseHandler.Patient {
+            if let nurseid = user.nurseID {
+                DatabaseHandler.getNurseDetails(nurseID: nurseid) { (facetimeID) in
+                    self.facetime(phoneNumber: facetimeID)
+                }
+            }
+        }
+        
+    }
+    
+    private func facetime(phoneNumber:String) {
+        if let facetimeURL: URL = URL(string: "facetime://\(phoneNumber)") {
+            let application: UIApplication = UIApplication.shared
+            if (application.canOpenURL(facetimeURL as URL)) {
+                application.openURL(facetimeURL as URL)
+            }
+        }
+    }
     
     // MARK: - TableView
     var items = ["My Journal", "Encouragement Board", "My Photo Album", "Create Family Account", "Invite People", "Manage Followers", "About Humanity Hospice", "Sign Out"]

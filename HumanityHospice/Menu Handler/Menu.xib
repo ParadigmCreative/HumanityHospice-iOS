@@ -70,6 +70,9 @@
                             </constraints>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                             <state key="normal" backgroundImage="Contact Nurse"/>
+                            <connections>
+                                <action selector="callNurse:" destination="iN0-l3-epB" eventType="touchUpInside" id="IVm-GY-Ucd"/>
+                            </connections>
                         </button>
                     </subviews>
                     <constraints>
