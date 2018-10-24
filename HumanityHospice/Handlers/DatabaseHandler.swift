@@ -245,7 +245,7 @@ class DatabaseHandler {
                                   nurse: nil,
                                   nurseID: nil,
                                   inviteCode: code,
-                                  profilePic: nil)
+                                  profilePic: nil, team: nil)
             return appuser
         case .Reader:
             let appuser = Reader(id: user.uid,
@@ -342,10 +342,11 @@ class DatabaseHandler {
                     let last = data[c.LastName] as! String
                     let full = data[c.FullName] as! String
                     let nurseID = data["PrimaryNurseID"] as? String
+                    let team = data["Team"] as? String
                     
                     let user = Patient(id: AppSettings.currentFBUser!.uid,
                                        firstName: first, lastName: last, nurse: nil, nurseID: nurseID,
-                                       inviteCode: inviteCode, profilePic: nil)
+                                       inviteCode: inviteCode, profilePic: nil, team: team)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.id
                     AppSettings.currentPatientName = full
@@ -415,7 +416,7 @@ class DatabaseHandler {
                 let user = Patient(id: pid,
                                    firstName: first, lastName: last,
                                    nurse: nil, nurseID: nil,
-                                   inviteCode: inviteCode, profilePic: nil)
+                                   inviteCode: inviteCode, profilePic: nil, team: nil)
                 completion(user)
             }
         }
@@ -434,7 +435,8 @@ class DatabaseHandler {
                 let user = Patient(id: pid,
                                    firstName: first, lastName: last,
                                    nurse: nil, nurseID: nil,
-                                   inviteCode: inviteCode, profilePic: nil)
+                                   inviteCode: inviteCode,
+                                   profilePic: nil, team: nil)
                 NotificationCenter.default.post(name: .newPatientWasRecievedFromDB, object: nil, userInfo: ["user": user])
             }
         }
@@ -454,8 +456,33 @@ class DatabaseHandler {
         var ref = Database.database().reference().child("Nurses")
         ref.child(nurseID).observeSingleEvent(of: .value) { (snap) in
             if let nurseData = snap.value as? [String: Any] {
-                if let facetime = nurseData["FacetimeID"] as? String {
-                    completion(facetime)
+                if let onCall = nurseData["isOnCall"] as? Bool {
+                    if onCall {
+                        if let facetime = nurseData["FacetimeID"] as? String {
+                            completion(facetime)
+                        }
+                    } else {
+                        if let nurseTeam = nurseData["Team"] as? String {
+                            getRandomOnCallNurse(ref: ref, team: nurseTeam, completion: { (facetimeID) in
+                                
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private static func getRandomOnCallNurse(ref: DatabaseReference, team: String, completion: (String)->()) {
+        ref.queryOrdered(byChild: "Team").queryEqual(toValue: team).observeSingleEvent(of: .value) { (snap) in
+            if let snaps = snap.children.allObjects as? [DataSnapshot] {
+                for snap in snaps {
+                    if let data = snap.value as? [String: Any] {
+                        let facetimeID = data["FacetimeID"] as! String
+                        let first = data["FirstName"] as! String
+                        let last = data["LastName"] as! String
+                        // Create object or something to send this data back saying, 'Your nurse isn't on call at the moment. ___ is available, would you like to give them a call?
+                    }
                 }
             }
         }
@@ -1609,6 +1636,7 @@ class DatabaseHandler {
         var nurseID: String?
         let inviteCode: String?
         var profilePic: UIImage? = nil
+        var team: String?
     }
     
     struct Family: AppUser {
