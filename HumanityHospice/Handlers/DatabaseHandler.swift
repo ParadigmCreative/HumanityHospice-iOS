@@ -1437,7 +1437,7 @@ class DatabaseHandler {
                 var posts: [EBPost] = []
                     
                 if let post = snap.value as? [String: AnyObject] {
-                    let name = post[co.encouragementBoard.PosterName] as! String
+                    let name = post[co.encouragementBoard.PatientName] as! String
                     let posterUID = post[co.encouragementBoard.PosterUID] as! String
                     let timestamp = post[co.encouragementBoard.Timestamp] as! TimeInterval
                     let message = post[co.encouragementBoard.Message] as! String
