@@ -331,7 +331,7 @@ class DatabaseHandler {
         }
     }
     
-    private static func pullDataFrom(kind: String, completion: @escaping (Bool)->()) {
+    public static func pullDataFrom(kind: String, completion: @escaping (Bool)->()) {
         Database.database().reference().child(kind).child(AppSettings.currentFBUser!.uid).observeSingleEvent(of: .value) { (snapshot) in
             if let data = snapshot.value as? [String:Any] {
                 switch AppSettings.userType! {
@@ -961,7 +961,7 @@ class DatabaseHandler {
         
         if userRef != nil {
             let handle = userRef!.observe(.childAdded) { (snap) in
-                DispatchQueue.global(qos: .utility).async {
+                DispatchQueue.main.async {
                     var posts: [Post] = []
                     if let post = snap.value as? [String: AnyObject] {
                         let timestamp = post[co.journal.Timestamp] as! TimeInterval
@@ -1437,7 +1437,7 @@ class DatabaseHandler {
                 var posts: [EBPost] = []
                     
                 if let post = snap.value as? [String: AnyObject] {
-                    let name = post[co.encouragementBoard.PatientName] as! String
+                    let name = post[co.encouragementBoard.PosterName] as! String
                     let posterUID = post[co.encouragementBoard.PosterUID] as! String
                     let timestamp = post[co.encouragementBoard.Timestamp] as! TimeInterval
                     let message = post[co.encouragementBoard.Message] as! String
@@ -1465,7 +1465,7 @@ class DatabaseHandler {
     
     public static func postEBToDatabase(posterID: String, posterName: String, message: String, completion: ()->()) {
         let data: [String: Any] = [co.encouragementBoard.PosterUID: posterID,
-                                   co.encouragementBoard.PatientName: posterName,
+                                   co.encouragementBoard.PosterName: posterName,
                                    co.encouragementBoard.Message: message,
                                    co.encouragementBoard.Timestamp: Int(Date().timeIntervalSince1970.rounded())]
         let path = Database.database().reference()

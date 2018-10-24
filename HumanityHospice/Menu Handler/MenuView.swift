@@ -31,9 +31,15 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     @IBAction func callNurse(_ sender: UIButton) {
         
         if let user = AppSettings.currentAppUser as? DatabaseHandler.Patient {
-            if let nurseid = user.nurseID {
-                DatabaseHandler.getNurseDetails(nurseID: nurseid) { (facetimeID) in
-                    self.facetime(phoneNumber: facetimeID)
+            DatabaseHandler.pullDataFrom(kind: "Patients") { (done) in
+                if let nurseid = user.nurseID {
+                    DatabaseHandler.getNurseDetails(nurseID: nurseid) { (facetimeID) in
+                        var edited = facetimeID.replacingOccurrences(of: "(", with: "")
+                        edited = edited.replacingOccurrences(of: ")", with: "")
+                        edited = edited.replacingOccurrences(of: "-", with: "")
+                        edited = edited.replacingOccurrences(of: " ", with: "")
+                        self.facetime(phoneNumber: edited)
+                    }
                 }
             }
         }
@@ -43,8 +49,8 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     private func facetime(phoneNumber:String) {
         if let facetimeURL: URL = URL(string: "facetime://\(phoneNumber)") {
             let application: UIApplication = UIApplication.shared
-            if (application.canOpenURL(facetimeURL as URL)) {
-                application.openURL(facetimeURL as URL)
+            if application.canOpenURL(facetimeURL as URL) {
+                application.open(facetimeURL, options: [:], completionHandler: nil)
             }
         }
     }
@@ -138,8 +144,11 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let total = tableView.frame.height
+        var total = tableView.frame.height
         let numberOfItems = self.menuItems.count
+        
+        total -= 75
+        
         let height = total / CGFloat(numberOfItems)
         return height
     }
