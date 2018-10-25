@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 
 class Utilities {
-    private static var indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+    public static var indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     
     public static func showActivityIndicator(view: UIView) {
         self.indicator.color = #colorLiteral(red: 0.4605029225, green: 0.447249949, blue: 0.7566576004, alpha: 1)
@@ -44,8 +44,11 @@ class Utilities {
 // Extensions
 extension UIViewController {
     @objc func showAlert(title: String, message: String) {
+        UIApplication.shared.endIgnoringInteractionEvents()
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }

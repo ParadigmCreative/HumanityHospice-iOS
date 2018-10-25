@@ -258,6 +258,7 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
         Utilities.showActivityIndicator(view: self.view)
         // Query DB
         DatabaseHandler.checkDBForInviteCode(code: code) { (success, pid) in
+            Utilities.closeActivityIndicator()
             if success {
                 if let pid = pid {
                     AppSettings.currentPatient = pid
@@ -267,7 +268,6 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
             } else {
                 // show failure
                 self.showAlert(title: "Hmm...", message: "That invite code doesn't exist.")
-                Utilities.closeActivityIndicator()
             }
         }
     }
