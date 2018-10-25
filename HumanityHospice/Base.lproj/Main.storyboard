@@ -1141,6 +1141,13 @@
                             <constraint firstItem="gDI-5S-wuK" firstAttribute="top" secondItem="o6K-w8-IyF" secondAttribute="bottom" constant="16" id="yM3-aa-AIP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tde-ns-WPu"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="o6K-w8-IyF"/>
+                                <exclude reference="gDI-5S-wuK"/>
+                                <exclude reference="R8c-ex-0GM"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Invite People" id="7rB-Lr-fo8">
@@ -2250,7 +2257,7 @@
         <image name="Logo 2" width="52" height="52"/>
         <image name="Menu" width="30" height="20"/>
         <image name="Notice Box" width="321" height="104"/>
-        <image name="Picture - simple-line-icons" width="15" height="13"/>
+        <image name="Picture - simple-line-icons" width="20" height="17"/>
         <image name="TextField" width="311" height="48"/>
     </resources>
 </document>
