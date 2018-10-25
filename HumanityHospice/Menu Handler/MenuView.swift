@@ -33,12 +33,19 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         if let user = AppSettings.currentAppUser as? DatabaseHandler.Patient {
             DatabaseHandler.pullDataFrom(kind: "Patients") { (done) in
                 if let nurseid = user.nurseID {
-                    DatabaseHandler.getNurseDetails(nurseID: nurseid) { (facetimeID) in
-                        var edited = facetimeID.replacingOccurrences(of: "(", with: "")
-                        edited = edited.replacingOccurrences(of: ")", with: "")
-                        edited = edited.replacingOccurrences(of: "-", with: "")
-                        edited = edited.replacingOccurrences(of: " ", with: "")
-                        self.facetime(phoneNumber: edited)
+                    DatabaseHandler.getNurseDetails(nurseID: nurseid) { (facetimeID, name)  in
+//                        var edited = facetimeID.replacingOccurrences(of: "(", with: "")
+//                        edited = edited.replacingOccurrences(of: ")", with: "")
+//                        edited = edited.replacingOccurrences(of: "-", with: "")
+//                        edited = edited.replacingOccurrences(of: " ", with: "")
+                        
+                        if let name = name {
+                            self.showNurseUnavailableAlert(name: name, completion: {
+                                self.facetime(phoneNumber: facetimeID)
+                            })
+                        } else {
+                            self.facetime(phoneNumber: facetimeID)
+                        }
                     }
                 }
             }
@@ -53,6 +60,18 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
                 application.open(facetimeURL, options: [:], completionHandler: nil)
             }
         }
+    }
+    
+    private func showNurseUnavailableAlert(name: String, completion: @escaping ()->()) {
+        let alert = UIAlertController(title: "Attention!", message: "Your assigned nurse isn't on call right now. Another nurse, \(name), is available. Would you like to call them?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "No, cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes, call \(name)", style: .default, handler: { (action) in
+            completion()
+        }))
+        
+        self.handlingController?.present(alert, animated: true, completion: nil)
+        
     }
     
     // MARK: - TableView

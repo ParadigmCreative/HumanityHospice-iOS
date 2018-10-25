@@ -452,19 +452,21 @@ class DatabaseHandler {
         }
     }
     
-    static func getNurseDetails(nurseID: String, completion: @escaping (_ facetimeID: String)->()) {
+    static func getNurseDetails(nurseID: String, completion: @escaping (_ facetimeID: String, _ name: String?)->()) {
         var ref = Database.database().reference().child("Nurses")
         ref.child(nurseID).observeSingleEvent(of: .value) { (snap) in
             if let nurseData = snap.value as? [String: Any] {
                 if let onCall = nurseData["isOnCall"] as? Bool {
                     if onCall {
                         if let facetime = nurseData["FacetimeID"] as? String {
-                            completion(facetime)
+                            completion(facetime, nil)
                         }
                     } else {
                         if let nurseTeam = nurseData["Team"] as? String {
-                            getRandomOnCallNurse(ref: ref, team: nurseTeam, completion: { (facetimeID) in
-                                
+                            
+                            var avoid = "\(nurseData["FirstName"]) \(nurseData["LastName"])"
+                            getRandomOnCallNurse(ref: ref, team: nurseTeam, avoid: avoid, completion: { (name, facetimeID)  in
+                                completion(facetimeID, name)
                             })
                         }
                     }
@@ -473,17 +475,38 @@ class DatabaseHandler {
         }
     }
     
-    private static func getRandomOnCallNurse(ref: DatabaseReference, team: String, completion: (String)->()) {
+    private static func getRandomOnCallNurse(ref: DatabaseReference, team: String, avoid nurseName: String, completion: @escaping (_ name: String, _ facetime: String)->()) {
         ref.queryOrdered(byChild: "Team").queryEqual(toValue: team).observeSingleEvent(of: .value) { (snap) in
             if let snaps = snap.children.allObjects as? [DataSnapshot] {
+                struct n {
+                    let name: String
+                    let facetime: String
+                }
+                
+                var nurses: [n] = []
+                
                 for snap in snaps {
                     if let data = snap.value as? [String: Any] {
                         let facetimeID = data["FacetimeID"] as! String
                         let first = data["FirstName"] as! String
                         let last = data["LastName"] as! String
+                        let isOnCall = data["isOnCall"] as! Bool
                         // Create object or something to send this data back saying, 'Your nurse isn't on call at the moment. ___ is available, would you like to give them a call?
+                        let newNurse = n(name: "\(first) \(last)", facetime: facetimeID)
+                        
+                        if isOnCall {
+                            nurses.append(newNurse)
+                        }
+
                     }
                 }
+                
+                if var calling = nurses.first(where: { (nurse) -> Bool in
+                    return nurse.name != nurseName
+                }) {
+                    completion(calling.name, calling.facetime)
+                }
+                
             }
         }
     }
