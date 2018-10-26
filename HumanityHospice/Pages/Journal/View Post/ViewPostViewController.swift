@@ -162,7 +162,9 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     // MARK: - Composing new comment
     let messageInputContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.4588235294, green: 0.4470588235, blue: 0.7568627451, alpha: 1)
+        view.backgroundColor = UIColor.white
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.layer.borderWidth = 1
         return view
     }()
     
@@ -175,8 +177,8 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     lazy var sendButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Send", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.5098039216, green: 0.5215686275, blue: 0.8392156863, alpha: 1), for: .normal)
-        button.backgroundColor = UIColor.white
+        button.setTitleColor(#colorLiteral(red: 0.9999071956, green: 1, blue: 0.999881804, alpha: 1), for: .normal)
+        button.backgroundColor = #colorLiteral(red: 0.5115768313, green: 0.5218793154, blue: 0.8382071853, alpha: 1)
         button.layer.cornerRadius = 5
         button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(postComment), for: .touchUpInside)

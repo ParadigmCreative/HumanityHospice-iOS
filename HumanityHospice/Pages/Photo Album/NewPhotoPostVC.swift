@@ -36,7 +36,7 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
         if isInitial {
             clearPhotoButton.isHidden = true
             addPhotoButton.isHidden = true
-            ImageSelector.open(with: self, delegate: self)
+            selectPicture()
             isInitial = false
         } else {
             if imagePreview.image == nil {
@@ -52,7 +52,7 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
     }
     
     @IBAction func addPhoto(_ sender: Any) {
-        ImageSelector.open(with: self, delegate: self)
+        selectPicture()
     }
     
     @IBAction func clearPhoto(_ sender: Any) {
@@ -241,3 +241,51 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
     
     
 }
+
+
+extension NewPhotoPostVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func selectPicture() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        
+        let alert = UIAlertController(title: "Please select an option", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+            picker.sourceType = .camera
+            self.present(picker, animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Camera Roll", style: .default, handler: { (action) in
+            picker.sourceType = .photoLibrary
+            self.present(picker, animated: true)
+        }))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        var newImage: UIImage
+        
+        if let possibleImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+            newImage = possibleImage
+        } else if let possibleImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            newImage = possibleImage
+        } else {
+            return
+        }
+        
+        self.imagePreview.image = newImage
+        self.imagePreview.isHidden = false
+        self.clearPhotoButton.transform = CGAffineTransform.identity
+        self.clearPhotoButton.isHidden = false
+        self.view.bringSubview(toFront: self.clearPhotoButton)
+        
+        dismiss(animated: true)
+    }
+    
+}
+
