@@ -118,6 +118,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="callNurseButton" destination="Mxv-9j-8La" id="dbH-wc-cno"/>
                 <outlet property="editProfileImageButton" destination="Iba-nS-4FV" id="qSR-is-mTN"/>
                 <outlet property="emailLabel" destination="sHl-wf-YSI" id="97M-71-Lwz"/>
                 <outlet property="exitAreaView" destination="Wi7-Sx-pDH" id="5u6-Mn-abo"/>

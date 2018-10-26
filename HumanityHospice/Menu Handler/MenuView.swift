@@ -28,6 +28,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     @IBOutlet weak var exitAreaView: UIView!
     @IBOutlet weak var editProfileImageButton: UIButton!
     var imagePicker = ImagePickerController()
+    @IBOutlet weak var callNurseButton: UIButton!
     @IBAction func callNurse(_ sender: UIButton) {
         
         if let user = AppSettings.currentAppUser as? DatabaseHandler.Patient {
@@ -212,6 +213,8 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
                     menuItems.insert("Switch Patients", at: 4)
                     menuIcons.insert(#imageLiteral(resourceName: "Switch Users"), at: 4)
                 }
+                self.callNurseButton.isHidden = true
+                self.callNurseButton.isEnabled = false
             }
         }
     }
@@ -283,3 +286,4 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     
     
 }
+

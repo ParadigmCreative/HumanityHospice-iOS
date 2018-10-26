@@ -171,14 +171,18 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
     
     @IBAction func attachPhoto(_ sender: Any) {
 //        ImageSelector.open(with: self, delegate: self)
-        var config = Configuration()
-        config.noImagesTitle = "Loading images..."
-        config.requestPermissionTitle = "Attention!"
-        let picker = ImagePickerController(configuration: config)
-        picker.imageLimit = 1
-        picker.delegate = self
-        self.present(picker, animated: true, completion: nil)
+//        var config = Configuration()
+//        config.noImagesTitle = "Loading images..."
+//        config.requestPermissionTitle = "Attention!"
+//        let picker = ImagePickerController(configuration: config)
+//        picker.imageLimit = 1
+//        picker.delegate = self
+//        self.present(picker, animated: true, completion: nil)
+        
+        selectPicture()
     }
+    
+    
     
     @IBAction func cancel(_ sender: Any) {
         self.messageTF.resignFirstResponder()
@@ -269,5 +273,52 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
     }
     
     
+
+}
+
+
+extension NewPostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func selectPicture() {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        
+        let alert = UIAlertController(title: "Please select an option", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+            picker.sourceType = .camera
+            self.present(picker, animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Camera Roll", style: .default, handler: { (action) in
+            picker.sourceType = .photoLibrary
+            self.present(picker, animated: true)
+        }))
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        var newImage: UIImage
+        
+        if let possibleImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+            newImage = possibleImage
+        } else if let possibleImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            newImage = possibleImage
+        } else {
+            return
+        }
+        
+        self.image = newImage
+        self.imagePreview.isHidden = false
+        self.clearPhotoButton.transform = CGAffineTransform.identity
+        self.clearPhotoButton.isHidden = false
+        self.view.bringSubview(toFront: self.clearPhotoButton)
+        
+        dismiss(animated: true)
+    }
 
 }

@@ -106,7 +106,19 @@ class InviteReaders: UIViewController {
     
     @IBAction func shareCode(_ sender: Any) {
         let code = self.accessCodeButton.titleLabel!.text!
-        let activityVC = UIActivityViewController(activityItems: [code], applicationActivities: nil)
+        guard let currentName = (AppSettings.currentAppUser as? DatabaseHandler.Patient)?.fullName() else { return }
+        let messageText =   """
+                            \(currentName) has invited you to follow their profile on Humanity Connect!
+
+                            When creating an account, use access code "\(code)" to view their profile.
+
+                            View their profile online at www.humanityhospice.com or, Download the App!
+
+                            For iPhone: (iOS URL here)
+                            For Android: (Android URL here)
+                            """
+        
+        let activityVC = UIActivityViewController(activityItems: [messageText], applicationActivities: nil)
         self.present(activityVC, animated: true, completion: nil)
     }
     
