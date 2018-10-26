@@ -15,6 +15,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
         masterSetup()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: self)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -152,6 +159,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    var viewHasBeenAdjusted: Bool = false
 
 }
 
@@ -169,5 +177,23 @@ extension UITextField {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
         self.rightView = paddingView
         self.rightViewMode = .always
+    }
+}
+
+
+extension LoginViewController {
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if !viewHasBeenAdjusted {
+                self.view.frame.origin.y -= keyboardSize.height / 2
+                viewHasBeenAdjusted = true
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.view.frame.origin.y += keyboardSize.height / 2
+        }
     }
 }

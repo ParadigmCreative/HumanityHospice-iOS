@@ -63,16 +63,12 @@ class NewEBPostViewController: UIViewController, UITextViewDelegate {
     @IBAction func submitPost(_ sender: Any) {
         checkTextView { (done, text) in
             if done {
-                showVerificationAlert(completion: { (verified) in
-                    if verified {
-                        Utilities.showActivityIndicator(view: self.view)
-                        let uid = AppSettings.currentAppUser!.id
-                        let name = AppSettings.currentAppUser!.fullName()
-                        DatabaseHandler.postEBToDatabase(posterID: uid, posterName: name, message: text!, completion: {
-                            Utilities.closeActivityIndicator()
-                            self.dismiss(animated: true, completion: nil)
-                        })
-                    }
+                Utilities.showActivityIndicator(view: self.view)
+                let uid = AppSettings.currentAppUser!.id
+                let name = AppSettings.currentAppUser!.fullName()
+                DatabaseHandler.postEBToDatabase(posterID: uid, posterName: name, message: text!, completion: {
+                    Utilities.closeActivityIndicator()
+                    self.dismiss(animated: true, completion: nil)
                 })
             }
         }
