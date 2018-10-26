@@ -39,27 +39,12 @@ class ImagePostTableViewCell: UITableViewCell {
 //
 //            }
             
-            DatabaseHandler.checkForProfilePicture(for: self.post.posterUID) { (urlString) in
-                if let url = urlString {
-                    if let path = URL(string: url) {
-                        DatabaseHandler.getProfilePicture(URL: path, completion: { (image) in
-                            if let img = image {
-                                DispatchQueue.main.async {
-                                    self.profilePictureView.image = img
-                                    self.profilePictureView.setupSecondaryProfilePicture()
-                                    self.profilePictureView.contentMode = .scaleAspectFill
-                                }
-                                
-                                RealmHandler.write({ (realm) in
-                                    try! realm.write {
-                                        print("1 - Starting Update")
-                                        self.post.posterProfilePicture = img.prepareImageForSaving()
-                                        realm.add(self.post, update: true)
-                                        print("2 - DONE UPDATING IMAGE")
-                                    }
-                                })
-                            }
-                        })
+            if let savedProfilePic = self.post.posterProfilePicture {
+                if let image = savedProfilePic.getImageFromData() {
+                    DispatchQueue.main.async {
+                        self.profilePictureView.image = image
+                        self.profilePictureView.setupSecondaryProfilePicture()
+                        self.profilePictureView.contentMode = .scaleAspectFill
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -68,8 +53,38 @@ class ImagePostTableViewCell: UITableViewCell {
                         self.profilePictureView.contentMode = .scaleAspectFill
                     }
                 }
+            } else {
+                DatabaseHandler.checkForProfilePicture(for: self.post.posterUID) { (urlString) in
+                    if let url = urlString {
+                        if let path = URL(string: url) {
+                            DatabaseHandler.getProfilePicture(URL: path, completion: { (image) in
+                                if let img = image {
+                                    DispatchQueue.main.async {
+                                        self.profilePictureView.image = img
+                                        self.profilePictureView.setupSecondaryProfilePicture()
+                                        self.profilePictureView.contentMode = .scaleAspectFill
+                                    }
+                                    
+                                    RealmHandler.write({ (realm) in
+                                        try! realm.write {
+                                            print("1 - Starting Update")
+                                            self.post.posterProfilePicture = img.prepareImageForSaving()
+                                            realm.add(self.post, update: true)
+                                            print("2 - DONE UPDATING IMAGE")
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.profilePictureView.image = #imageLiteral(resourceName: "Logo")
+                            self.profilePictureView.setupSecondaryProfilePicture()
+                            self.profilePictureView.contentMode = .scaleAspectFill
+                        }
+                    }
+                }
             }
-            
         }
     }
     
