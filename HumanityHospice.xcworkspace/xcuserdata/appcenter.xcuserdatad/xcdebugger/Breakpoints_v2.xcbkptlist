@@ -266,12 +266,12 @@
                   moduleName = "HumanityHospice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appcenter/Documents/Work/Paradigm%20Creative/Humanity%20Hospice/HumanityHospice-iOS/HumanityHospice/Landing%20Process/CompleteSignUpViewController.swift"
-                  timestampString = "562217640.933738"
+                  timestampString = "562268653.610646"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "319"
                   endingLineNumber = "319"
-                  offsetFromSymbolStart = "60">
+                  offsetFromSymbolStart = "72">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -281,12 +281,12 @@
                   moduleName = "HumanityHospice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appcenter/Documents/Work/Paradigm%20Creative/Humanity%20Hospice/HumanityHospice-iOS/HumanityHospice/Landing%20Process/CompleteSignUpViewController.swift"
-                  timestampString = "562217640.935629"
+                  timestampString = "562268653.612486"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "320"
                   endingLineNumber = "320"
-                  offsetFromSymbolStart = "60">
+                  offsetFromSymbolStart = "70">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -378,12 +378,12 @@
                   moduleName = "HumanityHospice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appcenter/Documents/Work/Paradigm%20Creative/Humanity%20Hospice/HumanityHospice-iOS/HumanityHospice/Landing%20Process/CompleteSignUpViewController.swift"
-                  timestampString = "562217640.9404351"
+                  timestampString = "562268653.6174411"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "201"
                   endingLineNumber = "201"
-                  offsetFromSymbolStart = "948">
+                  offsetFromSymbolStart = "1131">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -393,12 +393,12 @@
                   moduleName = "HumanityHospice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/appcenter/Documents/Work/Paradigm%20Creative/Humanity%20Hospice/HumanityHospice-iOS/HumanityHospice/Landing%20Process/CompleteSignUpViewController.swift"
-                  timestampString = "562217640.942235"
+                  timestampString = "562268653.619449"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "202"
                   endingLineNumber = "202"
-                  offsetFromSymbolStart = "80">
+                  offsetFromSymbolStart = "85">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -496,6 +496,54 @@
             startingLineNumber = "123"
             endingLineNumber = "123"
             landmarkName = "setupImagePreview()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Pages/Journal/View Post/ViewPostViewController.swift"
+            timestampString = "562268652.748384"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Pages/Journal/View Post/ViewPostViewController.swift"
+            timestampString = "562268652.74889"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Pages/Journal/View Post/ViewPostViewController.swift"
+            timestampString = "562268884.180838"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
