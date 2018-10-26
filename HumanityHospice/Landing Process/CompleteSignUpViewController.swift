@@ -221,32 +221,38 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
             
             guard f.isEmpty == false else {
                 self.showAlert(title: "Oops!", message: "Please enter your first name")
+                Utilities.closeActivityIndicator()
                 return
             }
             
             guard l.isEmpty == false else {
                 self.showAlert(title: "Oops!", message: "Please enter your last name")
+                Utilities.closeActivityIndicator()
                 return
             }
             
             guard e.isEmpty == false else {
                 self.showAlert(title: "Oops!", message: "Please enter a valid email address.")
+                Utilities.closeActivityIndicator()
                 return
             }
             
             guard p1.isEmpty == false else {
                 self.showAlert(title: "Oops!", message: "Please enter your password.")
+                Utilities.closeActivityIndicator()
                 return
             }
             
             guard p2.isEmpty == false else {
                 self.showAlert(title: "Oops!", message: "Please re-enter your password.")
+                Utilities.closeActivityIndicator()
                 return
             }
             
             if p1 == p2 {
                 completion(f, l, e, p1)
             } else {
+                Utilities.closeActivityIndicator()
                 self.showAlert(title: "Oops!", message: "Passwords do not match.")
             }
             
@@ -366,6 +372,7 @@ extension CompleteSignUpViewController {
                 if AppSettings.userType == DatabaseHandler.UserType.Reader {
                     if let id = self.pidToFollow {
                         DatabaseHandler.addUserToFollow(pid: id, userID: appuser!.id)
+                        DatabaseHandler.addReaderToPatientList(pid: id, rid: appuser!.id)
                         AppSettings.currentPatient = id
                         if var user = appuser as? DatabaseHandler.Reader {
                             user.readingFrom = id

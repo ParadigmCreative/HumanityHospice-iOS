@@ -805,6 +805,10 @@ class DatabaseHandler {
         Database.database().reference().child(co.reader.Readers).child(userID).child("PatientList").child(pid).setValue(true)
     }
     
+    static func addReaderToPatientList(pid: String, rid: String) {
+        Database.database().reference().child(co.patient.Patients).child(pid).child("Readers").child(rid).setValue(true)
+    }
+    
     static func setCurrentPatientToReadFrom(patientID: String, followerID: String) {
         Database.database().reference().child("Readers").child(followerID).child("ReadingFrom").setValue(patientID)
     }
@@ -1185,7 +1189,7 @@ class DatabaseHandler {
         
         if userRef != nil {
             let handle = userRef!.observe(.childChanged) { (snap) in
-                DispatchQueue.global(qos: .utility).async {
+                DispatchQueue.main.async {
                     var posts: [Post] = []
                     if let post = snap.value as? [String: AnyObject] {
                         let timestamp = post[co.journal.Timestamp] as! TimeInterval
