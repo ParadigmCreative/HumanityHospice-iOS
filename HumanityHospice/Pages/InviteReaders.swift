@@ -114,8 +114,8 @@ class InviteReaders: UIViewController {
 
                             View their profile online at www.humanityhospice.com or, Download the App!
 
-                            For iPhone: (iOS URL here)
-                            For Android: (Android URL here)
+                            For iOS: https://apple.co/2StPCRu
+                            Android: https://goo.gl/DGWdQf
                             """
         
         let activityVC = UIActivityViewController(activityItems: [messageText], applicationActivities: nil)
