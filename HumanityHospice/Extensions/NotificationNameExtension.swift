@@ -13,5 +13,5 @@ extension Notification.Name {
     static let commentWasPosted = Notification.Name(rawValue: "commentWasPosted")
     static let newPatientWasRecievedFromDB = Notification.Name(rawValue: "newPatientWasRecievedFromDB")
     static let userSelectedNewPatient = Notification.Name(rawValue: "userSelectedNewPatient")
-    
+    static let ownerDidRequestDeleteImage = Notification.Name("ownerDidRequestDeleteImage")
 }

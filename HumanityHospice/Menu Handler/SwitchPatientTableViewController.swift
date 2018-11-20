@@ -128,10 +128,7 @@ class SwitchPatientTableViewController: UITableViewController, UITextFieldDelega
                 if let data = info as? [String: Any] {
                     if let user = data["user"] as? DatabaseHandler.Patient {
                         self.patients.append(user)
-                        self.totalPatientsToGrab -= 1
-                        if self.totalPatientsToGrab == 0 {
-                            self.tableView.reloadData()
-                        }
+                        self.tableView.reloadData()
                     }
                 }
             }

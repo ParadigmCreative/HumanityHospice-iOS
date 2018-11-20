@@ -63,6 +63,7 @@ class PhotoAlbumPost: Object {
     @objc dynamic var url: String = ""
     @objc dynamic var caption: String? = nil
     @objc dynamic var image: Data? = nil
+    @objc dynamic var name: String = ""
     
     
     override static func primaryKey() -> String? {

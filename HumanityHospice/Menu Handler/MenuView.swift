@@ -53,6 +53,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         }
         
     }
+    @IBOutlet weak var versionLabel: UILabel!
     
     private func facetime(phoneNumber:String) {
         if let facetimeURL: URL = URL(string: "facetime://\(phoneNumber)") {
@@ -190,6 +191,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     }
     
     func setupHeader() {
+        setupBuildNumber()
         checkForProfilePicture()
 
         guard let email = AppSettings.currentFBUser?.email else { return }
@@ -219,13 +221,21 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
         }
     }
     
+    func setupBuildNumber() {
+        let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+        let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+        
+        let str = "\(version) - \(build)"
+        self.versionLabel.text = str
+    }
+    
     func checkForMultiplePatients() -> Bool {
         if let reader = AppSettings.currentAppUser as? DatabaseHandler.Reader {
             let patients = reader.patients
             if patients.count > 0 {
                 return true
             } else {
-                return false
+                return true
             }
         } else {
             return false

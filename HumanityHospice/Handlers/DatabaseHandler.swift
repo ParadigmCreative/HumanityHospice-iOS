@@ -18,6 +18,9 @@ class DatabaseHandler {
     // MARK: - Constants
     static let realm = try! Realm()
     
+    static let database = Database.database().reference()
+    static let storage = Storage.storage().reference()
+    
     // MARK: - Administration
     
     /// Closes all connections to Firebase Database by removing each observer that exists.
@@ -1560,7 +1563,8 @@ class DatabaseHandler {
                     } else {
                         if let url = url?.absoluteString {
                             let dbdata: [String: Any] = [co.photoAlbum.URL: url,
-                                                         co.photoAlbum.Timestamp: Int(Date().timeIntervalSince1970.rounded())]
+                                                         co.photoAlbum.Timestamp: Int(Date().timeIntervalSince1970.rounded()),
+                                                         "imageName": ref.name]
                             dbRef.setValue(dbdata)
                             completion(nil)
                         }
@@ -1589,11 +1593,13 @@ class DatabaseHandler {
                 if let imgPost = snap.value as? [String: Any] {
                     let url = imgPost[co.photoAlbum.URL] as! String
                     let timestamp = imgPost[co.photoAlbum.Timestamp] as! TimeInterval
+                    let name = imgPost["imageName"] as! String
                     
                     let newPAP = PhotoAlbumPost()
                     newPAP.url = url
                     newPAP.timestamp = timestamp
                     newPAP.id = snap.key
+                    newPAP.name = name
                     
                     posts.append(newPAP)
                 }

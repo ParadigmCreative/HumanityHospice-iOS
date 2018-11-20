@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        let version: UInt64 = 2
+        let version: UInt64 = 3
         
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used

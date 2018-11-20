@@ -1627,7 +1627,7 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UwO-Zv-Q72">
-                                <rect key="frame" x="90" y="556" width="195" height="27"/>
+                                <rect key="frame" x="90" y="551" width="195" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="Can't Sign In? Reset you password"/>
                                 <connections>
@@ -1657,10 +1657,10 @@
                             <constraint firstItem="M07-er-RhG" firstAttribute="trailing" secondItem="0Pr-jH-Ios" secondAttribute="trailing" constant="16" id="9TM-mM-r5r"/>
                             <constraint firstItem="UwO-Zv-Q72" firstAttribute="centerX" secondItem="46M-df-Jj5" secondAttribute="centerX" id="Cdr-w1-Vps"/>
                             <constraint firstItem="wUm-GF-BJB" firstAttribute="top" secondItem="6pt-ND-L5O" secondAttribute="bottom" constant="16" id="CuX-Px-cNS"/>
-                            <constraint firstItem="M07-er-RhG" firstAttribute="bottom" secondItem="UwO-Zv-Q72" secondAttribute="bottom" constant="20" id="Hxu-S1-f4y"/>
                             <constraint firstItem="wUm-GF-BJB" firstAttribute="centerX" secondItem="46M-df-Jj5" secondAttribute="centerX" id="J8g-53-JC8"/>
                             <constraint firstItem="0Pr-jH-Ios" firstAttribute="top" secondItem="M07-er-RhG" secondAttribute="top" constant="100" id="che-Dl-tVS"/>
                             <constraint firstItem="Q2T-0X-9lI" firstAttribute="top" secondItem="0Pr-jH-Ios" secondAttribute="bottom" constant="50" id="fwS-td-mRJ"/>
+                            <constraint firstItem="M07-er-RhG" firstAttribute="bottom" secondItem="UwO-Zv-Q72" secondAttribute="bottom" constant="25" id="j2B-qr-7KQ"/>
                             <constraint firstItem="6pt-ND-L5O" firstAttribute="centerX" secondItem="46M-df-Jj5" secondAttribute="centerX" id="lWO-vf-oOq"/>
                             <constraint firstItem="6pt-ND-L5O" firstAttribute="top" secondItem="Q2T-0X-9lI" secondAttribute="bottom" constant="25" id="oVW-ef-sJ0"/>
                             <constraint firstItem="0Pr-jH-Ios" firstAttribute="centerX" secondItem="46M-df-Jj5" secondAttribute="centerX" id="sks-WM-cQP"/>

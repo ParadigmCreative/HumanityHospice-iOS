@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,7 +27,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="279" height="667"/>
                         </imageView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wqc-vY-iFy">
-                            <rect key="frame" x="0.0" y="149" width="275" height="441"/>
+                            <rect key="frame" x="0.0" y="149" width="275" height="433"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="N9o-x3-3BZ"/>
@@ -64,7 +64,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mxv-9j-8La">
-                            <rect key="frame" x="16" y="594" width="243" height="48"/>
+                            <rect key="frame" x="16" y="586" width="243" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="g39-6c-i61"/>
                             </constraints>
@@ -74,16 +74,25 @@
                                 <action selector="callNurse:" destination="iN0-l3-epB" eventType="touchUpInside" id="IVm-GY-Ucd"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZN-py-fb8">
+                            <rect key="frame" x="16" y="642" width="243" height="9"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                            <color key="textColor" red="1" green="0.99997597930000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="wqc-vY-iFy" secondAttribute="trailing" id="3NN-aq-0bK"/>
                         <constraint firstItem="Axx-4M-fhh" firstAttribute="top" secondItem="Xtc-Yw-XY2" secondAttribute="top" constant="50" id="3gj-Z6-rF0"/>
+                        <constraint firstAttribute="bottom" secondItem="NZN-py-fb8" secondAttribute="bottom" constant="16" id="3jm-eH-vdh"/>
+                        <constraint firstItem="NZN-py-fb8" firstAttribute="leading" secondItem="Mxv-9j-8La" secondAttribute="leading" id="4CL-ba-J0S"/>
                         <constraint firstItem="6bx-av-ErN" firstAttribute="top" secondItem="Xtc-Yw-XY2" secondAttribute="top" id="5an-Lx-CRV"/>
                         <constraint firstItem="Dn4-lf-1Wu" firstAttribute="top" secondItem="Axx-4M-fhh" secondAttribute="top" id="6Bu-X3-4Wy"/>
                         <constraint firstAttribute="trailing" secondItem="6bx-av-ErN" secondAttribute="trailing" constant="-4" id="6yC-Vv-XTd"/>
                         <constraint firstItem="wqc-vY-iFy" firstAttribute="leading" secondItem="Xtc-Yw-XY2" secondAttribute="leading" id="BUl-a3-u8L"/>
                         <constraint firstItem="Dn4-lf-1Wu" firstAttribute="leading" secondItem="Axx-4M-fhh" secondAttribute="trailing" constant="8" id="HAM-Fr-wRX"/>
                         <constraint firstItem="wqc-vY-iFy" firstAttribute="leading" secondItem="Xtc-Yw-XY2" secondAttribute="leading" id="Jiw-Aj-VOH"/>
+                        <constraint firstItem="NZN-py-fb8" firstAttribute="top" secondItem="Mxv-9j-8La" secondAttribute="bottom" constant="8" id="OjU-aF-ufE"/>
                         <constraint firstAttribute="width" constant="275" placeholder="YES" id="RAJ-3Y-9eW"/>
                         <constraint firstItem="sHl-wf-YSI" firstAttribute="top" secondItem="Dn4-lf-1Wu" secondAttribute="bottom" constant="8" id="UU4-0h-L3V"/>
                         <constraint firstItem="sHl-wf-YSI" firstAttribute="leading" secondItem="Axx-4M-fhh" secondAttribute="trailing" constant="8" id="UsY-iq-3vI"/>
@@ -93,7 +102,6 @@
                         <constraint firstAttribute="trailing" secondItem="Dn4-lf-1Wu" secondAttribute="trailing" constant="8" id="bHJ-3r-fsh"/>
                         <constraint firstItem="Iba-nS-4FV" firstAttribute="leading" secondItem="Axx-4M-fhh" secondAttribute="leading" id="e0G-NX-dUD"/>
                         <constraint firstAttribute="trailing" secondItem="Mxv-9j-8La" secondAttribute="trailing" constant="16" id="fdh-gz-Me8"/>
-                        <constraint firstAttribute="bottom" secondItem="Mxv-9j-8La" secondAttribute="bottom" constant="25" id="fxc-qm-Ji7"/>
                         <constraint firstItem="Axx-4M-fhh" firstAttribute="leading" secondItem="Xtc-Yw-XY2" secondAttribute="leading" constant="16" id="gOi-OF-ae7"/>
                         <constraint firstItem="wqc-vY-iFy" firstAttribute="top" secondItem="Axx-4M-fhh" secondAttribute="bottom" constant="24" id="jdS-fM-kwd"/>
                         <constraint firstAttribute="trailing" secondItem="wqc-vY-iFy" secondAttribute="trailing" id="mEJ-wd-x3s"/>
@@ -102,6 +110,7 @@
                         <constraint firstItem="Iba-nS-4FV" firstAttribute="height" secondItem="Axx-4M-fhh" secondAttribute="height" id="tJj-Ak-TGM"/>
                         <constraint firstAttribute="trailing" secondItem="sHl-wf-YSI" secondAttribute="trailing" constant="8" id="xDr-NO-Wcm"/>
                         <constraint firstItem="6bx-av-ErN" firstAttribute="leading" secondItem="Xtc-Yw-XY2" secondAttribute="leading" id="yE1-yz-Hgk"/>
+                        <constraint firstItem="NZN-py-fb8" firstAttribute="trailing" secondItem="Mxv-9j-8La" secondAttribute="trailing" id="yZC-vE-61u"/>
                     </constraints>
                 </view>
             </subviews>
@@ -126,6 +135,7 @@
                 <outlet property="logoImageView" destination="Axx-4M-fhh" id="s8o-IC-p5G"/>
                 <outlet property="mainAreaView" destination="Xtc-Yw-XY2" id="Bjh-XZ-siI"/>
                 <outlet property="nameLabel" destination="Dn4-lf-1Wu" id="Zb1-w6-XI9"/>
+                <outlet property="versionLabel" destination="NZN-py-fb8" id="fQc-eg-c2Q"/>
             </connections>
             <point key="canvasLocation" x="-95.5" y="54.5"/>
         </view>

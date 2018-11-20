@@ -18,6 +18,7 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         RealmHandler.resetPhotoAlbum()
         MenuHandler.staticMenu?.setHandingController(vc: self)
         setupEmptyDataSet()
+        listenForImageDelete()
         
         if let type = AppSettings.userType {
             switch type {
@@ -30,6 +31,10 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         }
         
         getImages()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.ownerDidRequestDeleteImage, object: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,6 +96,7 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
             newPost.timestamp = post.timestamp
             newPost.url = post.url
             newPost.id = post.id
+            newPost.name = post.name
             
             collectionPosts.append(newPost)
         }
@@ -150,12 +156,41 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         let realm = try! Realm()
         let key = posts[indexPath.row].id
         if let post = realm.object(ofType: PhotoAlbumPost.self, forPrimaryKey: key) {
+            ImageViewer.currentlyViewingID = key
+            ImageViewer.currentlyViewingIndex = indexPath.row
             post.viewImage(vc: self)
         } else if let post = realm.object(ofType: Post.self, forPrimaryKey: key) {
             post.viewImage(vc: self)
         }
     }
     
+    func listenForImageDelete() {
+        NotificationCenter.default.addObserver(forName: .ownerDidRequestDeleteImage, object: nil, queue: .current) { (notification) in
+            if let user = AppSettings.currentFBUser {
+                self.showDeleteAlert(uid: user.uid, photoID: ImageViewer.currentlyViewingID)
+            }
+        }
+    }
+    
+    func showDeleteAlert(uid: String, photoID: String) {
+        let alert = UIAlertController(title: "Attention!", message: "Are you sure you want to delete this photo?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
+            let time = Int(self.posts[ImageViewer.currentlyViewingIndex].timestamp.rounded())
+            let storagekey = self.posts[ImageViewer.currentlyViewingIndex].name
+            DatabaseHandler.database.child("PhotoAlbum").child(uid).child(photoID).setValue(nil)
+            DatabaseHandler.storage.child("PhotoAlbum").child(uid).child(storagekey).delete(completion: { (error) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    alert.dismiss(animated: true, completion: {
+                        ImageViewer.viewer.dismiss(animated: true, completion: nil)
+                    })
+                }
+            })
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     
     // MARK: - Empty Data Set
@@ -191,6 +226,7 @@ struct PhotoAlbumCollectionItem {
     var timestamp: TimeInterval
     var url: String? = nil
     var id: String = ""
+    var name: String = ""
     
     init() {
         self.image = nil
