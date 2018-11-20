@@ -29,6 +29,8 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
     
     override func viewWillAppear(_ animated: Bool) {
         getPostsAndListenForPostAdded()
+        listenForPostsEdited()
+        listenForPostsDeleted()
     }
     
     
@@ -62,6 +64,45 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let post = self.ebposts[indexPath.row]
+        
+        if post.posterUID == AppSettings.currentAppUser!.id {
+            let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+                print("Delete")
+                self.deletePost(post: post)
+            }
+            delete.backgroundColor = UIColor.red
+            
+            let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
+                print("Edit")
+                self.performSegue(withIdentifier: "showNewPostVC", sender: post)
+            }
+            edit.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+            
+            let config = UISwipeActionsConfiguration(actions: [delete, edit])
+            config.performsFirstActionWithFullSwipe = false
+            
+            return config
+        } else {
+            return nil
+        }
+        
+    }
+    
+    func deletePost(post: EBPost) {
+        if let reader = AppSettings.currentAppUser as? DatabaseHandler.Reader {
+            DatabaseHandler.database.child(co.encouragementBoard.EncouragementBoards).child(reader.readingFrom).child(post.id).setValue(nil)
+        }
+    }
+    
+    func editPost(post: EBPost) {
+        if let reader = AppSettings.currentAppUser as? DatabaseHandler.Reader {
+            let postRef = DatabaseHandler.database.child(co.encouragementBoard.EncouragementBoards).child(reader.readingFrom)
+            postRef.updateChildValues(["Message": post.message])
+        }
+    }
+    
     //MARK: - Button Actions
     
     // newPostButton
@@ -82,6 +123,28 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
                 self.tableView.reloadData()
             }
         })
+    }
+    
+    func listenForPostsEdited() {
+        DatabaseHandler.listenForEBPostChanged { (posts) in
+            let posts = RealmHandler.getEBPostList()
+            
+            let toSet = self.setPosts(posts: posts)
+            
+            self.ebposts = toSet
+            self.tableView.reloadData()
+        }
+    }
+    
+    func listenForPostsDeleted() {
+        DatabaseHandler.listenForEBPostDeleted {
+            let posts = RealmHandler.getEBPostList()
+            
+            let toSet = self.setPosts(posts: posts)
+            
+            self.ebposts = toSet
+            self.tableView.reloadData()
+        }
     }
 
     
@@ -142,6 +205,16 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
         
         MenuHandler.openMenu(vc: self)
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showNewPostVC" {
+            if let post = sender as? EBPost {
+                if let vc = segue.destination as? NewEBPostViewController {
+                    vc.EBPostToEdit = post
+                }
+            }
+        }
     }
 
 }

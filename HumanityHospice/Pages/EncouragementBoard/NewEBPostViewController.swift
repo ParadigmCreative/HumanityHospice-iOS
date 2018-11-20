@@ -28,6 +28,7 @@ class NewEBPostViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var toolbar: UIView!
     @IBOutlet weak var submitButton: UIButton!
     
+    var EBPostToEdit: EBPost?
     
     
     // MARK: - Setup
@@ -35,6 +36,11 @@ class NewEBPostViewController: UIViewController, UITextViewDelegate {
         setupButtons()
         messageTF.inputAccessoryView = toolbar
         messageTF.becomeFirstResponder()
+        
+        if let post = EBPostToEdit {
+            messageTF.text = post.message
+        }
+        
     }
     
     func setupButtons() {
@@ -63,13 +69,23 @@ class NewEBPostViewController: UIViewController, UITextViewDelegate {
     @IBAction func submitPost(_ sender: Any) {
         checkTextView { (done, text) in
             if done {
-                Utilities.showActivityIndicator(view: self.view)
-                let uid = AppSettings.currentAppUser!.id
-                let name = AppSettings.currentAppUser!.fullName()
-                DatabaseHandler.postEBToDatabase(posterID: uid, posterName: name, message: text!, completion: {
-                    Utilities.closeActivityIndicator()
-                    self.dismiss(animated: true, completion: nil)
-                })
+                if EBPostToEdit == nil {
+                    Utilities.showActivityIndicator(view: self.view)
+                    let uid = AppSettings.currentAppUser!.id
+                    let name = AppSettings.currentAppUser!.fullName()
+                    DatabaseHandler.postEBToDatabase(posterID: uid, posterName: name, message: text!, completion: {
+                        Utilities.closeActivityIndicator()
+                        self.dismiss(animated: true, completion: nil)
+                    })
+                } else {
+                    Utilities.showActivityIndicator(view: self.view)
+                    if let reader = AppSettings.currentAppUser as? DatabaseHandler.Reader {
+                        let postRef = DatabaseHandler.database.child(co.encouragementBoard.EncouragementBoards).child(reader.readingFrom)
+                        postRef.child(EBPostToEdit!.id).updateChildValues(["Message": text!])
+                        Utilities.closeActivityIndicator()
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
             }
         }
     }

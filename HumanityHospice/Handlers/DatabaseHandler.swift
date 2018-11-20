@@ -1520,6 +1520,66 @@ class DatabaseHandler {
         addedEBPostLister = handle
     }
     
+    public static var changedEBPostLister: DatabaseHandle?
+    public static func listenForEBPostChanged(completion: @escaping ([EBPost])->()) {
+        let ref = Database.database().reference().child(co.encouragementBoard.EncouragementBoards)
+        guard let patient = AppSettings.currentPatient else { return }
+        let userRef = ref.child(patient)
+        
+        let handle = userRef.observe(.childChanged, with: { (snap) in
+            if snap.childrenCount > 0 {
+                var posts: [EBPost] = []
+                
+                if let post = snap.value as? [String: AnyObject] {
+                    let name = post[co.encouragementBoard.PosterName] as! String
+                    let posterUID = post[co.encouragementBoard.PosterUID] as! String
+                    let timestamp = post[co.encouragementBoard.Timestamp] as! TimeInterval
+                    let message = post[co.encouragementBoard.Message] as! String
+                    
+                    let newPost = EBPost()
+                    newPost.timestamp = timestamp
+                    newPost.message = message
+                    newPost.posterUID = posterUID
+                    newPost.posterName = name
+                    newPost.id = snap.key
+                    
+                    posts.append(newPost)
+                    
+                }
+                
+                try! realm.write {
+                    realm.add(posts, update: true)
+                }
+                
+                completion(posts)
+            }
+        })
+        changedEBPostLister = handle
+    }
+    
+    public static var deletedEBPostLister: DatabaseHandle?
+    public static func listenForEBPostDeleted(completion: @escaping ()->()) {
+        let ref = Database.database().reference().child(co.encouragementBoard.EncouragementBoards)
+        guard let patient = AppSettings.currentPatient else { return }
+        let userRef = ref.child(patient)
+        
+        let handle = userRef.observe(.childRemoved, with: { (snap) in
+            if snap.childrenCount > 0 {
+                var posts: [EBPost] = []
+                
+                if let post = snap.value as? [String: AnyObject] {
+                    if let result = realm.object(ofType: EBPost.self, forPrimaryKey: snap.key) {
+                        try! realm.write {
+                            realm.delete(result)
+                            completion()
+                        }
+                    }
+                }
+            }
+        })
+        deletedEBPostLister = handle
+    }
+    
     public static func postEBToDatabase(posterID: String, posterName: String, message: String, completion: ()->()) {
         let data: [String: Any] = [co.encouragementBoard.PosterUID: posterID,
                                    co.encouragementBoard.PosterName: posterName,
