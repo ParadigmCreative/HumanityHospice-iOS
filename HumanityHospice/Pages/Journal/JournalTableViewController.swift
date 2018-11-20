@@ -196,6 +196,52 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         }
     }
     
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let post = self.posts[indexPath.row]
+        
+        if post.posterUID == AppSettings.currentAppUser!.id {
+            let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+                print("Delete")
+                self.deleteComment(post: post)
+                
+            }
+            delete.backgroundColor = UIColor.red
+            
+            let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
+                print("Edit")
+                self.performSegue(withIdentifier: "showNewPost", sender: post)
+            }
+            edit.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+            
+            let config = UISwipeActionsConfiguration(actions: [delete, edit])
+            config.performsFirstActionWithFullSwipe = false
+            
+            return config
+        } else {
+            return nil
+        }
+    }
+    
+    func deleteComment(post: Post) {
+        if let reader = AppSettings.currentAppUser as? DatabaseHandler.Reader {
+            DatabaseHandler.database.child(co.journal.Journals).child(reader.readingFrom).child(post.id).setValue(nil)
+        } else if let family = AppSettings.currentAppUser as? DatabaseHandler.Family {
+            DatabaseHandler.database.child(co.journal.Journals).child(family.patient).child(post.id).setValue(nil)
+        } else if let patient = AppSettings.currentAppUser as? DatabaseHandler.Patient {
+            DatabaseHandler.database.child(co.journal.Journals).child(patient.id).child(post.id).setValue(nil)
+        }
+    }
+    
+    func editComment(post: Post) {
+        if let reader = AppSettings.currentAppUser as? DatabaseHandler.Reader {
+            DatabaseHandler.database.child(co.journal.Journals).child(reader.readingFrom).child(post.id).updateChildValues(["Post": post.message])
+        } else if let family = AppSettings.currentAppUser as? DatabaseHandler.Family {
+            DatabaseHandler.database.child(co.journal.Journals).child(family.patient).child(post.id).updateChildValues(["Post": post.message])
+        } else if let patient = AppSettings.currentAppUser as? DatabaseHandler.Patient {
+            DatabaseHandler.database.child(co.journal.Journals).child(patient.id).child(post.id).updateChildValues(["Post": post.message])
+        }
+    }
+    
     func userDidSelectPostForComments(post: Post) {
         performSegue(withIdentifier: "viewPost", sender: post)
     }
@@ -285,6 +331,12 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             if let vc = segue.destination as? ViewPostViewController {
                 if let post = sender as? Post {
                     vc.post = post
+                }
+            }
+        } else if segue.identifier == "showNewPost" {
+            if let vc = segue.destination as? NewPostViewController {
+                if let post = sender as? Post {
+                    vc.postToEdit = post
                 }
             }
         }

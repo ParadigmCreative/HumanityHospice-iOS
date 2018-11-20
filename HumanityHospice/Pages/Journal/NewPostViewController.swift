@@ -34,7 +34,7 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
         }
     }
     @IBOutlet weak var clearPhotoButton: UIButton!
-    
+    var postToEdit: Post?
     
     // MARK: - Setup
     func setup() {
@@ -42,6 +42,9 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
         clearPhotoButton.isHidden = true
         messageTF.inputAccessoryView = toolbar
         setupImagePreview()
+        if postToEdit != nil {
+            messageTF.text = postToEdit!.message
+        }
         messageTF.becomeFirstResponder()
     }
     
@@ -119,54 +122,66 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
         var message: String = messageTF.text ?? ""
         
         if self.imagePreview.image == nil {
-            var name: String = ""
             
-            if AppSettings.userType == .Family {
-                if let user = AppSettings.currentAppUser as? DatabaseHandler.Family {
-                    if let patient = user.patientObj {
-                        name = "\(patient.firstName) \(patient.lastName)"
-                    }
-                }
+            if let postToEdit = self.postToEdit {
+                DatabaseHandler.database.child("Journals").child(AppSettings.currentPatient!).child(postToEdit.id).updateChildValues(["Post": message])
+                Utilities.closeActivityIndicator()
+                self.dismiss(animated: true, completion: nil)
             } else {
-                name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
-            }
-            DatabaseHandler.postToDatabase(posterUID: AppSettings.currentPatient!,
-                                           posterName: name,
-                                           message: message,
-                                           imageURL: nil,
-                                           completion: {
-                                            Utilities.closeActivityIndicator()
-                                            self.dismiss(animated: true, completion: nil)})
-        } else {
-            let name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
-            if let img = self.imagePreview.image {
+                var name: String = ""
                 
-                showProgress()
-                
-                DatabaseHandler.postImageToDatabase(image: img, completion: { (url, error) in
-                    self.hideProgess()
-                    if error != nil {
-                        print(error!.localizedDescription)
-                    } else {
-                        DatabaseHandler.postToDatabase(posterUID: AppSettings.currentPatient!,
-                                                       posterName: name,
-                                                       message: message,
-                                                       imageURL: url!, completion: {
-                            Utilities.closeActivityIndicator()
-                            self.dismiss(animated: true, completion: nil)
-                        })
+                if AppSettings.userType == .Family {
+                    if let user = AppSettings.currentAppUser as? DatabaseHandler.Family {
+                        if let patient = user.patientObj {
+                            name = "\(patient.firstName) \(patient.lastName)"
+                        }
                     }
-                })
-                
-                DatabaseHandler.manageJournalImageUpload { (snap) in
-                    let percent = Float(snap.progress!.fractionCompleted)
-                    self.progressBar.setProgress(percent, animated: true)
+                } else {
+                    name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
                 }
-                
+                DatabaseHandler.postToDatabase(posterUID: AppSettings.currentPatient!,
+                                               posterName: name,
+                                               message: message,
+                                               imageURL: nil,
+                                               completion: {
+                                                Utilities.closeActivityIndicator()
+                                                self.dismiss(animated: true, completion: nil)
+                                                
+                })
             }
-            
+        } else {
+            if let postToEdit = self.postToEdit {
+                DatabaseHandler.database.child("Journals").child(AppSettings.currentPatient!).child(postToEdit.id).updateChildValues(["Post": message])
+                Utilities.closeActivityIndicator()
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                let name = "\(AppSettings.currentAppUser!.firstName) \(AppSettings.currentAppUser!.lastName)"
+                if let img = self.imagePreview.image {
+                    
+                    showProgress()
+                    
+                    DatabaseHandler.postImageToDatabase(image: img, completion: { (url, error) in
+                        self.hideProgess()
+                        if error != nil {
+                            print(error!.localizedDescription)
+                        } else {
+                            DatabaseHandler.postToDatabase(posterUID: AppSettings.currentPatient!,
+                                                           posterName: name,
+                                                           message: message,
+                                                           imageURL: url!, completion: {
+                                                            Utilities.closeActivityIndicator()
+                                                            self.dismiss(animated: true, completion: nil)
+                            })
+                        }
+                    })
+                    
+                    DatabaseHandler.manageJournalImageUpload { (snap) in
+                        let percent = Float(snap.progress!.fractionCompleted)
+                        self.progressBar.setProgress(percent, animated: true)
+                    }
+                }
+            }
         }
-
     }
     
     @IBAction func attachPhoto(_ sender: Any) {
