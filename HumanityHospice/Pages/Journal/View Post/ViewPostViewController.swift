@@ -23,6 +23,7 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
     override func viewWillAppear(_ animated: Bool) {
         listenForComments()
         listenForCommentsRemoved()
+        listenForCommentsUpdated()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,7 +57,23 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
                 return comment.id == id
             }) {
                 self.comments.remove(at: comment)
+                self.tableView.reloadData()
             }
+        }
+    }
+    
+    func listenForCommentsUpdated() {
+        DatabaseHandler.listenForCommentEdited(postToListenAt: self.post) { (editedComment) in
+            if let comment = self.comments.first(where: { (comment) -> Bool in
+                return comment.id == editedComment.id
+            }) {
+                if let index = self.comments.firstIndex(of: comment) {
+                    self.comments.remove(at: index)
+                    self.comments.insert(editedComment, at: index)
+                    self.tableView.reloadData()
+                }
+            }
+            
         }
     }
     
@@ -148,16 +165,64 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         }
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        let comment = comments[indexPath.row]
-        if editingStyle == .delete {
-            // Delete from firebase
-            DatabaseHandler.removeCommentFromDatabase(post: self.post, comment: comment) {
-                print("Removed comment from Firebase")
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        let comment = comments[indexPath.row]
+//        if editingStyle == .delete {
+//            // Delete from firebase
+//            DatabaseHandler.removeCommentFromDatabase(post: self.post, comment: comment) {
+//                print("Removed comment from Firebase")
+//            }
+//        }
+//    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let post = self.comments[indexPath.row]
+        
+        if post.posterUID == AppSettings.currentAppUser!.id {
+            let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+                print("Delete")
+                self.deleteComment(post: post)
+
             }
+            delete.backgroundColor = UIColor.red
+            
+            let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
+                print("Edit")
+                self.messageTF.text = post.message
+                self.messageTF.becomeFirstResponder()
+                self.isEditingComment = true
+                self.commentToEdit = post
+            }
+            edit.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+            
+            let config = UISwipeActionsConfiguration(actions: [delete, edit])
+            config.performsFirstActionWithFullSwipe = false
+            
+            return config
+        } else {
+            return nil
         }
     }
     
+    func deleteComment(post: Post) {
+        if let reader = AppSettings.currentAppUser as? DatabaseHandler.Reader {
+            DatabaseHandler.database.child(co.journal.Journals).child(reader.readingFrom).child(self.post.id).child("Comments").child(post.id).setValue(nil)
+        } else if let family = AppSettings.currentAppUser as? DatabaseHandler.Family {
+            DatabaseHandler.database.child(co.journal.Journals).child(family.patient).child(self.post.id).child("Comments").child(post.id).setValue(nil)
+        } else if let patient = AppSettings.currentAppUser as? DatabaseHandler.Patient {
+            DatabaseHandler.database.child(co.journal.Journals).child(patient.id).child(self.post.id).child("Comments").child(post.id).setValue(nil)
+        }
+    }
+    
+    func editComment(post: Post) {
+        if let reader = AppSettings.currentAppUser as? DatabaseHandler.Reader {
+            DatabaseHandler.database.child(co.journal.Journals).child(reader.readingFrom).child(post.id).updateChildValues(["Comment": post.message])
+        } else if let family = AppSettings.currentAppUser as? DatabaseHandler.Family {
+            DatabaseHandler.database.child(co.journal.Journals).child(family.patient).child(post.id).updateChildValues(["Comment": post.message])
+        } else if let patient = AppSettings.currentAppUser as? DatabaseHandler.Patient {
+            DatabaseHandler.database.child(co.journal.Journals).child(patient.id).child(post.id).updateChildValues(["Comment": post.message])
+        }
+    }
     
     // MARK: - Composing new comment
     let messageInputContainerView: UIView = {
@@ -308,6 +373,8 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         }
     }
     
+    var isEditingComment = false
+    var commentToEdit: Post?
     @objc func postComment() {
         //check that the field is not empty
         guard let commentText = messageTF.text else { return }
@@ -319,22 +386,34 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         guard let posterID = AppSettings.currentAppUser?.id else { return }
         guard let posterName = AppSettings.currentAppUser?.fullName() else { return }
         
-        //if not, then create post object
-        let data: [String: Any] = [co.journal.comment.Timestamp: Date().timeIntervalSince1970,
-                                   co.journal.comment.PosterName: posterName,
-                                   co.journal.comment.PosterUID: posterID,
-                                   co.journal.comment.Comment: commentText]
-        
-        // post to db
-        let postID = self.post.id
-        DatabaseHandler.postCommentToDatabase(postID: postID, data: data, completion: {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.commentWasPosted()
-                self.messageTF.text = ""
+        if isEditingComment {
+            if let comment = commentToEdit {
+                let ref = DatabaseHandler.database.child("Journals").child(AppSettings.currentPatient!)
+                ref.child(self.post.id).child("Comments").child(comment.id).updateChildValues(["Comment": commentText])
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.commentWasPosted()
+                    self.messageTF.text = ""
+                    self.isEditingComment = false
+                }
             }
-        })
-        
+        } else {
+            //if not, then create post object
+            let data: [String: Any] = [co.journal.comment.Timestamp: Date().timeIntervalSince1970,
+                                       co.journal.comment.PosterName: posterName,
+                                       co.journal.comment.PosterUID: posterID,
+                                       co.journal.comment.Comment: commentText]
+            
+            // post to db
+            let postID = self.post.id
+            DatabaseHandler.postCommentToDatabase(postID: postID, data: data, completion: {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.commentWasPosted()
+                    self.messageTF.text = ""
+                }
+            })
+        }
     }
     
     private func setupGestureRecognizer() {

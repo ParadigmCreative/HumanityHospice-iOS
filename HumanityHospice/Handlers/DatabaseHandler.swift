@@ -1465,13 +1465,41 @@ class DatabaseHandler {
         let path = ref.child(co.journal.Journals).child(currentPatient).child(post.id).child(co.journal.Comments)
         
         let handle = path.observe(.childRemoved) { (snap) in
-            if (snap.value as? [String: AnyObject]) != nil {
+            if let data = snap.value as? [String: Any] {
                 let id = snap.key
-                
                 completion(id)
             }
         }
         self.commentRemovedListenerHandle = handle
+    }
+    
+    static var commentEditedListenerhandle: DatabaseHandle?
+    public static func listenForCommentEdited(postToListenAt post: Post, completion: @escaping (Post)->()) {
+        guard let currentPatient = AppSettings.currentPatient else { return }
+        let ref = Database.database().reference()
+        let path = ref.child(co.journal.Journals).child(currentPatient).child(post.id).child(co.journal.Comments)
+        
+        let handle = path.observe(.childChanged) { (snap) in
+            let comment = snap.value as! [String: Any]
+            
+            let posterName = comment[co.journal.comment.PosterName] as! String
+            let posterUID = comment[co.journal.comment.PosterUID] as! String
+            let message = comment[co.journal.comment.Comment] as! String
+            let timestamp = comment[co.journal.comment.Timestamp] as! TimeInterval
+            let key = snap.key as! String
+            
+            let newComment = Post()
+            newComment.isComment = true
+            newComment.posterUID = posterUID
+            newComment.posterName = posterName
+            newComment.message = message
+            newComment.timestamp = timestamp
+            newComment.id = key
+            
+            completion(newComment)
+            
+        }
+        self.commentEditedListenerhandle = handle
     }
     
     public static func stopListeningForComments() {
