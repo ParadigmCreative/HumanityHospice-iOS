@@ -2197,6 +2197,7 @@
                         <outlet property="exitButton" destination="oCg-dY-FLN" id="Tof-eV-rM1"/>
                         <outlet property="imageArea" destination="yHV-KI-euX" id="e3C-ah-Xwk"/>
                         <outlet property="imagePreview" destination="NgP-WR-e3d" id="lqr-ow-vqh"/>
+                        <outlet property="profilePictureImageView" destination="Ukj-5S-Fth" id="TmX-Am-gSH"/>
                         <outlet property="progressBar" destination="BjL-9n-aPE" id="5jo-mR-tIH"/>
                         <outlet property="submitPostButton" destination="vGg-UH-VHK" id="1PQ-j6-C3L"/>
                         <outlet property="toolbar" destination="HZk-ze-bxb" id="u9E-H3-maB"/>

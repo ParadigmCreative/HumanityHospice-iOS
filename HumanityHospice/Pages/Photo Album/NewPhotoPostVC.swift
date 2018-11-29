@@ -25,6 +25,9 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var addPhotoButton: UIButton!
     @IBOutlet weak var clearPhotoButton: UIButton!
+    @IBOutlet weak var profilePictureImageView: UIImageView!
+    
+    let picker = UIImagePickerController()
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -95,6 +98,7 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
     func setup() {
         setupButtons()
         setupImagePreview()
+        setupProfilePicture()
     }
     
     @IBOutlet weak var imageArea: UIView!
@@ -118,6 +122,29 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
         submitPostButton.layer.cornerRadius = 10
     }
     
+    func setupProfilePicture() {
+        if let user = AppSettings.currentFBUser {
+            if let profileURL = user.photoURL {
+                if let imgData = profilePictureCache.object(forKey: NSString(string: profileURL.absoluteString)) {
+                    let data = imgData as Data
+                    if let img = data.getImageFromData() {
+                        DispatchQueue.main.async {
+                            self.profilePictureImageView.image = img
+                            self.profilePictureImageView.setupProfilePicture()
+                            self.profilePictureImageView.contentMode = .scaleAspectFill
+                        }
+                    } else {
+                        Log.e("Image could not be parsed from Data")
+                    }
+                } else {
+                    // User has a profile picture, but is not saved locally
+                }
+            } else {
+                Log.d("User doesn't have a profile picture")
+            }
+        }
+    }
+    
     
     func setupImagePreview() {
         let tapGest = UITapGestureRecognizer(target: self, action: #selector(viewImage))
@@ -133,6 +160,8 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
         ImageViewer.initialize(image: img, text: "", isFromJournal: true)
         ImageViewer.open(vc: self)
     }
+    
+    
     
     // MARK: - Actions
     
@@ -239,27 +268,44 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
         }
     }
     
+    var alert: UIAlertController!
+    var isAlertShowing = false
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if isAlertShowing {
+            if let touch = touches.first {
+                if touch.view == self.view {
+                    Log.d("User wants to exit")
+                }
+            }
+        }
+    }
+    
     
 }
 
 
 extension NewPhotoPostVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func selectPicture() {
-        let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
         
-        let alert = UIAlertController(title: "Please select an option", message: nil, preferredStyle: .actionSheet)
+        alert = UIAlertController(title: "Please select an option", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
-            picker.sourceType = .camera
-            self.present(picker, animated: true)
+            self.picker.sourceType = .camera
+            self.present(self.picker, animated: true)
+            self.isAlertShowing = false
         }))
         alert.addAction(UIAlertAction(title: "Camera Roll", style: .default, handler: { (action) in
-            picker.sourceType = .photoLibrary
-            self.present(picker, animated: true)
+            self.picker.sourceType = .photoLibrary
+            self.present(self.picker, animated: true)
+            self.isAlertShowing = false
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            self.isAlertShowing = false
         }))
         
         present(alert, animated: true, completion: nil)
+        isAlertShowing = true
         
     }
     
