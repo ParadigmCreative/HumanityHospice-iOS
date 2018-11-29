@@ -75,15 +75,16 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         var collectionPosts: [PhotoAlbumCollectionItem] = []
         
         for post in journalPosts {
-            if let img = post.postImage!.getImageFromData() {
-                var newPost = PhotoAlbumCollectionItem()
-                newPost.caption = post.message
+            var newPost = PhotoAlbumCollectionItem()
+            if let img = post.postImage?.getImageFromData() {
                 newPost.image = img
-                newPost.timestamp = post.timestamp
-                newPost.id = post.id
-                
-                collectionPosts.append(newPost)
             }
+            newPost.caption = post.message
+            newPost.timestamp = post.timestamp
+            newPost.id = post.id
+            newPost.url = post.imageURL
+            
+            collectionPosts.append(newPost)
         }
         
         for post in PAPs {

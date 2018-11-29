@@ -342,70 +342,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/Journal/View Post/Post Cells/ImagePostTableViewCell.swift"
-            timestampString = "562269925.9434071"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "post"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/Journal/View Post/Post Cells/ImagePostTableViewCell.swift"
-            timestampString = "562269925.943482"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "post"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HumanityHospice.ImagePostTableViewCell.post.didset : Swift.Optional&lt;HumanityHospice.Post&gt;"
-                  moduleName = "HumanityHospice"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/appcenter/Documents/Work/Paradigm%20Creative/Humanity%20Hospice/HumanityHospice-iOS/HumanityHospice/Pages/Journal/View%20Post/Post%20Cells/ImagePostTableViewCell.swift"
-                  timestampString = "565142428.963228"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "57"
-                  endingLineNumber = "57"
-                  offsetFromSymbolStart = "1457">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 (Swift.Optional&lt;Swift.String&gt;) -&gt; () in HumanityHospice.ImagePostTableViewCell.post.didset : Swift.Optional&lt;HumanityHospice.Post&gt;"
-                  moduleName = "HumanityHospice"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/appcenter/Documents/Work/Paradigm%20Creative/Humanity%20Hospice/HumanityHospice-iOS/HumanityHospice/Pages/Journal/View%20Post/Post%20Cells/ImagePostTableViewCell.swift"
-                  timestampString = "565142428.964951"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "41">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -458,7 +394,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "565143135.602722"
+            timestampString = "565219441.97514"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "431"
@@ -490,7 +426,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "565143135.602883"
+            timestampString = "565219441.975255"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1639"
@@ -506,7 +442,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "565143135.6029609"
+            timestampString = "565219441.975322"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1655"
@@ -522,7 +458,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "565143135.603017"
+            timestampString = "565219441.975382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1561"
@@ -602,13 +538,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Pages/Photo Album/PhotoAlbum.swift"
-            timestampString = "565060840.393055"
+            timestampString = "565219441.9755729"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "showJournalDeleteAlert(uid:photoID:result:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -618,28 +554,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Pages/Photo Album/PhotoAlbum.swift"
-            timestampString = "565060840.393513"
+            timestampString = "565219441.9760799"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "565143135.603291"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1683"
-            endingLineNumber = "1683"
-            landmarkName = "getImageDataFromDatabase(completion:)"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "showJournalDeleteAlert(uid:photoID:result:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -650,7 +570,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Pages/Journal/JournalTableViewCell.swift"
-            timestampString = "565143135.603381"
+            timestampString = "565219441.97642"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "30"
@@ -665,45 +585,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/Journal/JournalTableViewCell.swift"
-            timestampString = "565143135.604686"
+            filePath = "HumanityHospice/Pages/Photo Album/PhotoAlbum.swift"
+            timestampString = "565219441.9764971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "setup(posterProfileURL:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/Journal/JournalTableViewCell.swift"
-            timestampString = "565143135.605395"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "setup(posterProfileURL:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/Journal/JournalTableViewCell.swift"
-            timestampString = "565143135.605819"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "setup(posterProfileURL:)"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "prepareImagesForCollection(journalPosts:PAPs:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
