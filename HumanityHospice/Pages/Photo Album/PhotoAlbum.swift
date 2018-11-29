@@ -158,16 +158,28 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         if let post = realm.object(ofType: PhotoAlbumPost.self, forPrimaryKey: key) {
             ImageViewer.currentlyViewingID = key
             ImageViewer.currentlyViewingIndex = indexPath.row
-            post.viewImage(vc: self)
+            post.viewImage(vc: self, isFromJournal: false)
         } else if let post = realm.object(ofType: Post.self, forPrimaryKey: key) {
-            post.viewImage(vc: self)
+            ImageViewer.currentlyViewingID = key
+            ImageViewer.currentlyViewingIndex = indexPath.row
+            post.viewImage(vc: self, isFromJournal: false)
         }
     }
     
     func listenForImageDelete() {
         NotificationCenter.default.addObserver(forName: .ownerDidRequestDeleteImage, object: nil, queue: .current) { (notification) in
             if let user = AppSettings.currentFBUser {
-                self.showDeleteAlert(uid: user.uid, photoID: ImageViewer.currentlyViewingID)
+                if let result = RealmHandler.realm.objects(Post.self).filter({ (post) -> Bool in
+                    if post.id == ImageViewer.currentlyViewingID && post.hasImage == true {
+                        return true
+                    } else {
+                        return false
+                    }
+                }).first {
+                    self.showJournalDeleteAlert(uid: user.uid, photoID: ImageViewer.currentlyViewingID, result: result)
+                } else {
+                    self.showDeleteAlert(uid: user.uid, photoID: ImageViewer.currentlyViewingID)
+                }
             }
         }
     }
@@ -185,6 +197,27 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
                 } else {
                     alert.dismiss(animated: true, completion: {
                         ImageViewer.viewer.dismiss(animated: true, completion: nil)
+                    })
+                }
+            })
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showJournalDeleteAlert(uid: String, photoID: String, result: Post) {
+        let alert = UIAlertController(title: "Attention!", message: "Are you sure you want to delete this photo?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
+            let time = Int(self.posts[ImageViewer.currentlyViewingIndex].timestamp.rounded())
+            let storagekey = self.posts[ImageViewer.currentlyViewingIndex].name
+        DatabaseHandler.database.child("Journals").child(AppSettings.currentPatient!).child(result.id).child("PostImageURL").setValue(nil)
+            DatabaseHandler.storage.child("PhotoAlbum").child(uid).child(storagekey).delete(completion: { (error) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else {
+                    alert.dismiss(animated: true, completion: {
+                        ImageViewer.viewer.dismiss(animated: true, completion: nil)
+                        self.collectionView?.reloadData()
                     })
                 }
             })

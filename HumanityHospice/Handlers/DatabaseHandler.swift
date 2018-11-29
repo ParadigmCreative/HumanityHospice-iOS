@@ -593,7 +593,7 @@ class DatabaseHandler {
         }
     }
     
-    static func getProfilePicture(URL: URL, completion: @escaping (UIImage?)->()) {
+    static func getProfilePicture(URL: URL, completion: @escaping (TableViewImage?)->()) {
         let ref = Storage.storage().reference(forURL: URL.absoluteString)
         ref.getData(maxSize: 20 * 1024 * 1024) { (data, error) in
             if error != nil {
@@ -601,7 +601,8 @@ class DatabaseHandler {
                 completion(nil)
             } else {
                 if let data = data {
-                    if let img = UIImage(data: data) {
+                    if let img = TableViewImage(data: data) {
+                        img.imageURLString = URL.absoluteString
                         completion(img)
                     } else {
                         completion(nil)
@@ -1287,17 +1288,18 @@ class DatabaseHandler {
         }
     }
     
-    public static func postToDatabase(posterUID: String, posterName: String, message: String, imageURL: String?, completion: ()->()) {
+    public static func postToDatabase(posterUID: String, posterName: String, message: String, imageURL: String?, imageName: String?, completion: ()->()) {
         
         let profilePictureURL = AppSettings.currentFBUser?.photoURL?.absoluteString
 
-        if imageURL != nil {
+        if imageURL != nil && imageName != nil {
             let ref = Database.database().reference().child("Journals").child(posterUID).childByAutoId()
             let data: [String: Any] = [co.journal.PosterUID: posterUID,
                                        co.journal.PatientName: posterName,
                                        co.journal.Post: message,
                                        co.journal.Timestamp: Int(Date().timeIntervalSince1970.rounded()),
-                                       co.journal.ImageURL: imageURL!]
+                                       co.journal.ImageURL: imageURL!,
+                                       "imageName": imageName!]
             ref.setValue(data)
             completion()
         } else {
@@ -1337,21 +1339,21 @@ class DatabaseHandler {
     }
     
     static var journalUploadTask: StorageUploadTask?
-    public static func postImageToDatabase(image: UIImage, completion: @escaping (String?, Error?)->()) {
+    public static func postImageToDatabase(image: UIImage, completion: @escaping (String?, String?, Error?)->()) {
         if let data = UIImagePNGRepresentation(image) {
             let uid = AppSettings.currentFBUser!.uid
             let date = Int(Date().timeIntervalSince1970.rounded())
             let ref = Storage.storage().reference().child("Journals").child(uid).child("PostImages").child("post-\(date)")
             let task = ref.putData(data, metadata: nil) { (meta, error) in
                 if error != nil {
-                    completion(nil, error)
+                    completion(nil, nil, error)
                 } else {
                     ref.downloadURL(completion: { (url, error) in
                         if error != nil {
                             print(error!.localizedDescription)
                         } else {
                             if let url = url {
-                                completion(url.absoluteString, nil)
+                                completion(url.absoluteString, meta!.name!, nil)
                             }
                         }
                     })
@@ -1675,7 +1677,7 @@ class DatabaseHandler {
         guard let uid = AppSettings.currentPatient else { return }
         let ref = Database.database().reference().child("PhotoAlbum").child(uid)
         let handle = ref.observe(.childAdded) { (snap) in
-            DispatchQueue.global(qos: .utility).async {
+            DispatchQueue.main.async {
                 var posts: [PhotoAlbumPost] = []
                 
                 if let imgPost = snap.value as? [String: Any] {

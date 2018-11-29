@@ -29,6 +29,7 @@
 		735EA43520AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */; };
 		736E199120CC377000CB6DF4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736E199020CC377000CB6DF4 /* Extensions.swift */; };
 		737118B720A12C0500656F8E /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737118B620A12C0500656F8E /* ImageViewer.swift */; };
+		73AF6F0621AF57EF00225E28 /* TableViewImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AF6F0521AF57EF00225E28 /* TableViewImage.swift */; };
 		73B4013C20EACAF3005EE40E /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B4013A20EACAF3005EE40E /* UploadViewController.swift */; };
 		73B4013D20EACAF3005EE40E /* UploadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73B4013B20EACAF3005EE40E /* UploadViewController.xib */; };
 		73BD07A120C5DF170051D94D /* SwitchPatientTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */; };
@@ -100,6 +101,7 @@
 		735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		736E199020CC377000CB6DF4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		737118B620A12C0500656F8E /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
+		73AF6F0521AF57EF00225E28 /* TableViewImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewImage.swift; sourceTree = "<group>"; };
 		73B4013A20EACAF3005EE40E /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		73B4013B20EACAF3005EE40E /* UploadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadViewController.xib; sourceTree = "<group>"; };
 		73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchPatientTableViewController.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			children = (
 				73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */,
 				736E199020CC377000CB6DF4 /* Extensions.swift */,
+				73AF6F0521AF57EF00225E28 /* TableViewImage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 				73383A3620BDFF91004CE58F /* JournalTableViewController.swift in Sources */,
 				7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */,
 				73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */,
+				73AF6F0621AF57EF00225E28 /* TableViewImage.swift in Sources */,
 				7357DE6D20980BA700AED945 /* AboutViewController.swift in Sources */,
 				7338482E20A7F50000EC6D01 /* Posts.swift in Sources */,
 				A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */,

@@ -85,7 +85,7 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
     
     @objc func viewImage() {
         guard let img = self.imagePreview.image else { return }
-        ImageViewer.initialize(image: img, text: "")
+        ImageViewer.initialize(image: img, text: "", isFromJournal: true)
         ImageViewer.open(vc: self)
     }
     
@@ -143,6 +143,7 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
                                                posterName: name,
                                                message: message,
                                                imageURL: nil,
+                                               imageName: nil,
                                                completion: {
                                                 Utilities.closeActivityIndicator()
                                                 self.dismiss(animated: true, completion: nil)
@@ -160,7 +161,7 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
                     
                     showProgress()
                     
-                    DatabaseHandler.postImageToDatabase(image: img, completion: { (url, error) in
+                    DatabaseHandler.postImageToDatabase(image: img, completion: { (url, imageName, error)  in
                         self.hideProgess()
                         if error != nil {
                             print(error!.localizedDescription)
@@ -168,7 +169,9 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
                             DatabaseHandler.postToDatabase(posterUID: AppSettings.currentPatient!,
                                                            posterName: name,
                                                            message: message,
-                                                           imageURL: url!, completion: {
+                                                           imageURL: url!,
+                                                           imageName: imageName,
+                                                            completion: {
                                                             Utilities.closeActivityIndicator()
                                                             self.dismiss(animated: true, completion: nil)
                             })

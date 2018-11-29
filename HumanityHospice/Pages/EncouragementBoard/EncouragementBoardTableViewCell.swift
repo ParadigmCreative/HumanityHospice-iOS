@@ -22,6 +22,8 @@ class EncouragementBoardTableViewCell: UITableViewCell {
                     self.profilePicture.image = image
                     self.profilePicture.setupSecondaryProfilePicture()
                     self.profilePicture.contentMode = .scaleAspectFill
+                } else {
+                    self.profilePicture.image = #imageLiteral(resourceName: "Logo")
                 }
             }
         }

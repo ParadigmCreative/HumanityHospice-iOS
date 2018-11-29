@@ -8,6 +8,9 @@
 
 import UIKit
 
+let journalImageCache = NSCache<NSString, NSData>()
+let profilePictureCache = NSCache<NSString, NSData>()
+
 class JournalTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
@@ -15,45 +18,79 @@ class JournalTableViewCell: UITableViewCell {
         // Initialization code
     }
     
+    var profilePicture: TableViewImage?
     
     var post: Post! {
         didSet {
             // profile image
-            if let img = self.post.postImage?.getImageFromData() {
-                DispatchQueue.main.async {
-                    self.userImage.image = img
-                    self.userImage.setupSecondaryProfilePicture()
-                    self.userImage.contentMode = .scaleAspectFill
-                }
+            if let posterProfileURL = self.post.posterProfileURL {
+                setup(posterProfileURL: posterProfileURL)
             } else {
-                DatabaseHandler.checkForProfilePicture(for: self.post.posterUID) { (urlString) in
-                    if let url = urlString {
-                        if let path = URL(string: url) {
-                            DatabaseHandler.getProfilePicture(URL: path, completion: { (image) in
-                                if let img = image {
-                                    DispatchQueue.main.async {
-                                        self.userImage.image = img
-                                        self.userImage.setupSecondaryProfilePicture()
-                                        self.userImage.contentMode = .scaleAspectFill
-                                    }
-                                    
-                                    RealmHandler.write({ (realm) in
-                                        try! realm.write {
-                                            self.post.posterProfilePicture = img.prepareImageForSaving()
-                                            realm.add(self.post, update: true)
-                                        }
-                                    })
-                                }
-                            })
+                DatabaseHandler.checkForProfilePicture(for: post.posterUID) { (url) in
+                    if let url = url {
+                        // Start Setup
+                        try! RealmHandler.realm.write {
+                            self.post.posterProfileURL = url
+                            RealmHandler.realm.add(self.post, update: true)
                         }
+                        self.setup(posterProfileURL: url)
                     } else {
+                        // No Profile Picture
                         DispatchQueue.main.async {
                             self.userImage.image = #imageLiteral(resourceName: "Logo")
                         }
                     }
                 }
             }
+        }
+    }
+    
+    func setup(posterProfileURL: String) {
+        profilePicture = TableViewImage()
+        profilePicture?.imageURLString = posterProfileURL
         
+        if let imgData = profilePictureCache.object(forKey: NSString(string: posterProfileURL)) {
+            let data = imgData as Data
+            if let img = data.getImageFromData() {
+                DispatchQueue.main.async {
+                    self.userImage.image = img
+                    self.userImage.setupSecondaryProfilePicture()
+                    self.userImage.contentMode = .scaleAspectFill
+                }
+            }
+        } else {
+            if let path = URL(string: posterProfileURL) {
+                DatabaseHandler.getProfilePicture(URL: path, completion: { (image) in
+                    if let img = image {
+                        
+                        if let data = img.prepareImageForSaving() {
+                            profilePictureCache.setObject(NSData(data: data), forKey: NSString(string: posterProfileURL))
+                        }
+                        
+                        DispatchQueue.main.async {
+                            if posterProfileURL == self.profilePicture?.imageURLString {
+                                self.userImage.image = img
+                                self.userImage.setupSecondaryProfilePicture()
+                                self.userImage.contentMode = .scaleAspectFill
+                            } else {
+                                print("URLs did not match on set")
+                            }
+                        }
+                        
+                        RealmHandler.write({ (realm) in
+                            try! realm.write {
+                                self.post.posterProfilePicture = img.prepareImageForSaving()
+                                realm.add(self.post, update: true)
+                            }
+                        })
+                        
+                    }
+                })
+            } else {
+                DispatchQueue.main.async {
+                    self.userImage.image = #imageLiteral(resourceName: "Logo")
+                }
+            }
         }
     }
     

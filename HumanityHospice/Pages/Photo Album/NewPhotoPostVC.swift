@@ -130,7 +130,7 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
     
     @objc func viewImage() {
         guard let img = imagePreview.image else { return }
-        ImageViewer.initialize(image: img, text: "")
+        ImageViewer.initialize(image: img, text: "", isFromJournal: true)
         ImageViewer.open(vc: self)
     }
     

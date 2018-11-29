@@ -18,7 +18,7 @@ class ImageViewer {
     public static var currentlyViewingID = ""
     public static var currentlyViewingIndex = 0
     
-    public static func initialize(image: UIImage, text: String) {
+    public static func initialize(image: UIImage, text: String, isFromJournal: Bool) {
 
         var title = "    "
         
@@ -29,6 +29,11 @@ class ImageViewer {
             title = "Delete Photo"
             viewerDelegate.shouldDelete = true
         } else {
+            title = "    "
+            viewerDelegate.shouldDelete = false
+        }
+        
+        if isFromJournal {
             title = "    "
             viewerDelegate.shouldDelete = false
         }
@@ -72,24 +77,29 @@ class ViewerDelegate: SlideLeafViewControllerDelegate {
 }
 
 extension Post {
-    func viewImage(vc: UIViewController) {
+    func viewImage(vc: UIViewController, isFromJournal: Bool) {
         if let data = self.postImage {
             if let image = data.getImageFromData() {
-                ImageViewer.initialize(image: image, text: self.message)
-                ImageViewer.open(vc: vc)
+                if self.message == "" {
+                    ImageViewer.initialize(image: image, text: "    ", isFromJournal: isFromJournal)
+                    ImageViewer.open(vc: vc)
+                } else {
+                    ImageViewer.initialize(image: image, text: self.message, isFromJournal: isFromJournal)
+                    ImageViewer.open(vc: vc)
+                }
             }
         }
     }
 }
 
 extension PhotoAlbumPost {
-    func viewImage(vc: UIViewController) {
+    func viewImage(vc: UIViewController, isFromJournal: Bool) {
         if let img = self.image?.getImageFromData() {
             if let text = self.caption {
-                ImageViewer.initialize(image: img, text: text)
+                ImageViewer.initialize(image: img, text: text, isFromJournal: isFromJournal)
                 ImageViewer.open(vc: vc)
             } else {
-                ImageViewer.initialize(image: img, text: "    ")
+                ImageViewer.initialize(image: img, text: "    ", isFromJournal: isFromJournal)
                 ImageViewer.open(vc: vc)
             }
         }

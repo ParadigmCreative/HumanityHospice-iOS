@@ -31,80 +31,123 @@ class PostWithImageTableViewCell: UITableViewCell {
 
     var indicator: UIActivityIndicatorView!
     
+    var profilePicture: TableViewImage?
+    var postImage: TableViewImage?
+    
     var post: Post! {
         didSet {
             
-            // Post Image
-            if let img = self.post.postImage?.getImageFromData() {
-                DispatchQueue.main.async {
-                    self.postPhoto.image = img
-                    self.postPhoto.contentMode = .scaleAspectFill
-                }
-            } else {
-                if let urlString = self.post.imageURL {
-                    if let url = URL(string: urlString) {
-                        DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
-                            if error != nil {
-                               print(error!.localizedDescription)
-                            } else {
-                                if let img = image {
-                                    DispatchQueue.main.async {
-                                        self.postPhoto.image = img
-                                        self.postPhoto.contentMode = .scaleAspectFill
+            if let url = self.post.imageURL {
+                self.postImage = TableViewImage()
+                self.postImage?.imageURLString = url
+                
+                if let imgData = journalImageCache.object(forKey: NSString(string: url)) {
+                    if let data = imgData as? Data {
+                        if let img = data.getImageFromData() {
+                            DispatchQueue.main.async {
+                                self.postPhoto.image = img
+                                self.postPhoto.contentMode = .scaleAspectFill
+                            }
+                        }
+                    }
+                } else {
+                    if let urlString = self.post.imageURL {
+                        self.postImage?.imageURLString = url
+                        if let url = URL(string: urlString) {
+                            DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
+                                if error != nil {
+                                    print(error!.localizedDescription)
+                                } else {
+                                    if let img = image {
+                                        
+                                        // Cached downloaded post image
+                                        if let data = image?.prepareImageForSaving()  {
+                                            journalImageCache.setObject(NSData(data: data), forKey: NSString(string: urlString))
+                                        }
+                                        
+                                        DispatchQueue.main.async {
+                                            if urlString == self.postImage?.imageURLString {
+                                                self.postPhoto.image = img
+                                                self.postPhoto.contentMode = .scaleAspectFill
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
+                        setupImageProperties()
                     }
                 }
             }
             
-            if let img = self.post.posterProfilePicture?.getImageFromData() {
-                DispatchQueue.main.async {
-                    self.profilePictureImageView.image = img
-                    self.profilePictureImageView.setupSecondaryProfilePicture()
-                    self.profilePictureImageView.contentMode = .scaleAspectFill
-                }
+            if let posterProfileURL = post.posterProfileURL {
+                // setup
+                setup(posterProfileURL: posterProfileURL)
             } else {
-                DatabaseHandler.checkForProfilePicture(for: self.post.posterUID) { (urlString) in
-                    if let url = urlString {
-                        if let path = URL(string: url) {
-                            DatabaseHandler.getProfilePicture(URL: path, completion: { (image) in
-                                if let img = image {
-                                    DispatchQueue.main.async {
-                                        self.profilePictureImageView.image = img
-                                        self.profilePictureImageView.setupSecondaryProfilePicture()
-                                        self.profilePictureImageView.contentMode = .scaleAspectFill
-                                    }
-                                    
-                                    RealmHandler.write({ (realm) in
-                                        try! realm.write {
-                                            self.post.posterProfilePicture = img.prepareImageForSaving()
-                                            realm.add(self.post, update: true)
-                                        }
-                                    })
-                                }
-                            })
+                // Check DB for profile picture
+                DatabaseHandler.checkForProfilePicture(for: post.posterUID) { (url) in
+                    if let url = url {
+                        // Setup
+                        try! RealmHandler.realm.write {
+                            self.post.posterProfileURL = url
+                            RealmHandler.realm.add(self.post, update: true)
                         }
+                        self.setup(posterProfileURL: url)
                     } else {
+                        // No Profile picture
                         DispatchQueue.main.async {
                             self.profilePictureImageView.image = #imageLiteral(resourceName: "Logo")
                         }
                     }
                 }
             }
-            
-            if post.postImage == nil {
-                setupUI()
-                setupImageProperties()
+        }
+    }
+    
+    func setup(posterProfileURL: String) {
+        profilePicture = TableViewImage()
+        profilePicture?.imageURLString = posterProfileURL
+        
+        if let imgData = profilePictureCache.object(forKey: NSString(string: posterProfileURL)) {
+            let data = imgData as Data
+            if let img = data.getImageFromData() {
+                DispatchQueue.main.async {
+                    self.profilePictureImageView.image = img
+                    self.profilePictureImageView.setupSecondaryProfilePicture()
+                    self.profilePictureImageView.contentMode = .scaleAspectFill
+                }
+            }
+        } else {
+            if let path = URL(string: posterProfileURL) {
+                DatabaseHandler.getProfilePicture(URL: path, completion: { (image) in
+                    if let img = image {
+                        
+                        if let data = img.prepareImageForSaving() {
+                            profilePictureCache.setObject(NSData(data: data), forKey: NSString(string: posterProfileURL))
+                        }
+                        
+                        DispatchQueue.main.async {
+                            if posterProfileURL == self.profilePicture?.imageURLString {
+                                self.profilePictureImageView.image = img
+                                self.profilePictureImageView.setupSecondaryProfilePicture()
+                                self.profilePictureImageView.contentMode = .scaleAspectFill
+                            } else {
+                                print("URLs did not match on set")
+                            }
+                        }
+                        
+                        RealmHandler.write({ (realm) in
+                            try! realm.write {
+                                self.post.posterProfilePicture = img.prepareImageForSaving()
+                                realm.add(self.post, update: true)
+                            }
+                        })
+                        
+                    }
+                })
             } else {
                 DispatchQueue.main.async {
-                    if let img = self.post.postImage?.getImageFromData() {
-                        self.postPhoto.image = img
-                        self.setupImageProperties()
-                        self.indicator.stopAnimating()
-                        self.indicator.removeFromSuperview()
-                    }
+                    self.profilePictureImageView.image = #imageLiteral(resourceName: "Logo")
                 }
             }
         }
@@ -145,7 +188,7 @@ class PostWithImageTableViewCell: UITableViewCell {
     
     @objc func viewImage() {
         if let vc = MenuHandler.staticMenu?.handlingController {
-            self.post.viewImage(vc: vc)
+            self.post.viewImage(vc: vc, isFromJournal: true)
         }
     }
     
@@ -160,8 +203,8 @@ class PostWithImageTableViewCell: UITableViewCell {
 
 
 extension Data {
-    func getImageFromData() -> UIImage? {
-        if let img = UIImage(data: self) {
+    func getImageFromData() -> TableViewImage? {
+        if let img = TableViewImage(data: self) {
             return img
         } else {
             return nil

@@ -266,12 +266,26 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         }
     }
     
+    var isFirstLoad = true
     func listenForAddition() {
+        if isFirstLoad {
+            // get all that data
+            DatabaseHandler.getPostsFromDB { (posts) in
+                if let posts = posts {
+                    self.posts = posts
+                    self.tableView.reloadData()
+                    self.isFirstLoad = false
+                }
+            }
+        }
+        
         DatabaseHandler.listenForPostAdded {
-            let posts = RealmHandler.getPostList()
-            print("After:", posts.count)
-            self.posts = posts
-            self.tableView.reloadData()
+            if !self.isFirstLoad {
+                let posts = RealmHandler.getPostList()
+                print("After:", posts.count)
+                self.posts = posts
+                self.tableView.reloadData()
+            }
         }
     }
     

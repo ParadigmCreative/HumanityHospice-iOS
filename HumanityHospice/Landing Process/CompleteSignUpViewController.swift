@@ -388,6 +388,7 @@ extension CompleteSignUpViewController {
                                                    posterName: user!.displayName!,
                                                    message: "\(user!.displayName!) has joined Humanity Hospice",
                                                    imageURL: nil,
+                                                   imageName: nil,
                                                    completion: {})
                 }
                 
