@@ -348,7 +348,7 @@ extension CompleteSignUpViewController {
                 self.showAlert(title: "Hmm...", message: error!.localizedDescription)
                 self.closeIndicator()
             } else {
-                print("New User:", user!.uid, user!.email!, user!.displayName!)
+                Log.d("New User:", user!.uid, user!.email!, user!.displayName!)
                 
                 // create app user instance
                 let appuser = DatabaseHandler.createAppUser(user: user!)
@@ -366,7 +366,7 @@ extension CompleteSignUpViewController {
                 self.showAlert(title: "Hmm...", message: error!.localizedDescription)
                 self.closeIndicator()
             } else {
-                print("Created new user:", appuser!.firstName, appuser!.lastName)
+                Log.d("Created new user:", appuser!.firstName, appuser!.lastName)
                 
                 // SET CURRENT PATIENT
                 if AppSettings.userType == DatabaseHandler.UserType.Reader {
@@ -378,7 +378,7 @@ extension CompleteSignUpViewController {
                             user.readingFrom = id
                             AppSettings.currentAppUser = user
                         }
-                        print("Set currentPatient to:", id)
+                        Log.d("Set currentPatient to:", id)
                     }
                 } else if AppSettings.userType == DatabaseHandler.UserType.Patient {
                     AppSettings.currentPatient = AppSettings.currentFBUser!.uid

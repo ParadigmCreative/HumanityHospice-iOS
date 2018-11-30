@@ -82,7 +82,7 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
             
             if UIApplication.shared.canOpenURL(settingsUrl) {
                 UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                    print("Settings opened: \(success)") // Prints true
+                    Log.d("Settings opened: \(success)") // Log.ds true
                 })
             }
         }
@@ -186,9 +186,9 @@ class NewPhotoPostVC: UIViewController, UITextViewDelegate, ImagePickerDelegate 
                     self.hideProgess()
                     UIApplication.shared.endIgnoringInteractionEvents()
                     if error != nil {
-                        print(error!.localizedDescription)
+                        Log.e(error!.localizedDescription)
                     } else {
-                        print("Posted image to storage")
+                        Log.d("Posted image to storage")
                         self.dismiss(animated: true, completion: nil)
                     }
                 })

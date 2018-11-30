@@ -47,6 +47,11 @@ class PostWithImageTableViewCell: UITableViewCell {
                             DispatchQueue.main.async {
                                 self.postPhoto.image = img
                                 self.postPhoto.contentMode = .scaleAspectFill
+                                try! RealmHandler.realm.write {
+                                    self.post.postImage = data
+                                    RealmHandler.realm.add(self.post, update: true)
+                                }
+                                self.setupImageProperties()
                             }
                         }
                     }
@@ -56,26 +61,31 @@ class PostWithImageTableViewCell: UITableViewCell {
                         if let url = URL(string: urlString) {
                             DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
                                 if error != nil {
-                                    print(error!.localizedDescription)
+                                    Log.e(error!.localizedDescription)
                                 } else {
                                     if let img = image {
-                                        
+                                        let newimage = TableViewImage(cgImage: img.cgImage!)
+                                        newimage.imageURLString = url.absoluteString
                                         // Cached downloaded post image
-                                        if let data = image?.prepareImageForSaving()  {
+                                        if let data = newimage.prepareImageForSaving() {
                                             journalImageCache.setObject(NSData(data: data), forKey: NSString(string: urlString))
+                                            try! RealmHandler.realm.write {
+                                                self.post.postImage = data
+                                                RealmHandler.realm.add(self.post, update: true)
+                                            }
                                         }
                                         
                                         DispatchQueue.main.async {
                                             if urlString == self.postImage?.imageURLString {
                                                 self.postPhoto.image = img
                                                 self.postPhoto.contentMode = .scaleAspectFill
+                                                self.setupImageProperties()
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                        setupImageProperties()
                     }
                 }
             }
@@ -132,7 +142,7 @@ class PostWithImageTableViewCell: UITableViewCell {
                                 self.profilePictureImageView.setupSecondaryProfilePicture()
                                 self.profilePictureImageView.contentMode = .scaleAspectFill
                             } else {
-                                print("URLs did not match on set")
+                                Log.e("URLs did not match on set")
                             }
                         }
                         
@@ -158,7 +168,7 @@ class PostWithImageTableViewCell: UITableViewCell {
             if let url = URL(string: url) {
                 DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
                     if error != nil {
-                        print(error!.localizedDescription)
+                        Log.e(error!.localizedDescription)
                     } else {
                         // save image to realm in data form
                         if let data = image?.prepareImageForSaving() {
@@ -193,7 +203,7 @@ class PostWithImageTableViewCell: UITableViewCell {
     }
     
     @IBAction func showComments(_ sender: Any) {
-        print("Comments")
+        Log.d("Comments")
         commentDelegate.userDidSelectPostForComments(post: self.post)
     }
 

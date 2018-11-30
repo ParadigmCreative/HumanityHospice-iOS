@@ -55,7 +55,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         loadingDelegate = LV
         self.present(LV, animated: true, completion: nil)
         Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (timer) in
-            print("Done Loading")
+            Log.d("Done Loading")
             timer.invalidate()
             self.loadingDelegate?.complete()
         }
@@ -78,7 +78,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
                 }
                 self.navigationItem.rightBarButtonItem = nil
             default:
-                print(type)
+                Log.d(type)
             }
         }
     }
@@ -109,7 +109,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
             
             let imageCell = tableView.dequeueReusableCell(withIdentifier: "postWithImage", for: indexPath) as! PostWithImageTableViewCell
             
-            
+            imageCell.postPhoto.image = nil
             imageCell.layoutSubviews()
             imageCell.indicator = Utilities.createActivityIndicator(view: imageCell)
             imageCell.indicator.stopAnimating()
@@ -201,14 +201,14 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
         
         if post.posterUID == AppSettings.currentAppUser!.id {
             let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-                print("Delete")
+                Log.d("Delete")
                 self.deleteComment(post: post)
                 
             }
             delete.backgroundColor = UIColor.red
             
             let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
-                print("Edit")
+                Log.d("Edit")
                 self.performSegue(withIdentifier: "showNewPost", sender: post)
             }
             edit.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
@@ -260,7 +260,7 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     func listenForRemoval() {
         DatabaseHandler.listenForPostRemoved {
             let posts = RealmHandler.getPostList()
-            print("After:", posts.count)
+            Log.d("After:", posts.count)
             self.posts = posts
             self.tableView.reloadData()
         }
@@ -268,24 +268,32 @@ class JournalTableViewController: UITableViewController, DZNEmptyDataSetDelegate
     
     var isFirstLoad = true
     func listenForAddition() {
-        if isFirstLoad {
-            // get all that data
-            DatabaseHandler.getPostsFromDB { (posts) in
-                if let posts = posts {
-                    self.posts = posts
-                    self.tableView.reloadData()
-                    self.isFirstLoad = false
-                }
-            }
-        }
+//        if isFirstLoad {
+//            // get all that data
+//            DatabaseHandler.getPostsFromDB { (posts) in
+//                if let posts = posts {
+//                    self.posts = posts
+//                    self.tableView.reloadData()
+//                    self.isFirstLoad = false
+//                }
+//            }
+//        }
         
-        DatabaseHandler.listenForPostAdded {
-            if !self.isFirstLoad {
-                let posts = RealmHandler.getPostList()
-                print("After:", posts.count)
-                self.posts = posts
-                self.tableView.reloadData()
+        DatabaseHandler.listenForPostAdded { (newPost) in
+//            if !self.isFirstLoad {
+////                let posts = RealmHandler.getPostList()
+////                self.posts = posts
+////                self.tableView.reloadData()
+//
+//            }
+            
+            if let post = newPost {
+                self.posts.insert(post, at: 0)
+                self.tableView.beginUpdates()
+                self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                self.tableView.endUpdates()
             }
+            
         }
     }
     

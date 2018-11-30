@@ -70,7 +70,7 @@ class ImagePostTableViewCell: UITableViewCell {
                         if let url = URL(string: urlString) {
                             DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
                                 if error != nil {
-                                    print(error!.localizedDescription)
+                                    Log.e(error!.localizedDescription)
                                 } else {
                                     if let img = image {
                                         
@@ -130,7 +130,7 @@ class ImagePostTableViewCell: UITableViewCell {
                                 self.profilePictureView.setupSecondaryProfilePicture()
                                 self.profilePictureView.contentMode = .scaleAspectFill
                             } else {
-                                print("URLs did not match on set")
+                                Log.e("URLs did not match on set")
                             }
                         }
                         

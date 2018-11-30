@@ -22,7 +22,7 @@ class AboutViewController: UIViewController, WKNavigationDelegate {
         webView.allowsBackForwardNavigationGestures = true
         let urlR = URLRequest(url: url)
         webView.load(urlR)
-        print("ABOUT PAGE")
+        Log.i("ABOUT PAGE")
         Utilities.showActivityIndicator(view: self.view)
         webView.navigationDelegate = self
     }

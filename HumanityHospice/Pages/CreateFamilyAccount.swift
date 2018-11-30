@@ -27,7 +27,7 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         MenuHandler.staticMenu?.setHandingController(vc: self)
-        print("Family")
+        Log.i("Family")
         setup()
         
         
@@ -151,7 +151,7 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
 
     func createFamilyAccount(first: String, last: String, email: String, password: String) {
         checkTextView { (first, last, email, pass) in
-            print(first, last, email, pass)
+            Log.d(first, last, email, pass)
         }
     }
     
@@ -229,14 +229,14 @@ class CreateFamilyAccount: UIViewController, UITextFieldDelegate {
                             Utilities.closeActivityIndicator()
                             self.showAlert(title: "Hmm...", message: error!.localizedDescription)
                         } else {
-                            print("Done creating family account!")
+                            Log.d("Done creating family account!")
                             Utilities.closeActivityIndicator()
                             self.clearFields()
                             self.showConfirmation()
                         }
                     })
                 } else {
-                    print("Cancelled")
+                    Log.d("Cancelled")
                 }
             })
         }

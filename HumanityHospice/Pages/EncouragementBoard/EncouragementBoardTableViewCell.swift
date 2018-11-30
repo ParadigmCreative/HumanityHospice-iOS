@@ -75,7 +75,7 @@ class EncouragementBoardTableViewCell: UITableViewCell {
                                 self.profilePicture.setupSecondaryProfilePicture()
                                 self.profilePicture.contentMode = .scaleAspectFill
                             } else {
-                                print("URLs did not match on set")
+                                Log.e("URLs did not match on set")
                             }
                         }
                         

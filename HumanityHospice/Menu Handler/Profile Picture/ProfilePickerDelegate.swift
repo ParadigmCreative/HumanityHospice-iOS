@@ -42,7 +42,7 @@ class ProfilePickerDelegate: ImagePickerDelegate {
     
     // MARK: - ImagePickerDelegate
     func wrapperDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
-        print("Wrapper")
+        Log.d("Wrapper")
     }
     
     func doneButtonDidPress(_ imagePicker: ImagePickerController, images: [UIImage]) {
@@ -55,10 +55,10 @@ class ProfilePickerDelegate: ImagePickerDelegate {
                 if done {
                     self.activityIndicator.stopAnimating()
                     self.progressView?.removeFromSuperview()
-                    print("Done setting profile image to storage")
+                    Log.d("Done setting profile image to storage")
                     imagePicker.dismiss(animated: true, completion: nil)
                 } else {
-                    print(error)
+                    Log.e(error)
                     self.activityIndicator.stopAnimating()
                     self.progressView?.removeFromSuperview()
                     imagePicker.dismiss(animated: true, completion: nil)

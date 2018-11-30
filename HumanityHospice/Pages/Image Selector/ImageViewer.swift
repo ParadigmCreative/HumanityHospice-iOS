@@ -70,7 +70,7 @@ class ViewerDelegate: SlideLeafViewControllerDelegate {
             NotificationCenter.default.post(name: .ownerDidRequestDeleteImage, object: nil, userInfo: ["info": ImageViewer.currentlyViewingID])
         } else {
             // Do nothing
-            print("Do nothing")
+            Log.d("Do nothing")
         }
     }
     

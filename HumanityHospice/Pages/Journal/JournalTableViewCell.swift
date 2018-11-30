@@ -73,7 +73,7 @@ class JournalTableViewCell: UITableViewCell {
                                 self.userImage.setupSecondaryProfilePicture()
                                 self.userImage.contentMode = .scaleAspectFill
                             } else {
-                                print("URLs did not match on set")
+                                Log.e("URLs did not match on set")
                             }
                         }
                         
@@ -102,7 +102,7 @@ class JournalTableViewCell: UITableViewCell {
     var commentDelegate: CommentsDelegate!
     
     @IBAction func showComments(_ sender: Any) {
-        print("Comments")
+        Log.d("Comments")
         commentDelegate.userDidSelectPostForComments(post: self.post)
     }
     

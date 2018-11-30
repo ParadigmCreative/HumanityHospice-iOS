@@ -26,7 +26,7 @@ class CommentTableViewCell: UITableViewCell {
 //                    if let url = URL(string: urlString) {
 //                        DatabaseHandler.getImageFromStorage(url: url) { (image, error) in
 //                            if error != nil {
-//                                print("Couldn't get Profile Image:", error!.localizedDescription)
+//                                Log.e("Couldn't get Profile Image:", error!.localizedDescription)
 //                                self.profilePictureView.image = #imageLiteral(resourceName: "Logo")
 //                            } else {
 //                                if let img = image {
@@ -68,10 +68,10 @@ class CommentTableViewCell: UITableViewCell {
                                     
                                     RealmHandler.write({ (realm) in
                                         try! realm.write {
-                                            print("1 - Starting Update")
+                                            Log.d("1 - Starting Update")
                                             self.post.posterProfilePicture = img.prepareImageForSaving()
                                             realm.add(self.post, update: true)
-                                            print("2 - DONE UPDATING IMAGE")
+                                            Log.d("2 - DONE UPDATING IMAGE")
                                         }
                                     })
                                 }

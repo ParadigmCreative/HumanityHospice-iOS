@@ -170,7 +170,7 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
 //        if editingStyle == .delete {
 //            // Delete from firebase
 //            DatabaseHandler.removeCommentFromDatabase(post: self.post, comment: comment) {
-//                print("Removed comment from Firebase")
+//                Log.d("Removed comment from Firebase")
 //            }
 //        }
 //    }
@@ -180,14 +180,14 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         
         if post.posterUID == AppSettings.currentAppUser!.id {
             let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-                print("Delete")
+                Log.d("Delete")
                 self.deleteComment(post: post)
 
             }
             delete.backgroundColor = UIColor.red
             
             let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
-                print("Edit")
+                Log.d("Edit")
                 self.messageTF.text = post.message
                 self.messageTF.becomeFirstResponder()
                 self.isEditingComment = true
@@ -255,7 +255,7 @@ class ViewPostViewController: UITableViewController, UITextFieldDelegate, DZNEmp
         self.navigationController!.view.addSubview(messageInputContainerView)
         nav = self.navigationController
         messageInputContainerView.snp.makeConstraints { (make) in
-            print(UIDevice.modelName)
+            Log.d(UIDevice.modelName)
             if UIDevice.modelName.isiPhoneX() {
                 make.left.right.equalToSuperview()
                 make.bottom.equalToSuperview().offset(-22)

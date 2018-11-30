@@ -112,7 +112,7 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
     }
     
     @IBAction func submitPost(_ sender: Any) {
-        print("POST!")
+        Log.d("POST!")
         
 //        Utilities.showActivityIndicator(view: self.view)
         
@@ -164,7 +164,7 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
                     DatabaseHandler.postImageToDatabase(image: img, completion: { (url, imageName, error)  in
                         self.hideProgess()
                         if error != nil {
-                            print(error!.localizedDescription)
+                            Log.e(error!.localizedDescription)
                         } else {
                             DatabaseHandler.postToDatabase(posterUID: AppSettings.currentPatient!,
                                                            posterName: name,

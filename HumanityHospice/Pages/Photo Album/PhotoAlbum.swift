@@ -26,10 +26,12 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
                 self.addPhotoButton.isEnabled = false
                 self.navigationItem.rightBarButtonItem = nil 
             default:
-                print(type)
+                Log.d(type)
             }
         }
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         getImages()
     }
     
@@ -56,7 +58,7 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
             let posts = RealmHandler.getPostList()
             if posts.count > 0 {
                 let imagePosts = posts.filter { (p) -> Bool in
-                    return p.hasImage
+                    return p.hasImage == true
                 }
                 
                 journalPosts.append(contentsOf: imagePosts)
@@ -194,11 +196,13 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
             DatabaseHandler.database.child("PhotoAlbum").child(uid).child(photoID).setValue(nil)
             DatabaseHandler.storage.child("PhotoAlbum").child(uid).child(storagekey).delete(completion: { (error) in
                 if error != nil {
-                    print(error!.localizedDescription)
+                    Log.e(error!.localizedDescription)
                 } else {
-                    alert.dismiss(animated: true, completion: {
-                        ImageViewer.viewer.dismiss(animated: true, completion: nil)
-                    })
+                    alert.dismiss(animated: true, completion: nil)
+                    ImageViewer.viewer.dismiss(animated: true, completion: nil)
+                    self.posts.remove(at: ImageViewer.currentlyViewingIndex)
+                    self.collectionView?.deleteItems(at: [IndexPath(row: ImageViewer.currentlyViewingIndex, section: 0)])
+                    self.collectionView?.reloadData()
                 }
             })
         }))
@@ -210,18 +214,20 @@ class PhotoAlbum: UICollectionViewController, DZNEmptyDataSetSource, DZNEmptyDat
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
             let time = Int(self.posts[ImageViewer.currentlyViewingIndex].timestamp.rounded())
-            let storagekey = self.posts[ImageViewer.currentlyViewingIndex].name
-        DatabaseHandler.database.child("Journals").child(AppSettings.currentPatient!).child(result.id).child("PostImageURL").setValue(nil)
-            DatabaseHandler.storage.child("PhotoAlbum").child(uid).child(storagekey).delete(completion: { (error) in
-                if error != nil {
-                    print(error!.localizedDescription)
-                } else {
-                    alert.dismiss(animated: true, completion: {
-                        ImageViewer.viewer.dismiss(animated: true, completion: nil)
+            DatabaseHandler.database.child("Journals").child(AppSettings.currentPatient!).child(result.id).child("PostImageURL").setValue(nil)
+            if let refString = self.posts[ImageViewer.currentlyViewingIndex].url {
+                let ref = DatabaseHandler.storage.storage.reference(forURL: refString)
+                ref.delete(completion: { (error) in
+                    if error != nil {
+                        Log.e(error!.localizedDescription)
+                    } else {
+                        alert.dismiss(animated: true, completion: nil)
+                        self.posts.remove(at: ImageViewer.currentlyViewingIndex)
+                        self.collectionView?.deleteItems(at: [IndexPath(row: ImageViewer.currentlyViewingIndex, section: 0)])
                         self.collectionView?.reloadData()
-                    })
-                }
-            })
+                    }
+                })
+            }
         }))
         self.present(alert, animated: true, completion: nil)
     }

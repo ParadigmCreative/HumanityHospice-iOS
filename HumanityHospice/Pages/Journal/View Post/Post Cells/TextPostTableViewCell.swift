@@ -83,7 +83,7 @@ class TextPostTableViewCell: UITableViewCell {
                                 self.profilePictureView.setupSecondaryProfilePicture()
                                 self.profilePictureView.contentMode = .scaleAspectFill
                             } else {
-                                print("URLs did not match on set")
+                                Log.e("URLs did not match on set")
                             }
                         }
                         

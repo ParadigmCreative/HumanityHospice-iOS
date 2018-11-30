@@ -31,7 +31,7 @@ class RealmHandler {
                     self.realm.delete(currentPosts)
                 }
                 let posts = realm.objects(Post.self)
-                print("Verifying Cleanout - Number of Posts:", posts.count)
+                Log.i("Verifying Cleanout - Number of Posts:", posts.count)
                 resetComments()
             }
         }
@@ -112,9 +112,9 @@ class RealmHandler {
                 self.realm.delete(currentPosts)
             }
             let posts = realm.objects(Post.self)
-            print("Verifying Cleanout - Number of Photo Album Items:", posts.count)
+            Log.i("Verifying Cleanout - Number of Photo Album Items:", posts.count)
         } else {
-            print("Verifying Cleanout - Number of Photo Album Items:", currentPosts.count)
+            Log.i("Verifying Cleanout - Number of Photo Album Items:", currentPosts.count)
         }
     }
     

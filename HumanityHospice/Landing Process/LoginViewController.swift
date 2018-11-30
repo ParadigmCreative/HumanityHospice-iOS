@@ -88,7 +88,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if error != nil {
                     self.showAlert(title: "Hmm...", message: error!.localizedDescription)
                 } else {
-                    print("Login Successful", user!.email)
+                    Log.d("Login Successful", user!.email)
                     AppSettings.currentFBUser = user
                     DatabaseHandler.fetchData(for: user!, completion: {
                         let tabbar = UIStoryboard(name: "Main", bundle: nil)
@@ -134,7 +134,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.showAlert(title: "Oops!", message: "Please enter a valid email")
                 } else {
                     alert.dismiss(animated: true, completion: nil)
-                    print("Email Sent")
+                    Log.d("Email Sent")
                 }
             })
         }

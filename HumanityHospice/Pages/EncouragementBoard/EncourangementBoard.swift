@@ -69,13 +69,13 @@ class EncourangementBoard: UITableViewController, DZNEmptyDataSetSource, DZNEmpt
         
         if post.posterUID == AppSettings.currentAppUser!.id {
             let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-                print("Delete")
+                Log.d("Delete")
                 self.deletePost(post: post)
             }
             delete.backgroundColor = UIColor.red
             
             let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, nil) in
-                print("Edit")
+                Log.d("Edit")
                 self.performSegue(withIdentifier: "showNewPostVC", sender: post)
             }
             edit.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)

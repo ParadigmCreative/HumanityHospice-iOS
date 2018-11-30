@@ -27,27 +27,27 @@ class DatabaseHandler {
     public static func closeConnections() {
         if let handle = DatabaseHandler.addedListenerHandle {
             Database.database().reference().removeObserver(withHandle: handle)
-            print("Removed Journal Added Listener")
+            Log.d("Removed Journal Added Listener")
         }
         
         if let handle2 = DatabaseHandler.removedListenerHandle {
             Database.database().reference().removeObserver(withHandle: handle2)
-            print("Removed Journal Removed Listener")
+            Log.d("Removed Journal Removed Listener")
         }
         
         if let handle3 = DatabaseHandler.addedEBPostLister {
             Database.database().reference().removeObserver(withHandle: handle3)
-            print("Removed Ecouragement Board Added Listener")
+            Log.d("Removed Ecouragement Board Added Listener")
         }
         
         if let handle4 = DatabaseHandler.addedPhotoAlbumItem {
             Database.database().reference().removeObserver(withHandle: handle4)
-            print("Removed Photo Album Added Listener")
+            Log.d("Removed Photo Album Added Listener")
         }
         
         if let handle5 = DatabaseHandler.changedListenerHandle {
             Database.database().reference().removeObserver(withHandle: handle5)
-            print("Removed Post Comments Changed Listener")
+            Log.d("Removed Post Comments Changed Listener")
         }
         
     }
@@ -106,11 +106,11 @@ class DatabaseHandler {
         do {
             try Auth.auth().signOut()
             while Auth.auth().currentUser != nil {
-                print("Waiting to signout")
+                Log.d("Waiting to signout")
             }
             AppSettings.clearAppSettings()
         } catch  {
-            print(error.localizedDescription)
+            Log.e(error.localizedDescription)
         }
     }
     
@@ -144,19 +144,19 @@ class DatabaseHandler {
         if let secondaryAuth = secondaryAuth {
             secondaryAuth.createUser(withEmail: email, password: pass) { (result, error) in
                 if error != nil {
-                    print(error!.localizedDescription)
+                    Log.e(error!.localizedDescription)
                     completion(error!)
                 } else {
                     if let user = result?.user {
-                        print("User Created! \(user.uid) Updating Info")
+                        Log.d("User Created! \(user.uid) Updating Info")
                         let req = user.createProfileChangeRequest()
                         req.displayName = "\(first) \(last)"
                         req.commitChanges(completion: { (error) in
                             if error != nil {
-                                print("Couldn't perform profile changes")
+                                Log.e("Couldn't perform profile changes")
                                 completion(error!)
                             } else {
-                                print("Successfully changed profile information")
+                                Log.d("Successfully changed profile information")
                                 if let patient = AppSettings.currentPatient {
                                     guard let patientObj = AppSettings.currentAppUser as? DatabaseHandler.Patient else { return }
                                     let appuser = Family(id: user.uid,
@@ -169,10 +169,10 @@ class DatabaseHandler {
                                                                         user: appuser,
                                                                         completion: { (error, done) in
                                                                             if error != nil {
-                                                                                print("Error! :", error!.localizedDescription)
+                                                                                Log.e("Error! :", error!.localizedDescription)
                                                                                 completion(error!)
                                                                             } else {
-                                                                                print("Created Family Account Reference")
+                                                                                Log.d("Created Family Account Reference")
                                                                                 completion(nil)
                                                                             }
                                     })
@@ -180,7 +180,7 @@ class DatabaseHandler {
                             }
                         })
                     } else {
-                        print("Did nopt get user back")
+                        Log.e("Did nopt get user back")
                     }
                 }
             }
@@ -189,19 +189,19 @@ class DatabaseHandler {
             if let secondaryAuth = secondaryAuth {
                 secondaryAuth.createUser(withEmail: email, password: pass) { (result, error) in
                     if error != nil {
-                        print(error!.localizedDescription)
+                        Log.e(error!.localizedDescription)
                         completion(error!)
                     } else {
                         if let user = result?.user {
-                            print("User Created! \(user.uid) Updating Info")
+                            Log.d("User Created! \(user.uid) Updating Info")
                             let req = user.createProfileChangeRequest()
                             req.displayName = "\(first) \(last)"
                             req.commitChanges(completion: { (error) in
                                 if error != nil {
-                                    print("Couldn't perform profile changes")
+                                    Log.e("Couldn't perform profile changes")
                                     completion(error!)
                                 } else {
-                                    print("Successfully changed profile information")
+                                    Log.d("Successfully changed profile information")
                                     if let patient = AppSettings.currentPatient {
                                         guard let patientObj = AppSettings.currentAppUser as? DatabaseHandler.Patient else { return }
                                         let appuser = Family(id: user.uid,
@@ -215,10 +215,10 @@ class DatabaseHandler {
                                                                             user: appuser,
                                                                             completion: { (error, done) in
                                                                                 if error != nil {
-                                                                                    print("Error! :", error!.localizedDescription)
+                                                                                    Log.e("Error! :", error!.localizedDescription)
                                                                                     completion(error!)
                                                                                 } else {
-                                                                                    print("Created Family Account Reference")
+                                                                                    Log.d("Created Family Account Reference")
                                                                                     completion(nil)
                                                                                 }
                                         })
@@ -226,7 +226,7 @@ class DatabaseHandler {
                                 }
                             })
                         } else {
-                            print("Did nopt get user back")
+                            Log.e("Did nopt get user back")
                         }
                     }
                 }
@@ -256,7 +256,7 @@ class DatabaseHandler {
                                  readingFrom: "", patients: [], profilePic: nil)
             return appuser
         default:
-            print("Error")
+            Log.e("Error")
             return nil
         }
     }
@@ -310,7 +310,7 @@ class DatabaseHandler {
                         do {
                             try! Auth.auth().signOut()
                             Utilities.closeActivityIndicator()
-                            print("Signed Out bc failure to grab data")
+                            Log.d("Signed Out bc failure to grab data")
                         }
                     }
                 }
@@ -573,7 +573,7 @@ class DatabaseHandler {
                 let ref = Storage.storage().reference(forURL: url.absoluteString)
                 ref.getData(maxSize: 20 * 1024 * 1024) { (data, error) in
                     if error != nil {
-                        print(error!.localizedDescription)
+                        Log.e(error!.localizedDescription)
                         completion(nil)
                     } else {
                         if let data = data {
@@ -597,7 +597,7 @@ class DatabaseHandler {
         let ref = Storage.storage().reference(forURL: URL.absoluteString)
         ref.getData(maxSize: 20 * 1024 * 1024) { (data, error) in
             if error != nil {
-                print(error!.localizedDescription)
+                Log.e(error!.localizedDescription)
                 completion(nil)
             } else {
                 if let data = data {
@@ -621,7 +621,7 @@ class DatabaseHandler {
             let ref = Storage.storage().reference(forURL: url.absoluteString)
             ref.getData(maxSize: 20 * 1024 * 1024) { (data, error) in
                 if error != nil {
-                    print(error!.localizedDescription)
+                    Log.e(error!.localizedDescription)
                     completion(nil)
                 } else {
                     if let data = data {
@@ -883,7 +883,7 @@ class DatabaseHandler {
                 userRef = uref
             }
         default:
-            print("User is staff")
+            Log.d("User is staff")
         }
         
         if userRef != nil {
@@ -987,7 +987,7 @@ class DatabaseHandler {
     public static var isFirstLoad = true
     public static var addedListenerHandle: DatabaseHandle?
     public static var removedListenerHandle: DatabaseHandle?
-    public static func listenForPostAdded(completion: @escaping ()->()) {
+    public static func listenForPostAdded(completion: @escaping (Post?)->()) {
         
         let ref = Database.database().reference().child("Journals")
         var userRef: DatabaseReference?
@@ -1014,7 +1014,7 @@ class DatabaseHandler {
                 userRef = uref
             }
         default:
-            print("User is staff")
+            Log.d("User is staff")
         }
         
         if userRef != nil {
@@ -1105,7 +1105,7 @@ class DatabaseHandler {
                         try! realm.write {
                             realm.add(sortedPosts, update: true)
                         }
-                        completion()
+                        completion(sortedPosts.first!)
                     })
                 }
             }
@@ -1140,7 +1140,7 @@ class DatabaseHandler {
                 userRef = uref
             }
         default:
-            print("User is staff")
+            Log.d("User is staff")
         }
         
         if userRef != nil {
@@ -1188,7 +1188,7 @@ class DatabaseHandler {
                 userRef = uref
             }
         default:
-            print("User is staff")
+            Log.d("User is staff")
         }
         
         if userRef != nil {
@@ -1318,10 +1318,10 @@ class DatabaseHandler {
                 let ref = Storage.storage().reference(forURL: url)
                 ref.delete { (error) in
                     if error != nil {
-                        print("Error! Couldn't delete the photo at that location")
+                        Log.e("Error! Couldn't delete the photo at that location")
                         completion(false)
                     } else {
-                        print("Successfully deleted Photo from storage")
+                        Log.d("Successfully deleted Photo from storage")
                         
                         let patient = Database.database().reference().child("Journals").child(AppSettings.currentPatient!)
                         let pRef = patient.child(post.id)
@@ -1350,7 +1350,7 @@ class DatabaseHandler {
                 } else {
                     ref.downloadURL(completion: { (url, error) in
                         if error != nil {
-                            print(error!.localizedDescription)
+                            Log.e(error!.localizedDescription)
                         } else {
                             if let url = url {
                                 completion(url.absoluteString, meta!.name!, nil)
@@ -1509,7 +1509,7 @@ class DatabaseHandler {
         guard let removed = self.commentRemovedListenerHandle else { return }
         Database.database().reference().removeObserver(withHandle: added)
         Database.database().reference().removeObserver(withHandle: removed)
-        print("Removed Comment Listener Handles:", added, removed)
+        Log.d("Removed Comment Listener Handles:", added, removed)
     }
     
     // MARK: - Encouragement Board
@@ -1648,7 +1648,7 @@ class DatabaseHandler {
                 let dbRef = Database.database().reference().child("PhotoAlbum").child(uid!).childByAutoId()
                 ref.downloadURL(completion: { (url, error) in
                     if error != nil {
-                        print(error!.localizedDescription)
+                        Log.e(error!.localizedDescription)
                         completion(error)
                     } else {
                         if let url = url?.absoluteString {

@@ -177,7 +177,7 @@ class SwitchPatientTableViewController: UITableViewController, UITextFieldDelega
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let switchUser = UIAlertAction(title: "Switch", style: .destructive) { (alert) in
-            print("Switching Users...")
+            Log.d("Switching Users...")
             self.switchPatient(patient: patient)
         }
         

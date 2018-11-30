@@ -35,7 +35,7 @@ class Log {
     ///   - line: The line on which the log occured
     ///   - column: The column in which the log occured
     ///   - funcName: The name of the function in which the log occurred
-    public static func e( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public static func e( _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         let date = Date()
         
         print("\(toString(date: date)) \(LogEvent.e.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
@@ -49,7 +49,7 @@ class Log {
     ///   - line: The line on which the log occured
     ///   - column: The column in which the log occured
     ///   - funcName: The name of the function in which the log occurred
-    public static func d( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public static func d( _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         let date = Date()
         
         print("\(toString(date: date)) \(LogEvent.d.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
@@ -63,7 +63,7 @@ class Log {
     ///   - line: The line on which the log occured
     ///   - column: The column in which the log occured
     ///   - funcName: The name of the function in which the log occurred
-    public static func i( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public static func i( _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         let date = Date()
         
         print("\(toString(date: date)) \(LogEvent.i.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
@@ -77,7 +77,7 @@ class Log {
     ///   - line: The line on which the log occured
     ///   - column: The column in which the log occured
     ///   - funcName: The name of the function in which the log occurred
-    public static func v( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public static func v( _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         let date = Date()
         
         print("\(toString(date: date)) \(LogEvent.v.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
@@ -91,7 +91,7 @@ class Log {
     ///   - line: The line on which the log occured
     ///   - column: The column in which the log occured
     ///   - funcName: The name of the function in which the log occurred
-    public static func w( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public static func w( _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         let date = Date()
         
         print("\(toString(date: date)) \(LogEvent.w.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
@@ -105,7 +105,7 @@ class Log {
     ///   - line: The line on which the log occured
     ///   - column: The column in which the log occured
     ///   - funcName: The name of the function in which the log occurred
-    public static func s( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
+    public static func s( _ object: Any..., filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         let date = Date()
         
         print("\(toString(date: date)) \(LogEvent.s.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
