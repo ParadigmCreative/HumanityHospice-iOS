@@ -1049,7 +1049,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BG" translatesAutoresizingMaskIntoConstraints="NO" id="XvF-zd-lpF">
-                                <rect key="frame" x="0.0" y="-90" width="375" height="600"/>
+                                <rect key="frame" x="0.0" y="-90" width="375" height="693"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0TF-OC-THK">
                                 <rect key="frame" x="30" y="103" width="315" height="51"/>
@@ -1118,7 +1118,7 @@
                         <constraints>
                             <constraint firstItem="0TF-OC-THK" firstAttribute="leading" secondItem="tde-ns-WPu" secondAttribute="leading" constant="30" id="0aF-Uj-9kC"/>
                             <constraint firstItem="R8c-ex-0GM" firstAttribute="top" secondItem="vcD-gN-VZK" secondAttribute="bottom" constant="30" id="0lo-s4-dqG"/>
-                            <constraint firstItem="tde-ns-WPu" firstAttribute="bottom" secondItem="XvF-zd-lpF" secondAttribute="bottom" id="0p9-cR-KtG"/>
+                            <constraint firstItem="tde-ns-WPu" firstAttribute="bottom" secondItem="XvF-zd-lpF" secondAttribute="bottom" constant="-93" id="0p9-cR-KtG"/>
                             <constraint firstItem="vcD-gN-VZK" firstAttribute="leading" secondItem="0TF-OC-THK" secondAttribute="leading" id="1fB-w6-dnx"/>
                             <constraint firstItem="o6K-w8-IyF" firstAttribute="top" secondItem="R8c-ex-0GM" secondAttribute="bottom" constant="8" id="2tN-Zg-k4v"/>
                             <constraint firstItem="XvF-zd-lpF" firstAttribute="leading" secondItem="tde-ns-WPu" secondAttribute="leading" id="6xX-oa-7mg"/>
@@ -1189,7 +1189,7 @@
                     <viewLayoutGuide key="safeArea" id="R9X-ty-LXv"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="5069.6000000000004" y="880.78817733990149"/>
+            <point key="canvasLocation" x="5069.6000000000004" y="880.20989505247383"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="r8h-ae-GWw">
@@ -2268,7 +2268,7 @@
         <image name="Menu" width="30" height="20"/>
         <image name="New Humanity Connect Logo" width="1902" height="882"/>
         <image name="Notice Box" width="321" height="104"/>
-        <image name="Picture - simple-line-icons" width="15" height="13"/>
+        <image name="Picture - simple-line-icons" width="20" height="17"/>
         <image name="TextField" width="311" height="48"/>
     </resources>
 </document>
