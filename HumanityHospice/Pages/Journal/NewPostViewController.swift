@@ -44,6 +44,21 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
         setupImagePreview()
         if postToEdit != nil {
             messageTF.text = postToEdit!.message
+            if postToEdit!.hasImage {
+                if let url = postToEdit!.imageURL {
+                    if let imgData = journalImageCache.object(forKey: NSString(string: url)) {
+                        if let data = imgData as? Data {
+                            if let img = data.getImageFromData() {
+                                self.imagePreview.image = img
+                                self.imagePreview.isHidden = false
+                                clearPhotoButton.isHidden = false
+                            }
+                        }
+                    }
+                }
+            }
+            self.attachPhotoButton.isHidden = true
+            self.submitPostButton.setTitle("Update", for: .normal)
         }
         messageTF.becomeFirstResponder()
     }
@@ -124,7 +139,15 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
         if self.imagePreview.image == nil {
             
             if let postToEdit = self.postToEdit {
-                DatabaseHandler.database.child("Journals").child(AppSettings.currentPatient!).child(postToEdit.id).updateChildValues(["Post": message])
+                DatabaseHandler.removeImageFromStorage(post: postToEdit) { (error) in
+                    guard error == nil else {
+                        Log.e(error!.localizedDescription)
+                        return
+                    }
+                    let ref = DatabaseHandler.database.child("Journals").child(AppSettings.currentPatient!)
+                    ref.child(postToEdit.id).updateChildValues(["Post": message,
+                                                                "PostImageURL": nil])
+                }
                 Utilities.closeActivityIndicator()
                 self.dismiss(animated: true, completion: nil)
             } else {
@@ -152,7 +175,8 @@ class NewPostViewController: UIViewController, UITextViewDelegate, ImagePickerDe
             }
         } else {
             if let postToEdit = self.postToEdit {
-                DatabaseHandler.database.child("Journals").child(AppSettings.currentPatient!).child(postToEdit.id).updateChildValues(["Post": message])
+                let ref = DatabaseHandler.database.child("Journals").child(AppSettings.currentPatient!)
+                ref.child(postToEdit.id).updateChildValues(["Post": message])
                 Utilities.closeActivityIndicator()
                 self.dismiss(animated: true, completion: nil)
             } else {

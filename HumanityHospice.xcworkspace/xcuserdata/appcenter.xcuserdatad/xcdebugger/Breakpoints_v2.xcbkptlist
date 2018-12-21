@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Pages/Journal/NewPostViewController.swift"
-            timestampString = "565228702.057242"
+            timestampString = "567115198.548491"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "doneButtonDidPress(_:images:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Pages/Journal/NewPostViewController.swift"
-            timestampString = "565228702.0573829"
+            timestampString = "567115198.549071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
             landmarkName = "attachPhoto(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Pages/Journal/NewPostViewController.swift"
-            timestampString = "565228702.057523"
+            timestampString = "567115198.549479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
             landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -378,7 +378,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "565228702.0583251"
+            timestampString = "567115198.550101"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "431"
@@ -410,11 +410,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "565228702.0584641"
+            timestampString = "567115198.550203"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1561"
-            endingLineNumber = "1561"
+            startingLineNumber = "1583"
+            endingLineNumber = "1583"
             landmarkName = "listenForEBPostChanged(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -586,7 +586,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "565228702.059383"
+            timestampString = "567115198.5504791"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "948"
@@ -639,8 +639,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "79"
             endingLineNumber = "79"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "post"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

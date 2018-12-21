@@ -1338,6 +1338,28 @@ class DatabaseHandler {
         }
     }
     
+    public static func removeImageFromStorage(post: Post, completion: @escaping (Error?)->()) {
+        enum ImageRemovalError: Error {
+            case NoPhoto
+        }
+        
+        if let url = post.imageURL {
+            let ref = Storage.storage().reference(forURL: url)
+            ref.delete { (error) in
+                guard error == nil else {
+                    completion(error!)
+                    return
+                }
+                
+                Log.i("Successfully deleted photo from Storage")
+                completion(nil)
+            }
+        } else {
+            Log.e("Couldn't get image from the Post Object")
+            completion(ImageRemovalError.NoPhoto)
+        }
+    }
+    
     static var journalUploadTask: StorageUploadTask?
     public static func postImageToDatabase(image: UIImage, completion: @escaping (String?, String?, Error?)->()) {
         if let data = UIImagePNGRepresentation(image) {
