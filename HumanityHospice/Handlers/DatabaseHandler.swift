@@ -522,25 +522,39 @@ class DatabaseHandler {
         readerRef.child(co.reader.PatientList).child(pid).setValue(false)
         
         let journal = Database.database().reference().child(co.journal.Journals).child(pid)
-        journal.observeSingleEvent(of: .value) { (snap) in
-            if let entries = snap.children.allObjects as? [DataSnapshot] {
-                for entry in entries {
-                    let commentsRef = entry.ref
-                    commentsRef.child(co.journal.Comments).observeSingleEvent(of: .value, with: { (snap) in
-                        if let comments = snap.children.allObjects as? [DataSnapshot] {
-                            for comment in comments {
-                                if let data = comment.value as? [String: Any] {
-                                    let uid = data[co.journal.comment.PosterUID] as! String
-                                    if uid == rid {
-                                        DatabaseHandler.removeComment(pid: pid, postID: entry.key, commentID: comment.key)
-                                    }
-                                }
-                            }
-                        }
-                    })
+        
+        // Get posts that have comments
+        let posts = realm.objects(Post.self).filter("comments.@count > 0")
+        // For each post, check each comment
+        for post in posts {
+            for comment in post.comments {
+                if comment.posterUID == rid {
+                    // Remove the comment
+                    journal.child(post.id).child("Comments").child(comment.id).setValue(nil)
                 }
             }
         }
+        
+//        journal.observeSingleEvent(of: .value) { (snap) in
+//            if let entries = snap.children.allObjects as? [DataSnapshot] {
+//                for entry in entries {
+//                    let commentsRef = entry.ref.child(co.journal.Comments)
+//                    let query = commentsRef.queryOrdered(byChild: "PosterUID").queryEqual(toValue: rid)
+//                    query.observeSingleEvent(of: .value, with: { (snap) in
+//                        if let comments = snap.children.allObjects as? [DataSnapshot] {
+//                            for comment in comments {
+//                                if let data = comment.value as? [String: Any] {
+//                                    let uid = data[co.journal.comment.PosterUID] as! String
+//                                    if uid == rid {
+//                                        DatabaseHandler.removeComment(pid: pid, postID: entry.key, commentID: comment.key)
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    })
+//                }
+//            }
+//        }
         
         removeEncouragementPosts(pid: pid, rid: rid)
     }
@@ -1646,13 +1660,19 @@ class DatabaseHandler {
     public static func removeEncouragementPosts(pid: String, rid: String) {
         let boards = Database.database().reference().child(co.encouragementBoard.EncouragementBoards)
         let usersBoard = boards.child(pid)
-        let postsToDelete = usersBoard.queryOrdered(byChild: co.encouragementBoard.PosterUID).queryEqual(toValue: rid)
-        postsToDelete.observeSingleEvent(of: .value) { (snap) in
-            for child in snap.children.allObjects as! [DataSnapshot] {
-                let key = child.key
-                usersBoard.child(key).setValue(nil)
-            }
+        
+        let posts = realm.objects(EBPost.self).filter("posterUID == %@", rid)
+        for post in posts {
+            usersBoard.child(post.id).setValue(nil)
         }
+        
+//        let postsToDelete = usersBoard.queryOrdered(byChild: co.encouragementBoard.PosterUID).queryEqual(toValue: rid)
+//        postsToDelete.observeSingleEvent(of: .value) { (snap) in
+//            for child in snap.children.allObjects as! [DataSnapshot] {
+//                let key = child.key
+//                usersBoard.child(key).setValue(nil)
+//            }
+//        }
     }
     
     // MARK: - Photo Album

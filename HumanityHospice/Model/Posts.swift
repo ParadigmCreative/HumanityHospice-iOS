@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import FirebaseDatabase
 
 class Post: Object {
     
@@ -33,6 +34,10 @@ class Post: Object {
     
     override static func primaryKey() -> String? {
         return "id"
+    }
+    
+    func initFrom(ref: DatabaseReference) {
+        
     }
     
 }
