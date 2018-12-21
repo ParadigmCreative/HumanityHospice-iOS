@@ -41,6 +41,8 @@ class NewEBPostViewController: UIViewController, UITextViewDelegate {
             messageTF.text = post.message
         }
         
+        self.submitButton.setTitle("Send", for: .normal)
+        
     }
     
     func setupButtons() {
