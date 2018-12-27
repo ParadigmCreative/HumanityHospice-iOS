@@ -33,6 +33,7 @@
 		73AF6F0821B0776A00225E28 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73AF6F0721B0776A00225E28 /* Logger.swift */; };
 		73B4013C20EACAF3005EE40E /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B4013A20EACAF3005EE40E /* UploadViewController.swift */; };
 		73B4013D20EACAF3005EE40E /* UploadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73B4013B20EACAF3005EE40E /* UploadViewController.xib */; };
+		73B8480B21CDD2E9005BD0DA /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B8480A21CDD2E9005BD0DA /* NotificationCenterManager.swift */; };
 		73BD07A120C5DF170051D94D /* SwitchPatientTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */; };
 		73BE5C5320E2BF3A001A34F0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73BE5C5220E2BF3A001A34F0 /* GoogleService-Info.plist */; };
 		73C22EDD20C37D5C00E35E80 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */; };
@@ -106,6 +107,7 @@
 		73AF6F0721B0776A00225E28 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		73B4013A20EACAF3005EE40E /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		73B4013B20EACAF3005EE40E /* UploadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadViewController.xib; sourceTree = "<group>"; };
+		73B8480A21CDD2E9005BD0DA /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		73BD07A020C5DF170051D94D /* SwitchPatientTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchPatientTableViewController.swift; sourceTree = "<group>"; };
 		73BE5C5220E2BF3A001A34F0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "HumanityHospice/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		73C22EDC20C37D5C00E35E80 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */,
 				A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */,
 				A5D3F977208D31870079B713 /* AppSettings.swift */,
+				73B8480A21CDD2E9005BD0DA /* NotificationCenterManager.swift */,
 			);
 			path = Handlers;
 			sourceTree = "<group>";
@@ -403,6 +406,11 @@
 					A5BBD42E2086EC3700B80BD0 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -545,6 +553,7 @@
 				73AF6F0821B0776A00225E28 /* Logger.swift in Sources */,
 				7357DE6D20980BA700AED945 /* AboutViewController.swift in Sources */,
 				7338482E20A7F50000EC6D01 /* Posts.swift in Sources */,
+				73B8480B21CDD2E9005BD0DA /* NotificationCenterManager.swift in Sources */,
 				A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */,
 				73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */,
 				7335B2B4209FA41400AD5B1B /* ProfilePickerDelegate.swift in Sources */,
