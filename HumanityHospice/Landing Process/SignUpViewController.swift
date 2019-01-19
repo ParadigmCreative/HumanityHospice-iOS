@@ -110,6 +110,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         performSegue(withIdentifier: "showSignUp", sender: "Friend")
     }
     
+    @IBAction func nurseSignUp(_ sender: UIButton) {
+        AppSettings.userType = DatabaseHandler.UserType.Staff
+        performSegue(withIdentifier: "showSignUp", sender: "Nurse")
+    }
+    
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == firstName {
             lastName.becomeFirstResponder()

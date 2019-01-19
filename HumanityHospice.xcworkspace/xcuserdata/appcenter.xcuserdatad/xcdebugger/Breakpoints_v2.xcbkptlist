@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Landing Process/SignUpViewController.swift"
-            timestampString = "562216070.70128"
+            timestampString = "569197412.139418"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
-            timestampString = "565228702.057031"
+            timestampString = "569197412.139503"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
             landmarkName = "validateInvite(code:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
-            timestampString = "565228702.057124"
+            timestampString = "569197412.139581"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
             landmarkName = "validateInvite(code:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Landing Process/LoginViewController.swift"
-            timestampString = "565228702.057644"
+            timestampString = "569197412.140023"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "keyboardWillShow(notification:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
-            timestampString = "565228702.057716"
+            timestampString = "569197412.1404279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "365"
-            endingLineNumber = "365"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
             landmarkName = "createDatabaseReferenceFor(appuser:user:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
-            timestampString = "565228702.057784"
+            timestampString = "569197412.140493"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "signUp(_:)"
             landmarkType = "7">
             <Locations>
@@ -266,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
-            timestampString = "565228702.0578409"
+            timestampString = "569197412.14055"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "signUp(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
-            timestampString = "565228702.0579081"
+            timestampString = "569197412.140605"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "375"
-            endingLineNumber = "375"
+            startingLineNumber = "444"
+            endingLineNumber = "444"
             landmarkName = "createDatabaseReferenceFor(appuser:user:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Menu Handler/MenuView.swift"
-            timestampString = "564383460.945973"
+            timestampString = "569440127.556381"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "setupMenuItems()"
             landmarkType = "7">
          </BreakpointContent>
@@ -378,11 +378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "567205924.5372289"
+            timestampString = "569440127.5565031"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "431"
-            endingLineNumber = "431"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
             landmarkName = "getPatientDetailsForReader(pid:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -410,11 +410,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "567205924.5373859"
+            timestampString = "569440127.556579"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1597"
-            endingLineNumber = "1597"
+            startingLineNumber = "1632"
+            endingLineNumber = "1632"
             landmarkName = "listenForEBPostChanged(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -442,7 +442,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Pages/EncouragementBoard/NewEBPostViewController.swift"
-            timestampString = "567205924.537514"
+            timestampString = "569440127.556663"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "74"
@@ -458,7 +458,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Pages/EncouragementBoard/NewEBPostViewController.swift"
-            timestampString = "567205924.53809"
+            timestampString = "569440127.55671"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "87"
@@ -586,11 +586,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "567205924.538592"
+            timestampString = "569440127.556888"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "962"
-            endingLineNumber = "962"
+            startingLineNumber = "997"
+            endingLineNumber = "997"
             landmarkName = "getPostsFromDB(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -682,11 +682,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "567205924.5387779"
+            timestampString = "569440127.5570281"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "558"
-            endingLineNumber = "558"
+            startingLineNumber = "594"
+            endingLineNumber = "594"
             landmarkName = "blockReader(pid:rid:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -698,11 +698,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "567205924.538871"
+            timestampString = "569440127.557083"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1664"
-            endingLineNumber = "1664"
+            startingLineNumber = "1699"
+            endingLineNumber = "1699"
             landmarkName = "removeEncouragementPosts(pid:rid:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -713,13 +713,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
-            timestampString = "567205924.538941"
+            filePath = "HumanityHospice/Pages/EncouragementBoard/NewEBPostViewController.swift"
+            timestampString = "569440127.557133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "529"
-            endingLineNumber = "529"
-            landmarkName = "blockReader(pid:rid:)"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "submitPost(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
+            timestampString = "569197412.142115"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
+            landmarkName = "signUp(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Landing Process/LandingViewController.swift"
+            timestampString = "569197412.142206"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Landing Process/LandingViewController.swift"
+            timestampString = "569197412.142264"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -729,13 +777,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/AppDelegate.swift"
-            timestampString = "567205924.539009"
+            filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
+            timestampString = "569197412.142453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "applicationDidEnterBackground(_:)"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "signUp(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String, Swift.String, Swift.String, Swift.String) -&gt; () in HumanityHospice.CompleteSignUpViewController.signUp(Any) -&gt; ()"
+                  moduleName = "HumanityHospice"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/appcenter/Documents/Work/Paradigm%20Creative/Humanity%20Hospice/HumanityHospice-iOS/HumanityHospice/Landing%20Process/CompleteSignUpViewController.swift"
+                  timestampString = "569575883.900723"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "216"
+                  endingLineNumber = "216"
+                  offsetFromSymbolStart = "1740">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in closure #1 (Swift.String, Swift.String, Swift.String, Swift.String) -&gt; () in HumanityHospice.CompleteSignUpViewController.signUp(Any) -&gt; ()"
+                  moduleName = "HumanityHospice"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/appcenter/Documents/Work/Paradigm%20Creative/Humanity%20Hospice/HumanityHospice-iOS/HumanityHospice/Landing%20Process/CompleteSignUpViewController.swift"
+                  timestampString = "569575883.903559"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "217"
+                  endingLineNumber = "217"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
+            timestampString = "569197412.142502"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
+            landmarkName = "createNurse(first:last:email:pass:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -745,13 +841,77 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/AppDelegate.swift"
-            timestampString = "567205924.539088"
+            filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
+            timestampString = "569197412.142549"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
+            landmarkName = "createNurse(first:last:email:pass:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Landing Process/CompleteSignUpViewController.swift"
+            timestampString = "569197412.1425951"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "399"
+            endingLineNumber = "399"
+            landmarkName = "createNurse(first:last:email:pass:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Video Chat/VideoCallDatabaseManager.swift"
+            timestampString = "569573707.466977"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "requestCallToNurse(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Video Chat/VideoCallDatabaseManager.swift"
+            timestampString = "569573707.46707"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "updateTokenInDatabase()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Video Chat/VideoCallDatabaseManager.swift"
+            timestampString = "569573707.467129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "108"
             endingLineNumber = "108"
-            landmarkName = "registerDeviceForPatient()"
+            landmarkName = "parseAPN(action:patientID:title:body:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -761,13 +921,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/AppDelegate.swift"
-            timestampString = "567205924.5391591"
+            filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
+            timestampString = "569440127.557657"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "registerDeviceForReader()"
+            startingLineNumber = "485"
+            endingLineNumber = "485"
+            landmarkName = "getOnCallNurseDetails(nurseID:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -777,13 +937,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/AppDelegate.swift"
-            timestampString = "567205924.539223"
+            filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
+            timestampString = "569440127.557704"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "registerDeviceForPatient()"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
+            landmarkName = "getRandomOnCallNurse(ref:team:avoid:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -793,13 +953,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/AppDelegate.swift"
-            timestampString = "567205924.539301"
+            filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
+            timestampString = "569440127.557748"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "registerDeviceForReader()"
+            startingLineNumber = "545"
+            endingLineNumber = "545"
+            landmarkName = "getRandomOnCallNurse(ref:team:avoid:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -809,13 +969,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/AppDelegate.swift"
-            timestampString = "567205924.539373"
+            filePath = "HumanityHospice/Handlers/DatabaseHandler.swift"
+            timestampString = "569440127.557802"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "application(_:performFetchWithCompletionHandler:)"
+            startingLineNumber = "547"
+            endingLineNumber = "547"
+            landmarkName = "getRandomOnCallNurse(ref:team:avoid:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -825,13 +985,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HumanityHospice/Pages/EncouragementBoard/NewEBPostViewController.swift"
-            timestampString = "567205982.465722"
+            filePath = "HumanityHospice/Video Chat/VideoCallDatabaseManager.swift"
+            timestampString = "569573707.467243"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "submitPost(_:)"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "requestCallToNurse(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Menu Handler/MenuView.swift"
+            timestampString = "569440127.557907"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "callNurse(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HumanityHospice/Handlers/NotificationCenterManager.swift"
+            timestampString = "569440127.557981"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "notify(type:callerName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

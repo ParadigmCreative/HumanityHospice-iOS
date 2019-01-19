@@ -77,7 +77,7 @@ class NewEBPostViewController: UIViewController, UITextViewDelegate {
                     let name = AppSettings.currentAppUser!.fullName()
                     DatabaseHandler.postEBToDatabase(posterID: uid, posterName: name, message: text!, completion: {
                         
-                        NotificationDispatch.triggerNotification(for: .NewEncouragementPost)
+//                        NotificationDispatch.triggerNotification(for: .NewEncouragementPost)
                         
                         Utilities.closeActivityIndicator()
                         self.dismiss(animated: true, completion: nil)
@@ -88,7 +88,7 @@ class NewEBPostViewController: UIViewController, UITextViewDelegate {
                         let postRef = DatabaseHandler.database.child(co.encouragementBoard.EncouragementBoards).child(reader.readingFrom)
                         postRef.child(EBPostToEdit!.id).updateChildValues(["Message": text!])
                         
-                        NotificationDispatch.triggerNotification(for: .NewEncouragementPost)
+//                        NotificationDispatch.triggerNotification(for: .NewEncouragementPost)
                         
                         Utilities.closeActivityIndicator()
                         self.dismiss(animated: true, completion: nil)

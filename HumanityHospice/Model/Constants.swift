@@ -15,6 +15,7 @@ class co {
     public static let patient = Patient()
     public static let reader = Readers()
     public static let family = Family()
+    public static let staff = Staff()
 }
 
 struct Journals {
@@ -76,6 +77,12 @@ struct Family {
     let LastName = "LastName"
     let FullName = "FullName"
     let PatientUID = "PatientUID"
+}
+
+struct Staff {
+    let Staff = "Staff"
+    let firstName = "firstName"
+    let lastName = "lastName"
 }
 
 struct PhotoAlbumStr {

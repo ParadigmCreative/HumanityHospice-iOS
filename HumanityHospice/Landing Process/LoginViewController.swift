@@ -90,11 +90,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     Log.d("Login Successful", user!.email)
                     AppSettings.currentFBUser = user
-                    DatabaseHandler.fetchData(for: user!, completion: {
-                        let tabbar = UIStoryboard(name: "Main", bundle: nil)
-                        if let tabbar = tabbar.instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
-                            Utilities.closeActivityIndicator()
-                            self.present(tabbar, animated: true, completion: nil)
+                    DatabaseHandler.fetchData(for: AppSettings.currentFBUser!, completion: {
+                        Utilities.closeActivityIndicator()
+                        if AppSettings.userType == .Staff {
+                            if let nav = UIStoryboard(name: "Nurse", bundle: nil).instantiateViewController(withIdentifier: "NurseNav") as? UINavigationController {
+                                self.present(nav, animated: true, completion: nil)
+                            }
+                        } else {
+                            if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
+                                self.present(tabbar, animated: true, completion: nil)
+                            }
                         }
                     })
                 }

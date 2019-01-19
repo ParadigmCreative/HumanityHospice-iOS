@@ -103,6 +103,15 @@ class RealmHandler {
         return sorted
     }
     
+    public static func resetEBPostList() {
+        let currentPosts = self.realm.objects(EBPost.self)
+        if currentPosts.count > 0 {
+            try! self.realm.write {
+                self.realm.delete(currentPosts)
+            }
+        }
+    }
+    
     // MARK: - Photo Album
     
     public static func resetPhotoAlbum() {
@@ -111,10 +120,6 @@ class RealmHandler {
             try! self.realm.write {
                 self.realm.delete(currentPosts)
             }
-            let posts = realm.objects(Post.self)
-            Log.i("Verifying Cleanout - Number of Photo Album Items:", posts.count)
-        } else {
-            Log.i("Verifying Cleanout - Number of Photo Album Items:", currentPosts.count)
         }
     }
     
@@ -130,9 +135,10 @@ class RealmHandler {
     // MARK: - Master
     public static func masterResetRealm() {
         DispatchQueue.main.async {
-            try! realm.write {
-                realm.deleteAll()
-            }
+            resetComments()
+            resetPhotoAlbum()
+            resetJournalPosts()
+            resetEBPostList()
         }
     }
     

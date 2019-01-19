@@ -9,6 +9,21 @@
 /* Begin PBXBuildFile section */
 		0BC827D0329B3113D20F14AE /* Pods_HumanityHospice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03038EFFF88515CF212F99CE /* Pods_HumanityHospice.framework */; };
 		7310489F20B895C500E52EA9 /* NewPhotoPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7310489E20B895C500E52EA9 /* NewPhotoPostVC.swift */; };
+		73159B7921ECFDE800F32C0B /* Nurse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73159B7821ECFDE800F32C0B /* Nurse.storyboard */; };
+		73159B9521ED022100F32C0B /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73159B9321ED022100F32C0B /* AppID.swift */; };
+		73159B9621ED022100F32C0B /* VideoChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73159B9421ED022100F32C0B /* VideoChatViewController.swift */; };
+		73159BA021ED039900F32C0B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73159B9F21ED039900F32C0B /* SystemConfiguration.framework */; };
+		73159BA221ED03AB00F32C0B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 73159BA121ED03AB00F32C0B /* libc++.tbd */; };
+		73159BA421ED03CC00F32C0B /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 73159BA321ED03CB00F32C0B /* libresolv.tbd */; };
+		73159BA621ED03D700F32C0B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73159BA521ED03D600F32C0B /* CoreMedia.framework */; };
+		73159BA821ED03E600F32C0B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73159BA721ED03E600F32C0B /* VideoToolbox.framework */; };
+		73159BAA21ED03F100F32C0B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73159BA921ED03F000F32C0B /* AudioToolbox.framework */; };
+		73159BAC21ED03FA00F32C0B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73159BAB21ED03FA00F32C0B /* CoreTelephony.framework */; };
+		73159BAE21ED040200F32C0B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73159BAD21ED040200F32C0B /* AVFoundation.framework */; };
+		73159BB021ED040B00F32C0B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73159BAF21ED040B00F32C0B /* CoreMotion.framework */; };
+		73159BB221ED041F00F32C0B /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73159BB121ED041F00F32C0B /* Accelerate.framework */; };
+		73159BB421ED089500F32C0B /* CallLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73159BB321ED089500F32C0B /* CallLogViewController.swift */; };
+		73159BB621ED125000F32C0B /* VideoCallDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73159BB521ED125000F32C0B /* VideoCallDatabaseManager.swift */; };
 		7335B2AF209BC37100AD5B1B /* JournalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */; };
 		7335B2B2209BDFF700AD5B1B /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */; };
 		7335B2B4209FA41400AD5B1B /* ProfilePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7335B2B3209FA41400AD5B1B /* ProfilePickerDelegate.swift */; };
@@ -41,8 +56,11 @@
 		73C56FE220E5AB890078522E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73C56FE120E5AB890078522E /* GoogleService-Info.plist */; };
 		73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */; };
 		73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */; };
+		73CE547321F2E31900806C7D /* CallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CE547221F2E31900806C7D /* CallManager.swift */; };
 		73E792DC2116445F00A2AF2E /* ManageFollowersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E792DB2116445F00A2AF2E /* ManageFollowersTableViewController.swift */; };
 		73E938AA20C4901E00CC3648 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */; };
+		73EBBFC721EFA89A000AA803 /* CallLogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EBBFC621EFA89A000AA803 /* CallLogViewModel.swift */; };
+		73EBBFC921EFAAAB000AA803 /* Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EBBFC821EFAAAB000AA803 /* Call.swift */; };
 		73ED2C3820A903CF005D7AF8 /* RealmHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */; };
 		73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */; };
 		A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CC3EF20881C2200C9D776 /* DatabaseHandler.swift */; };
@@ -83,6 +101,21 @@
 		6A3A9CE6D5B505135CD48FAB /* Pods_HumanityHospiceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HumanityHospiceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F245B1A412F6AABE75C3EDD /* Pods-HumanityHospiceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospiceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospiceTests/Pods-HumanityHospiceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7310489E20B895C500E52EA9 /* NewPhotoPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPhotoPostVC.swift; sourceTree = "<group>"; };
+		73159B7821ECFDE800F32C0B /* Nurse.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Nurse.storyboard; sourceTree = "<group>"; };
+		73159B9321ED022100F32C0B /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
+		73159B9421ED022100F32C0B /* VideoChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoChatViewController.swift; sourceTree = "<group>"; };
+		73159B9F21ED039900F32C0B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		73159BA121ED03AB00F32C0B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		73159BA321ED03CB00F32C0B /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		73159BA521ED03D600F32C0B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		73159BA721ED03E600F32C0B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		73159BA921ED03F000F32C0B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		73159BAB21ED03FA00F32C0B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		73159BAD21ED040200F32C0B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		73159BAF21ED040B00F32C0B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		73159BB121ED041F00F32C0B /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		73159BB321ED089500F32C0B /* CallLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLogViewController.swift; sourceTree = "<group>"; };
+		73159BB521ED125000F32C0B /* VideoCallDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallDatabaseManager.swift; sourceTree = "<group>"; };
 		7335B2AE209BC37100AD5B1B /* JournalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalTableViewCell.swift; sourceTree = "<group>"; };
 		7335B2B1209BDFF700AD5B1B /* NewPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
 		7335B2B3209FA41400AD5B1B /* ProfilePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePickerDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +136,7 @@
 		735EA43420AD0A9900ED339F /* PhotoAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		736E199020CC377000CB6DF4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		737118B620A12C0500656F8E /* ImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
+		739CCB0D21E9080100DF8EBB /* HumanityHospice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HumanityHospice.entitlements; sourceTree = "<group>"; };
 		73AF6F0521AF57EF00225E28 /* TableViewImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewImage.swift; sourceTree = "<group>"; };
 		73AF6F0721B0776A00225E28 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		73B4013A20EACAF3005EE40E /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
@@ -115,8 +149,11 @@
 		73C56FE120E5AB890078522E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncouragementBoardTableViewCell.swift; sourceTree = "<group>"; };
 		73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEBPostViewController.swift; sourceTree = "<group>"; };
+		73CE547221F2E31900806C7D /* CallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManager.swift; sourceTree = "<group>"; };
 		73E792DB2116445F00A2AF2E /* ManageFollowersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFollowersTableViewController.swift; sourceTree = "<group>"; };
 		73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
+		73EBBFC621EFA89A000AA803 /* CallLogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLogViewModel.swift; sourceTree = "<group>"; };
+		73EBBFC821EFAAAB000AA803 /* Call.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Call.swift; sourceTree = "<group>"; };
 		73ED2C3720A903CF005D7AF8 /* RealmHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHandler.swift; sourceTree = "<group>"; };
 		73FC4B97208FCC6A0014520E /* InviteCodePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodePopUp.swift; sourceTree = "<group>"; };
 		83953C65908D26D1EEE693D8 /* Pods-HumanityHospiceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HumanityHospiceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HumanityHospiceTests/Pods-HumanityHospiceTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -147,6 +184,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73159BB221ED041F00F32C0B /* Accelerate.framework in Frameworks */,
+				73159BB021ED040B00F32C0B /* CoreMotion.framework in Frameworks */,
+				73159BAE21ED040200F32C0B /* AVFoundation.framework in Frameworks */,
+				73159BAC21ED03FA00F32C0B /* CoreTelephony.framework in Frameworks */,
+				73159BAA21ED03F100F32C0B /* AudioToolbox.framework in Frameworks */,
+				73159BA821ED03E600F32C0B /* VideoToolbox.framework in Frameworks */,
+				73159BA621ED03D700F32C0B /* CoreMedia.framework in Frameworks */,
+				73159BA421ED03CC00F32C0B /* libresolv.tbd in Frameworks */,
+				73159BA221ED03AB00F32C0B /* libc++.tbd in Frameworks */,
+				73159BA021ED039900F32C0B /* SystemConfiguration.framework in Frameworks */,
 				0BC827D0329B3113D20F14AE /* Pods_HumanityHospice.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,6 +204,16 @@
 		32B3044A1FD103E66EB0AD5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				73159BB121ED041F00F32C0B /* Accelerate.framework */,
+				73159BAF21ED040B00F32C0B /* CoreMotion.framework */,
+				73159BAD21ED040200F32C0B /* AVFoundation.framework */,
+				73159BAB21ED03FA00F32C0B /* CoreTelephony.framework */,
+				73159BA921ED03F000F32C0B /* AudioToolbox.framework */,
+				73159BA721ED03E600F32C0B /* VideoToolbox.framework */,
+				73159BA521ED03D600F32C0B /* CoreMedia.framework */,
+				73159BA321ED03CB00F32C0B /* libresolv.tbd */,
+				73159BA121ED03AB00F32C0B /* libc++.tbd */,
+				73159B9F21ED039900F32C0B /* SystemConfiguration.framework */,
 				03038EFFF88515CF212F99CE /* Pods_HumanityHospice.framework */,
 				6A3A9CE6D5B505135CD48FAB /* Pods_HumanityHospiceTests.framework */,
 				88689F47E062E9DB2AA7EA27 /* Pods_HumanityHospiceUITests.framework */,
@@ -183,6 +240,7 @@
 			children = (
 				7338482D20A7F50000EC6D01 /* Posts.swift */,
 				73C56FDD20E596F20078522E /* Constants.swift */,
+				73EBBFC821EFAAAB000AA803 /* Call.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -205,6 +263,19 @@
 				73AF6F0521AF57EF00225E28 /* TableViewImage.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		73159B9721ED022700F32C0B /* Video Chat */ = {
+			isa = PBXGroup;
+			children = (
+				73159B9321ED022100F32C0B /* AppID.swift */,
+				73159B9421ED022100F32C0B /* VideoChatViewController.swift */,
+				73159BB321ED089500F32C0B /* CallLogViewController.swift */,
+				73159BB521ED125000F32C0B /* VideoCallDatabaseManager.swift */,
+				73EBBFC621EFA89A000AA803 /* CallLogViewModel.swift */,
+				73CE547221F2E31900806C7D /* CallManager.swift */,
+			);
+			path = "Video Chat";
 			sourceTree = "<group>";
 		};
 		7335B2B0209BC37800AD5B1B /* Journal */ = {
@@ -309,8 +380,10 @@
 		A5BBD4312086EC3700B80BD0 /* HumanityHospice */ = {
 			isa = PBXGroup;
 			children = (
+				739CCB0D21E9080100DF8EBB /* HumanityHospice.entitlements */,
 				A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */,
 				A5BBD4362086EC3700B80BD0 /* Main.storyboard */,
+				73159B7821ECFDE800F32C0B /* Nurse.storyboard */,
 				73104E7520CB04AD00D34C04 /* Gloabals */,
 				73104E7420CB04A600D34C04 /* Model */,
 				73104E7620CB04BB00D34C04 /* Extensions */,
@@ -318,6 +391,7 @@
 				A57CC3F120881C3000C9D776 /* Handlers */,
 				A5FC5C1620892FAB0084BA9B /* Menu Handler */,
 				A5FC5C1B208936830084BA9B /* Pages */,
+				73159B9721ED022700F32C0B /* Video Chat */,
 				A5BBD4392086EC3700B80BD0 /* Assets.xcassets */,
 				A5BBD43B2086EC3700B80BD0 /* LaunchScreen.storyboard */,
 				73AF6F0721B0776A00225E28 /* Logger.swift */,
@@ -410,6 +484,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -440,6 +517,7 @@
 				73B4013D20EACAF3005EE40E /* UploadViewController.xib in Resources */,
 				A5BBD43D2086EC3700B80BD0 /* LaunchScreen.storyboard in Resources */,
 				A5FC5C1520892FA60084BA9B /* Menu.xib in Resources */,
+				73159B7921ECFDE800F32C0B /* Nurse.storyboard in Resources */,
 				73BE5C5320E2BF3A001A34F0 /* GoogleService-Info.plist in Resources */,
 				A5BBD43A2086EC3700B80BD0 /* Assets.xcassets in Resources */,
 				A5BBD4382086EC3700B80BD0 /* Main.storyboard in Resources */,
@@ -494,6 +572,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Serrata/Serrata.framework",
@@ -508,6 +587,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImagePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Serrata.framework",
@@ -540,11 +620,16 @@
 				73383A4120BE259A004CE58F /* TextPostTableViewCell.swift in Sources */,
 				7335B2B9209FCB0100AD5B1B /* PostWithImageTableViewCell.swift in Sources */,
 				A5D00665208938C30079CD49 /* MenuHandler.swift in Sources */,
+				73EBBFC921EFAAAB000AA803 /* Call.swift in Sources */,
 				7335B2BB209FD48F00AD5B1B /* ImageSelector.swift in Sources */,
 				7335B2AF209BC37100AD5B1B /* JournalTableViewCell.swift in Sources */,
+				73159B9621ED022100F32C0B /* VideoChatViewController.swift in Sources */,
+				73159BB621ED125000F32C0B /* VideoCallDatabaseManager.swift in Sources */,
 				73C56FDE20E596F20078522E /* Constants.swift in Sources */,
+				73CE547321F2E31900806C7D /* CallManager.swift in Sources */,
 				7335B2B6209FAFA000AD5B1B /* ProfilePickerHandler.swift in Sources */,
 				A57CC3F020881C2200C9D776 /* DatabaseHandler.swift in Sources */,
+				73159BB421ED089500F32C0B /* CallLogViewController.swift in Sources */,
 				73B4013C20EACAF3005EE40E /* UploadViewController.swift in Sources */,
 				73383A3620BDFF91004CE58F /* JournalTableViewController.swift in Sources */,
 				7357DE6720980B6000AED945 /* PhotoAlbum.swift in Sources */,
@@ -553,6 +638,7 @@
 				73AF6F0821B0776A00225E28 /* Logger.swift in Sources */,
 				7357DE6D20980BA700AED945 /* AboutViewController.swift in Sources */,
 				7338482E20A7F50000EC6D01 /* Posts.swift in Sources */,
+				73159B9521ED022100F32C0B /* AppID.swift in Sources */,
 				73B8480B21CDD2E9005BD0DA /* NotificationCenterManager.swift in Sources */,
 				A5D3F96D208D0D130079B713 /* LandingViewController.swift in Sources */,
 				73FC4B98208FCC6A0014520E /* InviteCodePopUp.swift in Sources */,
@@ -560,6 +646,7 @@
 				73C22EDD20C37D5C00E35E80 /* LoadingViewController.swift in Sources */,
 				A5BBD4332086EC3700B80BD0 /* AppDelegate.swift in Sources */,
 				73383A3F20BE2544004CE58F /* ImagePostTableViewCell.swift in Sources */,
+				73EBBFC721EFA89A000AA803 /* CallLogViewModel.swift in Sources */,
 				73383A3820BE1815004CE58F /* ViewPostViewController.swift in Sources */,
 				A5D3F976208D2E8C0079B713 /* CompleteSignUpViewController.swift in Sources */,
 				A5FC5C1320892CA00084BA9B /* MenuView.swift in Sources */,
@@ -714,13 +801,26 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HumanityHospice/HumanityHospice.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = W23QWSXCYJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HumanityHospice/Pages/Agora\\ iOS\\ Tutorial/libs",
+					"$(PROJECT_DIR)/HumanityHospice/Pages/Agora\\ iOS\\ Tutorial/libs",
+					"$(PROJECT_DIR)/HumanityHospice/Video\\ Chat/libs",
+					"$(PROJECT_DIR)/HumanityHospice/Video\\ Chat/libs",
+				);
 				INFOPLIST_FILE = HumanityHospice/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HumanityHospice/Pages/Agora\\ iOS\\ Tutorial/libs",
+					"$(PROJECT_DIR)/HumanityHospice/Video\\ Chat/libs",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospiceApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -736,13 +836,26 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HumanityHospice/HumanityHospice.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = W23QWSXCYJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HumanityHospice/Pages/Agora\\ iOS\\ Tutorial/libs",
+					"$(PROJECT_DIR)/HumanityHospice/Pages/Agora\\ iOS\\ Tutorial/libs",
+					"$(PROJECT_DIR)/HumanityHospice/Video\\ Chat/libs",
+					"$(PROJECT_DIR)/HumanityHospice/Video\\ Chat/libs",
+				);
 				INFOPLIST_FILE = HumanityHospice/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HumanityHospice/Pages/Agora\\ iOS\\ Tutorial/libs",
+					"$(PROJECT_DIR)/HumanityHospice/Video\\ Chat/libs",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospiceApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
