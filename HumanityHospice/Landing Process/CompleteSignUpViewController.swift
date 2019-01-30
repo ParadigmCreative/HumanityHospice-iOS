@@ -38,6 +38,7 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
     var inviteCode: String?
     var pidToFollow: String?
     var signupType: String = ""
+    var nursePassword = "HumanityConnect2018"
     
     // MARK: - Setup
     func masterSetup() {
@@ -47,9 +48,13 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
             patientCode.isEnabled = false
             patientCode.isHidden = true
             self.title = "I am a Patient"
-        } else {
+        } else if signupType == "Friend" {
             self.title = "I am a Friend of a Patient"
+        } else {
+            patientCode.placeholder = "Admin Password"
+            self.title = "Nurse Signup"
         }
+        
         setupTextView()
         
         self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
@@ -64,8 +69,6 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
         agreeToTermsButton.layer.borderColor = UIColor.white.cgColor
         agreeToTermsButton.layer.borderWidth = 2
     }
-    
-    
     
     func setupTextfields() {
         firstNameTF.delegate = self
@@ -197,10 +200,23 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
         verifyTextFields { (first, last, email, pass) in
 
             if !patientCode.isHidden {
-                guard let invite = patientCode.text else { return }
-                validateInvite(code: invite, completion: { (pid) in
-                    self.createUser(first: first, last: last, email: email, password: pass)
-                })
+                if signupType == "Friend" {
+                    guard let invite = patientCode.text else { return }
+                    validateInvite(code: invite, completion: { (pid) in
+                        self.createUser(first: first, last: last, email: email, password: pass)
+                    })
+                } else {
+                    guard let password = patientCode.text else { return }
+                    guard password == nursePassword.uppercased() else {
+                        self.closeIndicator()
+                        showAlert(title: "Hmmm...", message: "Incorrect Password")
+                        return
+                    }
+                    
+                    self.createNurse(first: first, last: last, email: email, pass: pass, completion: {
+                        self.moveToNurseWaiting()
+                    })
+                }
             } else {
                 self.createUser(first: first, last: last, email: email, password: pass)
             }
@@ -211,6 +227,12 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
     func moveToJournal() {
         if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
            self.present(tabbar, animated: true, completion: nil)
+        }
+    }
+    
+    func moveToNurseWaiting() {
+        if let nav = UIStoryboard(name: "Nurse", bundle: nil).instantiateViewController(withIdentifier: "NurseNav") as? UINavigationController {
+            self.present(nav, animated: true, completion: nil)
         }
     }
     
@@ -300,15 +322,7 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 }
 
@@ -336,7 +350,62 @@ extension CompleteSignUpViewController {
                 }
             }
         })
-        
+    }
+    
+    func createNurse(first: String, last: String, email: String, pass: String, completion: @escaping ()->()) {
+        Auth.auth().createUser(withEmail: email, password: pass) { (result, error) in
+            guard error == nil else {
+                Log.e(error!.localizedDescription)
+                self.closeIndicator()
+                self.showAlert(title: "Hmmm...", message: error!.localizedDescription)
+                return
+            }
+            
+            guard let user = result?.user else {
+                self.closeIndicator()
+                self.showAlert(title: "Something went wrong...", message: "Please try again later.")
+                return
+            }
+            
+            AppSettings.signUpName = (first, last)
+            
+            let changes = user.createProfileChangeRequest()
+            changes.displayName = "\(first) \(last)"
+            changes.commitChanges(completion: { (error) in
+                guard error == nil else {
+                    Log.e(error!.localizedDescription)
+                    self.closeIndicator()
+                    self.showAlert(title: "Hmmm...", message: error!.localizedDescription)
+                    return
+                }
+                
+                Log.d("New User:", user.uid, user.email!, user.displayName!)
+                
+                // create app user instance
+                guard let appuser = DatabaseHandler.createAppUser(user: user) else {
+                    Log.e("Could not get app user from user object")
+                    return
+                }
+                
+                let data: [String: Any] = ["firstName": first,
+                                           "lastName": last,
+                                           "FacetimeID": email,
+                                           "HangoutID": email,
+                                           "isOnCall": false,
+                                           "Team": "Edmond"]
+                
+                let userRef = DatabaseHandler.database.child("Staff").child(user.uid)
+                userRef.setValue(data, withCompletionBlock: { (error, ref) in
+                    if error != nil {
+                        Log.e(error!.localizedDescription)
+                    } else {
+                        AppSettings.currentAppUser = appuser
+                        completion()
+                    }
+                })
+            })
+            
+        }
     }
     
     func submitChanges(user: User?, first: String, last: String) {
@@ -390,15 +459,28 @@ extension CompleteSignUpViewController {
                                                    imageURL: nil,
                                                    imageName: nil,
                                                    completion: {})
+                } else if AppSettings.userType == DatabaseHandler.UserType.Staff {
+                    AppSettings.currentPatient = nil
                 }
-                
                 
                 // if creation is successful, set
                 AppSettings.currentAppUser = appuser
                 
-                // Present the Journal View
                 self.closeIndicator()
-                self.moveToJournal()
+                
+                if AppSettings.userType != DatabaseHandler.UserType.Staff {
+                    self.moveToJournal()
+                } else {
+                    guard VideoCallDatabaseHandler.deviceToken.isEmpty == false else { return }
+                    CallManager.goOnline(with: VideoCallDatabaseHandler.deviceToken)
+                    
+                    let nav = UINavigationController()
+                    self.present(nav, animated: true, completion: nil)
+                    let nurseCoordinator = NurseCoordinator(nav: nav)
+                    nurseCoordinator.start()
+                    
+                    self.moveToNurseWaiting()
+                }
                 
             }
         })

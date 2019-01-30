@@ -10,6 +10,7 @@ target 'HumanityHospice' do
     pod 'Firebase/Database'
     pod 'Firebase/Auth'
     pod 'Firebase/Storage'
+    pod 'Firebase/Messaging'
     pod 'RealmSwift'
     pod 'DZNEmptyDataSet'
     pod 'SnapKit', '~> 4.0'
@@ -18,6 +19,7 @@ target 'HumanityHospice' do
     # pod 'Hue'
     # pod 'Imaginary'
     pod 'Serrata'
+    pod 'AgoraRtcEngine_iOS'
 
 
     post_install do |installer|

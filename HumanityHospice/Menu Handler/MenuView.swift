@@ -31,25 +31,33 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     @IBOutlet weak var callNurseButton: UIButton!
     @IBAction func callNurse(_ sender: UIButton) {
         
-        if let user = AppSettings.currentAppUser as? DatabaseHandler.Patient {
-            DatabaseHandler.pullDataFrom(kind: "Patients") { (done) in
-                if let nurseid = user.nurseID {
-                    DatabaseHandler.getNurseDetails(nurseID: nurseid) { (facetimeID, name)  in
-//                        var edited = facetimeID.replacingOccurrences(of: "(", with: "")
-//                        edited = edited.replacingOccurrences(of: ")", with: "")
-//                        edited = edited.replacingOccurrences(of: "-", with: "")
-//                        edited = edited.replacingOccurrences(of: " ", with: "")
-                        
-                        if let name = name {
-                            self.showNurseUnavailableAlert(name: name, completion: {
-                                self.facetime(phoneNumber: facetimeID)
-                            })
-                        } else {
-                            self.facetime(phoneNumber: facetimeID)
-                        }
-                    }
+        VideoCallDatabaseHandler.requestCallToNurse { (vc, error) in
+            guard error == nil else {
+                var alert: UIAlertController
+                
+                switch error! {
+                case .NoTokenForNurse:
+                    alert = UIAlertController(title: "Hmmm...",
+                                              message: "We can't contact your nurse right now. Please try again later",
+                                              preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    
+                case .NoNurseOnCallForTeam:
+                    alert = UIAlertController(title: "No Nurses Available",
+                                              message: "No nurses are on call right now. If this is an emergency, please dial 911.",
+                                              preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 }
+                
+                self.handlingController?.present(alert, animated: true, completion: nil)
+                
+                return
             }
+            
+            MenuHandler.closeMenu()
+            guard let vc = vc else { return }
+            self.handlingController?.present(vc, animated: true, completion: nil)
+            
         }
         
     }

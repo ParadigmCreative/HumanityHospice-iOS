@@ -255,6 +255,12 @@ class DatabaseHandler {
                                  firstName: AppSettings.signUpName!.first, lastName: AppSettings.signUpName!.last,
                                  readingFrom: "", patients: [], profilePic: nil)
             return appuser
+        case .Staff:
+            let appuser = Staff(id: user.uid,
+                                firstName: AppSettings.signUpName!.first,
+                                lastName: AppSettings.signUpName!.last,
+                                isAdmin: true)
+            return appuser
         default:
             Log.e("Error")
             return nil
@@ -352,6 +358,7 @@ class DatabaseHandler {
                                        inviteCode: inviteCode, profilePic: nil, team: team)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.id
+                    AppSettings.userType = .Patient
                     AppSettings.currentPatientName = full
                     completion(true)
                 case .Reader:
@@ -373,6 +380,7 @@ class DatabaseHandler {
                                       profilePic: nil)
                     AppSettings.currentAppUser = user
                     AppSettings.currentPatient = user.readingFrom
+                    AppSettings.userType = .Reader
                     
                     getPatientDetailsForFamilyMember(pid: readingFrom, completion: { (patient) in
                         AppSettings.currentPatientName = patient.fullName()
@@ -395,12 +403,22 @@ class DatabaseHandler {
                         user.patientObj = patient
                         AppSettings.currentAppUser = user
                         AppSettings.currentPatient = patientid
+                        AppSettings.userType = .Family
                         AppSettings.currentPatientName = patient.fullName()
                         completion(true)
                     })
+                case .Staff:
+                    let c = co.staff
+                    let first = data[c.firstName] as! String
+                    let last = data[c.lastName] as! String
                     
-                default:
-                    break
+                    let user = Staff(id: AppSettings.currentFBUser!.uid,
+                                     firstName: first,
+                                     lastName: last,
+                                     isAdmin: false)
+                    AppSettings.currentAppUser = user
+                    AppSettings.userType = .Staff
+                    completion(true)
                 }
             }
         }
@@ -455,21 +473,31 @@ class DatabaseHandler {
         }
     }
     
-    static func getNurseDetails(nurseID: String, completion: @escaping (_ facetimeID: String, _ name: String?)->()) {
-        var ref = Database.database().reference().child("Nurses")
+    enum StaffError {
+        case NoTokenForNurse
+        case NoNurseOnCallForTeam
+    }
+    
+    static func getOnCallNurseDetails(nurseID: String,
+                                completion: @escaping (_ error: StaffError?, _ nid: String?, _ token: String?)->()) {
+        let ref = Database.database().reference().child("Staff")
         ref.child(nurseID).observeSingleEvent(of: .value) { (snap) in
             if let nurseData = snap.value as? [String: Any] {
                 if let onCall = nurseData["isOnCall"] as? Bool {
                     if onCall {
-                        if let facetime = nurseData["FacetimeID"] as? String {
-                            completion(facetime, nil)
+                        if let token = nurseData["token"] as? String {
+                            completion(nil, nurseID, token)
+                        } else {
+                            completion(StaffError.NoTokenForNurse, nurseID, nil)
                         }
                     } else {
                         if let nurseTeam = nurseData["Team"] as? String {
                             
-                            var avoid = "\(nurseData["FirstName"]) \(nurseData["LastName"])"
-                            getRandomOnCallNurse(ref: ref, team: nurseTeam, avoid: avoid, completion: { (name, facetimeID)  in
-                                completion(facetimeID, name)
+                            getRandomOnCallNurse(ref: ref,
+                                                 team: nurseTeam,
+                                                 avoid: nurseID,
+                                                 completion: { (error, id, token) in
+                                completion(error, id, token)
                             })
                         }
                     }
@@ -478,38 +506,46 @@ class DatabaseHandler {
         }
     }
     
-    private static func getRandomOnCallNurse(ref: DatabaseReference, team: String, avoid nurseName: String, completion: @escaping (_ name: String, _ facetime: String)->()) {
-        ref.queryOrdered(byChild: "Team").queryEqual(toValue: team).observeSingleEvent(of: .value) { (snap) in
+    private static func getRandomOnCallNurse(ref: DatabaseReference,
+                                             team: String,
+                                             avoid nurseID: String,
+                                             completion: @escaping (_ error: StaffError?, _ id: String?, _ token: String?)->()) {
+        
+        let nursesRef = ref.queryOrdered(byChild: "Team")
+        
+        nursesRef.queryEqual(toValue: team).observeSingleEvent(of: .value) { (snap) in
             if let snaps = snap.children.allObjects as? [DataSnapshot] {
                 struct n {
-                    let name: String
-                    let facetime: String
+                    let id: String
+                    let token: String?
                 }
                 
                 var nurses: [n] = []
                 
                 for snap in snaps {
                     if let data = snap.value as? [String: Any] {
-                        let facetimeID = data["FacetimeID"] as! String
-                        let first = data["FirstName"] as! String
-                        let last = data["LastName"] as! String
+                        let id = snap.key
                         let isOnCall = data["isOnCall"] as! Bool
-                        // Create object or something to send this data back saying, 'Your nurse isn't on call at the moment. ___ is available, would you like to give them a call?
-                        let newNurse = n(name: "\(first) \(last)", facetime: facetimeID)
+                        let token = data["token"] as? String
+                        let newNurse = n(id: id, token: token)
                         
                         if isOnCall {
                             nurses.append(newNurse)
                         }
-
                     }
                 }
                 
-                if var calling = nurses.first(where: { (nurse) -> Bool in
-                    return nurse.name != nurseName
+                if let calling = nurses.first(where: { (nurse) -> Bool in
+                    if nurse.id != nurseID && nurse.token != nil {
+                        return true
+                    } else {
+                        return false
+                    }
                 }) {
-                    completion(calling.name, calling.facetime)
+                    completion(nil, calling.id, calling.token!)
+                } else {
+                    completion(StaffError.NoNurseOnCallForTeam, nil, nil)
                 }
-                
             }
         }
     }
@@ -522,25 +558,39 @@ class DatabaseHandler {
         readerRef.child(co.reader.PatientList).child(pid).setValue(false)
         
         let journal = Database.database().reference().child(co.journal.Journals).child(pid)
-        journal.observeSingleEvent(of: .value) { (snap) in
-            if let entries = snap.children.allObjects as? [DataSnapshot] {
-                for entry in entries {
-                    let commentsRef = entry.ref
-                    commentsRef.child(co.journal.Comments).observeSingleEvent(of: .value, with: { (snap) in
-                        if let comments = snap.children.allObjects as? [DataSnapshot] {
-                            for comment in comments {
-                                if let data = comment.value as? [String: Any] {
-                                    let uid = data[co.journal.comment.PosterUID] as! String
-                                    if uid == rid {
-                                        DatabaseHandler.removeComment(pid: pid, postID: entry.key, commentID: comment.key)
-                                    }
-                                }
-                            }
-                        }
-                    })
+        
+        // Get posts that have comments
+        let posts = realm.objects(Post.self).filter("comments.@count > 0")
+        // For each post, check each comment
+        for post in posts {
+            for comment in post.comments {
+                if comment.posterUID == rid {
+                    // Remove the comment
+                    journal.child(post.id).child("Comments").child(comment.id).setValue(nil)
                 }
             }
         }
+        
+//        journal.observeSingleEvent(of: .value) { (snap) in
+//            if let entries = snap.children.allObjects as? [DataSnapshot] {
+//                for entry in entries {
+//                    let commentsRef = entry.ref.child(co.journal.Comments)
+//                    let query = commentsRef.queryOrdered(byChild: "PosterUID").queryEqual(toValue: rid)
+//                    query.observeSingleEvent(of: .value, with: { (snap) in
+//                        if let comments = snap.children.allObjects as? [DataSnapshot] {
+//                            for comment in comments {
+//                                if let data = comment.value as? [String: Any] {
+//                                    let uid = data[co.journal.comment.PosterUID] as! String
+//                                    if uid == rid {
+//                                        DatabaseHandler.removeComment(pid: pid, postID: entry.key, commentID: comment.key)
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    })
+//                }
+//            }
+//        }
         
         removeEncouragementPosts(pid: pid, rid: rid)
     }
@@ -764,9 +814,8 @@ class DatabaseHandler {
             let staffer = user as! Staff
             userRef = ref.child("Staff").child(staffer.id)
             
-            let data: [String: Any] = ["MetaData": ["firstName": staffer.firstName,
-                                                    "lastName": staffer.lastName],
-                                       "isAdmin": staffer.isAdmin]
+            let data: [String: Any] = ["firstName": staffer.firstName,
+                                       "lastName": staffer.lastName]
             
             dataToSend = data
         }
@@ -1646,13 +1695,19 @@ class DatabaseHandler {
     public static func removeEncouragementPosts(pid: String, rid: String) {
         let boards = Database.database().reference().child(co.encouragementBoard.EncouragementBoards)
         let usersBoard = boards.child(pid)
-        let postsToDelete = usersBoard.queryOrdered(byChild: co.encouragementBoard.PosterUID).queryEqual(toValue: rid)
-        postsToDelete.observeSingleEvent(of: .value) { (snap) in
-            for child in snap.children.allObjects as! [DataSnapshot] {
-                let key = child.key
-                usersBoard.child(key).setValue(nil)
-            }
+        
+        let posts = realm.objects(EBPost.self).filter("posterUID == %@", rid)
+        for post in posts {
+            usersBoard.child(post.id).setValue(nil)
         }
+        
+//        let postsToDelete = usersBoard.queryOrdered(byChild: co.encouragementBoard.PosterUID).queryEqual(toValue: rid)
+//        postsToDelete.observeSingleEvent(of: .value) { (snap) in
+//            for child in snap.children.allObjects as! [DataSnapshot] {
+//                let key = child.key
+//                usersBoard.child(key).setValue(nil)
+//            }
+//        }
     }
     
     // MARK: - Photo Album

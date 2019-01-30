@@ -90,11 +90,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     Log.d("Login Successful", user!.email)
                     AppSettings.currentFBUser = user
-                    DatabaseHandler.fetchData(for: user!, completion: {
-                        let tabbar = UIStoryboard(name: "Main", bundle: nil)
-                        if let tabbar = tabbar.instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
-                            Utilities.closeActivityIndicator()
-                            self.present(tabbar, animated: true, completion: nil)
+                    DatabaseHandler.fetchData(for: AppSettings.currentFBUser!, completion: {
+                        Utilities.closeActivityIndicator()
+                        if AppSettings.userType == .Staff {
+                            guard VideoCallDatabaseHandler.deviceToken.isEmpty == false else { return }
+                            CallManager.goOnline(with: VideoCallDatabaseHandler.deviceToken)
+                            
+                            let nav = UINavigationController()
+                            self.present(nav, animated: true, completion: nil)
+                            let nurseCoordinator = NurseCoordinator(nav: nav)
+                            nurseCoordinator.start()
+                        } else {
+                            if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
+                                self.present(tabbar, animated: true, completion: nil)
+                            }
                         }
                     })
                 }
