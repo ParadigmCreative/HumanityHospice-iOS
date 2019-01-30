@@ -27,12 +27,23 @@ class LandingViewController: UIViewController {
         checkForLoggedinUser { (user) in
             if user != nil {
                 AppSettings.currentFBUser = Auth.auth().currentUser
-                if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
-                    DatabaseHandler.fetchData(for: AppSettings.currentFBUser!, completion: {
-                        Utilities.closeActivityIndicator()
-                        self.present(tabbar, animated: true, completion: nil)
-                    })
-                }
+                DatabaseHandler.fetchData(for: AppSettings.currentFBUser!, completion: {
+                    Utilities.closeActivityIndicator()
+                    if AppSettings.userType == .Staff {
+                        guard VideoCallDatabaseHandler.deviceToken.isEmpty == false else { return }
+                        CallManager.goOnline(with: VideoCallDatabaseHandler.deviceToken)
+                        
+                        let nav = UINavigationController()
+                        self.present(nav, animated: true, completion: nil)
+                        let nurseCoordinator = NurseCoordinator(nav: nav)
+                        nurseCoordinator.start()
+                        
+                    } else {
+                        if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
+                            self.present(tabbar, animated: true, completion: nil)
+                        }
+                    }
+                })
             } else {
                 Utilities.closeActivityIndicator()
             }

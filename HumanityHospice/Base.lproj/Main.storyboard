@@ -1049,7 +1049,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BG" translatesAutoresizingMaskIntoConstraints="NO" id="XvF-zd-lpF">
-                                <rect key="frame" x="0.0" y="-90" width="375" height="600"/>
+                                <rect key="frame" x="0.0" y="-90" width="375" height="693"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0TF-OC-THK">
                                 <rect key="frame" x="30" y="103" width="315" height="51"/>
@@ -1118,7 +1118,7 @@
                         <constraints>
                             <constraint firstItem="0TF-OC-THK" firstAttribute="leading" secondItem="tde-ns-WPu" secondAttribute="leading" constant="30" id="0aF-Uj-9kC"/>
                             <constraint firstItem="R8c-ex-0GM" firstAttribute="top" secondItem="vcD-gN-VZK" secondAttribute="bottom" constant="30" id="0lo-s4-dqG"/>
-                            <constraint firstItem="tde-ns-WPu" firstAttribute="bottom" secondItem="XvF-zd-lpF" secondAttribute="bottom" id="0p9-cR-KtG"/>
+                            <constraint firstItem="tde-ns-WPu" firstAttribute="bottom" secondItem="XvF-zd-lpF" secondAttribute="bottom" constant="-93" id="0p9-cR-KtG"/>
                             <constraint firstItem="vcD-gN-VZK" firstAttribute="leading" secondItem="0TF-OC-THK" secondAttribute="leading" id="1fB-w6-dnx"/>
                             <constraint firstItem="o6K-w8-IyF" firstAttribute="top" secondItem="R8c-ex-0GM" secondAttribute="bottom" constant="8" id="2tN-Zg-k4v"/>
                             <constraint firstItem="XvF-zd-lpF" firstAttribute="leading" secondItem="tde-ns-WPu" secondAttribute="leading" id="6xX-oa-7mg"/>
@@ -1189,7 +1189,7 @@
                     <viewLayoutGuide key="safeArea" id="R9X-ty-LXv"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="5069.6000000000004" y="880.78817733990149"/>
+            <point key="canvasLocation" x="5069.6000000000004" y="880.20989505247383"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="r8h-ae-GWw">
@@ -1351,6 +1351,19 @@
                                     <action selector="friendSignUp:" destination="toj-hb-Io1" eventType="touchUpInside" id="GVg-FH-AKE"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4j7-j9-hwH">
+                                <rect key="frame" x="30" y="423.5" width="315" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Aia-In-QSd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="I am a Nurse" backgroundImage="Button">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="nurseSignUp:" destination="toj-hb-Io1" eventType="touchUpInside" id="2rJ-NX-wZj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="ZIS-u7-qNH" firstAttribute="top" secondItem="n8b-V6-Xms" secondAttribute="top" constant="-87" id="4PU-Ki-DoC"/>
@@ -1363,9 +1376,12 @@
                             <constraint firstItem="wqy-bo-fS0" firstAttribute="top" secondItem="fa8-sa-dMc" secondAttribute="top" constant="40" id="T7c-Xs-dT3"/>
                             <constraint firstItem="ZIS-u7-qNH" firstAttribute="leading" secondItem="fa8-sa-dMc" secondAttribute="leading" id="Ts5-qT-79X"/>
                             <constraint firstItem="nfw-9g-pw8" firstAttribute="top" secondItem="dmx-AQ-io6" secondAttribute="bottom" constant="16" id="TyK-EQ-0pY"/>
+                            <constraint firstItem="fa8-sa-dMc" firstAttribute="trailing" secondItem="4j7-j9-hwH" secondAttribute="trailing" constant="30" id="VcG-38-crx"/>
                             <constraint firstItem="fa8-sa-dMc" firstAttribute="trailing" secondItem="dmx-AQ-io6" secondAttribute="trailing" constant="30" id="Xg0-UQ-PDO"/>
                             <constraint firstItem="dmx-AQ-io6" firstAttribute="leading" secondItem="fa8-sa-dMc" secondAttribute="leading" constant="30" id="ZTn-F9-Sun"/>
+                            <constraint firstItem="4j7-j9-hwH" firstAttribute="top" secondItem="nfw-9g-pw8" secondAttribute="bottom" constant="16" id="bCk-Ui-O2K"/>
                             <constraint firstItem="dmx-AQ-io6" firstAttribute="centerX" secondItem="n8b-V6-Xms" secondAttribute="centerX" id="ixg-n3-ISF"/>
+                            <constraint firstItem="4j7-j9-hwH" firstAttribute="leading" secondItem="fa8-sa-dMc" secondAttribute="leading" constant="30" id="qcX-3u-Ym8"/>
                             <constraint firstItem="wqy-bo-fS0" firstAttribute="centerX" secondItem="n8b-V6-Xms" secondAttribute="centerX" id="sRO-Vb-9Af"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fa8-sa-dMc"/>
@@ -1427,7 +1443,7 @@
                     </connections>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1072.8" y="-948.76847290640399"/>
+            <point key="canvasLocation" x="1072.8" y="-949.47526236881572"/>
         </scene>
         <!--Complete Sign Up View Controller-->
         <scene sceneID="QDm-9g-w3g">
@@ -2268,7 +2284,7 @@
         <image name="Menu" width="30" height="20"/>
         <image name="New Humanity Connect Logo" width="1902" height="882"/>
         <image name="Notice Box" width="321" height="104"/>
-        <image name="Picture - simple-line-icons" width="15" height="13"/>
+        <image name="Picture - simple-line-icons" width="20" height="17"/>
         <image name="TextField" width="311" height="48"/>
     </resources>
 </document>

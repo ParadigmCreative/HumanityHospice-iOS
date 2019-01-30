@@ -1,4 +1,5 @@
 PODS:
+  - AgoraRtcEngine_iOS (2.3.1)
   - DZNEmptyDataSet (1.8.1)
   - Firebase/Auth (5.4.0):
     - Firebase/CoreOnly
@@ -11,6 +12,9 @@ PODS:
   - Firebase/Database (5.4.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (= 5.0.2)
+  - Firebase/Messaging (5.4.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (= 3.0.3)
   - Firebase/Storage (5.4.0):
     - Firebase/CoreOnly
     - FirebaseStorage (= 3.0.0)
@@ -29,10 +33,17 @@ PODS:
     - leveldb-library (~> 1.18)
   - FirebaseInstanceID (3.1.1):
     - FirebaseCore (~> 5.0)
+  - FirebaseMessaging (3.0.3):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
   - FirebaseStorage (3.0.0):
     - FirebaseCore (~> 5.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/Defines (2.1.4)
+  - GoogleToolboxForMac/Logger (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - GTMSessionFetcher/Core (1.1.15)
@@ -44,6 +55,7 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - Protobuf (3.6.1)
   - Realm (3.7.4):
     - Realm/Headers (= 3.7.4)
   - Realm/Headers (3.7.4)
@@ -54,10 +66,12 @@ PODS:
   - SnapKit (4.0.0)
 
 DEPENDENCIES:
+  - AgoraRtcEngine_iOS
   - DZNEmptyDataSet
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - Firebase/Messaging
   - Firebase/Storage
   - ImagePicker
   - RealmSwift
@@ -66,6 +80,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AgoraRtcEngine_iOS
     - DZNEmptyDataSet
     - Firebase
     - FirebaseAnalytics
@@ -73,6 +88,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseDatabase
     - FirebaseInstanceID
+    - FirebaseMessaging
     - FirebaseStorage
     - GoogleToolboxForMac
     - GTMSessionFetcher
@@ -80,12 +96,14 @@ SPEC REPOS:
     - Kingfisher
     - leveldb-library
     - nanopb
+    - Protobuf
     - Realm
     - RealmSwift
     - Serrata
     - SnapKit
 
 SPEC CHECKSUMS:
+  AgoraRtcEngine_iOS: b0304fee470e0b88bd3abedf9ce1c4309f4fd722
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   Firebase: d66f4f29c23f22d96808d9abc174d81d8eee968f
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
@@ -93,6 +111,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 42b3267233bd21a5abd54117ccc38ca3dd0f8e83
   FirebaseDatabase: 27be5ac5bc75e0b17537b2bbfada8258addcc8cd
   FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
+  FirebaseMessaging: f43eb0c0e1da096e659de6f713038e74862a62cd
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
@@ -100,11 +119,12 @@ SPEC CHECKSUMS:
   Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   Realm: a469bb59e33f9926102ccaea4349822c53b9117e
   RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
   Serrata: cfaf2a46ddfa89b202685983246e9c1da68b595b
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 802069c9bea3e3ae3cd036305d3972eb5d3205f8
+PODFILE CHECKSUM: 30bcaff8d8c0f5a99a8d3990a47a891d5b0001fe
 
 COCOAPODS: 1.5.3

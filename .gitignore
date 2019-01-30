@@ -1,2 +1,6 @@
 GoogleService-Info.plist
 .DS_Store
+
+Pods/
+
+HumanityHospice/Video Chat/libs/
