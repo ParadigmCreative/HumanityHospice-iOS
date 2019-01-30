@@ -12,15 +12,13 @@ import FirebaseMessaging
 import RealmSwift
 import UserNotifications
 import CallKit
-import PushKit
 import AVKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate, PKPushRegistryDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
     let provider = CXProvider(configuration: CXProviderConfiguration(localizedName: "HumanityConnect"))
-    let registry = PKPushRegistry(queue: nil)
     let callController = CXCallController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -80,8 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         RealmHandler.masterResetRealm()
         
         initProvider()
-        registry.delegate = self
-        registry.desiredPushTypes = [.voIP]
         
         return true
     }
@@ -188,7 +184,15 @@ extension AppDelegate: CXProviderDelegate {
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
         Log.i("Answered")
         action.fulfill()
+        
         NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "CallAnswered"), object: nil)
+
+        guard let uuid = VideoCallDatabaseHandler.currentUUID else { return }
+        let end = CXEndCallAction(call: uuid)
+        let trans = CXTransaction(action: end)
+        callController.request(trans) { (error) in
+            Log.e(error?.localizedDescription)
+        }
     }
     
     func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
@@ -199,6 +203,7 @@ extension AppDelegate: CXProviderDelegate {
     
     func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
         Log.i("Started")
+        
         action.fulfill()
     }
     
@@ -212,15 +217,4 @@ extension AppDelegate: CXProviderDelegate {
         }
     }
     
-}
-
-extension AppDelegate {
-    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-        Log.d(pushCredentials.token.map { String(format: "%02.2hhx", $0) }.joined())
-    }
-    
-    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
-        Log.d(payload.dictionaryPayload)
-        completion()
-    }
 }

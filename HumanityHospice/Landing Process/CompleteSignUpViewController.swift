@@ -469,9 +469,16 @@ extension CompleteSignUpViewController {
                 self.closeIndicator()
                 
                 if AppSettings.userType != DatabaseHandler.UserType.Staff {
-                    // Present the Journal View
                     self.moveToJournal()
                 } else {
+                    guard VideoCallDatabaseHandler.deviceToken.isEmpty == false else { return }
+                    CallManager.goOnline(with: VideoCallDatabaseHandler.deviceToken)
+                    
+                    let nav = UINavigationController()
+                    self.present(nav, animated: true, completion: nil)
+                    let nurseCoordinator = NurseCoordinator(nav: nav)
+                    nurseCoordinator.start()
+                    
                     self.moveToNurseWaiting()
                 }
                 

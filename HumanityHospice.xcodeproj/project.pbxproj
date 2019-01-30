@@ -57,6 +57,9 @@
 		73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */; };
 		73C9B1E520A3A60300056994 /* NewEBPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */; };
 		73CE547321F2E31900806C7D /* CallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CE547221F2E31900806C7D /* CallManager.swift */; };
+		73CEBEAA22011673007B8620 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CEBEA922011673007B8620 /* Storyboarded.swift */; };
+		73CEBEAC220116F3007B8620 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CEBEAB220116F3007B8620 /* Coordinator.swift */; };
+		73CEBEAF2201184C007B8620 /* NurseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CEBEAE2201184C007B8620 /* NurseCoordinator.swift */; };
 		73E792DC2116445F00A2AF2E /* ManageFollowersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E792DB2116445F00A2AF2E /* ManageFollowersTableViewController.swift */; };
 		73E938AA20C4901E00CC3648 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */; };
 		73EBBFC721EFA89A000AA803 /* CallLogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EBBFC621EFA89A000AA803 /* CallLogViewModel.swift */; };
@@ -150,6 +153,9 @@
 		73C9B1E120A3949A00056994 /* EncouragementBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncouragementBoardTableViewCell.swift; sourceTree = "<group>"; };
 		73C9B1E420A3A60300056994 /* NewEBPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEBPostViewController.swift; sourceTree = "<group>"; };
 		73CE547221F2E31900806C7D /* CallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManager.swift; sourceTree = "<group>"; };
+		73CEBEA922011673007B8620 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		73CEBEAB220116F3007B8620 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		73CEBEAE2201184C007B8620 /* NurseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NurseCoordinator.swift; sourceTree = "<group>"; };
 		73E792DB2116445F00A2AF2E /* ManageFollowersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFollowersTableViewController.swift; sourceTree = "<group>"; };
 		73E938A920C4901E00CC3648 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
 		73EBBFC621EFA89A000AA803 /* CallLogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLogViewModel.swift; sourceTree = "<group>"; };
@@ -274,6 +280,7 @@
 				73159BB521ED125000F32C0B /* VideoCallDatabaseManager.swift */,
 				73EBBFC621EFA89A000AA803 /* CallLogViewModel.swift */,
 				73CE547221F2E31900806C7D /* CallManager.swift */,
+				73CEBEAE2201184C007B8620 /* NurseCoordinator.swift */,
 			);
 			path = "Video Chat";
 			sourceTree = "<group>";
@@ -348,6 +355,15 @@
 			path = EncouragementBoard;
 			sourceTree = "<group>";
 		};
+		73CEBEAD22011728007B8620 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				73CEBEA922011673007B8620 /* Storyboarded.swift */,
+				73CEBEAB220116F3007B8620 /* Coordinator.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		A57CC3F120881C3000C9D776 /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,6 +400,7 @@
 				A5BBD4322086EC3700B80BD0 /* AppDelegate.swift */,
 				A5BBD4362086EC3700B80BD0 /* Main.storyboard */,
 				73159B7821ECFDE800F32C0B /* Nurse.storyboard */,
+				73CEBEAD22011728007B8620 /* Protocols */,
 				73104E7520CB04AD00D34C04 /* Gloabals */,
 				73104E7420CB04A600D34C04 /* Model */,
 				73104E7620CB04BB00D34C04 /* Extensions */,
@@ -615,10 +632,13 @@
 				73C9B1E220A3949A00056994 /* EncouragementBoardTableViewCell.swift in Sources */,
 				A5D3F970208D18540079B713 /* LoginViewController.swift in Sources */,
 				73BD07A120C5DF170051D94D /* SwitchPatientTableViewController.swift in Sources */,
+				73CEBEAC220116F3007B8620 /* Coordinator.swift in Sources */,
 				73ED2C3820A903CF005D7AF8 /* RealmHandler.swift in Sources */,
 				7357DE6920980B7E00AED945 /* CreateFamilyAccount.swift in Sources */,
 				73383A4120BE259A004CE58F /* TextPostTableViewCell.swift in Sources */,
+				73CEBEAA22011673007B8620 /* Storyboarded.swift in Sources */,
 				7335B2B9209FCB0100AD5B1B /* PostWithImageTableViewCell.swift in Sources */,
+				73CEBEAF2201184C007B8620 /* NurseCoordinator.swift in Sources */,
 				A5D00665208938C30079CD49 /* MenuHandler.swift in Sources */,
 				73EBBFC921EFAAAB000AA803 /* Call.swift in Sources */,
 				7335B2BB209FD48F00AD5B1B /* ImageSelector.swift in Sources */,
@@ -806,6 +826,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = W23QWSXCYJ;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HumanityHospice/Pages/Agora\\ iOS\\ Tutorial/libs",
@@ -824,6 +845,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospiceApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -841,6 +863,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = W23QWSXCYJ;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HumanityHospice/Pages/Agora\\ iOS\\ Tutorial/libs",
@@ -859,6 +882,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.paradigmappdev.HumanityHospiceApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";

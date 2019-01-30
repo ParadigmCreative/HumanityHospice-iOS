@@ -29,11 +29,15 @@ class LandingViewController: UIViewController {
                 AppSettings.currentFBUser = Auth.auth().currentUser
                 DatabaseHandler.fetchData(for: AppSettings.currentFBUser!, completion: {
                     Utilities.closeActivityIndicator()
-                    VideoCallDatabaseHandler.updateTokenInDatabase()
                     if AppSettings.userType == .Staff {
-                        if let nav = UIStoryboard(name: "Nurse", bundle: nil).instantiateViewController(withIdentifier: "NurseNav") as? UINavigationController {
-                            self.present(nav, animated: true, completion: nil)
-                        }
+                        guard VideoCallDatabaseHandler.deviceToken.isEmpty == false else { return }
+                        CallManager.goOnline(with: VideoCallDatabaseHandler.deviceToken)
+                        
+                        let nav = UINavigationController()
+                        self.present(nav, animated: true, completion: nil)
+                        let nurseCoordinator = NurseCoordinator(nav: nav)
+                        nurseCoordinator.start()
+                        
                     } else {
                         if let tabbar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainTabBar") as? UITabBarController {
                             self.present(tabbar, animated: true, completion: nil)

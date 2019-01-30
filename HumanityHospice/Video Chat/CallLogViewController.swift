@@ -9,15 +9,17 @@
 import UIKit
 import FirebaseAuth
 
-class CallLogViewController: UIViewController, VideoCallDelegate {
+class CallLogViewController: UIViewController, VideoCallDelegate, Storyboarded {
 
     let devMode: Bool = true
     var viewModel: CallLogViewModel!
     var videoChatDelegate: VideoChatDelegate!
     
+    var videoChatController: VideoChatViewController?
+    var coordinator: NurseCoordinator?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         VideoCallDatabaseHandler.set(delegate: self)
         viewModel = CallLogViewModel()
@@ -62,24 +64,7 @@ class CallLogViewController: UIViewController, VideoCallDelegate {
     
     // MARK: - VideoCallDelegate
     func goToVideo(sessionID: String, call: Call) {
-        self.performSegue(withIdentifier: "showVideo", sender: (sessionID, call))
-    }
-    
-    func showJoinAlert(sessionID: String, call: Call) {
-        let alert = UIAlertController(title: "\(call.patientName) is calling!", message: "Press 'Answer' to join the call", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Answer", style: .default, handler: { (action) in
-            self.goToVideo(sessionID: sessionID, call: call)
-        }))
-        alert.addAction(UIAlertAction(title: "Decline", style: .destructive, handler: { (action) in
-            try! RealmHandler.realm.write {
-                call.status = "missed"
-            }
-            self.viewModel.refreshCallLog {
-                self.callLogTable.reloadData()
-            }
-            Log.i("Dismissed")
-        }))
-        self.present(alert, animated: true, completion: nil)
+        coordinator?.startVideo(sessionID: sessionID, call: call)
     }
     
     // MARK: - Navigation

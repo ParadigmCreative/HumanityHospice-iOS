@@ -14,7 +14,7 @@ protocol VideoChatDelegate {
     func didFinishCall()
 }
 
-class VideoChatViewController: UIViewController {
+class VideoChatViewController: UIViewController, Storyboarded {
     @IBOutlet weak var localVideo: UIView!              // Tutorial Step 3
     @IBOutlet weak var remoteVideo: UIView!             // Tutorial Step 5
     @IBOutlet weak var controlButtons: UIView!
@@ -24,17 +24,18 @@ class VideoChatViewController: UIViewController {
 
     var agoraKit: AgoraRtcEngineKit!                    // Tutorial Step 1
     
+    var coordinator: NurseCoordinator?
+    
     var uuid: UInt!
     var sessionID: String!
-    var call: Call!
+    var call: Call?
     var shouldStartTimer: Bool = false
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        
+        Log.s("STARTING SETUP OF VIDEO FEED")
         setupButtons()              // Tutorial Step 8
         hideVideoMuted()            // Tutorial Step 10
         initializeAgoraEngine()     // Tutorial Step 1
@@ -42,15 +43,26 @@ class VideoChatViewController: UIViewController {
         setupLocalVideo()           // Tutorial Step 3
         joinChannel()               // Tutorial Step 4
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let session = AVAudioSession.sharedInstance()
+        session.requestRecordPermission { (granted) in
+            Log.i("Can use mic: \(granted)")
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+        Log.d("Deint")
     }
     
     // Tutorial Step 1
     func initializeAgoraEngine() {
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: AppID, delegate: self)
+        agoraKit.delegate = self
     }
 
     // Tutorial Step 2
@@ -73,6 +85,7 @@ class VideoChatViewController: UIViewController {
     
     // Tutorial Step 4
     func joinChannel() {
+        agoraKit.setEnableSpeakerphone(true)
         agoraKit.setDefaultAudioRouteToSpeakerphone(true)
         
         agoraKit.joinChannel(byToken: nil, channelId: sessionID, info:nil, uid: self.uuid) {[weak self] (sid, uid, elapsed) -> Void in
@@ -86,24 +99,29 @@ class VideoChatViewController: UIViewController {
     @IBAction func didClickHangUpButton(_ sender: UIButton) {
         leaveChannel()
         if AppSettings.userType == .Staff {
-            performSegue(withIdentifier: "returnToCallLog", sender: nil)
+            self.coordinator!.navigationController.popViewController(animated: true)
         } else {
             self.dismiss(animated: true, completion: nil)
         }
     }
     
     func leaveChannel() {
-        agoraKit.leaveChannel(nil)
+        let result = agoraKit.leaveChannel { (stats) in
+            Log.s(stats)
+        }
+        Log.s("Leave Result: \(result)")
         hideControlButtons()   // Tutorial Step 8
         UIApplication.shared.isIdleTimerDisabled = false
         remoteVideo.removeFromSuperview()
         localVideo.removeFromSuperview()
+        
     }
     
     // Tutorial Step 8
     func setupButtons() {
         perform(#selector(hideControlButtons), with:nil, afterDelay:8)
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(VideoChatViewController.ViewTapped))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                          action: #selector(VideoChatViewController.ViewTapped))
         view.addGestureRecognizer(tapGestureRecognizer)
         view.isUserInteractionEnabled = true
     }
@@ -182,6 +200,12 @@ extension VideoChatViewController: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinChannel channel: String, withUid uid: UInt, elapsed: Int) {
         Log.d(channel, uid)
     }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didLeaveChannelWith stats: AgoraChannelStats) {
+        Log.s("Successful leave")
+        Log.s(stats)
+    }
+    
 }
 
 

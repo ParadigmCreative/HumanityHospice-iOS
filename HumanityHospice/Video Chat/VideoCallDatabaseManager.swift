@@ -12,12 +12,13 @@ import CallKit
 
 protocol VideoCallDelegate {
     func goToVideo(sessionID: String, call: Call)
-    func showJoinAlert(sessionID: String, call: Call)
+//    func showJoinAlert(sessionID: String, call: Call)
 }
 
 class VideoCallDatabaseHandler {
     
     public static var deviceToken: String = ""
+    public static var hasAddedObserver = false
     
     private static let ref = Database.database().reference()
     private static let staff = ref.child("Staff")
@@ -49,12 +50,12 @@ class VideoCallDatabaseHandler {
                         "patientID": user.id]
                     
                     notificationCenter.childByAutoId().setValue(request)
-                    if let vc = UIStoryboard(name: "Nurse", bundle: nil).instantiateViewController(withIdentifier: "videoVC") as? VideoChatViewController {
-                        vc.uuid = UInt(bitPattern: user.id.hashValue)
-                        vc.sessionID = user.id
-                        
-                        completion(vc, nil)
-                    }
+                    let vc = VideoChatViewController.instantiate(from: "Nurse")
+                    vc.uuid = UInt(bitPattern: user.id.hashValue)
+                    vc.sessionID = user.id
+                    
+                    completion(vc, nil)
+                    
                 })
             }
         }
@@ -122,20 +123,23 @@ class VideoCallDatabaseHandler {
                 RealmHandler.realm.add(call)
             }
             
-            NotificationCenter.default.addObserver(forName: NSNotification.Name.init(rawValue: "CallAnswered"),
-                                                   object: nil,
-                                                   queue: nil, using: { (notification) in
-                delegate?.goToVideo(sessionID: patientID, call: call)
-            })
+            if hasAddedObserver {
+                print("Already has observer")
+            } else {
+                NotificationCenter.default.addObserver(forName: NSNotification.Name.init(rawValue: "CallAnswered"),
+                                                       object: nil,
+                                                       queue: nil, using: { (notification) in
+                                                        delegate?.goToVideo(sessionID: patientID, call: call)
+                })
+                hasAddedObserver = true
+            }
+            
             completion(delegate, patientID, call)
         default:
             break
         }
     }
     
-    public static func startVideo(patientID: String, call: Call) {
-        delegate!.goToVideo(sessionID: patientID, call: call)
-    }
     
     public static var currentUUID: UUID? = nil
     public static func endCall() {
