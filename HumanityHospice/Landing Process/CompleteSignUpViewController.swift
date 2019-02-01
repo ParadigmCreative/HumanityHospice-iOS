@@ -398,7 +398,8 @@ extension CompleteSignUpViewController {
                                            "FacetimeID": email,
                                            "HangoutID": email,
                                            "isOnCall": false,
-                                           "Team": "Edmond"]
+                                           "Team": "Edmond",
+                                           "id": user.uid]
                 
                 let userRef = DatabaseHandler.database.child("Staff").child(user.uid)
                 userRef.setValue(data, withCompletionBlock: { (error, ref) in
