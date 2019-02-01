@@ -29,6 +29,7 @@ class CallLogViewController: UIViewController, VideoCallDelegate, Storyboarded {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
         viewModel.refreshCallLog {
             self.callLogTable.reloadData()
         }
@@ -48,7 +49,11 @@ class CallLogViewController: UIViewController, VideoCallDelegate, Storyboarded {
             do {
                 try Auth.auth().signOut()
                 if let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "landingNav") as? UINavigationController {
-                    RealmHandler.masterResetRealm()
+                    try! RealmHandler.realm.write {
+                        RealmHandler.realm.deleteAll()
+                    }
+                    DatabaseHandler.database.child("Staff").child(AppSettings.currentFBUser!.uid).child("token").setValue(nil)
+                    DatabaseHandler.database.child("Staff").child(AppSettings.currentFBUser!.uid).child("isOnCall").setValue(false)
                     self.present(nav, animated: true, completion: nil)
                 }
             } catch {

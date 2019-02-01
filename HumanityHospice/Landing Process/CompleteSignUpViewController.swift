@@ -214,7 +214,13 @@ class CompleteSignUpViewController: UIViewController, UITextFieldDelegate {
                     }
                     
                     self.createNurse(first: first, last: last, email: email, pass: pass, completion: {
-                        self.moveToNurseWaiting()
+                        guard VideoCallDatabaseHandler.deviceToken.isEmpty == false else { return }
+                        CallManager.goOnline(with: VideoCallDatabaseHandler.deviceToken)
+                        
+                        let nav = UINavigationController()
+                        self.present(nav, animated: true, completion: nil)
+                        let nurseCoordinator = NurseCoordinator(nav: nav)
+                        nurseCoordinator.start()
                     })
                 }
             } else {
@@ -478,8 +484,6 @@ extension CompleteSignUpViewController {
                     self.present(nav, animated: true, completion: nil)
                     let nurseCoordinator = NurseCoordinator(nav: nav)
                     nurseCoordinator.start()
-                    
-                    self.moveToNurseWaiting()
                 }
                 
             }

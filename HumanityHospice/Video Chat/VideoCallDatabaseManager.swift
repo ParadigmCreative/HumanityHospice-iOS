@@ -34,27 +34,38 @@ class VideoCallDatabaseHandler {
         case EncouragementPost = "EncouragementPost"
     }
     
-    public static func requestCallToNurse(completion: @escaping (VideoChatViewController?, DatabaseHandler.StaffError?)->()) {
+    public static func requestCallToNurse(completion: @escaping (VideoChatViewController?, DatabaseHandler.StaffError?, Bool?)->()) {
         if let user = AppSettings.currentAppUser as? DatabaseHandler.Patient {
             DatabaseHandler.pullDataFrom(kind: "Patients") { (done) in
                 guard let nurseid = user.nurseID else { return }
                 
-                DatabaseHandler.getOnCallNurseDetails(nurseID: nurseid, completion: { (error, nurseID, token) in
+                DatabaseHandler.getOnCallNurseDetails(nurseID: nurseid, completion: { (error, onCall, token) in
                     guard error == nil else {
-                        completion(nil, error)
+                        completion(nil, error, nil)
                         return
                     }
                     
-                    let request: [String: Any] = ["greeting": "\(user.fullName()) is calling you! Tap here to answer.",
-                        "nurseID": nurseid,
-                        "patientID": user.id]
+                    guard onCall != nil else {
+                        completion(nil, DatabaseHandler.StaffError.NoNurseOnCallForTeam, nil)
+                        return
+                    }
+                    
+                    let request: [String: Any] = [
+                        "greeting": "\(user.fullName()) is calling you! Tap here to answer.",
+                        "nurseID": onCall!,
+                        "patientID": user.id,
+                        "timestamp": Date().timeIntervalSince1970]
                     
                     notificationCenter.childByAutoId().setValue(request)
                     let vc = VideoChatViewController.instantiate(from: "Nurse")
                     vc.uuid = UInt(bitPattern: user.id.hashValue)
                     vc.sessionID = user.id
                     
-                    completion(vc, nil)
+                    if nurseid == onCall {
+                        completion(vc, nil, true)
+                    } else {
+                        completion(vc, nil, false)
+                    }
                     
                 })
             }

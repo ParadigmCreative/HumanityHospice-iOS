@@ -124,7 +124,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 return
             }
             guard let result = result else { return }
-            Log.i("InstanceID:", result.instanceID)
             Log.i("Token:", result.token)
             VideoCallDatabaseHandler.deviceToken = result.token
         }

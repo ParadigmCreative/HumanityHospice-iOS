@@ -35,6 +35,8 @@ class VideoChatViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        self.navigationController?.isNavigationBarHidden = true
+        
         Log.s("STARTING SETUP OF VIDEO FEED")
         setupButtons()              // Tutorial Step 8
         hideVideoMuted()            // Tutorial Step 10

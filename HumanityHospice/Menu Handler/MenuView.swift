@@ -31,7 +31,7 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
     @IBOutlet weak var callNurseButton: UIButton!
     @IBAction func callNurse(_ sender: UIButton) {
         
-        VideoCallDatabaseHandler.requestCallToNurse { (vc, error) in
+        VideoCallDatabaseHandler.requestCallToNurse { (vc, error, isNurse) in
             guard error == nil else {
                 var alert: UIAlertController
                 
@@ -51,6 +51,16 @@ class MenuView: UIView, UITableViewDataSource, UITableViewDelegate, MenuHandlerD
                 
                 self.handlingController?.present(alert, animated: true, completion: nil)
                 
+                return
+            }
+            
+            guard isNurse != nil else {
+                var alert: UIAlertController
+                alert = UIAlertController(title: "Hmm..",
+                                          message: "Something went wrong. Please try again later.",
+                                          preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.handlingController?.present(alert, animated: true, completion: nil)
                 return
             }
             
